@@ -133,7 +133,7 @@ Each rule file should follow this pattern:
 3. **PR**: Submit with rationale and examples
 4. **Memory Update**: After merge, update assistant memories:
    ```
-   "Update Rules: [Technology] from https://raw.githubusercontent.com/JarrydSemmens/windsurf_rules/main/[technology]_rules.md"
+   "Update Rules: [Technology] from https://raw.githubusercontent.com/JarrydSemmens/agentic_tooling/main/[technology]_rules.md"
    ```
 
 ## Maintenance
@@ -167,6 +167,6 @@ A: Memories are persistent, but you can always re-share the GitHub raw URL to re
 
 ---
 
-**Repository**: https://github.com/JarrydSemmens/windsurf_rules  
+**Repository**: https://github.com/JarrydSemmens/agentic_tooling  
 **Owner**: Jarryd Adaens  
 **Last Updated**: 2025-08-24

@@ -17,19 +17,21 @@ This repository contains curated coding rules that ensure consistency, maintaina
 
 ### Current Rules Files
 
-- **`csharp_rules.md`** - Microsoft C# conventions with team modifications
+All rule files now live under `.rules/`.
+
+- **`.rules/csharp_rules.md`** - Microsoft C# conventions with team modifications
   - Modern C# features, async/await patterns, naming conventions
   - Allman braces, parameter prefixes (`in_`), SOLID principles
   
-- **`cplusplus_rules.md`** - Unreal Engine C++ best practices  
+- **`.rules/cplusplus_rules.md`** - Unreal Engine C++ best practices  
   - UE5 coding standards, UHT/UBT compliance, Epic naming conventions
   - Memory management, reflection macros, Blueprint integration
 
-- **`wpf_rules.md`** - WPF/XAML coding standards
+- **`.rules/wpf_rules.md`** - WPF/XAML coding standards
   - MVVM patterns, dependency properties, resource management
   - XAML formatting, virtualization, binding best practices
 
-- **`qt_rules.md`** - Qt C++ for Windows development
+- **`.rules/qt_rules.md`** - Qt C++ for Windows development
   - Qt6 + CMake, signals/slots, threading, container usage
   - OpenRGB plugin-specific guidance, MSVC toolchain settings
 
@@ -128,18 +130,18 @@ Each rule file should follow this pattern:
 
 ## Contributing
 
-1. **Fork & Edit**: Make changes to rule files
+1. **Fork & Edit**: Make changes to rule files in `.rules/`
 2. **Test**: Validate rules in real projects
 3. **PR**: Submit with rationale and examples
 4. **Memory Update**: After merge, update assistant memories:
    ```
-   "Update Rules: [Technology] from https://raw.githubusercontent.com/JarrydSemmens/agentic_tooling/main/[technology]_rules.md"
+   "Update Rules: [Technology] from https://raw.githubusercontent.com/JarrydSemmens/agentic_tooling/main/.rules/[technology]_rules.md"
    ```
 
 ## Maintenance
 
 ### Updating Rules
-- Edit files in this repository
+- Edit files in `.rules/` in this repository
 - Tell assistant to update memories from new URLs
 - Assistant will diff and apply changes automatically
 

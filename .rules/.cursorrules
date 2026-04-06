@@ -4,12 +4,12 @@ This workspace contains technology-specific coding rules. The rules are organize
 
 ## Rules Files Reference
 
-For detailed rules, see these files in this workspace:
-- `global_rules.md` - General coding principles
-- `csharp_rules.md` - C# coding standards
-- `cplusplus_rules.md` - Unreal Engine C++ best practices
-- `wpf_rules.md` - WPF/XAML coding standards
-- `qt_rules.md` - Qt C++ rules for Windows development
+For detailed rules, see these files in the `.rules/` folder in this workspace:
+- `.rules/global_rules.md` - General coding principles
+- `.rules/csharp_rules.md` - C# coding standards
+- `.rules/cplusplus_rules.md` - Unreal Engine C++ best practices
+- `.rules/wpf_rules.md` - WPF/XAML coding standards
+- `.rules/qt_rules.md` - Qt C++ rules for Windows development
 
 ---
 
@@ -385,6 +385,6 @@ When working on code, apply rules based on file types:
 ## Notes
 
 - Rules files are versioned and dated - check the header of each file for version info
-- These rules are maintained in this repository: https://github.com/JarrydSemmens/windsurf_rules
+- These rules are maintained in this repository: https://github.com/JarrydSemmens/agentic_tooling
 - When in doubt, prioritize clarity, maintainability, and consistency
 - Follow SOLID principles and DRY (Don't Repeat Yourself) as outlined in General principles

@@ -1,0 +1,7 @@
+interface:
+  display_name: "XNA and MonoGame"
+  short_description: "MonoGame and XNA engineering."
+  default_prompt: "Use $xna to help with this XNA or MonoGame task."
+
+policy:
+  allow_implicit_invocation: true

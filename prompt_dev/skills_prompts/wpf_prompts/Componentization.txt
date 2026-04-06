@@ -1,0 +1,42 @@
+I am building a modular context file for an agentic IDE to provide an agent (or a human engineer) context on componentization.
+
+
+I will provide you with a template, and you fill it in with all the wisdom and instruction an senior engineer would impart on the topic of componentization covering the following:
+
+- Deciding how to encapsulate duplicated XAML or UI logic into reusable pieces
+- Choosing the right architectural tool such as `UserControl`, custom `Control`, `DataTemplate`, `ControlTemplate`, or behavior for a specific UI requirement
+- Applying MVVM principles so modular UI components remain decoupled from business logic and are easy to test
+- Designing performant visual trees by avoiding deep nesting and heavy unoptimized elements
+
+
+```markdown
+# Componentization
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+Good WPF componentization is
+
+Start by asking what is actually being reused:
+
+- ???
+
+## Preferred Decision Order
+
+1. ???
+
+## Practical Heuristics
+
+- ???
+
+## Smells
+
+- ??
+
+## Goal
+
+???
+```

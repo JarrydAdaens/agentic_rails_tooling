@@ -1,0 +1,52 @@
+Now let's do another for "Dependency Properties".
+
+- Creating a custom control or extending an existing one in code
+- Exposing bindable state to XAML
+- Participating in styling, animation, templating, or value inheritance
+- Adding control capabilities that should feel native to WPF
+
+Populate this template with the knowledge and wisdom of a senior engineer again:
+
+```markdown
+
+# Dependency Properties
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+Dependency properties are...???
+
+Use a dependency property when the value should support one or more of these:
+
+- ???
+
+If the property is...???
+
+## What Good DP Design Looks Like
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Novel Control Work
+
+When building new control behavior...???
+
+- ???
+
+If the answer is...???
+
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+```

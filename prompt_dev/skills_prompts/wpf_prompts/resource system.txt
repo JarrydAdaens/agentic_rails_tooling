@@ -1,0 +1,43 @@
+Now let's do another for "Resource System".
+
+Organizing colors, brushes, thicknesses, styles, templates, or theme values
+Standardizing visuals across multiple views or controls
+Building layered theming or skinning
+Reducing duplication and controlling redraw scope through smart resource usage
+
+Populate this template with the knowledge and wisdom of a senior engineer again:
+
+```markdown
+# Resource System
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+The resource system is how...???
+
+Treat resources...???
+
+## What Good Resource Design Achieves
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Deferred Loading And Overrides
+
+- ???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+
+```

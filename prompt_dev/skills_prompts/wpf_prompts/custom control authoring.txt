@@ -1,0 +1,66 @@
+Now let's do another for "Custom Control Authoring".
+
+
+- Building a reusable control library rather than a one-off composed view
+- Authoring controls that should be fully restylable through `ControlTemplate`
+- Wiring `DefaultStyleKey`, `Generic.xaml`, named parts, or `OnApplyTemplate`
+- Defining control states, automation peers, and default theme behavior for a custom control
+
+Populate this template with the knowledge and wisdom of an expert veteran: 
+
+
+```markdown
+
+# Custom Control Authoring
+
+## Use This Reference When
+
+- ???
+
+## Veteran Expert Stance
+
+Custom control authoring is ???
+
+## Full Lifecycle
+
+The typical lifecycle is:
+
+1. ???
+
+## Core Building Blocks
+
+- ???
+
+These pieces should... ???
+
+## Practical Heuristics
+
+- ???
+
+## Default Style Lookup
+
+Default style resolution is... ???
+
+- ???
+
+
+## Template Parts And States
+
+Named parts and visual states are how a reusable control exposes structured expectations to templates:
+
+- ???
+
+## Automation And Accessibility
+
+Reusable controls should...???
+
+- ???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+```

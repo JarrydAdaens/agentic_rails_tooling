@@ -1,0 +1,52 @@
+Now let's do another for "Input, Focus, and Commanding".
+
+Cover routed commands, command bindings, input bindings, access keys, focus scopes, keyboard navigation, tab order, pointer versus keyboard parity, and when to use behaviors versus routed commanding.
+
+- Wiring keyboard shortcuts, access keys, or routed commands
+- Fixing focus behavior, tab order, focus scopes, or keyboard navigation
+- Deciding between direct event handling, behaviors, and routed commanding
+- Ensuring pointer interaction and keyboard interaction have equivalent behavior
+
+Populate this template with the knowledge and wisdom of an expert veteran: 
+
+```markdown
+
+# Input, Focus, and Commanding
+
+## Use This Reference When
+
+-???
+
+## Veteran Expert Stance
+
+Great WPF interaction...???
+
+## Core Layers
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Focus Discipline
+
+Focus issues...???
+
+- ???
+
+Understanding these...???
+
+## Behaviors Versus Routed Commanding
+
+- ???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+
+```

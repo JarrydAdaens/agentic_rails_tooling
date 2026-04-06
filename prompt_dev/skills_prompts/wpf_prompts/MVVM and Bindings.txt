@@ -1,0 +1,45 @@
+Now let's do another for "MVVM Pattern And Bindings".
+
+Binding is not just a convenience. It is the backbone of how a WPF surface stays testable, maintainable, and expressive.
+The task involves DataContext, binding, commands, validation, or view model shape
+You are deciding whether logic belongs in XAML, code-behind, or the view model
+A view is too event-driven and needs to become more declarative
+A screen or control should fully participate in MVVM
+
+
+Populate this template with the knowledge and wisdom of a senior engineer again:
+
+```markdown
+# MVVM Pattern And Bindings
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+WPF is at its strongest when...
+
+## Core Rules
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Where Logic Goes
+
+- View model: ...???
+- View:... ???
+- Model:...???
+- Behavior or attached property:...???
+
+## Smells
+
+- ???
+
+## Goal
+
+Use WPF's...???
+```

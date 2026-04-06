@@ -1,0 +1,51 @@
+Now let's do another for "Windowing, navigation and lifetime".
+
+Cover windows, dialogs, owned windows, modal versus modeless flows, shutdown behavior, startup patterns, navigation services, frame-based navigation, and shell-level MVVM orchestration.
+
+- Designing startup, shutdown, or application shell behavior
+- Working with windows, dialogs, owned windows, or popups at the app-flow level
+- Choosing modal versus modeless interactions
+- Building navigation flows, frame-based shells, or view-model-driven screen transitions
+
+
+Populate this template with the knowledge and wisdom of an expert veteran: 
+
+
+```markdown
+
+# Windowing, Navigation, and Lifetime
+
+## Use This Reference When
+
+- ???
+
+## Veteran Expert Stance
+
+Desktop application quality depends...???
+
+## Core Concerns
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Navigation Patterns
+
+Different apps want...???
+
+- ???
+
+Choose...???
+
+## Smells
+
+- ???
+
+## Goal
+
+Build WPF application...???
+
+
+```

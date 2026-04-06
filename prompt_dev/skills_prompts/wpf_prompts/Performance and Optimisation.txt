@@ -1,0 +1,41 @@
+Now let's do another for "Performance and Optimization".
+
+WPF performance work starts with understanding what actually causes invalidation, layout work, and redraw. Performance is usually won by reducing unnecessary work, not by micro-optimizing random code paths.
+
+Populate this template with the knowledge and wisdom of a senior engineer again:
+
+
+```markdown
+# Performance and Optimization
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+WPF performance work starts...???
+
+## Core Performance Ideas
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Retained-Mode Mindset
+
+WPF ...???
+
+- ???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+
+```

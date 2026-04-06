@@ -1,0 +1,57 @@
+Now let's do another for "Custom Control Authoring".
+
+
+Cover ItemsControl, ItemContainerStyle, ItemsPanelTemplate, DataTemplateSelector, hierarchical templates, CollectionViewSource, sorting, grouping, filtering, virtualization interactions, and container-generation costs.
+
+- Building list, grid, tree, menu, or repeated-item UI
+- Choosing between `DataTemplate`, `ItemContainerStyle`, and custom item containers
+- Using `CollectionViewSource`, grouping, sorting, or filtering
+- Tuning item-template complexity, container generation, or virtualization behavior
+
+Populate this template with the knowledge and wisdom of an expert veteran: 
+
+```markdown
+
+# Data Templating and Items Controls
+
+## Use This Reference When
+
+- ???
+
+## Veteran Expert Stance
+
+???
+
+## Core Layers
+
+- ???
+
+When one of these layers is...???
+
+## Practical Heuristics
+
+- ???
+
+## Grouping, Sorting, And Filtering
+
+Collection views are...???
+
+- ???
+
+
+## Virtualization Interactions
+
+???
+
+- ???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+
+
+```

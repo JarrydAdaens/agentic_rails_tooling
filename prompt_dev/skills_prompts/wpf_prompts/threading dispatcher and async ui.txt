@@ -1,0 +1,47 @@
+Now let's do another for "Threading, Dispatcher, and Async UI".
+
+Cover the UI thread model, Dispatcher, SynchronizationContext, ObservableCollection constraints, background loading, progress reporting, cancellation, EnableCollectionSynchronization, and thread-safe UI update patterns.
+
+
+- Background work needs to update the UI safely
+- Async loading, progress reporting, or cancellation behavior is being designed
+- Observable collections are being updated from multiple threads
+- UI-thread ownership or dispatcher behavior is causing bugs or stalls
+
+Populate this template with the knowledge and wisdom of an expert veteran: 
+
+```markdown
+# Threading, Dispatcher, and Async UI
+
+## Use This Reference When
+
+- ???
+
+## Veteran Expert Stance
+
+WPF has a ???
+
+## Core Concepts
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Collection Synchronization
+
+Collection work is...???
+
+- ???
+
+If the collection is...???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+```

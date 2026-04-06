@@ -1,0 +1,45 @@
+Now let's do another module. This one is called "Control Templating", which is for the following:
+
+
+Restyling an existing WPF control without losing its semantics
+Replacing the visual tree of a built-in control
+Building a platform-specific or brand-specific presentation on top of familiar controls
+Deciding whether a Style, ControlTemplate, or custom control is the right move
+
+```markdown
+# Control Templating
+
+## Use This Reference When
+
+- ???
+
+## Senior WPF Stance
+
+Control templating is...???
+
+The goal is... ???
+
+## What Templates Are For
+
+- ???
+
+## Practical Heuristics
+
+- ???
+
+## Platform-Specific UI
+
+Templates are ...???
+
+- ???
+
+The outer control stays familiar....???
+
+## Smells
+
+- ???
+
+## Goal
+
+???
+```

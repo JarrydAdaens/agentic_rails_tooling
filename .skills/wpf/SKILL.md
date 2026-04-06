@@ -1,12 +1,12 @@
 ---
 name: wpf
-description: Use this skill when the user is building, styling, refactoring, troubleshooting, or architecting WPF applications and control libraries. It covers custom controls, templating, resources, MVVM, items controls, input, threading, accessibility, navigation, diagnostics, and performance, and it loads deeper reference files only for the WPF engineering domain currently in play.
+description: Use this when the user is building, styling, refactoring, troubleshooting, or architecting WPF applications and control libraries. It covers custom controls, templating, resources, MVVM, items controls, input, threading, accessibility, navigation, diagnostics, and performance, and it loads deeper reference files only for the WPF engineering domain currently in play.
 version: 1.2
 ---
 
 # WPF Frontend and Application Engineering
 
-This skill is for production-grade WPF engineering work. It should guide the agent toward solutions that feel native to the WPF ecosystem rather than treating XAML as generic markup or treating desktop UI as if it were web frontend work.
+This is for production-grade WPF engineering work. It should guide the agent toward solutions that feel native to the WPF ecosystem rather than treating XAML as generic markup or treating desktop UI as if it were web frontend work.
 
 The goal is not just to make the UI work. The goal is to shape UI that is:
 
@@ -32,7 +32,7 @@ Think in this order:
 
 Prefer the least powerful abstraction that cleanly solves the problem. Do not jump to inheritance or custom controls when a template, behavior, style, or attached property is enough.
 
-After identifying the problem type, load only the reference files that directly help solve it. This skill is a catalogue first and a knowledge dump second.
+After identifying the problem type, load only the reference files that directly help solve it. This is a catalogue first and a knowledge dump second.
 
 ## Default WPF Stance
 

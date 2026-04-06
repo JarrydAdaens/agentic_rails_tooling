@@ -1,0 +1,7 @@
+interface:
+  display_name: "Game Development"
+  short_description: "Game-dev engineering judgment."
+  default_prompt: "Use $gamedev to guide the tradeoffs for this game-development task."
+
+policy:
+  allow_implicit_invocation: true

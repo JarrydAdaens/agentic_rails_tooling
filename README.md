@@ -1,174 +1,159 @@
-# Windsurf Rules Repository
+# Agentic Tooling
 
-A centralized collection of technology-specific coding standards and best practices for use with Windsurf AI assistant across multiple projects.
+This repository is not just a collection of rules. It is a modular context system for AI-assisted development.
 
-## Purpose & Goals
+The goal is to store reusable context in the right layer, so agents can be given exactly the amount and kind of guidance they need:
 
-This repository contains curated coding rules that ensure consistency, maintainability, and best practices across different technology stacks. Rather than duplicating rule files across every project or relying on fragile filesystem links, we use Windsurf's persistent memory system to make these rules globally available.
+- Small style and standards guidance
+- Reusable skill-sized knowledge modules
+- Agent definitions with tools and expertise
+- Prompt records that act as the source material for generated outputs
 
-### Our Goals
-- **Consistency**: Apply the same high-quality standards across all projects
-- **Maintainability**: Single source of truth for rules - update once, apply everywhere  
-- **Efficiency**: No need to copy/paste rules between repositories
-- **Quality**: Curated, reviewed, and battle-tested coding standards
-- **Flexibility**: Technology-specific rules that adapt to your current context
+## Core Idea
 
-## Technology Coverage
+Different kinds of context should not all live in one place.
 
-### Current Rules Files
+This repository separates:
 
-All rule files now live under `.rules/`.
+- Lightweight rules from deeper expertise
+- Reusable skill modules from agent definitions
+- Generated artifacts from the prompt text that produced them
 
-- **`.rules/csharp_rules.md`** - Microsoft C# conventions with team modifications
-  - Modern C# features, async/await patterns, naming conventions
-  - Allman braces, parameter prefixes (`in_`), SOLID principles
-  
-- **`.rules/cplusplus_rules.md`** - Unreal Engine C++ best practices  
-  - UE5 coding standards, UHT/UBT compliance, Epic naming conventions
-  - Memory management, reflection macros, Blueprint integration
+That separation makes it easier to maintain, evolve, and reuse context across projects and agents.
 
-- **`.rules/wpf_rules.md`** - WPF/XAML coding standards
-  - MVVM patterns, dependency properties, resource management
-  - XAML formatting, virtualization, binding best practices
+## Repository Structure
 
-- **`.rules/qt_rules.md`** - Qt C++ for Windows development
-  - Qt6 + CMake, signals/slots, threading, container usage
-  - OpenRGB plugin-specific guidance, MSVC toolchain settings
+### `.rules/`
 
-## How It Works: Assistant Memory System
+This folder is for style guides, coding rules, and smaller context files.
 
-### Why Not Traditional Approaches?
+Use `.rules/` for things like:
 
-We explored several options for sharing rules across projects:
+- Language and framework standards
+- Formatting expectations
+- Naming conventions
+- General engineering rules
+- Workspace-level behavior constraints
 
-- ❌ **Copy/paste files** - Creates maintenance nightmare, rules drift apart
-- ❌ **Git submodules** - Complex, requires setup in every repo  
-- ❌ **Filesystem junctions** - Windows-specific, breaks on different machines
-- ❌ **Git subtrees** - Manual sync required, easy to forget updates
+Current examples include:
 
-### ✅ Assistant Memory Approach
+- `.rules/global_rules.md`
+- `.rules/csharp_rules.md`
+- `.rules/cplusplus_rules.md`
+- `.rules/wpf_rules.md`
+- `.rules/qt_rules.md`
+- `.rules/.cursorrules`
 
-Instead, we use Windsurf's persistent memory system:
+In short: `.rules/` is for concise guidance and style-shaping context, not broad expertise systems.
 
-1. **Global Storage**: Rules are stored as persistent memories in the assistant
-2. **Auto-Detection**: Assistant detects technology stack and applies relevant rules
-3. **Cross-Project**: Works in any workspace without setup
-4. **Precedence**: Local repo rules override global memories when present
-5. **Easy Updates**: Send new content or URLs to update memories instantly
+### `.skills/`
 
-## Getting Started
+This folder is for modular chunks of context.
 
-### For Rule Authors
+A skill is a reusable unit of expertise, behavior, or process guidance that an agent can load when it is relevant. Skills are larger and more capability-oriented than rules.
 
-1. **Create/Edit Rules**: Write your rules in clear, actionable markdown
-2. **Review & Test**: Validate rules work in real projects  
-3. **Commit to Memory**: Tell the assistant to save them globally
+Use `.skills/` for things like:
 
-### For Developers Using Rules
+- Domain knowledge such as WPF, game development, or XNA/MonoGame
+- Process skills such as writing commit logs correctly
+- Tool-usage guidance for specific CLIs or workflows
+- Progressive-disclosure expertise split across reference files
 
-#### Initial Setup
-Share the rule content with Windsurf assistant:
+Current examples include:
 
-```
-Here are my [Technology] rules: [paste content or share raw GitHub URL]
-Please save these as global Rules: [Technology] memory.
-```
+- `.skills/wpf`
+- `.skills/gamedev`
+- `.skills/xna`
+- `.skills/commit-log`
+- `.skills/commit-history`
+- `.skills/skill-template`
+- `.skills/skill-template-advanced`
 
-#### Examples
-```
-"Save these C# rules as global memory: Rules: CSharp"
-"Update Rules: Qt from this URL: https://raw.githubusercontent.com/..."
-"Apply my WPF rules to this project"
-```
+In short: `.skills/` is where deeper, task-shaped context lives.
 
-#### Management Commands
-```
-"List my global rules"                    # See what's stored
-"Update Rules: CSharp with this content"  # Update existing rules  
-"Disable Rules: Qt for this repo"         # Override for specific project
-"Delete Rules: [Technology]"              # Remove rule set
-```
+### `.agents/`
 
-### Why This Workflow?
+This folder is for defining agents: their tools, their expertise, and the shape of the work they are meant to do.
 
-**Assistant Context Limits**: Windsurf has limited context windows. All conversation history gets cleared periodically, so rules stored only in chat would be lost.
+Agents will usually depend on skills, and they are often used to prime a sub-agent for a specific role.
 
-**Persistent Memory**: By saving rules as memories, they persist across:
-- Different conversations
-- Different projects  
-- Different sessions
-- Context window resets
+Use `.agents/` for things like:
 
-**Automatic Retrieval**: The assistant automatically loads relevant rule memories based on detected file types and project structure.
+- Specialist agent definitions
+- Tool access configuration
+- Role-specific expertise bundles
+- Sub-agent priming setups
 
-## Rule File Structure
+In short: `.agents/` defines the worker, while `.skills/` defines reusable knowledge the worker can carry.
 
-Each rule file should follow this pattern:
+### `prompt_dev/`
 
-```markdown
-# [Technology] Coding Rules
+This folder holds records of prompts used to produce artifacts.
 
-## Scope
-- Target audience and use cases
-- When these rules apply
+Right now it mainly contains WPF-development prompt material that was driven by NotebookLM, but the idea is broader than that.
 
-## [Specific Sections]
-- Language features
-- Naming conventions  
-- Formatting rules
-- Best practices
-- Anti-patterns to avoid
+If a skill file is an output artifact, the text files in `prompt_dev/` are closer to source code.
 
-## Examples
-- Code samples showing correct usage
-- Before/after comparisons
+That means:
 
-## Tooling
-- Recommended tools and configurations
-- CI/CD integration
-```
+- A prompt record can capture how a skill or context pack was produced
+- The generated skill can be refined later without losing the original source thinking
+- The repository can preserve both the artifact and the prompt lineage behind it
 
-## Contributing
+In short: `prompt_dev/` is the source-material layer for generated context.
 
-1. **Fork & Edit**: Make changes to rule files in `.rules/`
-2. **Test**: Validate rules in real projects
-3. **PR**: Submit with rationale and examples
-4. **Memory Update**: After merge, update assistant memories:
-   ```
-   "Update Rules: [Technology] from https://raw.githubusercontent.com/JarrydSemmens/agentic_tooling/main/.rules/[technology]_rules.md"
-   ```
+## How the Layers Relate
 
-## Maintenance
+Think of the repository as a stack:
 
-### Updating Rules
-- Edit files in `.rules/` in this repository
-- Tell assistant to update memories from new URLs
-- Assistant will diff and apply changes automatically
+1. `.rules/` shapes style, standards, and small constraints.
+2. `.skills/` provides modular expertise and reusable task guidance.
+3. `.agents/` assembles tools and skills into a usable specialist worker.
+4. `prompt_dev/` preserves the prompt history and source material behind generated outputs.
 
-### Version Control
-- Each rule file includes version and date headers
-- Git history provides full change tracking
-- Assistant memories can reference specific versions
+These layers are related, but they should not be collapsed into one another.
 
-## FAQ
+For example:
 
-**Q: Do I need to copy these files to every project?**  
-A: No! Once stored in assistant memory, they work globally.
+- A WPF naming or formatting convention belongs in `.rules/`
+- A production-grade WPF engineering knowledge system belongs in `.skills/`
+- A UI-focused specialist sub-agent definition belongs in `.agents/`
+- The prompt set used to generate a WPF skill belongs in `prompt_dev/`
 
-**Q: What if I want project-specific overrides?**  
-A: Create `.windsurf/rules/` in your project - local rules take precedence.
+## Working Model
 
-**Q: How do I know which rules are active?**  
-A: Ask the assistant: "What rules are you using for this project?"
+When adding or updating context, place it in the narrowest layer that matches its job.
 
-**Q: Can I use multiple rule sets together?**  
-A: Yes! The assistant can apply multiple relevant rule sets (e.g., C# + WPF).
+Use this rule of thumb:
 
-**Q: What if the assistant forgets my rules?**  
-A: Memories are persistent, but you can always re-share the GitHub raw URL to refresh them.
+- Put it in `.rules/` if it is short, prescriptive, and style-oriented.
+- Put it in `.skills/` if it is reusable expertise, workflow knowledge, or a modular context pack.
+- Put it in `.agents/` if it defines what an agent can do and how it should be equipped.
+- Put it in `prompt_dev/` if it is source prompt material used to generate or evolve an output artifact.
 
----
+## Skills as Modular Context
 
-**Repository**: https://github.com/JarrydSemmens/agentic_tooling  
-**Owner**: Jarryd Adaens  
-**Last Updated**: 2025-08-24
+Many of the skills in this repository use progressive disclosure.
+
+That means:
+
+- The main skill file defines stance, routing, and when to load deeper material
+- Reference files hold focused chunks of deeper expertise
+- Only the smallest relevant set of references should be loaded for a given task
+
+This keeps broad domains usable without turning every skill into a giant context dump.
+
+## Maintenance Notes
+
+- Keep rules concise.
+- Keep skills modular.
+- Keep agents explicit about tools and role.
+- Keep prompt records when they are the real source behind generated artifacts.
+- Prefer focused files over giant omnibus documents.
+- Preserve the distinction between source material and produced output.
+
+## Repository
+
+- Repository: https://github.com/JarrydSemmens/agentic_tooling
+- Owner: Jarryd Adaens
+- Last Updated: 2026-04-06

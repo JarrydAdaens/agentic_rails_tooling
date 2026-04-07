@@ -18,7 +18,7 @@ This file routes the agent to the minimum relevant shared rules for the current 
 | [wpf_rules.md](wpf_rules.md) | Review when the task touches WPF, XAML, desktop UI, bindings, view models, or Windows presentation concerns. |
 | [cplusplus_rules.md](cplusplus_rules.md) | Review when the repository uses C++, especially Unreal Engine style and tooling. |
 | [qt_rules.md](qt_rules.md) | Review when the repository uses Qt, CMake-based Qt apps, or Qt widgets/QML concerns. |
-| [README.md](README.md) | Review only if you need background on how this shared rules directory is organized. |
+| [../README.md](../README.md) | Review only if you need repository-level background on how rules, skills, agents, and prompt records are organized. |
 | [.cursorrules](.cursorrules) | Review only if compatibility with the existing Cursor/Windsurf rule format is needed. |
 
 ## Selection Rules

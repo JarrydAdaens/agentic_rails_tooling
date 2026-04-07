@@ -1,0 +1,7 @@
+interface:
+  display_name: "WPF Engineering Agent"
+  short_description: "Production-grade WPF UI and control engineering."
+  default_prompt: "Use $wpf as the primary specialist for this WPF or XAML task."
+
+policy:
+  allow_implicit_invocation: true

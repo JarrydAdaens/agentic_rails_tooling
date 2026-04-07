@@ -6,6 +6,7 @@ The goal is to keep reusable guidance in the right place, so agents can load the
 
 - Short rules and standards
 - Reusable skills and workflow modules
+- Orchestration workflows that compose skills (and optional subagents)
 - Specialist agent definitions
 - Prompt-development records that preserve source material
 
@@ -17,6 +18,7 @@ This repository separates:
 
 - Lightweight rules from deeper reusable guidance
 - Reusable skills from named specialist agents
+- Multi-step workflows from one-off ad hoc instructions
 - Produced artifacts from the prompt material that generated them
 
 That separation makes the system easier to maintain, evolve, and reuse across projects.
@@ -67,10 +69,29 @@ Current examples include:
 - `.skills/commit-log`
 - `.skills/commit-history`
 - `.skills/check_dot_agent`
+- `.skills/mermaid-scout`, `.skills/mermaid-mapper`, `.skills/mermaid-validation`, `.skills/mermaid-aggregation`
 - `.skills/skill-template`
 - `.skills/skill-template-advanced`
 
 In short: `.skills/` is for reusable task-shaped knowledge, not broad persona-style specialist workers.
+
+### `.workflows/`
+
+This folder is for **orchestration workflows**: multi-step, file-backed, or subagent-driven pipelines that combine existing skills into a larger reusable procedure. A workflow does not replace skills; it wires them together with clear handoffs, artifact paths, and state.
+
+Use `.workflows/` for things like:
+
+- End-to-end pipelines that would be too large or repetitive to spell out every time
+- Boss-style coordination (discovery, parallel workers, validation, aggregation)
+- Processes that assume standard artifact locations on a **target** repository
+
+Workflows stay **thin**: domain behavior lives in `.skills/`; the workflow document describes sequencing, dispatch, and recovery.
+
+Current examples include:
+
+- `.workflows/mermaid-mapper` — large-codebase Mermaid mapping (see `WORKFLOW.md`)
+
+In short: `.workflows/` is the procedural orchestration layer; `.skills/` remains where portable task knowledge lives.
 
 ### `.agents/`
 
@@ -112,8 +133,9 @@ Think of the repository as a stack:
 
 1. `.rules/` shapes style, standards, and small constraints.
 2. `.skills/` provides reusable workflow guidance and modular expertise.
-3. `.agents/` defines specialist workers with role contracts and supporting reference libraries.
-4. `prompt_dev/` preserves the prompt history and source material behind generated outputs.
+3. `.workflows/` composes skills (and optional subagents) into larger orchestrated pipelines with explicit artifacts and state.
+4. `.agents/` defines specialist workers with role contracts and supporting reference libraries.
+5. `prompt_dev/` preserves the prompt history and source material behind generated outputs.
 
 These layers are related, but they should not be collapsed into one another.
 
@@ -121,6 +143,7 @@ For example:
 
 - A WPF naming or formatting convention belongs in `.rules/`
 - A reusable commit-log workflow belongs in `.skills/commit-log`
+- A multi-step orchestration such as large-scale Mermaid mapping belongs in `.workflows/mermaid-mapper` while its steps remain separate skills under `.skills/`
 - A production-grade WPF specialist worker belongs in `.agents/wpf`
 - The prompt set used to generate or evolve one of those artifacts belongs in `prompt_dev/`
 
@@ -132,20 +155,22 @@ Use this rule of thumb:
 
 - Put it in `.rules/` if it is short, prescriptive, and style-oriented.
 - Put it in `.skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
+- Put it in `.workflows/` if it is a named multi-step orchestration that combines skills, defines artifact layout, or coordinates subagents.
 - Put it in `.agents/` if it defines a named worker: mission, scope, operating model, and supporting references.
 - Put it in `prompt_dev/` if it is source prompt material used to generate or evolve an output artifact.
 
-## Skills and Agents
+## Skills, Workflows, and Agents
 
-Both skills and agents can use progressive disclosure, but they serve different purposes.
+Skills, workflows, and agents can use progressive disclosure, but they serve different purposes.
 
 Typical pattern:
 
-- A skill provides reusable guidance that many different agents can load.
+- A skill provides reusable guidance that many different agents (or workflow Boss steps) can load.
+- A workflow sequences skills and optional subagents, owns artifact paths and state on a target repo, and stays thin.
 - An agent defines who is doing the work, how it should think, when it should escalate, and which references it should consult.
 - Reference files keep deeper expertise modular so the active context stays small.
 
-If a context pack starts behaving like a standing specialist persona instead of a portable capability module, it likely belongs in `.agents/`.
+If a context pack starts behaving like a standing specialist persona instead of a portable capability module, it likely belongs in `.agents/`. If it is mostly sequencing and coordination without a persona, it likely belongs in `.workflows/`.
 
 ## Maintenance Notes
 

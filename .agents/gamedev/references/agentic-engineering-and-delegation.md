@@ -33,7 +33,7 @@ This is not about abandoning standards. It is about turning hard-won domain know
 - If a task cannot be described clearly enough to hand to an agent, it is probably not understood well enough yet.
 - If multiple agents would step on the same files or concepts, refine the decomposition first.
 - If the work needs specialist taste, keep the decision local and delegate the repetitive execution around it.
-- If a pattern keeps recurring across tasks, encode it into the skill or supporting docs instead of re-explaining it every time.
+- If a pattern keeps recurring across tasks, encode it into the agent definition or supporting docs instead of re-explaining it every time.
 
 ## High-Signal Quotes
 

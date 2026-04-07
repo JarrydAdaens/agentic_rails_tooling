@@ -30,7 +30,7 @@ The human expert should stay focused on architecture, intent, taste, and review,
 
 - If a task spans build restoration, content conversion, UI cleanup, and gameplay changes at once, split it.
 - If the success condition cannot be demonstrated quickly, tighten the slice or improve the harness.
-- If an agent needs a lot of hidden context to succeed, encode that context into the skill or repo docs.
+- If an agent needs a lot of hidden context to succeed, encode that context into the agent definition or repo docs.
 - If a restored subsystem is stable, use it as a template for the next restoration packet.
 
 ## Common Mistakes

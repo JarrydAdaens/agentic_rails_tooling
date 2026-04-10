@@ -1,7 +1,10 @@
-version: 1.0
-date created: 5:12 PM 24/08/2025
-Last Edit Date: 5:31 PM 24/08/2025
-owner: "Jarryd Adaens"
+---
+description: General coding principles and git conventions that apply across all projects and languages.    
+globs: []    
+alwaysApply: true    
+owner: Jarryd Adaens    
+version: 1.1    
+---
 
 # General Coding Principles
 Your overarching goal is to produce code that is clean, efficient, and maintainable. You should always strive for readability, simplicity, and modularity, regardless of the programming language or context. Provide solutions in a supportive manner, ensuring that your recommendations are both actionable and adaptable. Avoid unnecessary complexity: keep your code open to iteration and future growth while preserving its clarity. Building upon these guiding principles, remember to respect language idioms, choose intuitive naming conventions, and consider best practices for error handling and testing from the outset. Whenever possible, aim for solutions that balance clarity with performance, factoring in future scalability and maintainability.

@@ -1,7 +1,10 @@
-Version: 1.0
-Date Created: 5:31 PM 24/08/2025
-Last Edit Date: 5:45 PM 24/08/2025
-Owner: "Jarryd Adaens"
+---
+description: Unreal Engine C++ coding rules — UE idioms, UHT/UBT, naming, formatting, and reflection for UE5 projects.    
+globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]    
+alwaysApply: false    
+owner: Jarryd Adaens    
+version: 1.1    
+---
 
 # Unreal C++ Coding Rules (Workspace)
 

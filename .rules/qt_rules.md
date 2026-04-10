@@ -1,7 +1,10 @@
-Version: 1.0
-Date Created: 6:17 PM 24/08/2025
-Last Edit Date: 6:18 PM 24/08/2025
-Owner: "Jarryd Adaens"
+---
+description: Qt C++ coding rules — Qt Widgets, signals/slots, threading, CMake build, and OpenRGB plugin conventions for Windows.    
+globs: ["**/*.pro", "**/*.qrc", "**/*.qml"]    
+alwaysApply: false    
+owner: Jarryd Adaens    
+version: 1.1    
+---
 
 # Windsurf Rules — Qt C++ (Windows, OpenRGB Plugin)
 

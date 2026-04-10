@@ -1,7 +1,10 @@
-Version: 1.0
-Date Created: 5:31 PM 24/08/2025
-Last Edit Date: 5:45 PM 24/08/2025
-Owner: "Jarryd Adaens"
+---
+description: C# coding rules — naming, style, modern language features, and conventions for .NET projects.    
+globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]    
+alwaysApply: false    
+owner: Jarryd Adaens    
+version: 1.1    
+---
 
 # C# Coding Rules
 - We use Microsoft's C# coding conventions with some modifications.

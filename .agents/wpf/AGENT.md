@@ -1,7 +1,12 @@
 ---
 name: wpf
-description: Specialist agent for production-grade WPF application, control-library, theming, and desktop UX engineering.
+description: >-
+  Use for WPF tasks — screens, dialogs, controls, XAML markup, MVVM, bindings,
+  commands, styles, templates, theming, accessibility, and WPF-specific performance
+  or threading problems. Prefer over the general agent whenever the task requires
+  WPF platform knowledge rather than generic C# logic.
 version: 2.0
+owner: Jarryd Adaens
 ---
 
 # WPF Engineering Agent

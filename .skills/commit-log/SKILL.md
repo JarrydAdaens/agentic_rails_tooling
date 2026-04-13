@@ -1,6 +1,6 @@
 ---
 name: commit-log
-version: 1.1
+version: 1.2
 description: >-
   Writes a standardized commit log from a fixed template for the user to copy into any VCS (git, Perforce, Mercurial, SVN, etc.). Use when the user asks for a commit message, changelog entry, or summary for version control; after completing a task or feature; when they want copy-paste wording for a check-in; or when they say commit log, commit message, or what to put in the commit.
 ---
@@ -13,7 +13,22 @@ Write a commit log that follows the template in [references/commit_log_template.
 
 - After completing work and summarizing what changed.
 - When the user explicitly wants commit or check-in wording.
-- Keeps the final commit step with the human (agentic safety).
+
+## Default behavior
+
+Output the commit message in chat and stop. Do not touch git. The user copies and commits themselves.
+
+## Commit behavior (only when the user explicitly asks to commit)
+
+If the user explicitly says to commit (e.g. "commit it", "go ahead and commit", "commit that"), do the following:
+
+1. Write the commit log as normal per the instructions below.
+2. Stage all changes made during this session: `git add` every file that was created or modified. Do not stage unrelated files.
+3. Use the generated commit message as the commit message verbatim.
+4. Run the commit.
+5. **Do not push.** Stop after the commit.
+
+If the work spans multiple independent change sets (see instructions below), stage and commit each set separately in order.
 
 ## Instructions
 

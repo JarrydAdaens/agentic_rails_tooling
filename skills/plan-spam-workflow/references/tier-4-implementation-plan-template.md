@@ -75,6 +75,7 @@ State the user-facing or system-facing outcome in one short paragraph.
 
 - Risk:
 - Open question:
+- Assumption used until answered:
 ```
 
 ## Template rules
@@ -86,6 +87,7 @@ State the user-facing or system-facing outcome in one short paragraph.
 - Keep slices implementation-oriented and ordered.
 - Keep validation specific to the likely change surface.
 - Preserve explicit user constraints and non-goals.
+- If important information is missing, write explicit open questions and the temporary assumption used so planning can continue honestly.
 
 ## Quality bar
 
@@ -96,4 +98,5 @@ A good Tier 4 plan:
 - separates scope from non-scope
 - sequences the work into sensible slices
 - includes concrete validation
+- carries visible assumptions where answers are still pending
 - avoids vague filler

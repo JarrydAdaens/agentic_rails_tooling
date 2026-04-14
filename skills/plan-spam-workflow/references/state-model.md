@@ -21,14 +21,16 @@ Only the **Boss** mutates the `Status` column in `documentation/workflows/plan_s
 | From | To | When |
 | --- | --- | --- |
 | `TODO` | `DOING` | Boss dispatches the goal to a planning worker |
-| `DOING` | `DONE` | Worker result is accepted and the plan file exists at the expected path |
-| `DOING` | `BLOCKED` | Worker is blocked, output is missing, output is duplicate, wrong template was used, or the plan is too shallow |
+| `DOING` | `DONE` | Worker result is accepted, the plan file exists at the expected path, and any open questions were captured in `questions.md` |
+| `DOING` | `BLOCKED` | Worker is blocked, output is missing, output is duplicate, wrong template was used, the plan is too shallow, or required questions were not captured |
 | `BLOCKED` | `TODO` | Boss explicitly requeues after a deliberate retry decision |
 
 ## Rules
 
 - Do not mark a row `DONE` before the worker result is reviewed.
 - Do not mark a row `DONE` if the output file is missing or clearly does not follow the assigned template.
+- Do not mark a row `DONE` if visible uncertainty exists but the worker failed to capture the corresponding questions in `documentation/workflows/plan_spam/questions.md`.
+- A row may still be `DONE` while questions remain unanswered if the plan is still useful and the uncertainty is marked honestly.
 - Preserve goal ids exactly when they came from source documents.
 - Synthetic ids such as `PLAN-001` are stable once created.
 

@@ -1,0 +1,6 @@
+9:23 AM 15-Apr-26
+
+So the concept of workflows is great, but no agentic ide can use it.
+So I've gone with making workflows into skills, suffixed with `-workflow`
+
+this works great.

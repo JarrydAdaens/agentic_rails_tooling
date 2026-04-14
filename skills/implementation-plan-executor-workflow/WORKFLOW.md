@@ -1,6 +1,6 @@
 ---
 name: implementation-plan-executor-workflow
-version: 1.0
+version: 1.1
 description: >-
   Repository-local orchestration for implementing work from design documents,
   milestone documents, goal lists, and implementation plans. Boss reads the
@@ -51,9 +51,9 @@ Do not delete them on resume unless the user explicitly asks for a clean run.
 
 | Role | Path from this repository root |
 | --- | --- |
-| Commit wording skill for every worker | `.skills/commit-log/SKILL.md` |
-| Optional specialist worker contract | `.agents/<agent-name>/AGENT.md` |
-| Example specialist worker contract | `.agents/wpf/AGENT.md` |
+| Commit wording skill for every worker | `skills/commit-log/SKILL.md` |
+| Optional specialist worker contract | `agents/<agent-name>/AGENT.md` |
+| Example specialist worker contract | `agents/wpf/AGENT.md` |
 
 Supporting reference: **state transitions**: [references/state-model.md](references/state-model.md).
 
@@ -81,8 +81,8 @@ If the user names both source docs and plan docs, read the source docs first and
 - Spawn at least one subagent for each goal or tightly-bound plan slice. Do not replace that worker step with Boss implementation.
 - Default to one goal per worker. Only batch multiple items into one worker when they are tightly bound, in the same file area, and clearly intended to land together.
 - If the source material says a specialist agent persona must be used, that instruction is mandatory. Pass that agent contract path to every relevant worker. Do not omit it.
-- If the source material says to use the WPF agent persona, use `.agents/wpf/AGENT.md`. Do not omit it.
-- Every worker must load `.skills/commit-log/SKILL.md` before finishing.
+- If the source material says to use the WPF agent persona, use `agents/wpf/AGENT.md`. Do not omit it.
+- Every worker must load `skills/commit-log/SKILL.md` before finishing.
 - Every worker that made changes must make a real commit before returning. The commit message must come from the `commit-log` skill contract. Do not skip the real commit.
 - Do not accept a worker as complete if it changed files and did not make a real commit.
 - After every successful worker completion, update `progress.md`.
@@ -116,7 +116,7 @@ Write or refresh `documentation/workflows/implementation_plan_executor/progress.
 
 | Status | Goal | Source | Persona | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| TODO | GOAL 1.2 | `Documentation/implementation_plan.md` | `.agents/wpf/AGENT.md` |  | queued |
+| TODO | GOAL 1.2 | `Documentation/implementation_plan.md` | `agents/wpf/AGENT.md` |  | queued |
 
 Use the status values from [references/state-model.md](references/state-model.md).
 Only the Boss updates the `Status` column.
@@ -164,10 +164,10 @@ Use the `Commit` column for the worker's actual commit SHA after success.
    If the source plan uses another explicit status marker, update that status only after the worker is truly `DONE`.
 
 10. **Repeat**  
-   Continue until there are no `TODO` rows left for the requested scope or until the remaining goals are blocked.
+      Continue until there are no `TODO` rows left for the requested scope or until the remaining goals are blocked.
 
 11. **Report**  
-   Tell the user where `briefing.md` and `progress.md` live, which goals are done, which goals are blocked, and which commits landed.
+      Tell the user where `briefing.md` and `progress.md` live, which goals are done, which goals are blocked, and which commits landed.
 
 ## Worker dispatch requirements
 
@@ -177,7 +177,7 @@ Every worker prompt must include all of the following:
 - The exact source document paths to read before coding
 - A plain statement that the worker must implement only the assigned goal or tightly-bound slice
 - The exact specialist agent contract path to use, or an explicit statement that no specialist agent contract is required
-- The exact path `.skills/commit-log/SKILL.md`
+- The exact path `skills/commit-log/SKILL.md`
 - A plain statement that the worker must load `commit-log`, generate the commit message from that skill, and make a real commit before returning if files changed
 - A plain statement that the worker must report commit SHA, changed files, tests run, and blockers
 - A plain statement that the worker must not silently skip the commit
@@ -189,8 +189,8 @@ Recommended worker wording:
 
 > Read the listed source documents before making changes.  
 > Implement only GOAL X.Y.  
-> Use this specialist agent contract if required: `.agents/wpf/AGENT.md`.  
-> Before you finish, load `.skills/commit-log/SKILL.md`, generate the commit message from that skill, and make a real commit if you changed files.  
+> Use this specialist agent contract if required: `agents/wpf/AGENT.md`.  
+> Before you finish, load `skills/commit-log/SKILL.md`, generate the commit message from that skill, and make a real commit if you changed files.  
 > Return the commit SHA, files changed, tests run, and blockers.
 
 ## Parallelism

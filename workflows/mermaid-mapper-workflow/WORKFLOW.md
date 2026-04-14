@@ -1,6 +1,6 @@
 ---
 name: mermaid-mapper-workflow
-version: 1.0
+version: 1.1
 description: >-
   Repository-local orchestration for building a Mermaid diagram of a large OO system from a user-supplied entry point or query. Boss coordinates scout discovery, parallel mapper chunks, validation, and aggregation. Artifacts live under documentation/workflows/mermaid_mapper on the target repo.
 ---
@@ -31,12 +31,12 @@ Create these directories on first run.
 
 | Role | Skill path (from this repo root) |
 | --- | --- |
-| Scout | `.skills/mermaid-scout/SKILL.md` |
-| Mapper | `.skills/mermaid-mapper/SKILL.md` |
-| Validation | `.skills/mermaid-validation/SKILL.md` |
-| Aggregation | `.skills/mermaid-aggregation/SKILL.md` |
+| Scout | `skills/mermaid-scout/SKILL.md` |
+| Mapper | `skills/mermaid-mapper/SKILL.md` |
+| Validation | `skills/mermaid-validation/SKILL.md` |
+| Aggregation | `skills/mermaid-aggregation/SKILL.md` |
 
-Supporting references: `.skills/mermaid-scout/references/scoutmap-format.md`, `.skills/mermaid-mapper/references/mermaid-conventions.md`, and **state transitions**: [references/state-model.md](references/state-model.md).
+Supporting references: `skills/mermaid-scout/references/scoutmap-format.md`, `skills/mermaid-mapper/references/mermaid-conventions.md`, and **state transitions**: [references/state-model.md](references/state-model.md).
 
 ## Invocation
 
@@ -69,10 +69,10 @@ Resolve that text into concrete discovery instructions for the Scout (paths, glo
    Read `scoutmap.md`. Find rows with ⬜. For each batch you dispatch, set those rows to 🟩 and persist the file.
 
 5. **Map (parallel)**  
-   Spawn one or more **Mapper** subagents with assignments: file path + type list per row (or batched rows if tiny). Mappers follow `.skills/mermaid-mapper/SKILL.md` and write edge-only partials under `partials/` with stable names.
+   Spawn one or more **Mapper** subagents with assignments: file path + type list per row (or batched rows if tiny). Mappers follow `skills/mermaid-mapper/SKILL.md` and write edge-only partials under `partials/` with stable names.
 
 6. **Validate**  
-   For each returned partial, apply **mermaid-validation** checks yourself (read `.skills/mermaid-validation/SKILL.md`). Do not spawn a separate validator subagent unless fragments are huge.
+   For each returned partial, apply **mermaid-validation** checks yourself (read `skills/mermaid-validation/SKILL.md`). Do not spawn a separate validator subagent unless fragments are huge.
 
 7. **State update**  
    - Pass: mark row ❎, keep partial.  
@@ -82,10 +82,10 @@ Resolve that text into concrete discovery instructions for the Scout (paths, glo
    Repeat steps 4–7 until no ⬜ rows remain (iterative refill, not only one wave at startup).
 
 9. **Aggregate**  
-   Run **mermaid-aggregation** (`.skills/mermaid-aggregation/SKILL.md`) over all accepted partials. Write `mermaid.md`.
+   Run **mermaid-aggregation** (`skills/mermaid-aggregation/SKILL.md`) over all accepted partials. Write `mermaid.md`.
 
 10. **Done**  
-   Tell the user where `mermaid.md` and `scoutmap.md` live.
+      Tell the user where `mermaid.md` and `scoutmap.md` live.
 
 ## Subagent dispatch
 

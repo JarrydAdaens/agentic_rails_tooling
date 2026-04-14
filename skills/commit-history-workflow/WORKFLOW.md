@@ -1,5 +1,5 @@
 ---
-name: commit-history
+name: commit-history-workflow
 version: 2.0
 description: >-
   Reviews one historical commit, inspects its metadata and file changes, and
@@ -9,7 +9,7 @@ description: >-
   work.
 ---
 
-# Commit History
+# Commit History Workflow
 
 Review exactly one historical commit and return exactly one JSON object for that
 commit.

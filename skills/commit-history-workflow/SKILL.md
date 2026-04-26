@@ -50,6 +50,8 @@ commit messages.
 
 ## Categories
 
+These categories are tuned for game-development codebases. For non-game repositories, prefer `MISC` when no category fits cleanly, or adapt this skill with a custom category set before using it on a different domain.
+
 Use exactly one category from this fixed set:
 
 - `GAME`

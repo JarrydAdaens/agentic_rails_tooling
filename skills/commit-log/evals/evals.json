@@ -1,0 +1,62 @@
+{
+  "skill_name": "commit-log",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I added a login feature that accepts username and password and returns a JWT token. Write a commit message.",
+      "expected_output": "A commit log with a [GOAL X.Y] or [XXX-123] heading, a ~ Problem: line, at least one body line describing the change, and a ~ Resolution: line.",
+      "assertions": [
+        "Output includes a heading line using [GOAL X.Y] or [XXX-123] format",
+        "Output includes a ~ Problem: line",
+        "Output includes a ~ Resolution: line",
+        "The heading line is 72 characters or fewer",
+        "No git commands are executed"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I fixed a null reference exception in UserService.cs that crashed when the user object was null. Write a commit message.",
+      "expected_output": "A commit log with a heading, a ~ Problem: line describing the null reference, a ~ Fixed: body line referencing UserService, and a ~ Resolution: line.",
+      "assertions": [
+        "Output includes a heading line using [GOAL X.Y] or [XXX-123] format",
+        "Output includes a ~ Problem: line that describes the null reference issue",
+        "Output includes a ~ Fixed: or ~ Changed: body line",
+        "Output includes a ~ Resolution: line",
+        "No git commands are executed"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I refactored DataService to use dependency injection instead of static methods. Write a commit message, then commit it.",
+      "expected_output": "A commit log message is output first, then a git add and git commit are executed. No push.",
+      "assertions": [
+        "Output includes a commit log in the correct format before any git commands run",
+        "A git add command is executed for files changed during the session",
+        "A git commit command is executed using the generated message verbatim",
+        "No git push command is executed"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I made two unrelated changes: updated the README with setup instructions, and fixed a crash in the audio system when no audio device is present. Write commit messages.",
+      "expected_output": "Two separate commit logs are output — one for the README update and one for the audio crash fix — labeled or separated so they can be pasted as separate check-ins.",
+      "assertions": [
+        "Output contains two distinct commit log blocks",
+        "Each block has its own heading, ~ Problem:, and ~ Resolution: line",
+        "The two blocks are visually separated (label, rule, or blank line grouping)",
+        "No git commands are executed"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Write a commit message for adding unit tests covering edge cases in the CSV parser.",
+      "expected_output": "A commit log with a docs/tests-scoped heading and body noting that production code was not changed.",
+      "assertions": [
+        "Output includes a heading in the correct format",
+        "Output includes a ~ Problem: line and a ~ Resolution: line",
+        "Body notes that only test files changed or explicitly scopes to tests",
+        "No git commands are executed"
+      ]
+    }
+  ]
+}

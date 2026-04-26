@@ -21,26 +21,15 @@ Your overarching goal is to produce code that is clean, efficient, and maintaina
 - Plan for growth and changing requirements, but do not overengineer. Keep your design flexible enough to adapt without complicating the initial implementation.
 - Write straightforward code that conveys its intent clearly. Minimize abstraction layers that obscure readability.
 - Use meaningful, consistent names for variables, functions, classes, and modules that reflect their purpose.
-- Comment thoughtfull. Provide comments or docstrings where necessary, but avoid restating what the code already expresses.
+- Comment thoughtfully. Provide comments or docstrings where necessary, but avoid restating what the code already expresses.
 - Encapsulate Complexity. Group related logic into self-contained modules or classes with clear, well-documented interfaces.
 - Loose coupling. Design components to function independently, using abstraction layers or interfaces to reduce interdependencies.
 - Adhere to SOLID principles.
 - Apply DRY principles. Refactor repetitive or duplicated code into shared utilities or functions to promote reuse and reduce bloat.
 -Design for Extensibility. Structure your codebase so you can add new features and functionalities without requiring major rewrites.
 
-# Core System Components
-- The main application logic is in source/.
-- Feature flags and configuration settings are in source/config.
-- Scripts are always in scripts/.
-- Binary assets are always in content/. (Examples of binary assets: image files such as .png, .jpg, .bmp, audio files such as .wav, .mp3, .ogg)
-
-
 # Git
 - Always write in American English.
 - Small, focused PRs. No cross-cutting refactors with feature work.
-- Commit prefix:
-  - `Added:` feature name
-  - `Fixed:` bug + file
-  - `Changed:` refactor + subsystem
-  - `Removed:` dead code
-- Messages ≤72 chars subject, body optional.
+- Commit format: use a `[GOAL X.Y]` or `[XXX-123]` heading followed by `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, `~ Removed:`, `~ Updated:`), and `~ Resolution:`. Full template is in `skills/commit-log/references/commit_log_template.md`.
+- Heading line ≤72 characters.

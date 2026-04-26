@@ -24,6 +24,8 @@ Use the named agent whenever the task clearly fits its domain. Don't wait to be 
 | Task involves | Use agent |
 |---------------|-----------|
 | WPF screens, XAML, MVVM, bindings, controls, theming, WPF performance | `wpf` |
+| Game-development architecture, runtime systems, content pipelines, performance, production tradeoffs | `gamedev` |
+| XNA or MonoGame restoration, game-loop, SpriteBatch rendering, content pipeline, screen systems | `xna` |
 
 ## Conflict Resolution
 Project-local `CLAUDE.md` beats these global rules. More specific tech rules beat general ones.

@@ -37,7 +37,9 @@ Do not silently skip output verification.
 
 ## Artifact root (target repository)
 
-All paths are relative to the **target** repository root (the project receiving the plans, not necessarily this tooling repository):
+All paths are relative to the **target** repository root (the project receiving the plans, not necessarily this tooling repository).
+
+Path conventions below follow the [`agentic_starter`](../../agentic_starter/) project structure. If the target repository uses different documentation folder conventions, adjust these paths before dispatching workers.
 
 | Path | Role |
 | --- | --- |

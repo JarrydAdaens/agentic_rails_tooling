@@ -43,6 +43,8 @@ Combine partial mapper outputs into a single deliverable diagram.
 
 Wrapping and default direction match [../mermaid-mapper/references/mermaid-conventions.md](../mermaid-mapper/references/mermaid-conventions.md).
 
+This path assumes `mermaid-aggregation` and `mermaid-mapper` are co-located as siblings under the same `skills/` parent. If deployed standalone, copy the conventions reference locally or load `mermaid-mapper/references/mermaid-conventions.md` from its installed location.
+
 ## Standalone examples
 
 - Combine `partial_0001.md` through `partial_0004.md` into one `mermaid.md`.

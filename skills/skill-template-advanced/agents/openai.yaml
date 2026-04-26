@@ -1,7 +1,11 @@
+# TEMPLATE — all values below are placeholders and MUST be replaced before deployment.
+# Replace "REPLACE: Skill Name" with the actual display name of your skill.
+# Replace the short_description with a one-sentence summary of what the skill does and when to trigger it.
+# Replace "REPLACE-skill-name" in the default_prompt with the exact skill folder name.
 interface:
-  display_name: "Skill Name"
-  short_description: "Replace with a short skill summary."
-  default_prompt: "Use $skill-name to help with the task in this domain."
+  display_name: "REPLACE: Skill Name"
+  short_description: "REPLACE: One-sentence description of what this skill does and when to use it."
+  default_prompt: "Use $REPLACE-skill-name to help with the task in this domain."
 
 policy:
   allow_implicit_invocation: true

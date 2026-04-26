@@ -1,14 +1,12 @@
 ---
 name: plan-spam-workflow
-version: 1.0
 description: >-
-  Repository-local orchestration for turning a batch of goals, feature
-  descriptions, backlog items, or design notes into many implementation-plan
-  documents. Boss reads the supplied source material, builds a durable planning
-  queue, dispatches one subagent per goal or tightly-bound feature cluster,
-  grounds every output in a Tier 4 implementation-plan template, writes plan
-  files into the target repository's implementation-plans folder, updates
-  progress, and repeats until the requested plan set is produced or blocked.
+  Use this orchestration skill when turning goals, feature descriptions,
+  backlog items, or design notes into many implementation-plan documents. The
+  Boss builds a durable planning queue, dispatches one subagent per goal or
+  feature cluster, writes plans, updates progress, and repeats until complete.
+metadata:
+  version: "1.0"
 ---
 
 # Plan Spam Workflow (Boss)

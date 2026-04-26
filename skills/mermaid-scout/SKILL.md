@@ -1,8 +1,11 @@
 ---
 name: mermaid-scout
-version: 1.0
 description: >-
-  Discovers files and filters each down to specific classes/types to include in a Mermaid relationship map. Writes scoutmap.md as a CSV-like work queue. Use standalone for scoped inventory, or as the discovery phase of the mermaid-mapper workflow.
+  Use this skill when discovering files and filtering them to specific classes
+  or types for a Mermaid relationship map. It writes scoutmap.md as a CSV-like
+  work queue for scoped inventory or for the mermaid-mapper workflow.
+metadata:
+  version: "1.0"
 ---
 
 # Mermaid Scout

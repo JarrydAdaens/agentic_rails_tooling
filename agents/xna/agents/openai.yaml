@@ -1,6 +1,6 @@
 interface:
   display_name: "XNA and MonoGame Agent"
-  short_description: "XNA and MonoGame restoration and runtime engineering."
+  short_description: "XNA and MonoGame restoration, rendering, content pipeline, and runtime engineering."
   default_prompt: "Use $xna as the primary specialist for this XNA or MonoGame task."
 
 policy:

@@ -1,8 +1,12 @@
 ---
 name: commit-log
-version: 1.2
 description: >-
-  Writes a standardized commit log from a fixed template for the user to copy into any VCS (git, Perforce, Mercurial, SVN, etc.). Use when the user asks for a commit message, changelog entry, or summary for version control; after completing a task or feature; when they want copy-paste wording for a check-in; or when they say commit log, commit message, or what to put in the commit.
+  Use this skill when the user asks for a commit message, commit log, changelog
+  entry, version-control summary, or copy-paste check-in wording after work is
+  completed. It writes a standardized commit log from a fixed template for git,
+  Perforce, Mercurial, SVN, or similar VCS workflows.
+metadata:
+  version: "1.2"
 ---
 
 # Commit log

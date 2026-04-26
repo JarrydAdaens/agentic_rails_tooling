@@ -1,13 +1,13 @@
 ---
 name: implementation-plan-executor-workflow
-version: 1.1
 description: >-
-  Repository-local orchestration for implementing work from design documents,
-  milestone documents, goal lists, and implementation plans. Boss reads the
+  Use this orchestration skill when implementing work from design documents,
+  milestone documents, goal lists, or implementation plans. The Boss reads the
   supplied documents, builds a durable goal queue, dispatches one subagent per
-  goal or tightly-bound plan slice, enforces any required specialist agent
-  persona, enforces commit-log-backed real commits, updates progress, and
-  repeats until the requested work is done or blocked.
+  goal or tightly bound plan slice, enforces specialist agents when required,
+  updates progress, and repeats until the requested work is done or blocked.
+metadata:
+  version: "1.1"
 ---
 
 # Implementation Plan Executor Workflow (Boss)

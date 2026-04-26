@@ -1,8 +1,12 @@
 ---
 name: mermaid-mapper
-version: 1.0
 description: >-
-  Converts a bounded file and/or type list into Mermaid graph edge lines (inheritance and dependencies). Use standalone for a single file or class, or as a worker chunk in the mermaid-mapper workflow.
+  Use this skill when converting a bounded source file or type list into
+  Mermaid relationship edges for inheritance, composition, dependencies, and
+  constructor-injected collaborators. Use standalone for one file/class or as a
+  worker chunk in the mermaid-mapper workflow.
+metadata:
+  version: "1.0"
 ---
 
 # Mermaid Mapper

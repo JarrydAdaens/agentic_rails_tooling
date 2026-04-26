@@ -1,13 +1,20 @@
 ---
 name: mermaid-mapper-workflow
-version: 1.1
 description: >-
-  Repository-local orchestration for building a Mermaid diagram of a large OO system from a user-supplied entry point or query. Boss coordinates scout discovery, parallel mapper chunks, validation, and aggregation. Artifacts live under documentation/workflows/mermaid_mapper on the target repo.
+  Use this orchestration skill when building a Mermaid diagram of a large
+  object-oriented codebase from a user-supplied entry point or query. The Boss
+  coordinates scout discovery, parallel mapper chunks, validation, aggregation,
+  and artifacts under documentation/workflows/mermaid_mapper.
+metadata:
+  version: "1.1"
 ---
 
 # Mermaid Mapper Workflow (Boss)
 
 You are the **Boss**: orchestrate end-to-end mapping without stuffing an entire codebase into one context. Delegate discovery and per-file extraction to subagents; keep synthesis, state, and validation here.
+
+This is a workflow-style skill: keep domain behavior in the component skills and
+use this file for sequencing, state, artifact paths, and recovery policy.
 
 ## Scope
 

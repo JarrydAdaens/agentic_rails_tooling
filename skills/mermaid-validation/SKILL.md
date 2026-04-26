@@ -1,8 +1,11 @@
 ---
 name: mermaid-validation
-version: 1.0
 description: >-
-  Validates a Mermaid graph fragment for structure, scope, and reference plausibility. Returns pass or fail with reasons. Use before accepting mapper output or when sanity-checking edges manually.
+  Use this skill when validating a Mermaid graph fragment before accepting
+  mapper output or merging partials. It checks structure, scope, and reference
+  plausibility, then returns pass or fail with concrete reasons.
+metadata:
+  version: "1.0"
 ---
 
 # Mermaid validation

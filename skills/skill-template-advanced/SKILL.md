@@ -1,7 +1,9 @@
 ---
-name: advanced-modular-skill-template
-description: Use this template when a skill needs to cover a broad knowledge domain without dumping all expertise into one file. It is designed for progressive disclosure: keep the main skill focused on routing, stance, and decision-making, then load only the smallest relevant reference files for the concrete task.
-version: 1.1
+name: skill-template-advanced
+description: Use this template when creating a broad Agent Skill that needs progressive disclosure, focused reference files, routing guidance, examples, and validation without loading all domain knowledge up front.
+metadata:
+  template: "true"
+  version: "1.1"
 ---
 
 # Advanced Progressive-Disclosure Skill Template

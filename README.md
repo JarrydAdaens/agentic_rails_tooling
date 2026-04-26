@@ -1,189 +1,206 @@
 # Agentic Tooling
 
-This repository is a layered context system for AI-assisted development.
+`agentic_tooling` is my reusable capability library for agentic development.
 
-The goal is to keep reusable guidance in the right place, so agents can load the minimum useful context for the job:
+It keeps the durable pieces of AI-assisted engineering in one place: rules, skills, specialist agents, workflow-skills, and the source prompts used to create or improve them. The point is not loyalty to one IDE, model provider, or vendor convention. The point is portable, version-controlled agent capability that can be installed or adapted wherever the current best tool expects it.
 
-- Short rules and standards
-- Reusable skills and workflow modules
-- Orchestration workflows that compose skills (and optional subagents)
-- Specialist agent definitions
-- Prompt-development records that preserve source material
+This repository is especially useful alongside project templates such as [`agentic_starter`](../agentic_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
 
 ## Core Idea
 
-Different kinds of context should not live in the same layer.
+Agentic IDEs are useful, but their conventions are fragmented. Some recognize global rules. Some understand skills. Some support agents. Some have their own private folders. A few are starting to recognize central user-level locations such as `%USERPROFILE%\.agents`.
 
-This repository separates:
+This repository keeps those concerns separated:
 
-- Lightweight rules from deeper reusable guidance
-- Reusable skills from named specialist agents
-- Multi-step workflows from one-off ad hoc instructions
-- Produced artifacts from the prompt material that generated them
+- `rules/` contains concise engineering standards and style guidance.
+- `skills/` contains reusable Agent Skills and advanced workflow-skills.
+- `agents/` contains named specialist workers with role contracts and reference libraries.
+- `prompt_dev/skills_prompts/` preserves high-value prompt source material.
+- `ide_specific/` holds unavoidable vendor-specific compatibility files.
 
-That separation makes the system easier to maintain, evolve, and reuse across projects.
+The goal is to stay IDE-agnostic while still being practical enough to use every day.
+
+## Grounded In Agent Skills
+
+Much of this repository's skills model is based on the open [Agent Skills specification](https://agentskills.io/specification).
+
+Agent Skills define a lightweight folder format for giving agents new capabilities. A skill is a directory containing a required `SKILL.md` file with metadata and instructions. Skills can also include optional `scripts/`, `references/`, and `assets/` folders.
+
+The specification matters because it gives this repository a real standard to build on:
+
+- Skills are portable folders, not hidden IDE state.
+- The `name` and `description` fields let agents discover relevant skills cheaply.
+- Full instructions load only when the task calls for them.
+- Extra scripts, references, and assets can be loaded on demand.
+- The format supports cross-product reuse as more clients adopt it.
+
+This repository leans into that model. The custom parts here exist to make the standard usable across many agentic IDEs, not to replace the standard.
 
 ## Repository Structure
 
-### `.rules/`
+### `rules/`
 
-This folder is for concise rule files: style guides, coding rules, and smaller instruction sets.
+This folder is for concise shared rules: style guides, coding rules, and smaller instruction sets.
 
-Start at `.rules/index.md`. It is the entry point for selecting the minimum relevant shared rules for a given repository and task.
+Start at `rules/index.md`. It is the entry point for selecting the minimum relevant shared rules for a repository and task.
 
-Use `.rules/` for things like:
+Use `rules/` for:
 
+- General engineering behavior
 - Language and framework standards
-- Formatting expectations
-- Naming conventions
-- General engineering rules
-- Workspace-level behavior constraints
+- Formatting and naming conventions
+- Stack-specific rules such as C#, C++, WPF, and Qt
+- Compatibility files such as `rules/.cursorrules`
+
+Rules should stay short and prescriptive. If a file becomes a large body of procedural expertise, it probably belongs in `skills/` or `agents/`.
+
+### `skills/`
+
+This folder is the main reusable capability layer.
+
+A normal skill is a portable task-shaped unit of expertise. It should help an agent do one class of work reliably without becoming a whole persona.
+
+Examples include:
+
+- `skills/commit-log`
+- `skills/grade`
+- `skills/check-dot-agent`
+- `skills/mermaid-scout`
+- `skills/mermaid-mapper`
+- `skills/mermaid-validation`
+- `skills/mermaid-aggregation`
+- `skills/skill-template`
+- `skills/skill-template-advanced`
+
+Use `skills/` for repeatable workflows, tool guidance, templates, and focused process knowledge.
+
+### `skills/*-workflow`
+
+Advanced multi-step workflows also live in `skills/`, but they are suffixed with `-workflow`.
+
+The old `workflows/` folder was an exploratory failure. The idea was good: some agentic procedures are large enough to run for hours, use subagents heavily, persist intermediate artifacts, and produce reusable outputs. The problem is that agentic IDEs generally do not understand a separate `workflows/` primitive.
+
+The practical convention is:
+
+```text
+<name>-workflow
+```
+
+That makes powerful workflows easy to find through autocomplete in ordinary skill pickers while still making their purpose obvious.
+
+Examples include:
+
+- `skills/commit-history-workflow`
+- `skills/implementation-plan-executor-workflow`
+- `skills/mermaid-mapper-workflow`
+- `skills/plan-spam-workflow`
+
+Workflow-skills should stay orchestration-focused. They can coordinate subagents, define artifact paths, manage queues, and compose smaller skills. The reusable domain behavior should still live in ordinary skills where possible.
+
+### `agents/`
+
+This folder is for named specialist agents.
+
+An agent is different from a skill. A skill says, "Here is how to do this task." An agent says, "Here is the kind of worker you are, how you think, what quality bar you uphold, and which references you consult."
 
 Current examples include:
 
-- `.rules/index.md`
-- `.rules/global_rules.md`
-- `.rules/csharp_rules.md`
-- `.rules/cplusplus_rules.md`
-- `.rules/wpf_rules.md`
-- `.rules/qt_rules.md`
-- `.rules/.cursorrules`
+- `agents/gamedev`
+- `agents/wpf`
+- `agents/xna`
 
-In short: `.rules/` is for concise guidance and style-shaping context, not for large domain knowledge packs.
-
-### `.skills/`
-
-This folder is for reusable capability modules that an agent can load on demand.
-
-A skill is a portable unit of expertise, behavior, or process guidance. It should stay reusable across different agent roles rather than defining a full specialist worker.
-
-Use `.skills/` for things like:
-
-- Process skills such as writing commit logs correctly
-- Tool-usage guidance for specific CLIs or workflows
-- Reusable compatibility checks
-- Templates for authoring new skills
-
-Current examples include:
-
-- `.skills/commit-log`
-- `.skills/commit-history`
-- `.skills/check_dot_agent`
-- `.skills/mermaid-scout`, `.skills/mermaid-mapper`, `.skills/mermaid-validation`, `.skills/mermaid-aggregation`
-- `.skills/skill-template`
-- `.skills/skill-template-advanced`
-
-In short: `.skills/` is for reusable task-shaped knowledge, not broad persona-style specialist workers.
-
-### `.workflows/`
-
-This folder is for **orchestration workflows**: multi-step, file-backed, or subagent-driven pipelines that combine existing skills into a larger reusable procedure. A workflow does not replace skills; it wires them together with clear handoffs, artifact paths, and state.
-
-Use `.workflows/` for things like:
-
-- End-to-end pipelines that would be too large or repetitive to spell out every time
-- Boss-style coordination (discovery, parallel workers, validation, aggregation)
-- Processes that assume standard artifact locations on a **target** repository
-
-Workflows stay **thin**: domain behavior lives in `.skills/`; the workflow document describes sequencing, dispatch, and recovery.
-
-Current examples include:
-
-- `.workflows/mermaid-mapper` — large-codebase Mermaid mapping (see `WORKFLOW.md`)
-
-In short: `.workflows/` is the procedural orchestration layer; `.skills/` remains where portable task knowledge lives.
-
-### `.agents/`
-
-This folder is for named specialist agents: workers with an explicit mission, operating model, quality bar, and supporting reference library.
-
-An agent bundle in this repository typically contains:
+Each agent bundle typically includes:
 
 - `AGENT.md` for the role definition and operating contract
-- `agents/openai.yaml` for provider-facing interface metadata
-- `references/` for focused domain modules loaded only when needed
+- provider-facing metadata under an `agents/` subfolder
+- `references/` for focused supporting knowledge
 
-Current examples include:
+Use `agents/` for durable specialist workers, not small reusable procedures.
 
-- `.agents/gamedev`
-- `.agents/wpf`
-- `.agents/xna`
+### `prompt_dev/skills_prompts/`
 
-These three used to live under `.skills/`, but they fit better as agents because each one defines a specialist role, a way of thinking, collaboration boundaries, and a curated reference library rather than a narrowly reusable skill.
+Prompts can be as valuable as source code.
 
-In short: `.agents/` defines the worker, while `.skills/` defines reusable knowledge a worker can carry.
+`prompt_dev/skills_prompts/` preserves prompt records and source material used to create, revise, or reason about skills and agents. If a generated skill is the artifact, these prompt records are often the design history behind it.
 
-### `prompt_dev/`
+Keeping them separate makes it easier to refine the artifacts later without losing the original thinking.
 
-This folder holds prompt-development records used to produce artifacts.
+### `ide_specific/`
 
-If a skill or agent file is an output artifact, the text files in `prompt_dev/` are closer to source material.
+This folder is intentionally a junk pile for vendor-specific files and conventions that do not belong in a standard layer.
 
-That means:
+It exists because real tools are messy. Some IDEs need one-off files, global folders, or naming conventions that are not portable. Those files can live here as a means to an end, but they should not define the repository's architecture.
 
-- A prompt record can capture how a skill or agent bundle was produced
-- The generated artifact can be refined later without losing the original source thinking
-- The repository can preserve both the artifact and the prompt lineage behind it
+### `workflows/`
 
-In short: `prompt_dev/` is the source-material layer for generated context.
+`workflows/` is not the active workflow system.
 
-## How the Layers Relate
+It contains `NOT USED.txt`, which records the decision to stop using a standalone workflows folder. Advanced workflows now live under `skills/` with the `-workflow` suffix because that works better across current agentic IDEs.
 
-Think of the repository as a stack:
+## Relationship To `agentic_starter`
 
-1. `.rules/` shapes style, standards, and small constraints.
-2. `.skills/` provides reusable workflow guidance and modular expertise.
-3. `.workflows/` composes skills (and optional subagents) into larger orchestrated pipelines with explicit artifacts and state.
-4. `.agents/` defines specialist workers with role contracts and supporting reference libraries.
-5. `prompt_dev/` preserves the prompt history and source material behind generated outputs.
+[`agentic_starter`](../agentic_starter/) is a companion GitHub template for new projects.
 
-These layers are related, but they should not be collapsed into one another.
+The split is:
+
+| Repository | Owns |
+| --- | --- |
+| `agentic_starter` | Project-local context: Tier 0 intake, design, laws, milestones, goals, implementation plans, handovers, and wiki notes. |
+| `agentic_tooling` | Reusable agent capabilities: shared rules, skills, workflow-skills, specialist agents, and prompt-development source material. |
+
+In practice, `agentic_starter` gives a project its documentation-first operating model. This repository gives agents better reusable tools to execute inside that model.
 
 For example:
 
-- A WPF naming or formatting convention belongs in `.rules/`
-- A reusable commit-log workflow belongs in `.skills/commit-log`
-- A multi-step orchestration such as large-scale Mermaid mapping belongs in `.workflows/mermaid-mapper` while its steps remain separate skills under `.skills/`
-- A production-grade WPF specialist worker belongs in `.agents/wpf`
-- The prompt set used to generate or evolve one of those artifacts belongs in `prompt_dev/`
+- A new project can start from `agentic_starter`.
+- The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
+- Shared rules from this repository can be copied or installed into the IDE's expected rule location.
+- Skills such as `commit-log` or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
+- Specialist agents such as `agents/wpf` can be used when the project calls for that domain expertise.
+
+The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
+
+## Relationship To `kung-fu`
+
+[`kung-fu`](../kung-fu/) is a WPF companion project and application/template that lives in the same ecosystem as this repository's rules.
+
+Where this repository stores reusable rules and agent capabilities, `kung-fu` demonstrates and benefits from the WPF-oriented version of that workflow: a documentation-first project shape, `AGENTS.md` guidance, `Documentation/` context files, WPF rules, and a concrete application codebase.
+
+The relationship is practical rather than branded. `kung-fu` is one place these rules and agent practices are exercised against a real WPF codebase.
 
 ## Working Model
 
-When adding or updating context, place it in the narrowest layer that matches its job.
+When adding or updating reusable context, place it in the narrowest layer that matches its job:
 
-Use this rule of thumb:
+- Put it in `rules/` if it is short, prescriptive, and style-oriented.
+- Put it in `skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
+- Put it in `skills/<name>-workflow/` if it coordinates a larger multi-step process, subagents, queues, or durable artifacts.
+- Put it in `agents/` if it defines a named specialist worker with a mission, operating model, and reference library.
+- Put it in `prompt_dev/skills_prompts/` if it is prompt source material used to generate or evolve an artifact.
+- Put it in `ide_specific/` only when a tool requires a nonstandard compatibility file.
 
-- Put it in `.rules/` if it is short, prescriptive, and style-oriented.
-- Put it in `.skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
-- Put it in `.workflows/` if it is a named multi-step orchestration that combines skills, defines artifact layout, or coordinates subagents.
-- Put it in `.agents/` if it defines a named worker: mission, scope, operating model, and supporting references.
-- Put it in `prompt_dev/` if it is source prompt material used to generate or evolve an output artifact.
+## Layer Examples
 
-## Skills, Workflows, and Agents
-
-Skills, workflows, and agents can use progressive disclosure, but they serve different purposes.
-
-Typical pattern:
-
-- A skill provides reusable guidance that many different agents (or workflow Boss steps) can load.
-- A workflow sequences skills and optional subagents, owns artifact paths and state on a target repo, and stays thin.
-- An agent defines who is doing the work, how it should think, when it should escalate, and which references it should consult.
-- Reference files keep deeper expertise modular so the active context stays small.
-
-If a context pack starts behaving like a standing specialist persona instead of a portable capability module, it likely belongs in `.agents/`. If it is mostly sequencing and coordination without a persona, it likely belongs in `.workflows/`.
+- A WPF naming rule belongs in `rules/wpf_rules.md`.
+- A reusable commit message process belongs in `skills/commit-log`.
+- A large Mermaid mapping pipeline belongs in `skills/mermaid-mapper-workflow`.
+- The individual Mermaid scout, mapper, validator, and aggregator behaviors belong in separate normal skills.
+- A production-grade WPF specialist worker belongs in `agents/wpf`.
+- The prompt material used to generate a skill belongs in `prompt_dev/skills_prompts/`.
 
 ## Maintenance Notes
 
+- Prefer open standards and portable formats.
 - Keep rules concise.
-- Keep skills portable and reusable.
-- Keep agents explicit about mission, scope, collaboration boundaries, and quality bar.
-- Keep provider metadata aligned with the actual agent definition.
+- Keep normal skills task-shaped and reusable.
+- Suffix advanced orchestrations with `-workflow`.
+- Keep workflow-skills thin enough that they coordinate rather than swallow every detail.
+- Keep agents explicit about mission, scope, collaboration boundaries, references, and quality bar.
 - Keep prompt records when they are the real source behind generated artifacts.
-- Prefer focused files over giant omnibus documents.
-- Preserve the distinction between source material and produced output.
+- Keep IDE-specific files isolated from the core architecture.
 
 ## Repository
 
 - Repository: https://github.com/JarrydSemmens/agentic_tooling
 - Owner: Jarryd Adaens
-- Last Updated: 2026-04-07
+- Last Updated: 2026-04-26

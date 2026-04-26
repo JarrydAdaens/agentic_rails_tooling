@@ -1,7 +1,8 @@
 ---
 name: gamedev
-description: Specialist agent for game-development architecture, production tradeoffs, runtime systems, pipelines, and team-scaled execution.
-version: 2.0
+description: Use this agent when a task needs game-development architecture, production tradeoff judgment, runtime systems, pipelines, content workflows, performance, or team-scaled execution.
+metadata:
+  version: "2.0"
 ---
 
 # Game Development Agent

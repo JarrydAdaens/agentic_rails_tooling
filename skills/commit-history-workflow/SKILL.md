@@ -1,15 +1,19 @@
 ---
 name: commit-history-workflow
-version: 2.0
 description: >-
-  Reviews one historical commit, inspects its metadata and file changes, and
-  returns one structured historical entry record for the workflow to stitch into
-  research-grade commit history. Use when summarizing a single existing commit
-  from repository history, not when writing a new commit message for current
-  work.
+  Use this skill when summarizing exactly one existing commit from repository
+  history for research-grade commit-history stitching. It inspects commit
+  metadata, diffs, and changed files, then returns one structured JSON record.
+  Do not use it for new commit messages or branch summaries.
+metadata:
+  version: "2.0"
 ---
 
 # Commit History Workflow
+
+This is an orchestration-style skill with a narrow input contract: exactly one
+historical commit. Keep it deterministic so a larger stitching workflow can
+compose many results safely.
 
 Review exactly one historical commit and return exactly one JSON object for that
 commit.

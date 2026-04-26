@@ -1,6 +1,6 @@
 interface:
   display_name: "Game Development Agent"
-  short_description: "Senior game-dev architecture and tradeoff judgment."
+  short_description: "Game-development architecture, runtime systems, pipelines, and production tradeoffs."
   default_prompt: "Use $gamedev as the primary specialist for this game-development task."
 
 policy:

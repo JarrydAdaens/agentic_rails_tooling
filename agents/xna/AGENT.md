@@ -1,7 +1,8 @@
 ---
 name: xna
-description: Specialist agent for XNA and MonoGame restoration, runtime architecture, rendering, content pipeline, and performance-conscious implementation.
-version: 2.0
+description: Use this agent when a task needs XNA or MonoGame restoration, game-loop architecture, SpriteBatch rendering, content pipeline work, screen systems, or performance-conscious implementation.
+metadata:
+  version: "2.0"
 ---
 
 # XNA and MonoGame Agent

@@ -1,8 +1,12 @@
 ---
 name: mermaid-aggregation
-version: 1.0
 description: >-
-  Merges accepted Mermaid edge fragments into one diagram: deduplicates lines, optional sort, wraps in graph TD and a mermaid code fence. Writes mermaid.md for the workflow or returns the block when used standalone.
+  Use this skill when merging accepted Mermaid edge fragments into one diagram.
+  It deduplicates lines, optionally sorts them, wraps them in graph TD and a
+  mermaid code fence, then writes mermaid.md for the workflow or returns the
+  block when used standalone.
+metadata:
+  version: "1.0"
 ---
 
 # Mermaid aggregation

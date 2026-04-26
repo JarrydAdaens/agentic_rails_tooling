@@ -2,69 +2,80 @@
 
 `agentic_tooling` is my reusable capability library for agentic development.
 
-It keeps the durable pieces of AI-assisted engineering in one place: rules, skills, specialist agents, workflow-skills, and the source prompts used to create or improve them. The point is not loyalty to one IDE, model provider, or vendor convention. The point is portable, version-controlled agent capability that can be installed or adapted wherever the current best tool expects it.
+It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, specialist agents, workflow-skills, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
 
-This repository is especially useful alongside project templates such as [`agentic_starter`](../agentic_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
+This repository is especially useful beside project templates such as [`agentic_starter`](../agentic_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
 
 ## Core Idea
 
-Agentic IDEs are useful, but their conventions are fragmented. Some recognize global rules. Some understand skills. Some support agents. Some have their own private folders. A few are starting to recognize central user-level locations such as `%USERPROFILE%\.agents`.
+Agentic IDEs are useful, but their conventions are fragmented. Some understand rules. Some understand skills. Some understand named agents. Some expect private dotfolders. Some are starting to recognize central user-level locations such as `%USERPROFILE%\.agents` for shared rules, skills, and agents.
 
-This repository keeps those concerns separated:
+This repository exists to keep that complexity under control without letting any one IDE define the architecture.
 
-- `rules/` contains concise engineering standards and style guidance.
-- `skills/` contains reusable Agent Skills and advanced workflow-skills.
-- `agents/` contains named specialist workers with role contracts and reference libraries.
-- `prompt_dev/skills_prompts/` preserves high-value prompt source material.
-- `ide_specific/` holds unavoidable vendor-specific compatibility files.
+The stars of the repository are:
 
-The goal is to stay IDE-agnostic while still being practical enough to use every day.
+- `rules/`
+- `skills/`
+- `agents/`
+
+Everything else exists to support those folders, preserve source material, document standards, or handle unavoidable compatibility problems.
 
 ## Grounded In Agent Skills
 
-Much of this repository's skills model is based on the open [Agent Skills specification](https://agentskills.io/specification).
+Much of this repository's skills model is based on the open [Agent Skills specification](https://agentskills.io/specification) and [Agent Skills overview](https://agentskills.io/home).
 
-Agent Skills define a lightweight folder format for giving agents new capabilities. A skill is a directory containing a required `SKILL.md` file with metadata and instructions. Skills can also include optional `scripts/`, `references/`, and `assets/` folders.
+AgentSkills.io describes Agent Skills as a standardized way to give AI agents new capabilities and expertise. A skill is a folder containing a required `SKILL.md` file with metadata and instructions. Skills may also include optional `scripts/`, `references/`, and `assets/` folders.
 
-The specification matters because it gives this repository a real standard to build on:
+```text
+my-skill/
+|-- SKILL.md
+|-- scripts/
+|-- references/
+|-- assets/
+`-- ...
+```
+
+That standard matters because it matches the way agentic work scales:
 
 - Skills are portable folders, not hidden IDE state.
-- The `name` and `description` fields let agents discover relevant skills cheaply.
-- Full instructions load only when the task calls for them.
-- Extra scripts, references, and assets can be loaded on demand.
-- The format supports cross-product reuse as more clients adopt it.
+- `name` and `description` let agents discover relevant skills cheaply.
+- Full instructions load only when a task calls for them.
+- Scripts, references, templates, and assets can be bundled with the skill and loaded on demand.
+- A useful skill can be reused across any skills-compatible agent client.
 
-This repository leans into that model. The custom parts here exist to make the standard usable across many agentic IDEs, not to replace the standard.
+AgentSkills.io also documents progressive disclosure: discovery, activation, then execution. This repository leans into that model. Agents should see enough metadata to know what exists, then load the larger instructions, scripts, and references only when the task actually needs them.
+
+For deeper local notes, see [`wiki/home.md`](wiki/home.md). The wiki summarizes AgentSkills.io guidance and records this repository's local alignment decisions.
 
 ## Repository Structure
 
 ### `rules/`
 
-This folder is for concise shared rules: style guides, coding rules, and smaller instruction sets.
+`rules/` contains concise engineering standards and style guidance.
 
-Start at `rules/index.md`. It is the entry point for selecting the minimum relevant shared rules for a repository and task.
+Start at [`rules/index.md`](rules/index.md). It is the entry point for selecting the smallest relevant rule set for a repository and task.
 
 Use `rules/` for:
 
 - General engineering behavior
 - Language and framework standards
 - Formatting and naming conventions
-- Stack-specific rules such as C#, C++, WPF, and Qt
-- Compatibility files such as `rules/.cursorrules`
+- Stack-specific guidance such as C#, C++, WPF, and Qt
+- Compatibility files such as [`rules/.cursorrules`](rules/.cursorrules)
 
 Rules should stay short and prescriptive. If a file becomes a large body of procedural expertise, it probably belongs in `skills/` or `agents/`.
 
 ### `skills/`
 
-This folder is the main reusable capability layer.
+`skills/` is the main reusable capability layer.
 
-A normal skill is a portable task-shaped unit of expertise. It should help an agent do one class of work reliably without becoming a whole persona.
+A normal skill is a portable task-shaped unit of expertise. It helps an agent do one class of work reliably without becoming a whole persona.
 
-Examples include:
+Current examples include:
 
+- `skills/check-dot-agent`
 - `skills/commit-log`
 - `skills/grade`
-- `skills/check-dot-agent`
 - `skills/mermaid-scout`
 - `skills/mermaid-mapper`
 - `skills/mermaid-validation`
@@ -72,13 +83,13 @@ Examples include:
 - `skills/skill-template`
 - `skills/skill-template-advanced`
 
-Use `skills/` for repeatable workflows, tool guidance, templates, and focused process knowledge.
+Use `skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
 ### `skills/*-workflow`
 
-Advanced multi-step workflows also live in `skills/`, but they are suffixed with `-workflow`.
+Advanced workflows also live in `skills/`, but they are suffixed with `-workflow`.
 
-The old `workflows/` folder was an exploratory failure. The idea was good: some agentic procedures are large enough to run for hours, use subagents heavily, persist intermediate artifacts, and produce reusable outputs. The problem is that agentic IDEs generally do not understand a separate `workflows/` primitive.
+The old [`workflows/`](workflows/) folder was an exploratory failure. The idea was right: some agentic procedures are large enough to run for hours, coordinate subagents, persist intermediate artifacts, and produce reusable work. The problem is that agentic IDEs generally do not understand a separate `workflows/` primitive.
 
 The practical convention is:
 
@@ -86,20 +97,20 @@ The practical convention is:
 <name>-workflow
 ```
 
-That makes powerful workflows easy to find through autocomplete in ordinary skill pickers while still making their purpose obvious.
+That keeps powerful workflows easy to find through autocomplete in ordinary skill pickers while still making their orchestration role obvious.
 
-Examples include:
+Current examples include:
 
 - `skills/commit-history-workflow`
 - `skills/implementation-plan-executor-workflow`
 - `skills/mermaid-mapper-workflow`
 - `skills/plan-spam-workflow`
 
-Workflow-skills should stay orchestration-focused. They can coordinate subagents, define artifact paths, manage queues, and compose smaller skills. The reusable domain behavior should still live in ordinary skills where possible.
+Workflow-skills should coordinate. They can define queues, subagent roles, artifact paths, handover rules, and validation gates. Reusable domain behavior should still live in ordinary skills when possible.
 
 ### `agents/`
 
-This folder is for named specialist agents.
+`agents/` contains named specialist workers.
 
 An agent is different from a skill. A skill says, "Here is how to do this task." An agent says, "Here is the kind of worker you are, how you think, what quality bar you uphold, and which references you consult."
 
@@ -112,7 +123,7 @@ Current examples include:
 Each agent bundle typically includes:
 
 - `AGENT.md` for the role definition and operating contract
-- provider-facing metadata under an `agents/` subfolder
+- Provider-facing metadata under an `agents/` subfolder
 - `references/` for focused supporting knowledge
 
 Use `agents/` for durable specialist workers, not small reusable procedures.
@@ -123,19 +134,33 @@ Prompts can be as valuable as source code.
 
 `prompt_dev/skills_prompts/` preserves prompt records and source material used to create, revise, or reason about skills and agents. If a generated skill is the artifact, these prompt records are often the design history behind it.
 
-Keeping them separate makes it easier to refine the artifacts later without losing the original thinking.
+Keeping prompt source material separate makes it easier to refine the artifacts later without losing the original thinking.
+
+### `wiki/`
+
+`wiki/` contains local documentation about Agent Skills and this repository's conventions.
+
+It is not a replacement for AgentSkills.io. It is a local, reviewable companion that captures the parts of the standard this repository relies on most often:
+
+- Overview
+- Specification notes
+- Best practices
+- Description optimization
+- Skill evaluation
+- Script usage
+- Repository alignment notes
 
 ### `ide_specific/`
 
-This folder is intentionally a junk pile for vendor-specific files and conventions that do not belong in a standard layer.
+`ide_specific/` is intentionally a junk pile for vendor-specific files and conventions that do not belong in the standard layers.
 
-It exists because real tools are messy. Some IDEs need one-off files, global folders, or naming conventions that are not portable. Those files can live here as a means to an end, but they should not define the repository's architecture.
+It exists because real tools are messy. Some IDEs need one-off folders, rule files, metadata, or naming conventions that are not portable. Those files can live here as a means to an end, but they should not define the repository's architecture.
 
 ### `workflows/`
 
 `workflows/` is not the active workflow system.
 
-It contains `NOT USED.txt`, which records the decision to stop using a standalone workflows folder. Advanced workflows now live under `skills/` with the `-workflow` suffix because that works better across current agentic IDEs.
+It contains [`workflows/NOT USED.txt`](workflows/NOT%20USED.txt), which records the decision to stop using a standalone workflows folder. Advanced workflows now live under `skills/` with the `-workflow` suffix because that works better across current agentic IDEs.
 
 ## Relationship To `agentic_starter`
 
@@ -146,27 +171,35 @@ The split is:
 | Repository | Owns |
 | --- | --- |
 | `agentic_starter` | Project-local context: Tier 0 intake, design, laws, milestones, goals, implementation plans, handovers, and wiki notes. |
-| `agentic_tooling` | Reusable agent capabilities: shared rules, skills, workflow-skills, specialist agents, and prompt-development source material. |
+| `agentic_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist agents, and prompt-development source material. |
 
-In practice, `agentic_starter` gives a project its documentation-first operating model. This repository gives agents better reusable tools to execute inside that model.
+In practice, `agentic_starter` gives a project its documentation-first operating model. It is intentionally empty of application code. It gives future agent sessions a five-tier context system:
+
+- Tier 0 raw intake and addenda
+- Tier 1 design
+- Tier 2 milestones
+- Tier 3 goals
+- Tier 4 implementation plans and handovers
+
+This repository gives agents reusable tools to execute inside that model.
 
 For example:
 
 - A new project can start from `agentic_starter`.
 - The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
 - Shared rules from this repository can be copied or installed into the IDE's expected rule location.
-- Skills such as `commit-log` or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
+- Skills such as `commit-log`, `grade`, or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
 - Specialist agents such as `agents/wpf` can be used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
 
 ## Relationship To `kung-fu`
 
-[`kung-fu`](../kung-fu/) is a WPF companion project and application/template that lives in the same ecosystem as this repository's rules.
+[`kung-fu`](../kung-fu/) is the WPF companion application/template in this ecosystem.
 
-Where this repository stores reusable rules and agent capabilities, `kung-fu` demonstrates and benefits from the WPF-oriented version of that workflow: a documentation-first project shape, `AGENTS.md` guidance, `Documentation/` context files, WPF rules, and a concrete application codebase.
+Where `agentic_starter` is a general project-context template, `kung-fu` is a WPF-oriented starter with real application structure, WPF documentation, `AGENTS.md` guidance, `Documentation/` context files, laws, tests, and a concrete source tree. It is a practical place where this repository's WPF rules and agentic workflow ideas are exercised against a desktop application codebase.
 
-The relationship is practical rather than branded. `kung-fu` is one place these rules and agent practices are exercised against a real WPF codebase.
+The relationship is practical rather than branded. `agentic_tooling` stores reusable rules and agent capabilities. `kung-fu` shows those practices applied to a WPF project shape.
 
 ## Working Model
 
@@ -177,6 +210,7 @@ When adding or updating reusable context, place it in the narrowest layer that m
 - Put it in `skills/<name>-workflow/` if it coordinates a larger multi-step process, subagents, queues, or durable artifacts.
 - Put it in `agents/` if it defines a named specialist worker with a mission, operating model, and reference library.
 - Put it in `prompt_dev/skills_prompts/` if it is prompt source material used to generate or evolve an artifact.
+- Put it in `wiki/` if it documents the standards and local conventions behind the repository.
 - Put it in `ide_specific/` only when a tool requires a nonstandard compatibility file.
 
 ## Layer Examples
@@ -191,10 +225,11 @@ When adding or updating reusable context, place it in the narrowest layer that m
 ## Maintenance Notes
 
 - Prefer open standards and portable formats.
+- Keep the AgentSkills.io specification close at hand when changing skills.
 - Keep rules concise.
 - Keep normal skills task-shaped and reusable.
 - Suffix advanced orchestrations with `-workflow`.
-- Keep workflow-skills thin enough that they coordinate rather than swallow every detail.
+- Keep workflow-skills focused on orchestration rather than swallowing every detail.
 - Keep agents explicit about mission, scope, collaboration boundaries, references, and quality bar.
 - Keep prompt records when they are the real source behind generated artifacts.
 - Keep IDE-specific files isolated from the core architecture.

@@ -18,6 +18,8 @@ This file routes the agent to the minimum relevant shared rules for the current 
 | [wpf_rules.md](wpf_rules.md) | Review when the task touches WPF, XAML, desktop UI, bindings, view models, or Windows presentation concerns. |
 | [cplusplus_rules.md](cplusplus_rules.md) | Review when the repository uses C++, especially Unreal Engine style and tooling. |
 | [qt_rules.md](qt_rules.md) | Review when the repository uses Qt, CMake-based Qt apps, or Qt widgets/QML concerns. |
+| [typescript_rules.md](typescript_rules.md) | Review when the repository uses TypeScript (`.ts` or `.tsx` files). |
+| [react_rules.md](react_rules.md) | Review when the task touches React components, hooks, JSX, or frontend UI patterns. |
 | [../README.md](../README.md) | Review only if you need repository-level background on how rules, skills, agents, and prompt records are organized. |
 | [.cursorrules](.cursorrules) | Review only if compatibility with the existing Cursor/Windsurf rule format is needed. |
 
@@ -28,6 +30,8 @@ This file routes the agent to the minimum relevant shared rules for the current 
 - Load [wpf_rules.md](wpf_rules.md) only when WPF or XAML work is in scope.
 - Load [cplusplus_rules.md](cplusplus_rules.md) when the repo contains `.uproject`, Unreal-style source layout, or C++ implementation files.
 - Load [qt_rules.md](qt_rules.md) when the repo contains Qt project files, CMake Qt configuration, or Qt-specific source.
+- Load [typescript_rules.md](typescript_rules.md) when the repo contains `.ts` or `.tsx` files.
+- Load [react_rules.md](react_rules.md) when the task touches React components, hooks, or frontend UI.
 - Load multiple files when the stack requires it, but only if each file is directly relevant.
 
 ## Conflict Resolution

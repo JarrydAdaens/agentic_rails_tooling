@@ -1,0 +1,7 @@
+interface:
+  display_name: "Web Engineering Agent"
+  short_description: "TypeScript, React, Vite frontend with ASP.NET backend integration."
+  default_prompt: "Use $web as the primary specialist for this TypeScript or React task."
+
+policy:
+  allow_implicit_invocation: true

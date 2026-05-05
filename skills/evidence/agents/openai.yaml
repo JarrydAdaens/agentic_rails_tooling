@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence"
+  short_description: "Maintain opt-in evidence and provenance records"
+  default_prompt: "Use evidence to maintain an evidence.md provenance index for this task."

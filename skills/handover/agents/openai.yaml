@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handover"
+  short_description: "Create a grounded shallow handover for completed agentic work"
+  default_prompt: "Use handover to create a shallow handover for this completed task."

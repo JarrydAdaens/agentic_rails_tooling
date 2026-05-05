@@ -1,0 +1,4 @@
+interface:
+  display_name: "Thinking Out Loud"
+  short_description: "Maintain opt-in sanitized thinking notes for agentic work"
+  default_prompt: "Use thinking-out-loud to maintain a sanitized thinking.md file for this task."

@@ -31,15 +31,15 @@ This is operational visibility, not emotional theatre.
 
 ## Artifact
 
-When this skill is active, ensure a complaints file exists in the target project documentation folder.
+When this skill is active, ensure a complaints file exists in the target project.
 
-Default path:
+Path selection:
 
-```text
-documentation/complaining.md
-```
+1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `complaining.md` in that folder.
+2. Otherwise, if the target repository follows Agentic Rails, write `Documentation/complaining.md`.
+3. Otherwise write `complaining.md` in the target project's documentation folder, preferring `Documentation/`, then `documentation/`, then `docs/`.
 
-If the project already uses a different documentation folder, follow that convention instead. Load [references/path-selection.md](references/path-selection.md) when the correct location is not obvious.
+Load [references/path-selection.md](references/path-selection.md) when the correct location is not obvious.
 
 Initial content may be:
 
@@ -53,7 +53,7 @@ If this file is empty, there were no meaningful complaints to record.
 
 ## Operating Model
 
-1. Identify the target project root and its documentation folder.
+1. Identify the target project root and complaint log path.
 2. Ensure the complaint log exists before substantive work begins.
 3. Work on the assigned task normally.
 4. Append a complaint when a real blocker, failure, ambiguity, risky assumption, or meaningful process problem appears.

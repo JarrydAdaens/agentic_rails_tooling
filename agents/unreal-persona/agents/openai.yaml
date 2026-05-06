@@ -1,7 +1,7 @@
 interface:
-  display_name: "Unreal Engine Agent"
+  display_name: "Unreal Engine Persona"
   short_description: "Unreal C++ gameplay, UI, networking, asset pipeline, editor tooling, and runtime debugging."
-  default_prompt: "Use $unreal as the primary specialist for this Unreal Engine C++ task."
+  default_prompt: "Use $unreal-persona as the primary specialist for this Unreal Engine C++ task."
 
 policy:
   allow_implicit_invocation: true

@@ -3,7 +3,7 @@ description: Unreal Engine C++ coding rules — UE idioms, UHT/UBT, naming, form
 globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]    
 alwaysApply: false    
 owner: Jarryd Adaens    
-version: 1.1    
+version: 1.2    
 ---
 
 # Unreal C++ Coding Rules (Workspace)
@@ -59,6 +59,9 @@ version: 1.1
 
 ## Files & Includes
 - File names match their primary type names, including UE prefixes where applicable: e.g., `USceneComponent.h/.cpp` for `USceneComponent`.
+- One primary type per header/source pair. Each `UCLASS`, `USTRUCT`, `UENUM`, interface, major `F` type, and standalone helper class or struct gets its own distinct file.
+- Do not collect sibling types in one header just because they are related; prefer separate headers with explicit includes or forward declarations.
+- Tiny one-line helper declarations may live with the owning type when they are private to that API and splitting them out would add noise.
 - All headers use `#pragma once`.
 - IWYU mindset:
   - Forward-declare where possible in headers; include in `.cpp`.

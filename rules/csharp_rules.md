@@ -3,7 +3,7 @@ description: C# coding rules — naming, style, modern language features, and co
 globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]    
 alwaysApply: false    
 owner: Jarryd Adaens    
-version: 1.1    
+version: 1.2    
 ---
 
 # C# Coding Rules
@@ -37,6 +37,12 @@ version: 1.1
 - One statement per line. One declaration per line.
 - Add a blank line between members. Indent continuation lines by one level.
 - Use parentheses to make precedence clear when needed.
+
+## Files and Types
+- One type per file. Every class, record, struct, interface, and enum gets its own file named for that type.
+- Do not pack unrelated or sibling types into the same file; it makes navigation harder and muddies git history.
+- Tiny one-line helper types may live beside the type that owns them when splitting them out would add noise, such as a local delegate alias used only by that file.
+- Use `partial` sparingly. It is acceptable for generated code, WPF code-behind, or rare cases where a large type must be split by responsibility.
 
 ## Comments
 - Use `//` for short explanations. Avoid block comments for long prose; move prose to docs.

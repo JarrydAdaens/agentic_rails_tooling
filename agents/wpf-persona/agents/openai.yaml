@@ -1,7 +1,7 @@
 interface:
-  display_name: "WPF Engineering Agent"
+  display_name: "WPF Engineering Persona"
   short_description: "WPF screens, controls, XAML, MVVM, accessibility, threading, and performance."
-  default_prompt: "Use $wpf as the primary specialist for this WPF or XAML task."
+  default_prompt: "Use $wpf-persona as the primary specialist for this WPF or XAML task."
 
 policy:
   allow_implicit_invocation: true

@@ -69,7 +69,7 @@ The agent must avoid mixing unrelated layers, especially:
 ## Folder Structure
 
 ```text
-unreal/
+unreal-persona/
 ├─ agent.md
 └─ references/
    ├─ umg-widgets.md
@@ -634,4 +634,3 @@ These are not required yet, but may become future reference files:
 - platform abstraction
 - localisation
 - build farm / CI integration
-

@@ -3,7 +3,7 @@ description: WPF and XAML coding rules — MVVM, bindings, resources, layout, an
 globs: ["**/*.xaml", "**/*.xaml.cs"]    
 alwaysApply: false    
 owner: Jarryd Adaens    
-version: 1.1    
+version: 1.2    
 ---
 
 # WPF XAML Coding Rules (Workspace)
@@ -16,6 +16,9 @@ version: 1.1
 
 ## File & Project Layout
 - One view per file (`Window`, `UserControl`, `DataTemplate` in `*.xaml` with partial class in `*.xaml.cs`).
+- One type per C# file still applies in WPF. View models, controls, converters, markup extensions, behaviors, attached-property owners, enums, records, structs, and helper classes each get their own file.
+- XAML code-behind partials are the normal exception: the `.xaml` root type and its generated/code-behind partial class belong together as one view.
+- Use additional `partial` files only for generated code or rare cases where a large WPF type must be split by responsibility.
 - Keep resource dictionaries in `/Resources` (global) and `/Themes` for control libraries. Use `MergedDictionaries` for composition.
 - Public styles/templates live at App or Window scope; private styles local to the view.
 

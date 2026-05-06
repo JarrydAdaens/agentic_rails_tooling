@@ -2,7 +2,7 @@
 
 `agentic_tooling` is my reusable capability library for agentic development.
 
-It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, specialist agents, workflow-skills, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
+It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, specialist persona bundles, workflow-skills, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
 
 This repository is especially useful beside project templates such as [`agentic_starter`](../agentic_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
 
@@ -73,15 +73,8 @@ A normal skill is a portable task-shaped unit of expertise. It helps an agent do
 
 Current examples include:
 
-- `skills/check-dot-agent`
 - `skills/commit-log`
 - `skills/grade`
-- `skills/mermaid-scout`
-- `skills/mermaid-mapper`
-- `skills/mermaid-validation`
-- `skills/mermaid-aggregation`
-- `skills/skill-template`
-- `skills/skill-template-advanced`
 
 Use `skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
@@ -101,32 +94,63 @@ That keeps powerful workflows easy to find through autocomplete in ordinary skil
 
 Current examples include:
 
-- `skills/commit-history-workflow`
 - `skills/implementation-plan-executor-workflow`
-- `skills/mermaid-mapper-workflow`
 - `skills/plan-spam-workflow`
 
 Workflow-skills should coordinate. They can define queues, subagent roles, artifact paths, handover rules, and validation gates. Reusable domain behavior should still live in ordinary skills when possible.
 
 ### `agents/`
 
-`agents/` contains named specialist workers.
+`agents/` contains named specialist persona bundles.
 
-An agent is different from a skill. A skill says, "Here is how to do this task." An agent says, "Here is the kind of worker you are, how you think, what quality bar you uphold, and which references you consult."
+An agent persona is different from a skill. A skill says, "Here is how to do this task." A persona says, "Here is the kind of worker you are, how you think, what quality bar you uphold, and which references you consult."
+
+Agent folder names and frontmatter names must use the suffix `-persona`. That naming convention keeps progressive-disclosure persona information visually distinct from task skills and workflow-skills.
 
 Current examples include:
 
-- `agents/gamedev`
-- `agents/wpf`
-- `agents/xna`
+- `agents/unreal-persona`
+- `agents/web-persona`
+- `agents/wpf-persona`
+- `agents/xna-persona`
 
-Each agent bundle typically includes:
+Each persona bundle typically includes:
 
 - `AGENT.md` for the role definition and operating contract
 - Provider-facing metadata under an `agents/` subfolder
 - `references/` for focused supporting knowledge
 
-Use `agents/` for durable specialist workers, not small reusable procedures.
+Use `agents/` for durable specialist personas, not small reusable procedures.
+
+### `archived/`
+
+`archived/` contains agentic artifacts that are preserved but no longer treated as active reusable capability.
+
+Use it for skills, rules, agents, workflows, and related material that may still have reference value but is of dubious current usefulness, superseded by another artifact, or not worth exposing through normal IDE consumption paths.
+
+The archive mirrors the main capability categories:
+
+- `archived/agents/`
+- `archived/skills/`
+- `archived/rules/`
+- `archived/workflows/`
+
+Archived artifacts should not be copied into agentic IDE configuration by default. They can be restored or mined later, but the active folders remain the source that tools and humans should normally consume.
+
+### `templates/`
+
+`templates/` contains blank or minimal starter points for creating new agentic artifacts.
+
+Use it for examples and scaffolds for new skills, persona bundles, rules, workflows, and similar reusable context. Templates are source material for authors, not production capability.
+
+The template area mirrors the main capability categories:
+
+- `templates/agents/`
+- `templates/skills/`
+- `templates/rules/`
+- `templates/workflows/`
+
+When creating a new artifact, start from the closest template, copy it into the active folder, then rename and fill it in. Do not expose templates directly to agentic IDEs.
 
 ### `prompt_dev/skills_prompts/`
 
@@ -171,7 +195,7 @@ The split is:
 | Repository | Owns |
 | --- | --- |
 | `agentic_starter` | Project-local context: Tier 0 intake, design, laws, milestones, goals, implementation plans, handovers, and wiki notes. |
-| `agentic_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist agents, and prompt-development source material. |
+| `agentic_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist persona bundles, and prompt-development source material. |
 
 In practice, `agentic_starter` gives a project its documentation-first operating model. It is intentionally empty of application code. It gives future agent sessions a five-tier context system:
 
@@ -189,17 +213,23 @@ For example:
 - The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
 - Shared rules from this repository can be copied or installed into the IDE's expected rule location.
 - Skills such as `commit-log`, `grade`, or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
-- Specialist agents such as `agents/wpf` can be used when the project calls for that domain expertise.
+- Specialist personas such as `agents/wpf-persona` can be used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
 
 ## Relationship To `kung-fu`
 
-[`kung-fu`](../kung-fu/) is the WPF companion application/template in this ecosystem.
+[`kung-fu`](../kung-fu/) is the local WPF deployment app for consuming the artifacts in this repository across agentic IDEs.
 
-Where `agentic_starter` is a general project-context template, `kung-fu` is a WPF-oriented starter with real application structure, WPF documentation, `AGENTS.md` guidance, `Documentation/` context files, laws, tests, and a concrete source tree. It is a practical place where this repository's WPF rules and agentic workflow ideas are exercised against a desktop application codebase.
+This repository is the source of truth. Kung Fu reads configured source folders for skills, rules, workflows, and agents, then copies them outward into the folder layouts expected by different IDEs, profiles, staging folders, or the shared `%USERPROFILE%/.agents` workspace.
 
-The relationship is practical rather than branded. `agentic_tooling` stores reusable rules and agent capabilities. `kung-fu` shows those practices applied to a WPF project shape.
+The relationship is deliberately one-way:
+
+```text
+agentic_tooling -> Kung Fu sync -> IDE and workspace configuration folders
+```
+
+Kung Fu manages deployment, not authorship. Edits should happen in this repository, while Kung Fu makes the active artifacts available wherever the current agentic tool expects them. Archived artifacts are retained here for reference, and templates are retained here for authoring new artifacts. Neither `archived/` nor `templates/` should be included in the normal Kung Fu sync set unless a specific artifact is intentionally promoted into an active folder.
 
 ## Working Model
 
@@ -208,7 +238,9 @@ When adding or updating reusable context, place it in the narrowest layer that m
 - Put it in `rules/` if it is short, prescriptive, and style-oriented.
 - Put it in `skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
 - Put it in `skills/<name>-workflow/` if it coordinates a larger multi-step process, subagents, queues, or durable artifacts.
-- Put it in `agents/` if it defines a named specialist worker with a mission, operating model, and reference library.
+- Put it in `agents/` if it defines a named specialist persona with a mission, operating model, and reference library.
+- Put it in `archived/` if it is preserved for reference but should not be part of the active agentic capability set.
+- Put it in `templates/` if it is a blank, skeletal, or example starter point for creating a future artifact.
 - Put it in `prompt_dev/skills_prompts/` if it is prompt source material used to generate or evolve an artifact.
 - Put it in `wiki/` if it documents the standards and local conventions behind the repository.
 - Put it in `ide_specific/` only when a tool requires a nonstandard compatibility file.
@@ -217,9 +249,10 @@ When adding or updating reusable context, place it in the narrowest layer that m
 
 - A WPF naming rule belongs in `rules/wpf_rules.md`.
 - A reusable commit message process belongs in `skills/commit-log`.
-- A large Mermaid mapping pipeline belongs in `skills/mermaid-mapper-workflow`.
-- The individual Mermaid scout, mapper, validator, and aggregator behaviors belong in separate normal skills.
-- A production-grade WPF specialist worker belongs in `agents/wpf`.
+- A questionable or superseded skill belongs in `archived/skills/`.
+- A retired multi-skill workflow, such as the old Mermaid mapping pipeline, belongs in `archived/skills/` with its related skills.
+- A blank starter for a future persona bundle belongs in `templates/agents/`.
+- A production-grade WPF specialist persona belongs in `agents/wpf-persona`.
 - The prompt material used to generate a skill belongs in `prompt_dev/skills_prompts/`.
 
 ## Maintenance Notes
@@ -230,12 +263,14 @@ When adding or updating reusable context, place it in the narrowest layer that m
 - Keep normal skills task-shaped and reusable.
 - Suffix advanced orchestrations with `-workflow`.
 - Keep workflow-skills focused on orchestration rather than swallowing every detail.
-- Keep agents explicit about mission, scope, collaboration boundaries, references, and quality bar.
+- Keep agent personas explicit about mission, scope, collaboration boundaries, references, and quality bar.
 - Keep prompt records when they are the real source behind generated artifacts.
 - Keep IDE-specific files isolated from the core architecture.
+- Keep archived artifacts out of normal sync/deployment paths unless deliberately restored.
+- Keep templates out of normal sync/deployment paths; copy from them into active folders before use.
 
 ## Repository
 
 - Repository: https://github.com/JarrydSemmens/agentic_tooling
 - Owner: Jarryd Adaens
-- Last Updated: 2026-04-26
+- Last Updated: 2026-05-07

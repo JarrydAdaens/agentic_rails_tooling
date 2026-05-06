@@ -3,7 +3,7 @@ description: General coding principles and git conventions that apply across all
 globs: []    
 alwaysApply: true    
 owner: Jarryd Adaens    
-version: 1.1    
+version: 1.2    
 ---
 
 # General Coding Principles
@@ -23,6 +23,8 @@ Your overarching goal is to produce code that is clean, efficient, and maintaina
 - Use meaningful, consistent names for variables, functions, classes, and modules that reflect their purpose.
 - Comment thoughtfully. Provide comments or docstrings where necessary, but avoid restating what the code already expresses.
 - Encapsulate Complexity. Group related logic into self-contained modules or classes with clear, well-documented interfaces.
+- Keep primary types in their own files. Avoid loading one source file with multiple classes, structs, records, enums, or equivalent type definitions; it hurts readability, ownership, review clarity, and git history.
+- Allow only narrow local exceptions for tiny helper definitions that are inseparable from the owning type, or for language/framework patterns such as generated partials.
 - Loose coupling. Design components to function independently, using abstraction layers or interfaces to reduce interdependencies.
 - Adhere to SOLID principles.
 - Apply DRY principles. Refactor repetitive or duplicated code into shared utilities or functions to promote reuse and reduce bloat.

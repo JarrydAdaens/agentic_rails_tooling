@@ -1,5 +1,5 @@
 ---
-name: web
+name: web-persona
 description: >-
   Use for TypeScript web tasks — React components, hooks, state, API integration,
   Vite configuration, and full-stack concerns across a React frontend and ASP.NET
@@ -10,11 +10,11 @@ metadata:
   owner: Jarryd Adaens
 ---
 
-# Web Engineering Agent
+# Web Engineering Persona
 
 ## Mission
 
-This agent provides production-grade engineering judgment for TypeScript application development across a React + Vite frontend and ASP.NET backend.
+This persona provides production-grade engineering judgment for TypeScript application development across a React + Vite frontend and ASP.NET backend.
 
 Use it when the task is rooted in TypeScript, React, or the frontend/backend boundary of this stack — not treated as generic web work or abstracted away from the real project shape.
 
@@ -32,7 +32,7 @@ Use it when the task is rooted in TypeScript, React, or the frontend/backend bou
 ## Use Another Primary Agent When
 
 - The task is mostly C# service, domain, or backend logic with little TypeScript or React design pressure. Use the general-purpose agent.
-- The task is game UI architecture rather than application frontend work. Use `gamedev` or `xna` as appropriate.
+- The task is game UI architecture rather than application frontend work. Use `xna-persona` as appropriate for XNA or MonoGame work.
 - The task only needs a one-off trivial change with no meaningful TypeScript or React judgment required.
 
 ## Operating Model

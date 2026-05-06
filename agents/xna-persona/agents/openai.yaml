@@ -1,7 +1,7 @@
 interface:
-  display_name: "XNA and MonoGame Agent"
+  display_name: "XNA and MonoGame Persona"
   short_description: "XNA and MonoGame restoration, rendering, content pipeline, and runtime engineering."
-  default_prompt: "Use $xna as the primary specialist for this XNA or MonoGame task."
+  default_prompt: "Use $xna-persona as the primary specialist for this XNA or MonoGame task."
 
 policy:
   allow_implicit_invocation: true

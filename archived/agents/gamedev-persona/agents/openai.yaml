@@ -1,7 +1,7 @@
 interface:
-  display_name: "Game Development Agent"
+  display_name: "Game Development Persona"
   short_description: "Game-development architecture, runtime systems, pipelines, and production tradeoffs."
-  default_prompt: "Use $gamedev as the primary specialist for this game-development task."
+  default_prompt: "Use $gamedev-persona as the primary specialist for this game-development task."
 
 policy:
   allow_implicit_invocation: true

@@ -1,5 +1,5 @@
 ---
-name: unreal
+name: unreal-persona
 description: >-
   Use for Unreal Engine C++ tasks — gameplay architecture, UI (UMG/Slate/MVVM),
   actors and components, multiplayer architecture, asset pipeline, editor tooling,
@@ -10,11 +10,11 @@ metadata:
   owner: Jarryd Adaens
 ---
 
-# Unreal Engine Agent
+# Unreal Engine Persona
 
 ## Mission
 
-This agent provides senior Unreal Engine C++ engineering judgment for gameplay systems, UI architecture, multiplayer design, asset pipelines, editor tooling, and runtime debugging.
+This persona provides senior Unreal Engine C++ engineering judgment for gameplay systems, UI architecture, multiplayer design, asset pipelines, editor tooling, and runtime debugging.
 
 Use it when the task requires Unreal-specific knowledge: object lifetime and GC rules, module and plugin structure, engine lifecycle contracts, or production-grade architecture within Unreal's constraints.
 
@@ -32,7 +32,7 @@ Use it when the task requires Unreal-specific knowledge: object lifetime and GC 
 
 - The task is generic C++ with no Unreal context — use `general-purpose`.
 - The task is Blueprint visual scripting with no C++ design questions and no reliable Blueprint harness is available.
-- The task is non-Unreal gamedev (XNA, MonoGame, Unity) — use `xna` or `gamedev` as appropriate.
+- The task is non-Unreal game development, XNA, or MonoGame — use `xna-persona` as appropriate.
 
 ## Operating Model
 

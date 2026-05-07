@@ -1,102 +1,19 @@
 ---
 name: tier-4-implementation-plan-template
-version: 1.0
+version: 2.0
+superseded_by: skills/rails-planning/references/plan-template.md
 ---
 
-# Tier 4 Implementation Plan Template
+# Tier 4 Implementation Plan Template — Superseded
 
-Use this template when no repository-local Tier 4 template was provided.
+This reference is superseded. `plan-spam-workflow` now delegates all plan creation to the `rails-planning` skill.
 
-Tier 4 context means the plan is grounded in concrete implementation reality rather than broad product intent alone.
-The plan should name likely files, modules, classes, systems, interfaces, validation surfaces, sequencing, and risks.
-If exact files are unknown, name the narrowest credible subsystem and the discovery step needed to confirm it.
+Use the unified template at:
 
-## Output contract
-
-Each generated plan should be a markdown file with this structure:
-
-```md
-# <PLAN-ID> - <Short Goal Title>
-
-## Goal
-
-State the user-facing or system-facing outcome in one short paragraph.
-
-## Source Context
-
-- Source documents:
-- Goal or feature id:
-- Requested scope:
-- Explicit constraints:
-
-## Tier 4 Context
-
-- Likely files or directories:
-- Likely classes, functions, services, screens, or subsystems:
-- Existing behaviors to preserve:
-- Interfaces, data contracts, or external dependencies involved:
-- Known tests, build steps, runtime surfaces, or observability points:
-
-## Scope
-
-### In Scope
-
-- ...
-
-### Out Of Scope
-
-- ...
-
-## Implementation Slices
-
-1. Slice name
-   - Why this slice exists
-   - Concrete edits expected
-   - Dependencies or ordering notes
-
-2. Slice name
-   - Why this slice exists
-   - Concrete edits expected
-   - Dependencies or ordering notes
-
-## Acceptance Criteria
-
-- Observable outcome 1
-- Observable outcome 2
-- Regression or compatibility guardrail
-
-## Validation
-
-- Tests to add or run
-- Manual checks
-- Logging, telemetry, or debug checks if relevant
-
-## Risks And Open Questions
-
-- Risk:
-- Open question:
-- Assumption used until answered:
+```text
+skills/rails-planning/references/plan-template.md
 ```
 
-## Template rules
+That template includes the Tier 4 Context section, unified metadata, acceptance criteria, per-step reasoning, and the completion checklist that includes `questions.md`.
 
-- Keep the title stable and include the goal id when one exists.
-- Do not turn the plan into an essay. Be concrete, not long.
-- Do not fake certainty. If a file path or dependency is uncertain, say so directly.
-- Do not stop at "update backend" or "adjust UI." Name the likely edit points or the discovery work needed to identify them.
-- Keep slices implementation-oriented and ordered.
-- Keep validation specific to the likely change surface.
-- Preserve explicit user constraints and non-goals.
-- If important information is missing, write explicit open questions and the temporary assumption used so planning can continue honestly.
-
-## Quality bar
-
-A good Tier 4 plan:
-
-- is specific enough that a worker can start implementation without re-deriving the whole system shape
-- is honest about unknowns
-- separates scope from non-scope
-- sequences the work into sensible slices
-- includes concrete validation
-- carries visible assumptions where answers are still pending
-- avoids vague filler
+Workers dispatched by `plan-spam-workflow` must follow `rails-planning` conventions and use the unified template above.

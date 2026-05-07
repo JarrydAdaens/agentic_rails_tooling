@@ -8,9 +8,10 @@ description: >-
   IDEs, machines, branches, sessions, reviews, retrospectives, implementation
   logs, evidence, complaints, or handovers. The skill ensures plans are written
   into the target repository under Documentation/implementation_plans/ using
-  Tier 4 planning conventions, with implementation-log.md beside new plans.
+  Tier 4 planning conventions, with implementation-log.md and questions.md
+  beside every new plan.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Planning
@@ -23,16 +24,12 @@ This is the single-plan enforcement skill for Agentic Rails. It creates or revis
 
 ## Core Rule
 
-When planning implementation work inside a repository, create or update the durable plan here:
+When planning implementation work inside a repository, create or update these durable files:
 
 ```text
 Documentation/implementation_plans/<task-folder>/plan.md
-```
-
-For every new plan folder, also create:
-
-```text
 Documentation/implementation_plans/<task-folder>/implementation-log.md
+Documentation/implementation_plans/<task-folder>/questions.md
 ```
 
 Initial log content may be minimal:
@@ -43,7 +40,9 @@ Initial log content may be minimal:
 This file records what actually happened during execution of the adjacent plan.
 ```
 
-The plan must be a normal repository file that the human can review, diff, branch, commit, copy, and preserve with the project.
+`questions.md` captures every open question discovered during planning, including the temporary assumption used in the plan until the answer arrives. If no questions exist, create the file and mark it with `Status: NONE`. See [references/questions-format.md](references/questions-format.md) for the exact format.
+
+All three files must be normal repository files that the human can review, diff, branch, commit, copy, and preserve with the project.
 
 ## When To Apply
 
@@ -137,13 +136,14 @@ Documentation/implementation_plans/SPIKE_compare-vector-store-options/
 5. Select or create the correct task folder under the implementation-plans path.
 6. Create or update `plan.md` using the Tier 4 structure from [references/plan-template.md](references/plan-template.md), unless the repository has a stronger local template.
 7. Ensure `implementation-log.md` exists beside a newly created `plan.md`.
-8. Preserve uncertainty. Record assumptions, constraints, risks, and open questions instead of inventing certainty.
-9. Do not create optional artifacts unless another active skill or workflow requires them:
-   - `complaining.md`
-   - `thinking.md`
-   - `evidence.md`
-   - `handover/`
-10. Report the exact `plan.md` path and companion artifacts to the user.
+8. Create `questions.md` beside a newly created `plan.md` using the format in [references/questions-format.md](references/questions-format.md). Populate it with any open questions identified during planning. If no questions exist, set `Status: NONE` and note that explicitly.
+9. Preserve uncertainty. Record assumptions, constraints, risks, and open questions in both `plan.md` and `questions.md` rather than inventing certainty.
+10. Do not create optional artifacts unless another active skill or workflow requires them:
+    - `complaining.md`
+    - `thinking.md`
+    - `evidence.md`
+    - `handover/`
+11. Report the exact paths of `plan.md`, `implementation-log.md`, and `questions.md` to the user.
 
 ## Plan Quality Bar
 
@@ -193,5 +193,7 @@ Before considering this skill applied correctly, confirm:
 - Relevant maintained context is linked where available.
 - The plan includes scope, steps, validation, risks, and open questions.
 - `implementation-log.md` exists beside `plan.md` for new plan folders.
+- `questions.md` exists beside `plan.md` for new plan folders and is either populated with open questions or explicitly marked `Status: NONE`.
+- Any open questions in `questions.md` are also reflected in the plan's `Risks And Open Questions` section.
 - Existing related plans were reused or intentionally superseded instead of duplicated accidentally.
-- The user was told the exact path of the plan.
+- The user was told the exact paths of `plan.md`, `implementation-log.md`, and `questions.md`.

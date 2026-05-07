@@ -6,7 +6,7 @@ description: >-
   completed. It writes a standardized commit log from a fixed template for git,
   Perforce, Mercurial, SVN, or similar VCS workflows.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Commit log
@@ -21,6 +21,20 @@ Write a commit log that follows the template in [references/commit_log_template.
 ## Default behavior
 
 Output the commit message in chat and stop. Do not touch git. The user copies and commits themselves.
+
+## Heading prefix selection
+
+Pick the most specific prefix the work warrants. Do **not** fabricate a `[GOAL X.Y]` value to make untracked work look tracked.
+
+- `[XXX-123]` — Jira-tracked work.
+- `[GOAL X.Y]` — work tied to a numbered goal in a non-Jira project.
+- `[BUG]` — defect fix not tracked against a ticket or goal.
+- `[FEATURE]` — new behavior not tracked against a ticket or goal.
+- `[CONTEXT]` — revisions to narrative content under `Documentation/`.
+- `[REFACTOR]` — code restructuring with no intended behavior change.
+- `[CHORE]` — build, CI, dependency, tooling, or repo housekeeping.
+
+Heading line is capped at 72 characters end-to-end.
 
 ## Commit behavior (only when the user explicitly asks to commit)
 

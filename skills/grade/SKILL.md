@@ -5,7 +5,11 @@ description: >-
   quality of an artifact such as code, design, persona, workflow, document, or
   plan. It returns a decisive letter grade (S, A-F) with concise evidence.
 metadata:
-  version: "1.0"
+  version: "1.1"
+  invocation: user
+  changelog:
+    "1.1": "Added validation checklist, invocation mode, version history, and per-artifact-type weighting guidance."
+    "1.0": "Initial release."
 ---
 
 # Grade
@@ -47,6 +51,20 @@ Weight each criterion by relevance to the context provided:
 - **User experience** - ergonomic for its audience?
 - **Risk / fragility** - how likely is it to break?
 - **Engineering balance** - neither over- nor under-engineered?
+
+## Weighting by artifact type
+
+Lead with the criteria that matter most for the artifact in front of you. The user's stated concern always overrides these defaults.
+
+| Artifact | Lead with | Treat as secondary |
+|----------|-----------|--------------------|
+| Production code | Correctness, Risk/fragility, Maintainability | Clarity, Engineering balance |
+| Design or architecture document | Architecture, Fitness for purpose, Engineering balance | Clarity, Maintainability |
+| Agent skill | Fitness for purpose, Clarity, User experience (the agent is the user) | Maintainability, Risk/fragility |
+| Agent persona | Fitness for purpose, Architecture (scope and boundaries), Clarity | Maintainability |
+| Implementation plan | Correctness (grounded in real context), Clarity, Fitness for purpose | Risk/fragility |
+| Workflow / orchestration | Architecture, Risk/fragility, Engineering balance | Clarity, Maintainability |
+| Prose document | Clarity, Fitness for purpose | Maintainability |
 
 ## Instructions
 
@@ -91,3 +109,15 @@ Weight each criterion by relevance to the context provided:
 > | B | Test coverage |
 >
 > The API is clean and well-structured. Test coverage is solid for the happy path but thin on edge cases. The UI works but feels unfinished - inconsistent spacing and missing loading states hurt perceived quality.
+
+## Validation
+
+Before considering the skill applied correctly, confirm:
+
+- The response leads with the grade — not preamble, not a summary, not hedging.
+- Exactly one grade was returned in standard mode, or one row per distinct component in expanded mode.
+- The justification cites concrete strengths or weaknesses from the artifact, not generic platitudes.
+- Criteria weighting matched the artifact type (or the user's stated concern, if given).
+- No implementation steps, fixes, or rewrites were offered unless the user explicitly asked for them.
+- Expanded mode was used only when separate components genuinely warrant separate grades.
+- The grade is decisive — no `B/C`, no `between A and B`, no averages-of-averages.

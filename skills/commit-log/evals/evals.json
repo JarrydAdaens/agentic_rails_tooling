@@ -4,23 +4,25 @@
     {
       "id": 1,
       "prompt": "I added a login feature that accepts username and password and returns a JWT token. Write a commit message.",
-      "expected_output": "A commit log with a [GOAL X.Y] or [XXX-123] heading, a ~ Problem: line, at least one body line describing the change, and a ~ Resolution: line.",
+      "expected_output": "A commit log with a heading using one of the supported prefixes ([XXX-123], [GOAL X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], [CHORE]), a ~ Problem: line, at least one body line describing the change, and a ~ Resolution: line.",
       "assertions": [
-        "Output includes a heading line using [GOAL X.Y] or [XXX-123] format",
+        "Output includes a heading line using one of the supported prefixes: [XXX-123], [GOAL X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], or [CHORE]",
+        "If no ticket or goal was referenced in the prompt, [FEATURE] is used (not a fabricated [GOAL X.Y])",
+        "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line",
         "Output includes a ~ Resolution: line",
-        "The heading line is 72 characters or fewer",
         "No git commands are executed"
       ]
     },
     {
       "id": 2,
       "prompt": "I fixed a null reference exception in UserService.cs that crashed when the user object was null. Write a commit message.",
-      "expected_output": "A commit log with a heading, a ~ Problem: line describing the null reference, a ~ Fixed: body line referencing UserService, and a ~ Resolution: line.",
+      "expected_output": "A commit log with a [BUG] heading, a ~ Problem: line describing the null reference, a ~ Fixed: body line referencing UserService, and a ~ Resolution: line.",
       "assertions": [
-        "Output includes a heading line using [GOAL X.Y] or [XXX-123] format",
+        "Output includes a heading line using the [BUG] prefix (no ticket or goal was referenced)",
+        "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line that describes the null reference issue",
-        "Output includes a ~ Fixed: or ~ Changed: body line",
+        "Output includes a ~ Fixed: or ~ Changed: body line that names UserService",
         "Output includes a ~ Resolution: line",
         "No git commands are executed"
       ]
@@ -28,9 +30,11 @@
     {
       "id": 3,
       "prompt": "I refactored DataService to use dependency injection instead of static methods. Write a commit message, then commit it.",
-      "expected_output": "A commit log message is output first, then a git add and git commit are executed. No push.",
+      "expected_output": "A commit log message with a [REFACTOR] heading is output first, then a git add and git commit are executed. No push.",
       "assertions": [
         "Output includes a commit log in the correct format before any git commands run",
+        "The heading uses the [REFACTOR] prefix",
+        "The heading line is 72 characters or fewer",
         "A git add command is executed for files changed during the session",
         "A git commit command is executed using the generated message verbatim",
         "No git push command is executed"
@@ -43,6 +47,8 @@
       "assertions": [
         "Output contains two distinct commit log blocks",
         "Each block has its own heading, ~ Problem:, and ~ Resolution: line",
+        "Each heading uses one of the supported prefixes and is 72 characters or fewer",
+        "The audio crash fix uses the [BUG] prefix",
         "The two blocks are visually separated (label, rule, or blank line grouping)",
         "No git commands are executed"
       ]
@@ -50,11 +56,25 @@
     {
       "id": 5,
       "prompt": "Write a commit message for adding unit tests covering edge cases in the CSV parser.",
-      "expected_output": "A commit log with a docs/tests-scoped heading and body noting that production code was not changed.",
+      "expected_output": "A commit log with a tests-scoped heading and body noting that production code was not changed.",
       "assertions": [
-        "Output includes a heading in the correct format",
+        "Output includes a heading using one of the supported prefixes",
+        "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line and a ~ Resolution: line",
         "Body notes that only test files changed or explicitly scopes to tests",
+        "No git commands are executed"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "I revised Documentation/handovers/2026-05-07.md to capture the current state of the auth migration. Write a commit message.",
+      "expected_output": "A commit log with a [CONTEXT] heading, a ~ Problem: line, a body line that names the handover document, and a ~ Resolution: line.",
+      "assertions": [
+        "Output includes a heading using the [CONTEXT] prefix",
+        "The heading line is 72 characters or fewer",
+        "Output includes a ~ Problem: line and a ~ Resolution: line",
+        "Body names the handover file or scopes the change to Documentation/",
+        "Body uses ~ Updated: or ~ Added: callouts",
         "No git commands are executed"
       ]
     }

@@ -5,7 +5,11 @@ description: >-
   genuine blockers, friction, ambiguity, tool failures, bad assumptions, risky
   constraints, or other execution problems while it works.
 metadata:
-  version: "1.0"
+  version: "1.1"
+  invocation: agent
+  changelog:
+    "1.1": "Clarified agent-invoked primary trigger, expanded validation checklist, removed duplicate reference loading section, added version history."
+    "1.0": "Initial release."
 ---
 
 # Complaining
@@ -16,10 +20,11 @@ This is operational visibility, not emotional theatre.
 
 ## When to use
 
-- The user explicitly asks the agent to use the `complaining` skill.
-- A project workflow requires a complaint, blocker, friction, or diagnostic log.
-- The agent is doing work where failed attempts, bad assumptions, tool failures, unclear requirements, or risky compromises should be recorded.
+This is an agent-invoked skill. The agent activates it proactively when conditions require a complaint log.
+
+- A workflow skill, orchestration run, or multi-step task is in progress and real blockers, tool failures, ambiguity, or risky assumptions appear.
 - A prior run failed or looped and the next run needs better visibility into what made the work difficult.
+- The user explicitly asks the agent to use the `complaining` skill or requires a diagnostic log.
 
 ## Do not use
 
@@ -60,14 +65,6 @@ If this file is empty, there were no meaningful complaints to record.
 5. Keep existing complaints append-only unless the user explicitly asks for cleanup or the agent is correcting its own factual mistake.
 6. Continue the task after logging unless the problem truly blocks progress.
 
-## Reference Loading
-
-Load only the references needed for the current moment.
-
-- [references/path-selection.md](references/path-selection.md): use when choosing or creating the complaints file path.
-- [references/logging-policy.md](references/logging-policy.md): use when deciding whether an issue is worth logging or how blunt to be.
-- [references/entry-format.md](references/entry-format.md): use when appending a complaint entry or initializing the file.
-
 ## Complaint Standard
 
 A useful complaint is specific, grounded, and actionable. It separates observed facts from interpretation, explains the cost of the friction, and says what would improve the situation.
@@ -94,7 +91,12 @@ The complaint log is a diagnostic artifact. It is allowed to criticize the task,
 
 Before considering the skill applied correctly, confirm:
 
-- The complaint log exists in the target project's documentation folder.
+- The complaint log exists inside the **target project**, not inside the tooling repository.
+- The complaint log is in the correct location for the detected project type:
+  - Agentic Rails with an active implementation-plan folder → `<plan-folder>/complaining.md`
+  - Agentic Rails without an identifiable active plan → `Documentation/complaining.md`
+  - Non-Agentic-Rails project → an existing documentation folder (`Documentation/`, `documentation/`, `docs/`, `Docs/`), or a newly created `Documentation/` if none exists
 - No fake complaint was added when nothing meaningful went wrong.
 - Any real blocker or friction was appended with enough detail for a later reader to understand it without reconstructing the whole session.
+- Entries follow the format in [references/entry-format.md](references/entry-format.md): timestamp omitted when reliable time was unavailable, interpretation separated into a `What I think` section.
 - Existing complaints were preserved unless there was a specific reason to edit them.

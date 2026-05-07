@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Move-Item *)"
     ]
   }
 }

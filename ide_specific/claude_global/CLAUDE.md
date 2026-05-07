@@ -17,6 +17,8 @@ Inspect the workspace before starting. Load every file whose condition matches; 
 | Task touches WPF, XAML, bindings, or view models | `~/.claude/rules/wpf_rules.md` |
 | Any `.uproject` file or Unreal-style source layout present | `~/.claude/rules/cplusplus_rules.md` |
 | Any Qt project file, CMake Qt config, or Qt-specific source present | `~/.claude/rules/qt_rules.md` |
+| Any `.ts` or `.tsx` files present | `~/.claude/rules/typescript_rules.md` |
+| Task touches React components, hooks, or JSX | `~/.claude/rules/react_rules.md` |
 
 ## Agents
 Use the named agent whenever the task clearly fits its domain. Don't wait to be asked.
@@ -24,7 +26,8 @@ Use the named agent whenever the task clearly fits its domain. Don't wait to be 
 | Task involves | Use agent |
 |---------------|-----------|
 | WPF screens, XAML, MVVM, bindings, controls, theming, WPF performance | `wpf` |
-| Game-development architecture, runtime systems, content pipelines, performance, production tradeoffs | `gamedev` |
+| Unreal Engine C++ — gameplay, UI (UMG/Slate/MVVM), actors, multiplayer, asset pipeline, editor tooling | `unreal` |
+| TypeScript web tasks — React components, hooks, state, API integration, Vite, ASP.NET backend | `web` |
 | XNA or MonoGame restoration, game-loop, SpriteBatch rendering, content pipeline, screen systems | `xna` |
 
 ## Conflict Resolution

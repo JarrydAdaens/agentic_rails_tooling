@@ -1,10 +1,10 @@
-# Agentic Tooling
+# Agentic Rails Tooling
 
-`agentic_tooling` is my reusable capability library for agentic development.
+`agentic_rails_tooling` is the right rail of the Agentic Rails framework — a reusable capability library for agentic development.
 
 It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, specialist persona bundles, workflow-skills, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
 
-This repository is especially useful beside project templates such as [`agentic_starter`](../agentic_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
+This repository is especially useful beside project templates such as [`agentic_rails_context_starter`](../agentic_rails_context_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
 
 ## Core Idea
 
@@ -75,6 +75,12 @@ Current examples include:
 
 - `skills/commit-log`
 - `skills/grade`
+- `skills/rails-planning`
+- `skills/rails-pair-programming`
+- `skills/complaining`
+- `skills/evidence`
+- `skills/handover`
+- `skills/thinking-out-loud`
 
 Use `skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
@@ -150,6 +156,11 @@ The template area mirrors the main capability categories:
 - `templates/rules/`
 - `templates/workflows/`
 
+Current examples include:
+
+- `templates/skills/skill-template`
+- `templates/skills/skill-template-advanced`
+
 When creating a new artifact, start from the closest template, copy it into the active folder, then rename and fill it in. Do not expose templates directly to agentic IDEs.
 
 ### `prompt_dev/skills_prompts/`
@@ -186,18 +197,18 @@ It exists because real tools are messy. Some IDEs need one-off folders, rule fil
 
 It contains [`workflows/NOT USED.txt`](workflows/NOT%20USED.txt), which records the decision to stop using a standalone workflows folder. Advanced workflows now live under `skills/` with the `-workflow` suffix because that works better across current agentic IDEs.
 
-## Relationship To `agentic_starter`
+## Relationship To `agentic_rails_context_starter`
 
-[`agentic_starter`](../agentic_starter/) is a companion GitHub template for new projects.
+[`agentic_rails_context_starter`](../agentic_rails_context_starter/) is the companion GitHub template for new projects — the left rail of the Agentic Rails framework.
 
 The split is:
 
 | Repository | Owns |
 | --- | --- |
-| `agentic_starter` | Project-local context: Tier 0 intake, design, laws, milestones, goals, implementation plans, handovers, and wiki notes. |
-| `agentic_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist persona bundles, and prompt-development source material. |
+| `agentic_rails_context_starter` | Project-local context: Tier 0 intake, design, milestones, goals, implementation plans, handovers, and wiki notes. |
+| `agentic_rails_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist persona bundles, and prompt-development source material. |
 
-In practice, `agentic_starter` gives a project its documentation-first operating model. It is intentionally empty of application code. It gives future agent sessions a five-tier context system:
+In practice, `agentic_rails_context_starter` gives a project its documentation-first operating model. It is intentionally empty of application code. It gives future agent sessions a five-tier context system:
 
 - Tier 0 raw intake and addenda
 - Tier 1 design
@@ -209,10 +220,10 @@ This repository gives agents reusable tools to execute inside that model.
 
 For example:
 
-- A new project can start from `agentic_starter`.
+- A new project can start from `agentic_rails_context_starter`.
 - The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
 - Shared rules from this repository can be copied or installed into the IDE's expected rule location.
-- Skills such as `commit-log`, `grade`, or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
+- Skills such as `commit-log`, `rails-planning`, or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
 - Specialist personas such as `agents/wpf-persona` can be used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
@@ -271,6 +282,6 @@ When adding or updating reusable context, place it in the narrowest layer that m
 
 ## Repository
 
-- Repository: https://github.com/JarrydSemmens/agentic_tooling
+- Repository: https://github.com/JarrydSemmens/agentic_rails_tooling
 - Owner: Jarryd Adaens
 - Last Updated: 2026-05-07

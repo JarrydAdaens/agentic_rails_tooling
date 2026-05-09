@@ -6,7 +6,7 @@ description: >-
   rails-pair-programming", "pair program this under Rails", or similar phrasing.
   The skill establishes intent, gathers current 5T Goal and implementation-plan
   context, runs a collaborative tutoring and pair-programming loop, and creates
-  or appends a durable pair-programming.md session artifact at wrap-up.
+  a uniquely named session artifact at wrap-up.
 ---
 
 # Rails Pair Programming
@@ -162,27 +162,31 @@ summarise this
 At wrap-up:
 
 1. Summarize the session.
-2. Create or update `pair-programming.md`.
-3. Include discoveries, key discussions, decisions, open questions, outcomes,
+2. Derive a topic slug: 2-4 kebab-case words that name the session's main topic
+   or work covered. Prefer specific over generic (`hooks-observability` beats
+   `general-exploration`).
+3. Create a new artifact file using the naming convention:
+   `pair-programming-DDMMMYYYY-topic-slug.md`
+   Example: `pair-programming-09MAY2026-hooks-observability.md`
+4. Include discoveries, key discussions, decisions, open questions, outcomes,
    and yielded work.
-4. Ground the artifact in the active Goal and Plan context.
-5. Preserve existing session records.
+5. Ground the artifact in the active Goal and Plan context.
 6. End cleanly.
+
+Each session always produces its own file. Never overwrite or append to an
+existing session artifact.
 
 Preferred path:
 
 ```text
-Documentation/implementation_plans/<current-goal-or-plan-folder>/pair-programming.md
+Documentation/implementation_plans/<current-goal-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
 ```
 
 Fallback path when the active plan folder is unknown:
 
 ```text
-Documentation/pair-programming.md
+Documentation/pair-programming-DDMMMYYYY-topic-slug.md
 ```
-
-If `pair-programming.md` already exists, append a new dated session entry rather
-than overwriting prior sessions.
 
 ## Artifact Template
 
@@ -270,7 +274,9 @@ Before considering the skill applied correctly, confirm:
 - the collaborative loop stayed grounded in the current Goal and Plan
 - useful questions were asked where appropriate
 - wrap-up was triggered by the user
-- `pair-programming.md` was created or appended in the correct folder
+- a new artifact file was created using the `pair-programming-DDMMMYYYY-topic-slug.md` convention
+- the topic slug is specific and descriptive, not generic
+- the artifact is in the correct folder (plan folder preferred, `Documentation/` fallback)
 - the artifact includes discoveries, discussions, decisions, open questions,
   outcomes, and yielded work
-- existing session records were preserved
+- no existing session artifact was overwritten or appended to

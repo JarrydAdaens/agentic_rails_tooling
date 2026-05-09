@@ -6,7 +6,8 @@
       "Bash(Format-Table -AutoSize)",
       "PowerShell(Move-Item *)",
       "Read(//mnt/c/Users/Jarry/**)",
-      "Read(//mnt/c/Users/Jarry/.claude/**)"
+      "Read(//mnt/c/Users/Jarry/.claude/**)",
+      "PowerShell(Rename-Item *)"
     ]
   }
 }

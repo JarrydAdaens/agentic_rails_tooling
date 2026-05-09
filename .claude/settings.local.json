@@ -7,7 +7,9 @@
       "PowerShell(Move-Item *)",
       "Read(//mnt/c/Users/Jarry/**)",
       "Read(//mnt/c/Users/Jarry/.claude/**)",
-      "PowerShell(Rename-Item *)"
+      "PowerShell(Rename-Item *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

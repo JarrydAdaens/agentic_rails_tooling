@@ -4,7 +4,9 @@
       "Bash(Get-ChildItem *)",
       "Bash(Select-Object FullName, PSIsContainer)",
       "Bash(Format-Table -AutoSize)",
-      "PowerShell(Move-Item *)"
+      "PowerShell(Move-Item *)",
+      "Read(//mnt/c/Users/Jarry/**)",
+      "Read(//mnt/c/Users/Jarry/.claude/**)"
     ]
   }
 }

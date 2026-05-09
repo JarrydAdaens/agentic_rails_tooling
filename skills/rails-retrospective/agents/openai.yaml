@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rails Retrospective"
+  short_description: "Review completed Agentic Rails work"
+  default_prompt: "Use $rails-retrospective to review the completed implementation work and write a grounded retrospective."

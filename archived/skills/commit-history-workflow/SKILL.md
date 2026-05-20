@@ -7,6 +7,7 @@ description: >-
   Do not use it for new commit messages or branch summaries.
 metadata:
   version: "2.0"
+  agentic_rails_source_version: "2.0"
 ---
 
 # Commit History Workflow

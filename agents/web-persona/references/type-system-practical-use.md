@@ -1,6 +1,7 @@
 ---
 name: type-system-practical-use
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Practical Type System Usage

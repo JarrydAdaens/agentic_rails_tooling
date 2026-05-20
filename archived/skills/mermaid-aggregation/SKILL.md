@@ -7,6 +7,7 @@ description: >-
   block when used standalone.
 metadata:
   version: "1.0"
+  agentic_rails_source_version: "1.0"
 ---
 
 # Mermaid aggregation

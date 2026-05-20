@@ -4,6 +4,7 @@ globs: ["**/*.xaml", "**/*.xaml.cs"]
 alwaysApply: false    
 owner: Jarryd Adaens    
 version: 1.2    
+agentic_rails_source_version: 1.2
 ---
 
 # WPF XAML Coding Rules (Workspace)

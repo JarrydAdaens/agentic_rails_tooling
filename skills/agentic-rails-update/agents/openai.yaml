@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Rails Update"
+  short_description: "Refresh derived Agentic Rails context"
+  default_prompt: "Use $agentic-rails-update to update this derived Agentic Rails project from my local context starter."

@@ -6,6 +6,7 @@ description: >-
   work queue for scoped inventory or for the mermaid-mapper workflow.
 metadata:
   version: "1.0"
+  agentic_rails_source_version: "1.0"
 ---
 
 # Mermaid Scout

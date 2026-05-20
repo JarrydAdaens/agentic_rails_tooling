@@ -6,6 +6,7 @@ description: >-
   constraints, or other execution problems while it works.
 metadata:
   version: "1.1"
+  agentic_rails_source_version: "1.1"
   invocation: agent
   changelog:
     "1.1": "Clarified agent-invoked primary trigger, expanded validation checklist, removed duplicate reference loading section, added version history."

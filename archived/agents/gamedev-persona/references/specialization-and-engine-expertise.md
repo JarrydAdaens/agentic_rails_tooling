@@ -1,6 +1,7 @@
 ---
 name: specialization-and-engine-expertise
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Specialization and Engine Expertise

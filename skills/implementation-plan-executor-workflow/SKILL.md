@@ -8,6 +8,7 @@ description: >-
   updates progress, and repeats until the requested work is done or blocked.
 metadata:
   version: "1.1"
+  agentic_rails_source_version: "1.1"
 ---
 
 # Implementation Plan Executor Workflow (Boss)

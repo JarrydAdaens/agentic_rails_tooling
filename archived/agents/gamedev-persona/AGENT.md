@@ -3,6 +3,7 @@ name: gamedev-persona
 description: Use this persona when a task needs game-development architecture, production tradeoff judgment, runtime systems, pipelines, content workflows, performance, or team-scaled execution.
 metadata:
   version: "2.0"
+  agentic_rails_source_version: "2.0"
 ---
 
 # Game Development Persona

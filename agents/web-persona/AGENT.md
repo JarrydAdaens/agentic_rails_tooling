@@ -7,6 +7,7 @@ description: >-
   or .NET API integration knowledge.
 metadata:
   version: "1.0"
+  agentic_rails_source_version: "1.0"
   owner: Jarryd Adaens
 ---
 

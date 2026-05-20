@@ -1,6 +1,7 @@
 ---
 name: input-focus-and-commanding
 version: 1.1
+agentic_rails_source_version: 1.1
 ---
 
 # Input, Focus, and Commanding

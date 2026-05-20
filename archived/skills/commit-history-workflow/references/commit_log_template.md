@@ -1,6 +1,7 @@
 ---
 name: historical_commit_entry_template
 version: 2.0
+agentic_rails_source_version: 2.0
 ---
 
 # Historical Commit Entry Template

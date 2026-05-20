@@ -1,6 +1,7 @@
 ---
 name: threading-dispatcher-and-async-ui
 version: 1.1
+agentic_rails_source_version: 1.1
 ---
 
 # Threading, Dispatcher, and Async UI

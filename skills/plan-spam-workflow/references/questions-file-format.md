@@ -1,6 +1,7 @@
 ---
 name: plan-spam-questions-file-format
 version: 2.0
+agentic_rails_source_version: 2.0
 ---
 
 # Questions File Structure

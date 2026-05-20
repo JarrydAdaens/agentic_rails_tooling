@@ -7,6 +7,7 @@ description: >-
   Perforce, Mercurial, SVN, or similar VCS workflows.
 metadata:
   version: "1.3"
+  agentic_rails_source_version: "1.3"
 ---
 
 # Commit log

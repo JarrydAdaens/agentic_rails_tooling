@@ -1,6 +1,7 @@
 ---
 name: content-pipeline-and-assets
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Content Pipeline and Assets

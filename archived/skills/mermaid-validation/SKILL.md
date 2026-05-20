@@ -6,6 +6,7 @@ description: >-
   plausibility, then returns pass or fail with concrete reasons.
 metadata:
   version: "1.0"
+  agentic_rails_source_version: "1.0"
 ---
 
 # Mermaid validation

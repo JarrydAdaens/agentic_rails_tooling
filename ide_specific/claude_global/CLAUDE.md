@@ -1,6 +1,7 @@
 ---
 owner: Jarryd Adaens    
 version: 1.1    
+agentic_rails_source_version: 1.1
 ---
 
 # Global Claude Rules — Jarryd Adaens

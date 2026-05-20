@@ -1,6 +1,7 @@
 ---
 name: maintainability-solid-principles
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Maintainability and SOLID Principles

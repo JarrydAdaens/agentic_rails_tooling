@@ -1,5 +1,6 @@
 ---
 version: 0.1
+agentic_rails_source_version: 0.1
 owner: "Jarryd Adaens"
 repo: "Kung Fu"
 description: "Comparison of agentic IDE capabilities, configuration models, workflow primitives, and repository strategy implications."

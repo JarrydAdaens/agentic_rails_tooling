@@ -4,6 +4,7 @@ globs: ["**/*.pro", "**/*.qrc", "**/*.qml"]
 alwaysApply: false    
 owner: Jarryd Adaens    
 version: 1.1    
+agentic_rails_source_version: 1.1
 ---
 
 # Windsurf Rules — Qt C++ (Windows, OpenRGB Plugin)

@@ -1,6 +1,7 @@
 ---
 name: testing-ui-and-iteration
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Testing, UI, and Iteration

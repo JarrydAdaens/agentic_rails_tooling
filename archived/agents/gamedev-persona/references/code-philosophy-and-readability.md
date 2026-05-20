@@ -1,6 +1,7 @@
 ---
 name: code-philosophy-and-readability
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Code Philosophy and Readability

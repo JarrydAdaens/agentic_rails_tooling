@@ -4,6 +4,7 @@ description: Use this template when creating a broad Agent Skill that needs prog
 metadata:
   template: "true"
   version: "1.1"
+  agentic_rails_source_version: "1.1"
 ---
 
 # Advanced Progressive-Disclosure Skill Template

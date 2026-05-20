@@ -3,6 +3,7 @@ name: xna-persona
 description: Use this persona when a task needs XNA or MonoGame restoration, game-loop architecture, SpriteBatch rendering, content pipeline work, screen systems, or performance-conscious implementation.
 metadata:
   version: "2.0"
+  agentic_rails_source_version: "2.0"
 ---
 
 # XNA and MonoGame Persona

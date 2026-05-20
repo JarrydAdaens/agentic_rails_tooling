@@ -1,6 +1,7 @@
 ---
 name: codebase-restoration-and-project-shape
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Codebase Restoration and Project Shape

@@ -1,6 +1,7 @@
 ---
 name: mermaid-mapper-state-model
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Scoutmap row state model

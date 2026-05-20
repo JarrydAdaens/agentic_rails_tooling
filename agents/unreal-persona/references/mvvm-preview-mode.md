@@ -1,6 +1,7 @@
 ---
 name: mvvm-preview-mode
 version: "1.0"
+agentic_rails_source_version: "1.0"
 ---
 
 # MVVM and UMG Preview Mode

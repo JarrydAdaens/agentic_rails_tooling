@@ -7,6 +7,7 @@ description: >-
   WPF platform knowledge rather than generic C# logic.
 metadata:
   version: "2.0"
+  agentic_rails_source_version: "2.0"
   owner: Jarryd Adaens
 ---
 

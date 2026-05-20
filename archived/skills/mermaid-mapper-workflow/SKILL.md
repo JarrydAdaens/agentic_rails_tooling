@@ -7,6 +7,7 @@ description: >-
   and artifacts under documentation/workflows/mermaid_mapper.
 metadata:
   version: "1.1"
+  agentic_rails_source_version: "1.1"
 ---
 
 # Mermaid Mapper Workflow (Boss)

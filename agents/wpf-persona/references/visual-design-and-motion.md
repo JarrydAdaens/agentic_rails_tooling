@@ -1,6 +1,7 @@
 ---
 name: visual-design-and-motion
 version: 1.1
+agentic_rails_source_version: 1.1
 ---
 
 # Visual Design and Motion

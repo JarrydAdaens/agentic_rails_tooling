@@ -1,6 +1,7 @@
 ---
 name: save-formats-and-debuggability
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Save Formats and Debuggability

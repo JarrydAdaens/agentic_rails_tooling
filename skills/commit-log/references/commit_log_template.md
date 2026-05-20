@@ -1,6 +1,7 @@
 ---
 name: commit_log_template
 version: 1.2
+agentic_rails_source_version: 1.2
 ---
 
 # Commit Log Template

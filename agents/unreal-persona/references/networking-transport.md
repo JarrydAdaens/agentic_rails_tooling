@@ -1,6 +1,7 @@
 ---
 name: networking-transport
 version: "1.0"
+agentic_rails_source_version: "1.0"
 ---
 
 # Networking: Transport

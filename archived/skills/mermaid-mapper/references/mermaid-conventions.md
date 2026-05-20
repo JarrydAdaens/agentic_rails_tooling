@@ -1,6 +1,7 @@
 ---
 name: mermaid-conventions
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Mermaid conventions for mermaid-mapper

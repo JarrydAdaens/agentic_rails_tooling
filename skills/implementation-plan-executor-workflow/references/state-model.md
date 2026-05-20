@@ -1,6 +1,7 @@
 ---
 name: implementation-plan-executor-state-model
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Progress row state model

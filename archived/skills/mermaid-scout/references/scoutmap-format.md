@@ -1,6 +1,7 @@
 ---
 name: scoutmap-format
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Scoutmap format (`scoutmap.md`)

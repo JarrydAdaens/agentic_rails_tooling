@@ -4,6 +4,7 @@ globs: []
 alwaysApply: true    
 owner: Jarryd Adaens    
 version: 1.2    
+agentic_rails_source_version: 1.2
 ---
 
 # General Coding Principles

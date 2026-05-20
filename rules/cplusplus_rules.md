@@ -4,6 +4,7 @@ globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]
 alwaysApply: false    
 owner: Jarryd Adaens    
 version: 1.2    
+agentic_rails_source_version: 1.2
 ---
 
 # Unreal C++ Coding Rules (Workspace)

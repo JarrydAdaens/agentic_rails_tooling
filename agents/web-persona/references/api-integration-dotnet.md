@@ -1,6 +1,7 @@
 ---
 name: api-integration-dotnet
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # API Integration With .NET Backends

@@ -7,6 +7,7 @@ description: >-
   feature cluster, writes plans, updates progress, and repeats until complete.
 metadata:
   version: "2.0"
+  agentic_rails_source_version: "2.0"
 ---
 
 # Plan Spam Workflow (Boss)

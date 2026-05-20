@@ -1,6 +1,7 @@
 ---
 name: rendering-spritebatch-and-render-targets
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Rendering, SpriteBatch, and Render Targets

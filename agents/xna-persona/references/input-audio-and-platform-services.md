@@ -1,6 +1,7 @@
 ---
 name: input-audio-and-platform-services
 version: 1.0
+agentic_rails_source_version: 1.0
 ---
 
 # Input, Audio, and Platform Services

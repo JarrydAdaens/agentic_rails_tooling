@@ -6,6 +6,7 @@ description: >-
   plan. It returns a decisive letter grade (S, A-F) with concise evidence.
 metadata:
   version: "1.1"
+  agentic_rails_source_version: "1.1"
   invocation: user
   changelog:
     "1.1": "Added validation checklist, invocation mode, version history, and per-artifact-type weighting guidance."

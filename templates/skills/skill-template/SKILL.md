@@ -4,6 +4,7 @@ description: Use this template when creating a new Agent Skill that needs valid 
 metadata:
   template: "true"
   version: "1.0"
+  agentic_rails_source_version: "1.0"
 ---
 
 # Skill Template

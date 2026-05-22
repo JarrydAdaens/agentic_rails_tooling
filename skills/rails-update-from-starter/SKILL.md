@@ -1,5 +1,5 @@
 ---
-name: agentic-rails-update
+name: rails-update-from-starter
 description: >-
   Use this skill when updating a project derived from Agentic Rails so its
   project-local context files, templates, front matter, framework metadata, and
@@ -12,7 +12,7 @@ metadata:
   agentic_rails_source_version: "1.0"
 ---
 
-# Agentic Rails Update
+# Rails Update From Starter
 
 Keep a derived Agentic Rails project aligned with the current local `agentic_rails_context_starter` repository.
 

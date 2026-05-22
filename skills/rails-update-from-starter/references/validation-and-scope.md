@@ -1,6 +1,6 @@
 # Validation And Scope
 
-Use this reference when starting `agentic-rails-update`, validating paths, or deciding which files are in scope.
+Use this reference when starting `rails-update-from-starter`, validating paths, or deciding which files are in scope.
 
 ## Source Starter Validation
 

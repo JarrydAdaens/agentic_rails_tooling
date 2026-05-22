@@ -1,6 +1,6 @@
 # Report And Validation
 
-Use this reference before finishing `agentic-rails-update`.
+Use this reference before finishing `rails-update-from-starter`.
 
 ## Required Report Format
 
@@ -60,7 +60,7 @@ Before considering the skill complete, confirm:
 ## Example Trigger
 
 ```text
-Use Agentic Rails Update on this project. The starter is at D:\Code Projects\agentic_rails_context_starter.
+Use rails-update-from-starter on this project. The starter is at D:\Code Projects\agentic_rails_context_starter.
 ```
 
 ## Example Missing Source Path Response

@@ -1,16 +1,16 @@
 ---
-name: plan-spam-workflow
+name: rails-plan-spam-workflow
 description: >-
   Use this orchestration skill when turning goals, feature descriptions,
   backlog items, or design notes into many implementation-plan documents. The
   Boss builds a durable planning queue, dispatches one subagent per goal or
   feature cluster, writes plans, updates progress, and repeats until complete.
 metadata:
-  version: "2.0"
-  agentic_rails_source_version: "2.0"
+  version: "2.1"
+  agentic_rails_source_version: "2.1"
 ---
 
-# Plan Spam Workflow (Boss)
+# Rails Plan Spam Workflow (Boss)
 
 You are the **Boss**.
 
@@ -88,9 +88,9 @@ Keep the slug short. Avoid vague names such as `plan-spam-run` or `plan-spam-mis
 
 | Role | Path from this repository root |
 | --- | --- |
-| Progress state model | `skills/plan-spam-workflow/references/state-model.md` |
+| Progress state model | `skills/rails-plan-spam-workflow/references/state-model.md` |
 | Unified Tier 4 implementation-plan template | `skills/rails-planning/references/plan-template.md` |
-| Questions file structure | `skills/plan-spam-workflow/references/questions-file-format.md` |
+| Questions file structure | `skills/rails-plan-spam-workflow/references/questions-file-format.md` |
 | Per-plan questions format | `skills/rails-planning/references/questions-format.md` |
 
 The unified template in `skills/rails-planning/references/plan-template.md` is the canonical template for all workers.

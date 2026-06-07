@@ -1,14 +1,14 @@
 ---
-name: plan-spam-state-model
-version: 2.0
-agentic_rails_source_version: 2.0
+name: rails-plan-spam-state-model
+version: 2.1
+agentic_rails_source_version: 2.1
 ---
 
 # Progress Row State Model
 
 Only the **Boss** mutates the `Status` column in `Documentation/plan-spam-<slug>/progress.md`.
 
-The run folder (`Documentation/plan-spam-<slug>/`) is unique per invocation. See the run folder naming rules in `skills/plan-spam-workflow/SKILL.md`.
+The run folder (`Documentation/plan-spam-<slug>/`) is unique per invocation. See the run folder naming rules in `skills/rails-plan-spam-workflow/SKILL.md`.
 
 ## Status values
 

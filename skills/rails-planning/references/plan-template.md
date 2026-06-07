@@ -1,6 +1,6 @@
 # Tier 4 Implementation Plan Template
 
-Use this template for `rails-planning` and `plan-spam-workflow` unless the target repository has a stronger local implementation-plan template.
+Use this template for `rails-planning` and `rails-plan-spam-workflow` unless the target repository has a stronger local implementation-plan template.
 
 Tier 4 context means the plan is grounded in concrete implementation reality — named files, modules, classes, interfaces, and validation surfaces — rather than broad product intent alone. If exact locations are unknown, name the narrowest credible subsystem and the discovery step needed to confirm it.
 

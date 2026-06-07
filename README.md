@@ -100,8 +100,8 @@ That keeps powerful workflows easy to find through autocomplete in ordinary skil
 
 Current examples include:
 
-- `skills/implementation-plan-executor-workflow`
-- `skills/plan-spam-workflow`
+- `skills/rails-boss-execute-workflow`
+- `skills/rails-plan-spam-workflow`
 
 Workflow-skills should coordinate. They can define queues, subagent roles, artifact paths, handover rules, and validation gates. Reusable domain behavior should still live in ordinary skills when possible.
 
@@ -223,7 +223,7 @@ For example:
 - A new project can start from `agentic_rails_context_starter`.
 - The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
 - Shared rules from this repository can be copied or installed into the IDE's expected rule location.
-- Skills such as `commit-log`, `rails-planning`, or `implementation-plan-executor-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
+- Skills such as `commit-log`, `rails-planning`, or `rails-boss-execute-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
 - Specialist personas such as `agents/wpf-persona` can be used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.

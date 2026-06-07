@@ -1,12 +1,12 @@
 ---
-name: implementation-plan-executor-state-model
-version: 1.0
-agentic_rails_source_version: 1.0
+name: rails-boss-execute-state-model
+version: 1.3
+agentic_rails_source_version: 1.3
 ---
 
-# Progress row state model
+# Progress Row State Model
 
-Only the **Boss** mutates the `Status` column in `documentation/workflows/implementation_plan_executor/progress.md`.
+Only the **Boss** mutates the `Status` column in `Documentation/rails-boss-execute/progress.md`.
 
 ## Status values
 

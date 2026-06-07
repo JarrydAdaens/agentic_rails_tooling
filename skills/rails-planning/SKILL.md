@@ -57,7 +57,7 @@ Apply this skill when the user asks for one implementation plan or wants IDE pla
 
 Do not apply this skill when the user explicitly wants only a quick chat outline, the plan is unrelated to repository implementation work, the task is trivial enough that a durable Tier 4 plan would be noise, or another active workflow explicitly owns the output location.
 
-Use `plan-spam-workflow` instead when the user wants many plans generated from goals, backlog items, feature dumps, or milestone checklists.
+Use `rails-plan-spam-workflow` instead when the user wants many plans generated from goals, backlog items, feature dumps, or milestone checklists.
 
 ## Repository Detection
 

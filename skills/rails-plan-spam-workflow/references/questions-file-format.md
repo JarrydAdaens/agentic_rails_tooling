@@ -1,12 +1,12 @@
 ---
-name: plan-spam-questions-file-format
-version: 2.0
-agentic_rails_source_version: 2.0
+name: rails-plan-spam-questions-file-format
+version: 2.1
+agentic_rails_source_version: 2.1
 ---
 
 # Questions File Structure
 
-`plan-spam-workflow` uses a two-level questions structure.
+`rails-plan-spam-workflow` uses a two-level questions structure.
 
 ## Level 1 — Per-plan questions.md
 

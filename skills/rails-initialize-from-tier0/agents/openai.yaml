@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rails Initialize From Tier 0"
+  short_description: "Populate a new Agentic Rails project from Tier 0"
+  default_prompt: "Use $rails-initialize-from-tier0 to populate this new Agentic Rails project from my Tier 0 document."

@@ -7,8 +7,7 @@ description: >-
   goal or tightly bound plan slice, enforces specialist agents when required,
   updates progress, and repeats until the requested work is done or blocked.
 metadata:
-  version: "1.3"
-  agentic_rails_source_version: "1.3"
+  version: "1.4"
 ---
 
 # Rails Boss Execute Workflow

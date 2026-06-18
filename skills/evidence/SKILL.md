@@ -5,6 +5,8 @@ description: >-
   validation evidence, source-grounded proof, or an evidence.md file during an
   agentic task. It maintains an opt-in project-local evidence artifact that
   indexes changed files, commits, checks, planning inputs, and unverified claims.
+metadata:
+  version: "1.0"
 ---
 
 # Evidence

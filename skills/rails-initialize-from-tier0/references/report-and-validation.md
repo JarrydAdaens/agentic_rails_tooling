@@ -1,3 +1,9 @@
+---
+name: rails-initialize-from-tier0-report-and-validation
+metadata:
+  version: "1.0"
+---
+
 # Report And Validation
 
 Use this reference before finishing `rails-initialize-from-tier0`.

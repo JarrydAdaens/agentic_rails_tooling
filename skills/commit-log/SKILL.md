@@ -6,8 +6,7 @@ description: >-
   completed. It writes a standardized commit log from a fixed template for git,
   Perforce, Mercurial, SVN, or similar VCS workflows.
 metadata:
-  version: "1.3"
-  agentic_rails_source_version: "1.3"
+  version: "1.4"
 ---
 
 # Commit log

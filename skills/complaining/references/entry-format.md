@@ -1,3 +1,9 @@
+---
+name: complaining-entry-format
+metadata:
+  version: "1.0"
+---
+
 # Complaint Entry Format
 
 Use this format when appending a complaint. Include a timestamp only when the environment provides a reliable current date and time.

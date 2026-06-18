@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Evaluating Skill Output Quality
 
 Structured evals test whether a skill reliably improves outputs across realistic prompts and edge cases.

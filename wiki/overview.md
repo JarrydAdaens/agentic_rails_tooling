@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Agent Skills Overview
 
 Agent Skills are a lightweight, open format for extending AI agents with specialized knowledge, reusable workflows, scripts, references, templates, and other resources.

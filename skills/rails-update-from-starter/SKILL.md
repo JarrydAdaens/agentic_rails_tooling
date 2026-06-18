@@ -8,8 +8,7 @@ description: >-
   Agentic Rails projects from the starter without overwriting project-specific
   design, milestones, goals, historical implementation plans, or provenance.
 metadata:
-  version: "1.0"
-  agentic_rails_source_version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Update From Starter

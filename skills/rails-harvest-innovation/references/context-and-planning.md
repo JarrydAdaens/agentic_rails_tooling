@@ -1,3 +1,9 @@
+---
+name: rails-harvest-innovation-context-and-planning
+metadata:
+  version: "1.0"
+---
+
 # Context And Planning
 
 Use this reference when confirming repository roles, loading Agentic Rails context, and preparing the destination work record.

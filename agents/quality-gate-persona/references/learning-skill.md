@@ -1,3 +1,9 @@
+---
+name: learning-skill
+metadata:
+  version: "1.0"
+---
+
 # Learning Skill
 
 ## Purpose

@@ -1,7 +1,7 @@
 ---
 name: performance-and-diagnostics
-version: 1.0
-agentic_rails_source_version: 1.0
+metadata:
+  version: "1.1"
 ---
 
 # Performance and Diagnostics

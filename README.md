@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Agentic Rails Tooling
 
 `agentic_rails_tooling` is the right rail of the Agentic Rails framework — a reusable capability library for agentic development.

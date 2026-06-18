@@ -1,3 +1,9 @@
+---
+name: delegation
+metadata:
+  version: "1.0"
+---
+
 # Delegation
 
 ## Purpose

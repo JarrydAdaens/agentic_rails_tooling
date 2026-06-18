@@ -1,7 +1,7 @@
 ---
 name: custom-control-authoring
-version: 1.1
-agentic_rails_source_version: 1.1
+metadata:
+  version: "1.2"
 ---
 
 # Custom Control Authoring

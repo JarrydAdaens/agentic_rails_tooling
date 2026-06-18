@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Optimizing Skill Descriptions
 
 The `description` field is the main trigger signal for a skill. At startup, compatible clients usually load only `name` and `description`; the full `SKILL.md` is read only after the agent decides the task matches.

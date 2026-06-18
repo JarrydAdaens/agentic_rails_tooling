@@ -1,3 +1,9 @@
+---
+name: thinking-out-loud-path-selection
+metadata:
+  version: "1.0"
+---
+
 # Thinking Notes Path Selection
 
 Choose the `thinking.md` path inside the target project, not inside the reusable tooling repository unless the tooling repository itself is the target.

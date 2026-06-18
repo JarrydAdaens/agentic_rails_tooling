@@ -1,3 +1,9 @@
+---
+name: rails-harvest-innovation-wpf-feature-guides
+metadata:
+  version: "1.0"
+---
+
 # WPF Feature Guides
 
 Use this reference only for the feature type being harvested.

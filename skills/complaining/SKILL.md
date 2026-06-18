@@ -5,12 +5,7 @@ description: >-
   genuine blockers, friction, ambiguity, tool failures, bad assumptions, risky
   constraints, or other execution problems while it works.
 metadata:
-  version: "1.1"
-  agentic_rails_source_version: "1.1"
-  invocation: agent
-  changelog:
-    "1.1": "Clarified agent-invoked primary trigger, expanded validation checklist, removed duplicate reference loading section, added version history."
-    "1.0": "Initial release."
+  version: "1.2"
 ---
 
 # Complaining

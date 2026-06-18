@@ -1,7 +1,7 @@
 ---
 name: rails-plan-spam-state-model
-version: 2.1
-agentic_rails_source_version: 2.1
+metadata:
+  version: "2.2"
 ---
 
 # Progress Row State Model

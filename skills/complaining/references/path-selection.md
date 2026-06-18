@@ -1,3 +1,9 @@
+---
+name: complaining-path-selection
+metadata:
+  version: "1.0"
+---
+
 # Complaint Log Path Selection
 
 Choose the complaint log path inside the target project, not inside the reusable tooling repository unless the tooling repository itself is the target.

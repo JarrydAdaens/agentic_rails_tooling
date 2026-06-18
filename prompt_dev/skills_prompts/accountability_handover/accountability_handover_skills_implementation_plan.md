@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Accountability Handover Skills And Agents
 
 ## Summary

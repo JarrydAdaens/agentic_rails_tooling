@@ -1,10 +1,10 @@
 ---
-description: C# coding rules — naming, style, modern language features, and conventions for .NET projects.    
-globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]    
-alwaysApply: false    
-owner: Jarryd Adaens    
-version: 1.2    
-agentic_rails_source_version: 1.2
+description: C# coding rules — naming, style, modern language features, and conventions for .NET projects.
+globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]
+alwaysApply: false
+metadata:
+  version: "1.3"
+  owner: Jarryd Adaens
 ---
 
 # C# Coding Rules

@@ -2,9 +2,8 @@
 name: skill-template-advanced
 description: Use this template when creating a broad Agent Skill that needs progressive disclosure, focused reference files, routing guidance, examples, and validation without loading all domain knowledge up front.
 metadata:
+  version: "1.2"
   template: "true"
-  version: "1.1"
-  agentic_rails_source_version: "1.1"
 ---
 
 # Advanced Progressive-Disclosure Skill Template

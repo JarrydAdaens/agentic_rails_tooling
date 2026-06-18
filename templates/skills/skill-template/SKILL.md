@@ -2,9 +2,8 @@
 name: skill-template
 description: Use this template when creating a new Agent Skill that needs valid SKILL.md frontmatter, concise trigger guidance, workflow instructions, examples, and validation notes.
 metadata:
+  version: "1.1"
   template: "true"
-  version: "1.0"
-  agentic_rails_source_version: "1.0"
 ---
 
 # Skill Template

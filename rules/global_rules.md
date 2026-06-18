@@ -1,10 +1,10 @@
 ---
-description: General coding principles and git conventions that apply across all projects and languages.    
-globs: []    
-alwaysApply: true    
-owner: Jarryd Adaens    
-version: 1.2    
-agentic_rails_source_version: 1.2
+description: General coding principles and git conventions that apply across all projects and languages.
+globs: []
+alwaysApply: true
+metadata:
+  version: "1.3"
+  owner: Jarryd Adaens
 ---
 
 # General Coding Principles

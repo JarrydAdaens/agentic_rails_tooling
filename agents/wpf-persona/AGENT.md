@@ -6,8 +6,7 @@ description: >-
   or threading problems. Prefer over the general agent whenever the task requires
   WPF platform knowledge rather than generic C# logic.
 metadata:
-  version: "2.0"
-  agentic_rails_source_version: "2.0"
+  version: "2.1"
   owner: Jarryd Adaens
 ---
 

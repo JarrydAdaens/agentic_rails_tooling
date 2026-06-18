@@ -1,7 +1,7 @@
 ---
 name: rails-planning-questions-format
-version: 1.0
-agentic_rails_source_version: 1.0
+metadata:
+  version: "1.1"
 ---
 
 # Per-Plan Questions File Format

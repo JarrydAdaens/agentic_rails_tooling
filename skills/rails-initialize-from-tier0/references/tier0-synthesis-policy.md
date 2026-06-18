@@ -1,3 +1,9 @@
+---
+name: rails-initialize-from-tier0-synthesis-policy
+metadata:
+  version: "1.0"
+---
+
 # Tier 0 Synthesis Policy
 
 Use this reference when converting a raw Tier 0 document into maintained Agentic Rails project context.

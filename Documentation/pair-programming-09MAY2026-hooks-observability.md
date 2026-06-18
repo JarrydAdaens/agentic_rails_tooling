@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Pair Programming Session
 
 ## Session Date

@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Design Document: Accountability Handover Agent Skills
 
 ## Purpose

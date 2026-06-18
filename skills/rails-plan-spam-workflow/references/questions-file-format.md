@@ -1,7 +1,7 @@
 ---
 name: rails-plan-spam-questions-file-format
-version: 2.1
-agentic_rails_source_version: 2.1
+metadata:
+  version: "2.2"
 ---
 
 # Questions File Structure

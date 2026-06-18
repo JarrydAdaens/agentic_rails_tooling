@@ -1,3 +1,9 @@
+---
+name: complaining-logging-policy
+metadata:
+  version: "1.0"
+---
+
 # Logging Policy
 
 Log real friction when it meaningfully affects execution quality, confidence, time, or risk.

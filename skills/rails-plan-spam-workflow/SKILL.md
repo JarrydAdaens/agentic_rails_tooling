@@ -6,8 +6,7 @@ description: >-
   Boss builds a durable planning queue, dispatches one subagent per goal or
   feature cluster, writes plans, updates progress, and repeats until complete.
 metadata:
-  version: "2.1"
-  agentic_rails_source_version: "2.1"
+  version: "2.2"
 ---
 
 # Rails Plan Spam Workflow (Boss)

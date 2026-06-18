@@ -1,3 +1,9 @@
+---
+name: severity-rubric
+metadata:
+  version: "1.0"
+---
+
 # Severity Rubric
 
 ## Purpose

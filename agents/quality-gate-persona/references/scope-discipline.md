@@ -1,3 +1,9 @@
+---
+name: scope-discipline
+metadata:
+  version: "1.0"
+---
+
 # Scope Discipline
 
 ## Purpose

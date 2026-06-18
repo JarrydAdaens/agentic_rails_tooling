@@ -1,10 +1,10 @@
 ---
-description: Qt C++ coding rules — Qt Widgets, signals/slots, threading, CMake build, and OpenRGB plugin conventions for Windows.    
-globs: ["**/*.pro", "**/*.qrc", "**/*.qml"]    
-alwaysApply: false    
-owner: Jarryd Adaens    
-version: 1.1    
-agentic_rails_source_version: 1.1
+description: Qt C++ coding rules — Qt Widgets, signals/slots, threading, CMake build, and OpenRGB plugin conventions for Windows.
+globs: ["**/*.pro", "**/*.qrc", "**/*.qml"]
+alwaysApply: false
+metadata:
+  version: "1.2"
+  owner: Jarryd Adaens
 ---
 
 # Windsurf Rules — Qt C++ (Windows, OpenRGB Plugin)

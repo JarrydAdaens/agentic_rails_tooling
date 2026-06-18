@@ -1,3 +1,9 @@
+---
+name: rails-harvest-innovation-report-and-failures
+metadata:
+  version: "1.0"
+---
+
 # Report And Failures
 
 Use this reference when updating provenance, handling blockers, and producing the final user-facing report.

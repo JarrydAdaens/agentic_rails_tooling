@@ -1,10 +1,10 @@
 ---
-description: WPF and XAML coding rules — MVVM, bindings, resources, layout, and formatting for .NET desktop apps.    
-globs: ["**/*.xaml", "**/*.xaml.cs"]    
-alwaysApply: false    
-owner: Jarryd Adaens    
-version: 1.2    
-agentic_rails_source_version: 1.2
+description: WPF and XAML coding rules — MVVM, bindings, resources, layout, and formatting for .NET desktop apps.
+globs: ["**/*.xaml", "**/*.xaml.cs"]
+alwaysApply: false
+metadata:
+  version: "1.3"
+  owner: Jarryd Adaens
 ---
 
 # WPF XAML Coding Rules (Workspace)

@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # rails-pair-programming Skill Design Document
 
 Source: user-provided design brief used to create `skills/rails-pair-programming`.

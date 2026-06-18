@@ -1,7 +1,7 @@
 ---
 name: modules-project-structure
-version: 1.0
-agentic_rails_source_version: 1.0
+metadata:
+  version: "1.1"
 ---
 
 # Modules and Project Structure

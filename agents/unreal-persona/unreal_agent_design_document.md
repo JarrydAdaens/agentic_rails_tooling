@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Unreal Agent Design Document
 
 ## Purpose

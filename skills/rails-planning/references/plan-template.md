@@ -1,3 +1,9 @@
+---
+name: rails-planning-plan-template
+metadata:
+  version: "1.0"
+---
+
 # Tier 4 Implementation Plan Template
 
 Use this template for `rails-planning` and `rails-plan-spam-workflow` unless the target repository has a stronger local implementation-plan template.

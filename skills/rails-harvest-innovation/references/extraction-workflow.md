@@ -1,3 +1,9 @@
+---
+name: rails-harvest-innovation-extraction-workflow
+metadata:
+  version: "1.0"
+---
+
 # Extraction Workflow
 
 Use this reference while inspecting, bounding, neutralizing, integrating, and validating the harvested feature.

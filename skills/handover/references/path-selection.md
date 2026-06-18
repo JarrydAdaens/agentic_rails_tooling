@@ -1,3 +1,9 @@
+---
+name: handover-path-selection
+metadata:
+  version: "1.0"
+---
+
 # Handover Path Selection
 
 Choose the handover path inside the target project, not inside the reusable tooling repository unless the tooling repository itself is the target.

@@ -1,7 +1,7 @@
 ---
 name: lighting
-version: "1.0"
-agentic_rails_source_version: "1.0"
+metadata:
+  version: "1.1"
 ---
 
 # Lighting — Lumen GI, Light Mobility, and Post Process

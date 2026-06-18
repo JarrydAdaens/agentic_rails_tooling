@@ -11,7 +11,6 @@ description: >-
   plans without overwriting reusable Agentic Rails framework material.
 metadata:
   version: "1.4"
-  agentic_rails_source_version: "1.4"
 ---
 
 # Rails Initialize From Tier 0

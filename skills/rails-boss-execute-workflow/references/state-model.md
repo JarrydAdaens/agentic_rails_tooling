@@ -1,7 +1,7 @@
 ---
 name: rails-boss-execute-state-model
-version: 1.3
-agentic_rails_source_version: 1.3
+metadata:
+  version: "1.4"
 ---
 
 # Progress Row State Model

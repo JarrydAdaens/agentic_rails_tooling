@@ -1,3 +1,9 @@
+---
+name: rails-update-from-starter-version-and-merge-policy
+metadata:
+  version: "1.0"
+---
+
 # Version And Merge Policy
 
 Use this reference when interpreting front matter, comparing source versions, or deciding whether a merge is safe.

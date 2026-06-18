@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Best Practices For Skill Creators
 
 Good skills are grounded in real expertise, not generic advice. They capture the steps, corrections, formats, constraints, and edge cases that make a task reliable in practice.

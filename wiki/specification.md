@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Agent Skills Specification
 
 This page summarizes the compatibility requirements for skills in this repository.

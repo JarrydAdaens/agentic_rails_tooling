@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Review: Accountability Handover Skills Plan
 
 Reviewer perspective: the agent that would actually run these skills. Focus is on real gaps that would break the design's intent, not nitpicks.

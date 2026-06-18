@@ -1,3 +1,9 @@
+---
+name: evidence-path-selection
+metadata:
+  version: "1.0"
+---
+
 # Evidence Path Selection
 
 Choose the `evidence.md` path inside the target project, not inside the reusable tooling repository unless the tooling repository itself is the target.

@@ -1,3 +1,12 @@
+---
+description: React coding rules — function components, hooks, props, JSX, and state patterns for .tsx files.
+globs: ["**/*.tsx"]
+alwaysApply: false
+metadata:
+  version: "1.0"
+  owner: Jarryd Adaens
+---
+
 # React Coding Rules
 
 ## Scope

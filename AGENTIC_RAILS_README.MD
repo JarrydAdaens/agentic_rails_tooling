@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Agentic Rails
 
 Agentic Rails is an opinionated, IDE-agnostic framework for AI-assisted software development.

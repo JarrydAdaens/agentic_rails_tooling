@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.1"
+---
+
 # Repository Alignment Notes
 
 This repository separates reusable context into layers:
@@ -7,12 +12,42 @@ This repository separates reusable context into layers:
 - `agents/`: specialist worker definitions with operating contracts and references.
 - `prompt_dev/`: source prompt material used to create or refine artifacts.
 
+## Front Matter Standard
+
+Every Markdown file that carries front matter follows one shape:
+
+- A `metadata:` block with `version` as its first child. `version` is the file's
+  own revision (see [versioning.md](versioning.md)).
+- **Tool-consumed fields stay top-level**, because IDEs read them directly:
+  `name`, `description`, and the Cursor rule fields `globs` and `alwaysApply`.
+- **Local or custom data lives under `metadata`**: `version`, `owner`, and
+  `template` (for template files).
+- Do **not** use these anywhere in this repo's front matter:
+  `agentic_rails_source_version` (context-file only — never on tooling
+  artifacts), `changelog` (git is the changelog), or `invocation` (not an
+  IDE-consumed field).
+- `agents/openai.yaml` provider files use their own `interface:` schema and are
+  not Markdown front matter; leave their shape alone.
+
+Example:
+
+```yaml
+---
+name: my-skill
+description: Use this skill when ...
+metadata:
+  version: "1.2"
+  owner: Jarryd Adaens
+---
+```
+
 ## Skill Rules For This Repository
 
 - Every skill directory must contain `SKILL.md`.
 - The folder name and `name` frontmatter must match.
 - Skill names use lowercase letters, numbers, and hyphens.
 - Put nonstandard data such as local version, owner, or template status under `metadata`.
+- Skills and agents use only `metadata.version` for their own revision. Do not add `agentic_rails_source_version` to tooling artifacts — that field is for derived-project context files only (see [versioning.md](versioning.md)).
 - Descriptions should use "Use this skill when..." style when it helps activation.
 - Keep workflow-style skills under `skills/` for now, but make their orchestration role explicit.
 

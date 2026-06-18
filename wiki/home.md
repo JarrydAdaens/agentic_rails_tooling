@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Agent Skills Wiki
 
 This wiki captures the AgentSkills.io material used by this repository and turns it into local, reviewable guidance for maintaining compatible skills and agents.
@@ -13,6 +18,7 @@ This wiki captures the AgentSkills.io material used by this repository and turns
 | [evaluating-skills.md](evaluating-skills.md) | How to test whether a skill improves output quality. |
 | [using-scripts.md](using-scripts.md) | How to reference commands and bundle scripts in skills. |
 | [repo-alignment-notes.md](repo-alignment-notes.md) | Local conventions for this repository's `skills/`, `agents/`, `rules/`, and workflow-style skills. |
+| [versioning.md](versioning.md) | What `version` and `agentic_rails_source_version` mean, and how context sync uses them. |
 
 ## Local Maintenance Checklist
 

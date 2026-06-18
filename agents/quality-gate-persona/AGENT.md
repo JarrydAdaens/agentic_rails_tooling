@@ -5,8 +5,7 @@ description: >-
   human review. Validates a changeset against the task plan, standing rules,
   configured analysis tooling, architecture, scope, tests, and evidence.
 metadata:
-  version: "1.0"
-  agentic_rails_source_version: "1.0"
+  version: "1.1"
   owner: Jarryd Adaens
 ---
 

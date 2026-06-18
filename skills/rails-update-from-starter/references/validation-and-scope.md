@@ -1,3 +1,9 @@
+---
+name: rails-update-from-starter-validation-and-scope
+metadata:
+  version: "1.0"
+---
+
 # Validation And Scope
 
 Use this reference when starting `rails-update-from-starter`, validating paths, or deciding which files are in scope.

@@ -1,10 +1,10 @@
 ---
-description: Unreal Engine C++ coding rules — UE idioms, UHT/UBT, naming, formatting, and reflection for UE5 projects.    
-globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]    
-alwaysApply: false    
-owner: Jarryd Adaens    
-version: 1.2    
-agentic_rails_source_version: 1.2
+description: Unreal Engine C++ coding rules — UE idioms, UHT/UBT, naming, formatting, and reflection for UE5 projects.
+globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]
+alwaysApply: false
+metadata:
+  version: "1.3"
+  owner: Jarryd Adaens
 ---
 
 # Unreal C++ Coding Rules (Workspace)

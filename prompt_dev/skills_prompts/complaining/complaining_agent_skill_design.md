@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Design Document: `complaining` Agent Skill
 
 ## Purpose

@@ -1,3 +1,12 @@
+---
+description: TypeScript coding rules — strict typing, naming, modules, and formatting for .ts and .tsx files.
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+metadata:
+  version: "1.0"
+  owner: Jarryd Adaens
+---
+
 # TypeScript Coding Rules
 
 ## Scope

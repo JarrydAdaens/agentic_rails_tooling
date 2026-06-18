@@ -1,3 +1,9 @@
+---
+name: certainty-labels
+metadata:
+  version: "1.0"
+---
+
 # Certainty Labels
 
 ## Purpose

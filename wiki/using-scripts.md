@@ -1,3 +1,8 @@
+---
+metadata:
+  version: "1.0"
+---
+
 # Using Scripts In Skills
 
 Skills can reference one-off commands or bundle reusable executable scripts under `scripts/`.

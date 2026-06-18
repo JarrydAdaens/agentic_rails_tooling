@@ -6,8 +6,7 @@ description: >-
   build and plugin systems, and production debugging. C++ first. UE5-default.
   Blueprint-aware but not Blueprint-dependent.
 metadata:
-  version: "1.0"
-  agentic_rails_source_version: "1.0"
+  version: "1.1"
   owner: Jarryd Adaens
 ---
 

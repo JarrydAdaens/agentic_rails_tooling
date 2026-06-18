@@ -1,3 +1,12 @@
+---
+description: Shared rules index — routes agents to the minimum relevant rule files per stack and task.
+globs: []
+alwaysApply: true
+metadata:
+  version: "1.0"
+  owner: Jarryd Adaens
+---
+
 # Shared Rules Index
 
 This file routes the agent to the minimum relevant shared rules for the current repository and task.

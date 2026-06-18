@@ -1,8 +1,8 @@
 ---
 name: tier-4-implementation-plan-template
-version: 2.1
-agentic_rails_source_version: 2.1
 superseded_by: skills/rails-planning/references/plan-template.md
+metadata:
+  version: "2.2"
 ---
 
 # Tier 4 Implementation Plan Template — Superseded

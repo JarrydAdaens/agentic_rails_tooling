@@ -1,3 +1,9 @@
+---
+name: rails-initialize-from-tier0-validation-and-scope
+metadata:
+  version: "1.0"
+---
+
 # Validation And Scope
 
 Use this reference when starting `rails-initialize-from-tier0`, validating paths, or deciding which files are in scope.

@@ -6,6 +6,8 @@ description: >-
   agentic task. It maintains an opt-in project-local thinking artifact that
   captures useful investigation paths, discovered constraints, observations, and
   revisit items without exposing private chain-of-thought.
+metadata:
+  version: "1.0"
 ---
 
 # Thinking Out Loud

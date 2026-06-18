@@ -1,3 +1,9 @@
+---
+name: tooling-stages
+metadata:
+  version: "1.0"
+---
+
 # Tooling Stages
 
 ## Purpose

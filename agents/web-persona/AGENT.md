@@ -6,8 +6,7 @@ description: >-
   backend. Prefer over the general agent whenever the task requires React, TypeScript,
   or .NET API integration knowledge.
 metadata:
-  version: "1.0"
-  agentic_rails_source_version: "1.0"
+  version: "1.1"
   owner: Jarryd Adaens
 ---
 

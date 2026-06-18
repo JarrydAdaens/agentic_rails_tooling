@@ -7,6 +7,8 @@ description: >-
   review, process review, plan-adherence review, or durable retrospective.md
   grounded in plans, logs, git history, changed files, and optional provenance
   artifacts.
+metadata:
+  version: "1.0"
 ---
 
 # Rails Retrospective

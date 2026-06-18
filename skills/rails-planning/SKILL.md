@@ -11,8 +11,7 @@ description: >-
   Tier 4 planning conventions, with implementation-log.md and questions.md
   beside every new plan.
 metadata:
-  version: "1.1"
-  agentic_rails_source_version: "1.1"
+  version: "1.2"
 ---
 
 # Rails Planning

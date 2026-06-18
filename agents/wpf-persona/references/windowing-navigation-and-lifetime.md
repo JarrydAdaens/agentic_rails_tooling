@@ -1,7 +1,7 @@
 ---
 name: windowing-navigation-and-lifetime
-version: 1.1
-agentic_rails_source_version: 1.1
+metadata:
+  version: "1.2"
 ---
 
 # Windowing, Navigation, and Lifetime

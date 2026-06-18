@@ -1,6 +1,6 @@
 ---
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Repository Alignment Notes
@@ -18,6 +18,8 @@ Every Markdown file that carries front matter follows one shape:
 
 - A `metadata:` block with `version` as its first child. `version` is the file's
   own revision (see [versioning.md](versioning.md)).
+- **`name` and `description` are required** on every file. If either is missing,
+  infer and add it from the file's content.
 - **Tool-consumed fields stay top-level**, because IDEs read them directly:
   `name`, `description`, and the Cursor rule fields `globs` and `alwaysApply`.
 - **Local or custom data lives under `metadata`**: `version`, `owner`, and
@@ -28,6 +30,10 @@ Every Markdown file that carries front matter follows one shape:
   IDE-consumed field).
 - `agents/openai.yaml` provider files use their own `interface:` schema and are
   not Markdown front matter; leave their shape alone.
+
+The `rails-clean-frontmatter` skill applies and repairs this standard across an
+Agentic Rails repository, including the starter and derived-project variants of
+the `agentic_rails_source_version` rule.
 
 Example:
 

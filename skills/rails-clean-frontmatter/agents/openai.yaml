@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rails Clean Front Matter"
+  short_description: "Normalize Agentic Rails Markdown front matter"
+  default_prompt: "Use $rails-clean-frontmatter to normalize the YAML front matter across this Agentic Rails repository."

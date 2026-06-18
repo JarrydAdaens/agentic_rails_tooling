@@ -1,6 +1,8 @@
 ---
+name: evaluating-skills
+description: How to structure and run evaluations to test whether a skill reliably improves agent outputs.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Evaluating Skill Output Quality

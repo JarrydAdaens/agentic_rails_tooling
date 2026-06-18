@@ -1,6 +1,8 @@
 ---
+name: versioning
+description: Explains the difference between version (local file revision) and agentic_rails_source_version (starter sync baseline) in Agentic Rails front matter.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Versioning: `version` vs `agentic_rails_source_version`

@@ -1,6 +1,8 @@
 ---
+name: wiki-overview
+description: Overview of the Agent Skills open format, including structure, purpose, and progressive disclosure.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Agent Skills Overview

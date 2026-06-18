@@ -1,6 +1,8 @@
 ---
+name: best-practices
+description: Guidance for writing useful, scoped, and execution-tested Agent Skills.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Best Practices For Skill Creators

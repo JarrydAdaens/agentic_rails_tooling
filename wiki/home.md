@@ -1,6 +1,8 @@
 ---
+name: wiki-home
+description: Index and local guidance hub for the AgentSkills.io material used by this repository.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Agent Skills Wiki

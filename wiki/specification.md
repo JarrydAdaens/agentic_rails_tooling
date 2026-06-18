@@ -1,6 +1,8 @@
 ---
+name: wiki-specification
+description: Compatibility requirements for skill directories, SKILL.md front matter, optional folders, and validation.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Agent Skills Specification

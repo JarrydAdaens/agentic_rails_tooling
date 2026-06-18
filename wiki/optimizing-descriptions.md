@@ -1,6 +1,8 @@
 ---
+name: optimizing-descriptions
+description: How to craft skill descriptions that trigger reliably without becoming too broad.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Optimizing Skill Descriptions

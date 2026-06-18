@@ -1,6 +1,8 @@
 ---
+name: repo-alignment-notes
+description: Local conventions for this repository's front matter standard, skills, agents, rules, and workflow-style skills.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Repository Alignment Notes

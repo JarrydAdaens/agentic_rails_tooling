@@ -1,7 +1,8 @@
 ---
+name: agentic-ide-capability-comparison-report
 description: "Comparison of agentic IDE capabilities, configuration models, workflow primitives, and repository strategy implications."
 metadata:
-  version: "0.2"
+  version: "0.3"
   owner: "Jarryd Adaens"
 ---
 

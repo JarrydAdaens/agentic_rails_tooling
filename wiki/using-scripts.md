@@ -1,6 +1,8 @@
 ---
+name: using-scripts
+description: How to reference one-off commands and bundle reusable executable scripts in Agent Skills.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Using Scripts In Skills

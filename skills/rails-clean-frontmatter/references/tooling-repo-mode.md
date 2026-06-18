@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-tooling-repo-mode
 description: Tooling-repo mode for rails-clean-frontmatter — strip agentic_rails_source_version and conform every file to the metadata.version standard.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Tooling Repo Mode
@@ -24,9 +24,15 @@ Strong signals:
 If it instead carries real project context, it is a derived project — switch
 references.
 
-## `agentic_rails_source_version` Policy
+## `agentic_rails_source_version`, `repo`, and `owner` Policy
 
-**Remove it entirely.** It must not appear in any front matter here.
+**`agentic_rails_source_version` and `repo`: remove them entirely.** Neither applies to tooling artifacts.
+
+`agentic_rails_source_version` records which starter generation a derived project's context file last synced to — tooling artifacts are not synced against the starter, so it is meaningless here and was a past mistake. Strip it wherever it appears in front matter.
+
+`repo` is a project-identity placeholder used by the starter and derived projects. The tooling repo is a shared library, not a project, so this field has no meaning here. Strip it if found.
+
+`owner` is optional and may remain under `metadata` when present — it identifies a maintainer, which is useful on agents and personas.
 
 That field records which starter generation a *derived project's* context file
 last synced to. Tooling artifacts are not synced against the starter, so carrying
@@ -49,7 +55,7 @@ metadata:
 ---
 ```
 
-No `agentic_rails_source_version`, `changelog`, or `invocation`.
+No `agentic_rails_source_version`, `repo`, `changelog`, or `invocation`.
 
 ## File Scope
 

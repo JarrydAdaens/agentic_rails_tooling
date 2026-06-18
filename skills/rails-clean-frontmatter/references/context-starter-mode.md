@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-context-starter-mode
 description: Context-starter mode for rails-clean-frontmatter — keep agentic_rails_source_version equal to version, the starter source of truth.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Context Starter Mode
@@ -37,6 +37,16 @@ here. A mismatch is an error to fix:
 - If it differs from `version`, set it equal to `version`.
 - When a change bumps `version`, bump `agentic_rails_source_version` to match.
 
+## `repo` and `owner` Policy
+
+**Both required under `metadata`, and both must be `"default"` in this repository.**
+
+`repo` and `owner` serve as identity anchors that derived projects overwrite during initialization. The starter ships them as `"default"` intentionally — they are the known placeholder values that `rails-initialize-from-tier0` and future agents use to find and replace stale identity before the project goes live.
+
+- If either field is missing, add it with the value `"default"`.
+- If either field holds a real name (not `"default"`), something has gone wrong — reset it to `"default"` and note it in the report.
+- Do **not** infer real values from git or the filesystem here. `"default"` is the correct value for the starter template.
+
 ## Resulting Shape
 
 ```yaml
@@ -46,7 +56,8 @@ description: <one sentence>
 metadata:
   version: "X.Y"
   agentic_rails_source_version: "X.Y"   # always equal to version
-  owner: <name>                          # when present
+  owner: "default"
+  repo: "default"
   template: "true"                       # template files only
 ---
 ```
@@ -68,5 +79,5 @@ Process Markdown front matter outside `archived/`, including:
 - This is a template repository. Fix front matter only; never replace template
   placeholders with invented project content — that is initialization work for a
   different skill.
-- New front matter starts at `version: "1.0"` with
-  `agentic_rails_source_version: "1.0"`.
+- New front matter starts at `version: "1.0"` with `agentic_rails_source_version: "1.0"`,
+  `owner: "default"`, and `repo: "default"`.

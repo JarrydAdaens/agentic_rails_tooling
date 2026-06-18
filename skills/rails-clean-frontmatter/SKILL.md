@@ -8,7 +8,7 @@ description: >-
   project derived from the starter — and aborts in repositories that do not use
   Agentic Rails.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Clean Front Matter
@@ -74,8 +74,11 @@ globs: [<patterns>]
 alwaysApply: <true|false>
 metadata:
   version: "X.Y"
-  # mode-specific: agentic_rails_source_version (see the mode reference)
-  # optional: owner, template
+  # mode-specific fields — see the mode reference:
+  agentic_rails_source_version: "X.Y"   # starter and derived only
+  owner: <owner>                         # starter: "default"; derived: real name
+  repo: <repo>                           # starter: "default"; derived: real repo name
+  template: "true"                       # template files only
 ---
 ```
 
@@ -88,13 +91,13 @@ Rules that hold in every mode:
 - **Always remove** `changelog` (git is the changelog) and `invocation` (not an
   IDE-consumed field) from front matter.
 - **`metadata.version` is required**, listed first under `metadata`. Keep
-  `owner` and `template` under `metadata` when present.
+  `owner`, `repo`, and `template` under `metadata` when applicable to the mode.
 - **Keep top-level** only the tool-consumed fields: `name`, `description`, and
   the Cursor rule fields `globs` and `alwaysApply`. Move anything else that is
-  local data (`version`, `owner`, `template`) under `metadata`.
+  local data (`version`, `owner`, `repo`, `template`) under `metadata`.
 - **Unknown field → stop and ask.** If a front matter carries a field this skill
   does not recognize (not `name`, `description`, `globs`, `alwaysApply`,
-  `metadata`, `version`, `owner`, `template`, `agentic_rails_source_version`,
+  `metadata`, `version`, `owner`, `repo`, `template`, `agentic_rails_source_version`,
   `changelog`, or `invocation`), halt and ask the user what to do with it. Do not
   drop or keep it silently.
 - **Exclusions**: never process anything under `archived/`, and never rewrite

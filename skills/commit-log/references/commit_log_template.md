@@ -65,7 +65,7 @@ Use these for small, self-contained work that doesn't correspond to a tracked ti
 |--------|-------------|
 | `[BUG]` | Fixing a defect that is not tracked against a ticket or goal. |
 | `[FEATURE]` | Adding new behavior that is not tracked against a ticket or goal. |
-| `[CONTEXT]` | Revising narrative content under the `Documentation/` folder (plans, retrospectives, handovers, project context). |
+| `[CONTEXT]` | Revising narrative content under the `context/` folder (plans, retrospectives, handovers, project context). |
 | `[REFACTOR]` | Restructuring code with no intended behavior change. |
 | `[CHORE]` | Build, CI, dependency, tooling, or repo housekeeping. |
 
@@ -74,7 +74,7 @@ Examples:
 ```text
 [BUG] - Fix null deref in UserService when session is anonymous
 [FEATURE] - Add JWT-based login endpoint with refresh token
-[CONTEXT] - Update Documentation/handovers/2026-05-07.md with current goal state
+[CONTEXT] - Update context/handovers/2026-05-07.md with current goal state
 [REFACTOR] - Extract DataService dependencies behind an interface
 [CHORE] - Bump xunit to 2.7 and update test runner config
 ```

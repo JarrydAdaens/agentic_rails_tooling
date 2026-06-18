@@ -42,8 +42,8 @@ When this skill is active, ensure a complaints file exists in the target project
 Path selection:
 
 1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `complaining.md` in that folder.
-2. Otherwise, if the target repository follows Agentic Rails, write `Documentation/complaining.md`.
-3. Otherwise write `complaining.md` in the target project's documentation folder, preferring `Documentation/`, then `documentation/`, then `docs/`.
+2. Otherwise, if the target repository follows Agentic Rails, write `context/complaining.md`.
+3. Otherwise write `complaining.md` in the target project's context or documentation folder, preferring `context/`, then `documentation/`, then `docs/`.
 
 Load [references/path-selection.md](references/path-selection.md) when the correct location is not obvious.
 
@@ -95,8 +95,8 @@ Before considering the skill applied correctly, confirm:
 - The complaint log exists inside the **target project**, not inside the tooling repository.
 - The complaint log is in the correct location for the detected project type:
   - Agentic Rails with an active implementation-plan folder → `<plan-folder>/complaining.md`
-  - Agentic Rails without an identifiable active plan → `Documentation/complaining.md`
-  - Non-Agentic-Rails project → an existing documentation folder (`Documentation/`, `documentation/`, `docs/`, `Docs/`), or a newly created `Documentation/` if none exists
+  - Agentic Rails without an identifiable active plan → `context/complaining.md`
+  - Non-Agentic-Rails project → an existing context or documentation folder (`context/`, `documentation/`, `docs/`, `Docs/`), or a newly created `context/` if none exists
 - No fake complaint was added when nothing meaningful went wrong.
 - Any real blocker or friction was appended with enough detail for a later reader to understand it without reconstructing the whole session.
 - Entries follow the format in [references/entry-format.md](references/entry-format.md): timestamp omitted when reliable time was unavailable, interpretation separated into a `What I think` section.

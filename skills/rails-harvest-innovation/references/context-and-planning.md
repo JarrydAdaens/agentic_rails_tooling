@@ -14,13 +14,13 @@ The agent usually runs inside the destination starter. If the current directory 
 Signals that a repository may be WPF-Starter:
 
 - `README.md` names `WPF-Starter`.
-- `Documentation/wpf-starter-inventory.md` exists.
+- `context/wpf-starter-inventory.md` exists.
 - source projects include starter-flavoured names such as `Starter.WPF` or `Starter.Shared`.
-- Agentic Rails files such as `AGENTIC_RAILS_README.MD` and `Documentation/implementation_plans/` exist.
+- Agentic Rails files such as `AGENTIC_RAILS_README.MD` and `context/implementation-plans/` exist.
 
 Signals that a repository may be derived:
 
-- it carries `Documentation/wpf-starter-inventory.md` with modifications or intentional removals.
+- it carries `context/wpf-starter-inventory.md` with modifications or intentional removals.
 - WPF-Starter project names, namespaces, or architecture have been renamed.
 - app-specific design, milestones, goals, deployment identity, or product branding are present.
 
@@ -36,12 +36,12 @@ In the destination, inspect when present:
 2. `AGENTIC_RAILS.md`
 3. `.agentic-rails.json`
 4. `AGENTIC_RAILS_README.MD`
-5. `Documentation/wpf-starter-inventory.md`
-6. `Documentation/laws.md`
-7. `Documentation/design.md`
-8. `Documentation/milestones.md`
-9. relevant `Documentation/goals*.md`
-10. relevant `Documentation/implementation_plans/`
+5. `context/wpf-starter-inventory.md`
+6. `context/laws.md`
+7. `context/design.md`
+8. `context/milestones.md`
+9. relevant `context/goals*.md`
+10. relevant `context/implementation-plans/`
 
 In the source, inspect only what helps locate and understand the requested feature:
 
@@ -61,7 +61,7 @@ Project-local context is authoritative for that repository. Shared tooling suppl
 For meaningful upstreaming, create or reuse a destination folder under:
 
 ```text
-Documentation/implementation_plans/GOAL_x_y_harvest-short-feature-name/
+context/implementation-plans/GOAL_x_y_harvest-short-feature-name/
 ```
 
 Use the destination's existing naming pattern when one is obvious. If there is no clear goal number, use a readable folder name that includes `harvest` or `upstream`.

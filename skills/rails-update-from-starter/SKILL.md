@@ -57,12 +57,12 @@ Inspect root framework files before documentation files:
 
 1. `README.md`
 2. `AGENTIC_RAILS_README.MD`, `AGENTIC_RAILS.md`, `.agentic-rails.json`
-3. `Documentation/design.md`
-4. `Documentation/milestones.md`
-5. `Documentation/goals*.md`
-6. current Tier 4 templates under `Documentation/implementation_plans/`
+3. `context/design.md`
+4. `context/milestones.md`
+5. `context/goals*.md`
+6. current Tier 4 templates under `context/implementation-plans/`
 
-Do not bulk-update historical implementation-plan folders such as `Documentation/implementation_plans/GOAL_*/`.
+Do not bulk-update historical implementation-plan folders such as `context/implementation-plans/GOAL_*/`.
 
 ## Safety Rules
 

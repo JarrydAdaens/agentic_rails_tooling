@@ -23,7 +23,7 @@ Recommended front matter shape:
 ---
 version: 0.3
 agentic_rails_source_version: 1.4
-agentic_rails_source_file: Documentation/design.md
+agentic_rails_source_file: context/design.md
 ---
 ```
 
@@ -116,8 +116,8 @@ If a safe merge is not obvious, leave the file unchanged and report the conflict
 
 Keep current implementation-plan templates synchronized:
 
-- `Documentation/implementation_plans/plan.md`
-- `Documentation/implementation_plans/implementation-log.md`
+- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/plan.md`
+- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/implementation-log.md`
 
 Preserve project-local additions unless they conflict with newer starter requirements.
 

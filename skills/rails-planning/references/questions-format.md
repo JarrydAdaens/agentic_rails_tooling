@@ -6,7 +6,7 @@ agentic_rails_source_version: 1.0
 
 # Per-Plan Questions File Format
 
-Use this format for `questions.md` created beside every `plan.md` under `Documentation/implementation_plans/<task-folder>/`.
+Use this format for `questions.md` created beside every `plan.md` under `context/implementation-plans/<task-folder>/`.
 
 The file is plan-local. It captures open questions discovered while writing or executing this specific plan so the human or a follow-up agent can answer them and revise the plan without losing context.
 

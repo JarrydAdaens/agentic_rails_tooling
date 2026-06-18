@@ -73,11 +73,11 @@ Agentic Rails uses a five-tier context model:
 
 | Tier | Layer | Location | Purpose |
 | --- | --- | --- | --- |
-| Tier 0 | Raw intake and addenda | `Documentation/tier0/` | Dictated notes, rough source material, and recurring supplemental vision |
-| Tier 1 | Project purpose and design | `Documentation/design.md` | Maintained architecture, principles, constraints, and system shape |
-| Tier 2 | Milestones | `Documentation/milestones.md` | Roadmap stages and milestone intent |
-| Tier 3 | Goals | `Documentation/goals*.md` | Specific deliverables, acceptance criteria, scope, and status |
-| Tier 4 | Implementation plans and execution records | `Documentation/implementation_plans/` | Task-ready plans and implementation logs, with optional skill-generated provenance artifacts |
+| Tier 0 | Raw intake and addenda | `context/tier0/` | Dictated notes, rough source material, and recurring supplemental vision |
+| Tier 1 | Project purpose and design | `context/design.md` | Maintained architecture, principles, constraints, and system shape |
+| Tier 2 | Milestones | `context/milestones.md` | Roadmap stages and milestone intent |
+| Tier 3 | Goals | `context/goals*.md` | Specific deliverables, acceptance criteria, scope, and status |
+| Tier 4 | Implementation plans and execution records | `context/implementation-plans/` | Task-ready plans and implementation logs, with optional skill-generated provenance artifacts |
 
 Lower tiers give agents strategic context. Higher tiers capture what happened during execution. This prevents agents from operating only on immediate prompts and scattered source files.
 
@@ -93,11 +93,11 @@ It also asks:
 
 > What was intended, what happened, what evidence proves it, what friction appeared, and how does ownership transfer back to the human?
 
-Meaningful implementation work should live in a dedicated folder under `Documentation/implementation_plans/`:
+Meaningful implementation work should live in a dedicated folder under `context/implementation-plans/`:
 
 ```text
-Documentation/
-  implementation_plans/
+context/
+  implementation-plans/
     GOAL_3_1_short-readable-name/
       plan.md
       implementation-log.md
@@ -234,7 +234,7 @@ Common detection points include:
 
 - `AGENTIC_RAILS.md`
 - `.agentic-rails.json`
-- `Documentation/implementation_plans/`
+- `context/implementation-plans/`
 - `AGENTIC_RAILS_README.MD`
 
 Detailed conventions should live in reference files and project documentation, not in every prompt.

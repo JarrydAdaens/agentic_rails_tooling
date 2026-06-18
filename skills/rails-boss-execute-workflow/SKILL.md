@@ -39,13 +39,13 @@ Do not silently skip the goal-marking step.
 
 All paths are relative to the **target** repository root (the project being implemented, not necessarily this tooling repository).
 
-Path conventions below follow Agentic Rails documentation structure. If the target repository uses different documentation folder conventions, adjust these paths before dispatching workers and record the chosen path in `briefing.md`.
+Path conventions below follow the Agentic Rails context structure. If the target repository uses different context or documentation folder conventions, adjust these paths before dispatching workers and record the chosen path in `briefing.md`.
 
 | Path | Role |
 | --- | --- |
-| `Documentation/rails-boss-execute/briefing.md` | Durable summary of source documents, extracted constraints, required persona, and ordered goal queue |
-| `Documentation/rails-boss-execute/progress.md` | Durable execution queue and current state |
-| `Documentation/rails-boss-execute/logs/` | Blocked notes, worker failures, recovery notes |
+| `context/rails-boss-execute/briefing.md` | Durable summary of source documents, extracted constraints, required persona, and ordered goal queue |
+| `context/rails-boss-execute/progress.md` | Durable execution queue and current state |
+| `context/rails-boss-execute/logs/` | Blocked notes, worker failures, recovery notes |
 
 Create these directories and files on first run.
 Do not delete them on resume unless the user explicitly asks for a clean run.
@@ -66,7 +66,7 @@ The user passes the work request in the message. The message may include source 
 
 Examples:
 
-- `/rails-boss-execute review [Documentation/design.md] [Documentation/milestones.md] then follow [Documentation/implementation_plans/feature/plan.md] with subagents`
+- `/rails-boss-execute review [context/design.md] [context/milestones.md] then follow [context/implementation-plans/feature/plan.md] with subagents`
 - `/rails-boss-execute implement GOAL 1.2 and then GOAL 1.3 with subagents and mark them off as you go`
 - `/rails-boss-execute read these design docs first, then implement the requested plan steps with workers`
 
@@ -103,7 +103,7 @@ If the user names both source docs and plan docs, read the source docs first and
 
 ## Briefing file
 
-Write or refresh `Documentation/rails-boss-execute/briefing.md` with:
+Write or refresh `context/rails-boss-execute/briefing.md` with:
 
 - The exact source documents read for this run
 - A short note for each source document describing why it matters
@@ -117,11 +117,11 @@ Keep `briefing.md` concise.
 
 ## Progress file
 
-Write or refresh `Documentation/rails-boss-execute/progress.md` as a table like this:
+Write or refresh `context/rails-boss-execute/progress.md` as a table like this:
 
 | Status | Goal | Source | Persona | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| TODO | GOAL 1.2 | `Documentation/implementation_plans/example/plan.md` | `agents/wpf-persona/AGENT.md` |  | queued |
+| TODO | GOAL 1.2 | `context/implementation-plans/example/plan.md` | `agents/wpf-persona/AGENT.md` |  | queued |
 
 Use the status values from [references/state-model.md](references/state-model.md).
 Only the Boss updates the `Status` column.
@@ -130,7 +130,7 @@ Use the `Commit` column for the worker's actual commit SHA after success.
 ## Execution loop
 
 1. **Init**  
-   Ensure `Documentation/`, `Documentation/rails-boss-execute/`, `progress.md`, `briefing.md`, and `logs/` exist on the target repository.
+   Ensure `context/`, `context/rails-boss-execute/`, `progress.md`, `briefing.md`, and `logs/` exist on the target repository.
 
 2. **Read source documents**  
    Read every source document the user named. Read design and milestone context first. Read plan and implementation files second. Do not dispatch a worker before this step is complete.

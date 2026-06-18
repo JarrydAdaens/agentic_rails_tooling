@@ -10,7 +10,7 @@ If an agent repeatedly struggles, fails, loops, produces bad implementations, or
 
 ## Core Behaviour
 
-When an agent equips the `complaining` skill, it must create a complaints file inside the project documentation folder.
+When an agent equips the `complaining` skill, it must create a complaints file inside the project context or documentation folder.
 
 Recommended path:
 
@@ -18,13 +18,13 @@ Recommended path:
 documentation/complaining.md
 ```
 
-If the project uses a different documentation folder name, the agent should use the obvious existing documentation folder.
+If the project uses a different context or documentation folder name, the agent should use the obvious existing context or documentation folder.
 
 Examples:
 
 ```text
 docs/complaining.md
-Documentation/complaining.md
+context/complaining.md
 documentation/complaining.md
 ```
 
@@ -292,4 +292,3 @@ The skill is failing if the agent:
 It creates `documentation/complaining.md` and uses it to record genuine problems, blockers, stressors, bad assumptions, tool failures, permission issues, unclear instructions, conflicting goals, and strategic concerns.
 
 The agent must never invent complaints, but when there is a real problem, it should be blunt, detailed, and useful.
-

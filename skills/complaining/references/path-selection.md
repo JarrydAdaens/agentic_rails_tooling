@@ -6,13 +6,13 @@ Choose the complaint log path inside the target project, not inside the reusable
 
 1. Use a user-specified complaint log path or implementation-plan folder.
 2. If the repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `complaining.md` in that folder.
-3. If the repository follows Agentic Rails but no active implementation-plan folder is identifiable, write `Documentation/complaining.md`.
-4. In other repositories, use an obvious existing documentation folder in this order:
-   - `Documentation/`
+3. If the repository follows Agentic Rails but no active implementation-plan folder is identifiable, write `context/complaining.md`.
+4. In other repositories, use an obvious existing context or documentation folder in this order:
+   - `context/`
    - `documentation/`
    - `docs/`
    - `Docs/`
-5. If no documentation folder exists, create `Documentation/`.
+5. If no context or documentation folder exists, create `context/`.
 
 The complaint log filename is always:
 
@@ -23,8 +23,8 @@ complaining.md
 ## Examples
 
 ```text
-Documentation/implementation_plans/GOAL_1_2_short-slug/complaining.md
-Documentation/complaining.md
+context/implementation-plans/GOAL_1_2_short-slug/complaining.md
+context/complaining.md
 documentation/complaining.md
 docs/complaining.md
 Docs/complaining.md
@@ -37,16 +37,16 @@ Treat a repository as using Agentic Rails when one or more of these markers exis
 - `AGENTIC_RAILS_README.MD`
 - `AGENTIC_RAILS.md`
 - `.agentic-rails.json`
-- `Documentation/implementation_plans/`
-- `Documentation/agenticworkflow.md`
+- `context/implementation-plans/`
+- `context/agenticworkflow.md`
 
 ## Active Plan Folder Selection
 
 If the repository uses Agentic Rails, prefer the active implementation-plan folder:
 
 1. Use a user-specified implementation-plan folder.
-2. Use the only non-template folder under `Documentation/implementation_plans/`.
-3. Use the most recently modified non-template folder under `Documentation/implementation_plans/`.
+2. Use the only non-template folder under `context/implementation-plans/`.
+3. Use the most recently modified non-template folder under `context/implementation-plans/`.
 4. If multiple folders remain plausible and the choice affects where `complaining.md` will be written, ask the user before writing.
 
 Ignore `IMPLEMENTATION_PLAN_TEMPLATE` when detecting active plan folders.

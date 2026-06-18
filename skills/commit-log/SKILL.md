@@ -31,7 +31,7 @@ Pick the most specific prefix the work warrants. Do **not** fabricate a `[GOAL X
 - `[GOAL X.Y]` — work tied to a numbered goal in a non-Jira project.
 - `[BUG]` — defect fix not tracked against a ticket or goal.
 - `[FEATURE]` — new behavior not tracked against a ticket or goal.
-- `[CONTEXT]` — revisions to narrative content under `Documentation/`.
+- `[CONTEXT]` — revisions to narrative content under `context/`.
 - `[REFACTOR]` — code restructuring with no intended behavior change.
 - `[CHORE]` — build, CI, dependency, tooling, or repo housekeeping.
 

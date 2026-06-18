@@ -240,13 +240,13 @@ On wrap-up, the agent should:
 Preferred path:
 
 ```text
-Documentation/implementation_plans/<current-goal-or-plan-folder>/pair-programming.md
+context/implementation-plans/<current-goal-or-plan-folder>/pair-programming.md
 ```
 
 Fallback path if the active plan folder is unknown:
 
 ```text
-Documentation/pair-programming.md
+context/pair-programming.md
 ```
 
 The preferred location is beside the active Tier 4 plan files because the session

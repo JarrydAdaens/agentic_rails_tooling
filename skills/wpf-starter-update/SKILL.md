@@ -36,11 +36,11 @@ Update source code and source-adjacent project files only.
 
 Do not update or reconcile Agentic Rails context files, including:
 
-- `Documentation/design.md`
-- `Documentation/milestones.md`
-- `Documentation/goals*.md`
-- `Documentation/tier0/`
-- `Documentation/implementation_plans/`
+- `context/design.md`
+- `context/milestones.md`
+- `context/goals*.md`
+- `context/tier0/`
+- `context/implementation-plans/`
 - Agentic Rails context starter templates
 - project planning documents, goal status, or milestone status
 
@@ -177,7 +177,7 @@ Avoid broad find/replace unless the impact is fully understood.
 
 If the programmer rejects or defers a feature, record the decision explicitly.
 
-Create a concise local update report in an appropriate source-adjacent notes location, but keep it outside Agentic Rails context-tier folders such as `Documentation/implementation_plans/`. If the programmer explicitly asks to also update an Agentic Rails implementation log, treat that as a separate logging request governed by the relevant Agentic Rails skill.
+Create a concise local update report in an appropriate source-adjacent notes location, but keep it outside Agentic Rails context-tier folders such as `context/implementation-plans/`. If the programmer explicitly asks to also update an Agentic Rails implementation log, treat that as a separate logging request governed by the relevant Agentic Rails skill.
 
 Include the feature name, decision, reason, date, and any revisit condition.
 

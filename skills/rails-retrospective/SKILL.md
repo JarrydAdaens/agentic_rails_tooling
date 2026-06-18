@@ -26,9 +26,9 @@ retrospective.md
 Path selection:
 
 1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `retrospective.md` in that folder.
-2. Otherwise, if Agentic Rails is detected, write to `Documentation/retrospectives/retrospective.md` unless a more specific filename is needed to avoid overwriting an unrelated retrospective.
-3. Otherwise, write `retrospective.md` in the target project's documentation folder, preferring `Documentation/`, then `documentation/`, then `docs/`.
-4. If no documentation folder exists outside Agentic Rails, create `Documentation/retrospective.md`.
+2. Otherwise, if Agentic Rails is detected, write to `context/retrospectives/retrospective.md` unless a more specific filename is needed to avoid overwriting an unrelated retrospective.
+3. Otherwise, write `retrospective.md` in the target project's context or documentation folder, preferring `context/`, then `documentation/`, then `docs/`.
+4. If no context or documentation folder exists outside Agentic Rails, create `context/retrospective.md`.
 
 Prefer co-locating the retrospective with the implementation artifacts whenever possible.
 

@@ -10,12 +10,12 @@ Strong signals include:
 
 - `AGENTIC_RAILS_README.MD`
 - `.agentic-rails.json`
-- `Documentation/design.md`
-- `Documentation/milestones.md`
-- `Documentation/goals*.md`
-- `Documentation/implementation_plans/`
-- `Documentation/implementation_plans/plan.md`
-- `Documentation/implementation_plans/implementation-log.md`
+- `context/design.md`
+- `context/milestones.md`
+- `context/goals*.md`
+- `context/implementation-plans/`
+- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/plan.md`
+- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/implementation-log.md`
 
 If the path does not look like the starter, stop and tell the user what was missing. Do not continue against an uncertain source path.
 
@@ -27,11 +27,11 @@ Check whether the target appears Agentic Rails-derived using signals such as:
 
 - `AGENTIC_RAILS_README.MD`
 - `.agentic-rails.json`
-- `Documentation/`
-- `Documentation/design.md`
-- `Documentation/milestones.md`
-- `Documentation/goals*.md`
-- `Documentation/implementation_plans/`
+- `context/`
+- `context/design.md`
+- `context/milestones.md`
+- `context/goals*.md`
+- `context/implementation-plans/`
 
 If the target does not clearly look derived from Agentic Rails, stop and ask the user whether this is the intended target.
 
@@ -46,13 +46,13 @@ Process starter files in this order:
    - `AGENTIC_RAILS_README.MD`
    - `AGENTIC_RAILS.md`
    - `.agentic-rails.json`
-3. `Documentation/design.md`
-4. `Documentation/milestones.md`
-5. every starter `Documentation/goals*.md` file
-6. every target `Documentation/goals*.md` file, to detect target-only goal documents that need metadata checks
+3. `context/design.md`
+4. `context/milestones.md`
+5. every starter `context/goals*.md` file
+6. every target `context/goals*.md` file, to detect target-only goal documents that need metadata checks
 7. current Tier 4 implementation-plan templates:
-   - `Documentation/implementation_plans/plan.md`
-   - `Documentation/implementation_plans/implementation-log.md`
+   - `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/plan.md`
+   - `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/implementation-log.md`
    - other repository-local implementation-plan template files clearly marked as templates
 
 Do not bulk-update every historical implementation-plan folder.
@@ -61,12 +61,12 @@ Do not bulk-update every historical implementation-plan folder.
 
 Do not rewrite or normalize completed implementation-plan folders, including:
 
-- `Documentation/implementation_plans/GOAL_*/plan.md`
-- `Documentation/implementation_plans/GOAL_*/implementation-log.md`
-- `Documentation/implementation_plans/GOAL_*/complaining.md`
-- `Documentation/implementation_plans/GOAL_*/thinking.md`
-- `Documentation/implementation_plans/GOAL_*/evidence.md`
-- `Documentation/implementation_plans/GOAL_*/handover/`
+- `context/implementation-plans/GOAL_*/plan.md`
+- `context/implementation-plans/GOAL_*/implementation-log.md`
+- `context/implementation-plans/GOAL_*/complaining.md`
+- `context/implementation-plans/GOAL_*/thinking.md`
+- `context/implementation-plans/GOAL_*/evidence.md`
+- `context/implementation-plans/GOAL_*/handover/`
 
 Historical execution records preserve what the project knew at the time. Only touch old implementation-plan folders when the user explicitly asks for historical migration.
 
@@ -75,7 +75,7 @@ Historical execution records preserve what the project knew at the time. Only to
 If the starter has a standard context file that the target project is missing:
 
 - Create missing files when they are framework identity files or template files.
-- Create missing documentation files only when doing so will not fabricate project-specific content.
+- Create missing context files only when doing so will not fabricate project-specific content.
 - Use starter content only as scaffolding.
 - Mark placeholders honestly.
 - Report created files.

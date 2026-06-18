@@ -44,13 +44,13 @@ Stop until the user provides the required paths. Do not guess either path. If ei
 
 ## Hard Scope Boundary
 
-Harvest the requested feature into WPF-Starter and nothing else. Writing into `Documentation/implementation_plans/` for this harvest is allowed and expected; tidying unrelated areas while passing through is not.
+Harvest the requested feature into WPF-Starter and nothing else. Writing into `context/implementation-plans/` for this harvest is allowed and expected; tidying unrelated areas while passing through is not.
 
 Do not modify, reorganize, or "clean up" the following in WPF-Starter unless the harvested feature genuinely requires it and the user has accepted the change:
 
 - existing or historical implementation-plan folders unrelated to this harvest
-- `Documentation/design.md`, `Documentation/milestones.md`, `Documentation/goals*.md`, `Documentation/laws.md`
-- `Documentation/wpf-starter-inventory.md` sections unrelated to the harvested feature
+- `context/design.md`, `context/milestones.md`, `context/goals*.md`, `context/laws.md`
+- `context/wpf-starter-inventory.md` sections unrelated to the harvested feature
 - app identity, product name, assembly name, package id, signing config, or deployment metadata
 - starter sample views, panes, or content not related to the feature
 - root shell layout, `MainWindow`, DI/Generic Host bootstrap order, or persisted layout/config schemas
@@ -67,7 +67,7 @@ Load only what the current decision needs:
 - For WPF-specific feature checklists covering configuration, shared projects, XAML, services, dependencies, theming, docking, and startup, read [references/wpf-feature-guides.md](references/wpf-feature-guides.md).
 - For implementation logging, final reporting, and failure handling, read [references/report-and-failures.md](references/report-and-failures.md).
 
-For `WPF-Starter`, prefer `Documentation/wpf-starter-inventory.md` as the canonical feature map when present. Read the relevant section before deeper code inspection.
+For `WPF-Starter`, prefer `context/wpf-starter-inventory.md` as the canonical feature map when present. Read the relevant section before deeper code inspection.
 
 ## Operating Model
 

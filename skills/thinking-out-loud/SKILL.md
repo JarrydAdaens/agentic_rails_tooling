@@ -21,7 +21,7 @@ When this skill is active, ensure a `thinking.md` file exists in the target proj
 Path selection:
 
 1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `thinking.md` in that folder.
-2. Otherwise write `thinking.md` in the target project's documentation folder.
+2. Otherwise write `thinking.md` in the target project's context or documentation folder.
 3. Load [references/path-selection.md](references/path-selection.md) if the correct location is not obvious.
 
 Initial content may be:
@@ -51,7 +51,7 @@ Capture useful engineering notes here. This is not a private chain-of-thought du
 
 ## Good Entries
 
-- Investigation: `Documentation/agenticworkflow.md` - found that optional artifacts are skill-gated.
+- Investigation: `context/agenticworkflow.md` - found that optional artifacts are skill-gated.
 - Constraint: Do not write `thinking.md` unless this skill is active.
 - Observation: The implementation plan uses folder-based Tier 4 context, so local artifacts should live beside `plan.md` when possible.
 - Revisit: Validate path-selection behavior in a non-Agentic-Rails repository before installing globally.

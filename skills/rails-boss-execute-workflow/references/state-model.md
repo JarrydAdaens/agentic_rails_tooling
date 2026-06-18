@@ -6,7 +6,7 @@ agentic_rails_source_version: 1.3
 
 # Progress Row State Model
 
-Only the **Boss** mutates the `Status` column in `Documentation/rails-boss-execute/progress.md`.
+Only the **Boss** mutates the `Status` column in `context/rails-boss-execute/progress.md`.
 
 ## Status values
 

@@ -67,13 +67,13 @@
     },
     {
       "id": 6,
-      "prompt": "I revised Documentation/handovers/2026-05-07.md to capture the current state of the auth migration. Write a commit message.",
+      "prompt": "I revised context/handovers/2026-05-07.md to capture the current state of the auth migration. Write a commit message.",
       "expected_output": "A commit log with a [CONTEXT] heading, a ~ Problem: line, a body line that names the handover document, and a ~ Resolution: line.",
       "assertions": [
         "Output includes a heading using the [CONTEXT] prefix",
         "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line and a ~ Resolution: line",
-        "Body names the handover file or scopes the change to Documentation/",
+        "Body names the handover file or scopes the change to context/",
         "Body uses ~ Updated: or ~ Added: callouts",
         "No git commands are executed"
       ]

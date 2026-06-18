@@ -1,4 +1,4 @@
 interface:
   display_name: "Rails Planning"
   short_description: "Repo-local Agentic Rails planning"
-  default_prompt: "Use $rails-planning to create or update a durable repository-local implementation plan under Documentation/implementation_plans/."
+  default_prompt: "Use $rails-planning to create or update a durable repository-local implementation plan under context/implementation-plans/."

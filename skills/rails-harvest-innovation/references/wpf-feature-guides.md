@@ -12,7 +12,7 @@ When harvesting configuration:
 - preserve extensibility so future derived apps can add settings safely
 - keep JSON if that is the established WPF-Starter pattern
 - reconcile with `AppSettings`, `IAppSettingsService`, `AppSettingsService`, configuration view models, and shell theme state when present
-- document extension points in `Documentation/wpf-starter-inventory.md`
+- document extension points in `context/wpf-starter-inventory.md`
 
 Ask before changing persisted schema strategy, default AppData folder naming, or major compatibility behavior.
 

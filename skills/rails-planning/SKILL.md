@@ -7,7 +7,7 @@ description: >-
   coding, IDE planning drift, or any planning output that should survive across
   IDEs, machines, branches, sessions, reviews, retrospectives, implementation
   logs, evidence, complaints, or handovers. The skill ensures plans are written
-  into the target repository under Documentation/implementation_plans/ using
+  into the target repository under context/implementation-plans/ using
   Tier 4 planning conventions, with implementation-log.md and questions.md
   beside every new plan.
 metadata:
@@ -28,9 +28,9 @@ This is the single-plan enforcement skill for Agentic Rails. It creates or revis
 When planning implementation work inside a repository, create or update these durable files:
 
 ```text
-Documentation/implementation_plans/<task-folder>/plan.md
-Documentation/implementation_plans/<task-folder>/implementation-log.md
-Documentation/implementation_plans/<task-folder>/questions.md
+context/implementation-plans/<task-folder>/plan.md
+context/implementation-plans/<task-folder>/implementation-log.md
+context/implementation-plans/<task-folder>/questions.md
 ```
 
 Initial log content may be minimal:
@@ -66,18 +66,18 @@ Use `rails-plan-spam-workflow` instead when the user wants many plans generated 
    - `AGENTIC_RAILS.md`
    - `.agentic-rails.json`
    - `AGENTIC_RAILS_README.MD`
-   - `Documentation/implementation_plans/`
-   - an established five-tier `Documentation/` structure
+   - `context/implementation-plans/`
+   - an established five-tier `context/` structure
 3. If the target repository is not clearly Agentic Rails but the user explicitly asks for this skill, still create repository-local planning artifacts using the path rules below.
 
 ## Context Loading
 
 Load only the minimum context needed to write a grounded plan. Prefer maintained context over raw intake:
 
-1. `Documentation/design.md`
-2. `Documentation/milestones.md`
-3. relevant `Documentation/goals*.md`
-4. existing related `Documentation/implementation_plans/*/plan.md`
+1. `context/design.md`
+2. `context/milestones.md`
+3. relevant `context/goals*.md`
+4. existing related `context/implementation-plans/*/plan.md`
 5. relevant Tier 0 source only when raw intake materially shaped the task
 
 Tier 0 is raw intake, not final truth. If Tier 0 contradicts maintained design, milestones, or goals, prefer maintained context and record the contradiction as an open question.
@@ -87,15 +87,15 @@ Tier 0 is raw intake, not final truth. If Tier 0 contradicts maintained design, 
 Prefer the canonical Agentic Rails path:
 
 ```text
-Documentation/implementation_plans/
+context/implementation-plans/
 ```
 
 Preserve an existing repository convention rather than creating duplicate folders. Accept these existing variants:
 
 ```text
-Documentation/implementation_plans/
-documentation/implementation_plans/
-docs/implementation_plans/
+context/implementation-plans/
+documentation/implementation-plans/
+docs/implementation-plans/
 ```
 
 If an active plan already exists for the same task, update that `plan.md` instead of creating a duplicate. Preserve existing decisions unless the user asks for a revision, add a short revision note when useful, and do not overwrite `implementation-log.md`.
@@ -122,10 +122,10 @@ Slug rules:
 Examples:
 
 ```text
-Documentation/implementation_plans/FEATURE_add-report-export-support/
-Documentation/implementation_plans/BUG_fix-login-token-refresh/
-Documentation/implementation_plans/GOAL_2_3_add-health-checks/
-Documentation/implementation_plans/SPIKE_compare-vector-store-options/
+context/implementation-plans/FEATURE_add-report-export-support/
+context/implementation-plans/BUG_fix-login-token-refresh/
+context/implementation-plans/GOAL_2_3_add-health-checks/
+context/implementation-plans/SPIKE_compare-vector-store-options/
 ```
 
 ## Operating Model
@@ -178,7 +178,7 @@ Avoid:
 Any IDE may keep transient internal task state, but the durable plan of record must be the repository file:
 
 ```text
-Documentation/implementation_plans/<task-folder>/plan.md
+context/implementation-plans/<task-folder>/plan.md
 ```
 
 For Codex, Claude Code, Cursor, Windsurf, Cascade, and similar IDEs, materialize the plan file before implementation begins when the work needs durable planning.

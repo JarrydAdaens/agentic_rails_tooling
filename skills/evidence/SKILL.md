@@ -20,7 +20,7 @@ When this skill is active, ensure an `evidence.md` file exists in the target pro
 Path selection:
 
 1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `evidence.md` in that folder.
-2. Otherwise write `evidence.md` in the target project's documentation folder.
+2. Otherwise write `evidence.md` in the target project's context or documentation folder.
 3. Load [references/path-selection.md](references/path-selection.md) if the correct location is not obvious.
 
 Initial content may be:

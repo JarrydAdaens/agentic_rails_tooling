@@ -222,7 +222,7 @@ This repository gives agents reusable tools to execute inside that model.
 For example:
 
 - A new project can start from `agentic_rails_context_starter`.
-- The project's `AGENTS.md` and `Documentation/agenticworkflow.md` define how agents load local context.
+- The project's `AGENTS.md` and `context/agenticworkflow.md` define how agents load local context.
 - Shared rules from this repository can be copied or installed into the IDE's expected rule location.
 - Skills such as `commit-log`, `rails-planning`, or `rails-boss-execute-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
 - Specialist personas such as `agents/wpf-persona` can be used when the project calls for that domain expertise.

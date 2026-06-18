@@ -47,9 +47,9 @@ Before considering the skill complete, confirm:
 - The source starter path was provided and validated.
 - The target project path was validated.
 - Root framework files were inspected before documentation files.
-- `Documentation/design.md` was checked.
-- `Documentation/milestones.md` was checked.
-- All target `Documentation/goals*.md` files were checked.
+- `context/design.md` was checked.
+- `context/milestones.md` was checked.
+- All target `context/goals*.md` files were checked.
 - Implementation-plan templates were checked.
 - Completed implementation-plan folders were not rewritten.
 - Missing `agentic_rails_source_version` metadata was treated as outdated.
@@ -71,13 +71,13 @@ Where is your local agentic_rails_context_starter repository? Please provide the
 
 ## Example Version Interpretation
 
-Starter `Documentation/design.md`:
+Starter `context/design.md`:
 
 ```yaml
 version: 1.4
 ```
 
-Target `Documentation/design.md`:
+Target `context/design.md`:
 
 ```yaml
 version: 7.9
@@ -92,13 +92,13 @@ The target design document has evolved locally to 7.9, but it only incorporated 
 
 ## Example Unsafe Source Version
 
-Starter `Documentation/milestones.md`:
+Starter `context/milestones.md`:
 
 ```yaml
 version: 1.4
 ```
 
-Target `Documentation/milestones.md`:
+Target `context/milestones.md`:
 
 ```yaml
 version: 2.1

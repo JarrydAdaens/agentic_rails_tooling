@@ -43,18 +43,18 @@ Each worker follows the `rails-planning` skill conventions. The Boss orchestrate
 
 All paths are relative to the **target** repository root (the project receiving the plans, not necessarily this tooling repository).
 
-Each run produces a **unique run folder** inside `Documentation/`. All run-level artifacts live there. Implementation plans are written to the standard `rails-planning` output path.
+Each run produces a **unique run folder** inside `context/`. All run-level artifacts live there. Implementation plans are written to the standard `rails-planning` output path.
 
 | Path | Role |
 | --- | --- |
-| `Documentation/plan-spam-<slug>/` | Unique run folder for this invocation |
-| `Documentation/plan-spam-<slug>/briefing.md` | Durable summary of source documents, extraction choices, template source, and ordered planning queue |
-| `Documentation/plan-spam-<slug>/progress.md` | Durable planning queue and current row state |
-| `Documentation/plan-spam-<slug>/questions.md` | Run-level questions index linking to per-plan files, plus Boss questions |
-| `Documentation/plan-spam-<slug>/logs/` | Blocked notes, worker failures, retry notes, naming collisions |
-| `Documentation/implementation_plans/` | Per-plan output (one folder per goal containing `plan.md`, `implementation-log.md`, `questions.md`) |
+| `context/plan-spam-<slug>/` | Unique run folder for this invocation |
+| `context/plan-spam-<slug>/briefing.md` | Durable summary of source documents, extraction choices, template source, and ordered planning queue |
+| `context/plan-spam-<slug>/progress.md` | Durable planning queue and current row state |
+| `context/plan-spam-<slug>/questions.md` | Run-level questions index linking to per-plan files, plus Boss questions |
+| `context/plan-spam-<slug>/logs/` | Blocked notes, worker failures, retry notes, naming collisions |
+| `context/implementation-plans/` | Per-plan output (one folder per goal containing `plan.md`, `implementation-log.md`, `questions.md`) |
 
-If `Documentation/` does not exist in the target repository, create it.
+If `context/` does not exist in the target repository, create it.
 Do not delete durable state on resume unless the user explicitly asks for a clean run.
 Do not reuse a prior run folder unless the user explicitly asks to resume that run.
 
@@ -65,21 +65,21 @@ Derive the run folder slug from the goals being planned.
 **Numbered goals** — use the first and last goal ids with dots replaced by underscores:
 
 ```text
-Documentation/plan-spam-3_4-to-3_9/
-Documentation/plan-spam-2_1/           (single goal)
+context/plan-spam-3_4-to-3_9/
+context/plan-spam-2_1/           (single goal)
 ```
 
 **Unnumbered goals or feature dumps** — derive a short slug from the source document name plus the date:
 
 ```text
-Documentation/plan-spam-goals-2026-05-07/
-Documentation/plan-spam-backlog-auth-2026-05-07/
+context/plan-spam-goals-2026-05-07/
+context/plan-spam-backlog-auth-2026-05-07/
 ```
 
 **Synthetic ids** — if no ids exist and the Boss creates them (e.g., `PLAN-001`), use the range:
 
 ```text
-Documentation/plan-spam-PLAN-001-to-PLAN-005/
+context/plan-spam-PLAN-001-to-PLAN-005/
 ```
 
 Keep the slug short. Avoid vague names such as `plan-spam-run` or `plan-spam-misc`.
@@ -104,10 +104,10 @@ The user passes the planning request in the message. The message may include sou
 
 Examples:
 
-- `/plan-spam turn [Documentation/goals.md] into implementation plans`
-- `/plan-spam read [Documentation/milestones.md] and generate one implementation plan per unchecked item`
-- `/plan-spam use [Documentation/tier4_template.md] and produce plans for GOAL 2 through GOAL 9`
-- `/plan-spam take these feature descriptions and fill the implementation_plans folder with Tier 4 plans`
+- `/plan-spam turn [context/goals.md] into implementation plans`
+- `/plan-spam read [context/milestones.md] and generate one implementation plan per unchecked item`
+- `/plan-spam use [context/tier4_template.md] and produce plans for GOAL 2 through GOAL 9`
+- `/plan-spam take these feature descriptions and fill the implementation-plans folder with Tier 4 plans`
 
 Interpret the message literally.
 If the user names files, read those files first.
@@ -126,7 +126,7 @@ If the user names an output folder, use it.
 - Spawn at least one subagent for each goal or tightly-bound feature cluster. Do not replace the worker step with a Boss-only planning pass.
 - Default to one goal or feature description per plan file.
 - Only batch multiple items into one plan when the user clearly wants one combined delivery slice or the items are tightly bound and would create a worse plan if split.
-- Every worker must follow `rails-planning` conventions: read the assigned source material, use the assigned template, and produce `plan.md`, `implementation-log.md`, and `questions.md` inside the standard path `Documentation/implementation_plans/<task-folder>/`.
+- Every worker must follow `rails-planning` conventions: read the assigned source material, use the assigned template, and produce `plan.md`, `implementation-log.md`, and `questions.md` inside the standard path `context/implementation-plans/<task-folder>/`.
 - Every worker must ask clarifying questions instead of guessing when key context is missing, ambiguous, or risky, and record those questions in the plan-local `questions.md` with the exact goal id.
 - Every worker must continue planning as far as possible while clearly marking uncertainty rather than stopping at every gap.
 - Workers generate planning artifacts, not production code. Do not let a planning worker wander into direct implementation.
@@ -157,7 +157,7 @@ If the user names an output folder, use it.
 
 ## Briefing file
 
-Write or refresh `Documentation/plan-spam-<slug>/briefing.md` with:
+Write or refresh `context/plan-spam-<slug>/briefing.md` with:
 
 - The run folder path
 - The exact source documents read for this run
@@ -173,11 +173,11 @@ Keep `briefing.md` concise.
 
 ## Progress file
 
-Write or refresh `Documentation/plan-spam-<slug>/progress.md` as a table:
+Write or refresh `context/plan-spam-<slug>/progress.md` as a table:
 
 | Status | Goal | Source | Plan Folder | Template | Notes |
 | --- | --- | --- | --- | --- | --- |
-| TODO | GOAL 2.1 | `Documentation/milestones.md` | `Documentation/implementation_plans/GOAL_2_1_slug/` | `skills/rails-planning/references/plan-template.md` | queued |
+| TODO | GOAL 2.1 | `context/milestones.md` | `context/implementation-plans/GOAL_2_1_slug/` | `skills/rails-planning/references/plan-template.md` | queued |
 
 Use the status values from [references/state-model.md](references/state-model.md).
 Only the Boss updates the `Status` column.
@@ -185,7 +185,7 @@ Only the Boss updates the `Status` column.
 
 ## Questions index file
 
-Write or refresh `Documentation/plan-spam-<slug>/questions.md` using the format in [references/questions-file-format.md](references/questions-file-format.md).
+Write or refresh `context/plan-spam-<slug>/questions.md` using the format in [references/questions-file-format.md](references/questions-file-format.md).
 
 Before dispatching workers, pre-create one index row per queued goal so each worker has a stable entry in the index.
 After each worker is accepted, update the index row status to reflect the per-plan `questions.md`.
@@ -198,7 +198,7 @@ The index `questions.md` exists so the user can walk away during bulk planning, 
    Derive the run folder name from the goals and source material (see naming rules above).
 
 2. **Init**
-   Ensure `Documentation/`, `Documentation/plan-spam-<slug>/`, `briefing.md`, `progress.md`, `questions.md` (index), `logs/`, and `Documentation/implementation_plans/` all exist on the target repository.
+   Ensure `context/`, `context/plan-spam-<slug>/`, `briefing.md`, `progress.md`, `questions.md` (index), `logs/`, and `context/implementation-plans/` all exist on the target repository.
 
 3. **Read source documents**
    Read every source document the user named. Read higher-level design or milestone context before lower-level goal lists when both exist. Do not dispatch a worker before this step is complete.
@@ -262,10 +262,10 @@ Every worker prompt must include all of the following:
 
 - The exact goal id or synthetic id to plan
 - The exact source document paths to read before writing
-- The exact output **folder** path for the implementation plan (e.g., `Documentation/implementation_plans/GOAL_2_1_slug/`)
+- The exact output **folder** path for the implementation plan (e.g., `context/implementation-plans/GOAL_2_1_slug/`)
 - A statement that the worker must follow `rails-planning` skill conventions and produce three files: `plan.md`, `implementation-log.md`, and `questions.md`
 - The exact Tier 4 template path to follow
-- The exact per-plan `questions.md` path (`Documentation/implementation_plans/<task-folder>/questions.md`) and the format reference at `skills/rails-planning/references/questions-format.md`
+- The exact per-plan `questions.md` path (`context/implementation-plans/<task-folder>/questions.md`) and the format reference at `skills/rails-planning/references/questions-format.md`
 - A plain statement that the worker must produce a plan file, not implementation code
 - A plain statement that the worker must ask clarifying questions instead of guessing
 - A plain statement that the worker must record those questions in the plan-local `questions.md` with the goal id

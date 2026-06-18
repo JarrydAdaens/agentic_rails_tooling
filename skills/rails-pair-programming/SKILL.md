@@ -95,7 +95,7 @@ Priority order:
 
 Path hints:
 
-- Prefer `Documentation/implementation_plans/<current-goal-or-plan-folder>/`.
+- Prefer `context/implementation-plans/<current-goal-or-plan-folder>/`.
 - Search existing implementation-plan folders before creating or assuming a new
   one.
 - If no active Goal or Plan can be located, ask one targeted question or proceed
@@ -179,13 +179,13 @@ existing session artifact.
 Preferred path:
 
 ```text
-Documentation/implementation_plans/<current-goal-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
+context/implementation-plans/<current-goal-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
 ```
 
 Fallback path when the active plan folder is unknown:
 
 ```text
-Documentation/pair-programming-DDMMMYYYY-topic-slug.md
+context/pair-programming-DDMMMYYYY-topic-slug.md
 ```
 
 ## Artifact Template
@@ -276,7 +276,7 @@ Before considering the skill applied correctly, confirm:
 - wrap-up was triggered by the user
 - a new artifact file was created using the `pair-programming-DDMMMYYYY-topic-slug.md` convention
 - the topic slug is specific and descriptive, not generic
-- the artifact is in the correct folder (plan folder preferred, `Documentation/` fallback)
+- the artifact is in the correct folder (plan folder preferred, `context/` fallback)
 - the artifact includes discoveries, discussions, decisions, open questions,
   outcomes, and yielded work
 - no existing session artifact was overwritten or appended to

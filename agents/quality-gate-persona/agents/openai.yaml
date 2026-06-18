@@ -1,0 +1,7 @@
+interface:
+  display_name: "Quality Gate Persona"
+  short_description: "Local quality-gate reviewer for validating changesets against plans, rules, tooling, architecture, scope, and tests."
+  default_prompt: "Use $quality-gate-persona as the local evaluation and quality-gate reviewer for this changeset."
+
+policy:
+  allow_implicit_invocation: true

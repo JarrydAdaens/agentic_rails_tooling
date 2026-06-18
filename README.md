@@ -115,6 +115,7 @@ Agent folder names and frontmatter names must use the suffix `-persona`. That na
 
 Current examples include:
 
+- `agents/quality-gate-persona`
 - `agents/unreal-persona`
 - `agents/web-persona`
 - `agents/wpf-persona`

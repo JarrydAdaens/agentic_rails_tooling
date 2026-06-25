@@ -10,7 +10,9 @@
       "PowerShell(Rename-Item *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git status *)"
+      "Bash(git status *)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(python *)"
     ]
   }
 }

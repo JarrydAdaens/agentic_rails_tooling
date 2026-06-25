@@ -1,0 +1,3 @@
+{"type":"user","timestamp":"2026-06-11T09:00:00Z","sessionId":"sess-bad","cwd":"/home/u/proj-a","message":{"role":"user"}}
+{ this is not valid json at all
+{"type":"assistant","timestamp":"2026-06-11T09:00:10Z","sessionId":"sess-bad","cwd":"/home/u/proj-a","message":{"role":"assistant","model":"claude-haiku-4-5","usage":{"input_tokens":5,"output_tokens":7}}}

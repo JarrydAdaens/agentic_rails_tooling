@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rails Memory Learnings"
+  short_description: "Capture a session learning into Rails memory"
+  default_prompt: "Use $rails-memory-learnings to reflect on this session and write a learning artifact into the Rails memory repository, capturing the models, harness, thinking effort, and outcome."

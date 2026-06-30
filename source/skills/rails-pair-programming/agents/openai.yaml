@@ -1,4 +1,4 @@
 interface:
   display_name: "Rails Pair Programming"
   short_description: "Run grounded Agentic Rails pair-programming sessions."
-  default_prompt: "Use rails-pair-programming to start a structured session grounded in the current Goal and implementation plan."
+  default_prompt: "Use rails-pair-programming to start a structured session grounded in the current Story and implementation plan."

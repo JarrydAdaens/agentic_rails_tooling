@@ -1,7 +1,7 @@
 ---
 name: rails-initialize-from-tier0-validation-and-scope
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
 # Validation And Scope
@@ -13,7 +13,7 @@ Use this reference when starting `rails-initialize-from-tier0`, validating paths
 The skill needs:
 
 - Target project root: default to the current repository when the user does not specify a path.
-- Tier 0 source: one or more file paths, pasted texts, or existing files under the detected Tier 0 folder.
+- Tier 0 source: one or more file paths, pasted texts, or existing files under `context/dictations-tier-0/`.
 
 If the Tier 0 source is pasted in chat or lives outside the repository, create a durable repo-local intake file before synthesizing it. Do not make future agents depend on a downloads folder, chat transcript, or machine-specific external path.
 
@@ -32,40 +32,42 @@ Distinguish initialization seeds from later enrichment inputs. A Tier 0 file abo
 
 ## Layout Detection
 
-Detect the target's actual Agentic Rails era before choosing paths.
-
-Prefer the current layout when present:
+Confirm the target uses the current seven-tier `context/` layout before choosing paths:
 
 ```text
 context/
-context/tier0/
-context/design.md
-context/milestones.md
-context/goals*.md
+context/dictations-tier-0/
+context/design.md            (contains the Milestones Index subsection)
+context/milestones/          (one milestone-N.md per milestone)
+context/sprints/             (one sprint-N.md per sprint)
+context/backlog/             (backlog-N.md story files, 30 stories per file)
 context/implementation-plans/
-```
-
-Support the older layout when that is what the repository uses:
-
-```text
-Documentation/
-Documentation/tier0/
-Documentation/design.md
-Documentation/milestones.md
-Documentation/goals*.md
-Documentation/implementation_plans/
+context/laws.md
+context/agenticworkflow.md
+context/agent-thinking.md
+context/wiki/
 ```
 
 Set these working variables in the initialization plan:
 
-- context root: `context/` or `Documentation/`
-- Tier 0 folder: `<context-root>/tier0/`
-- implementation-plan folder: `implementation-plans/` or `implementation_plans/`
-- goals naming pattern: `goals*.md` under the detected context root
+- context root: `context/`
+- Tier 0 folder: `context/dictations-tier-0/`
+- Tier 1 design file: `context/design.md` (Milestones Index lives inside it)
+- Tier 2 milestone folder: `context/milestones/`
+- Tier 3 sprint folder: `context/sprints/`
+- Tier 4 backlog folder: `context/backlog/`
+- Tier 5 implementation-plan folder: `context/implementation-plans/`
 
-Do not rename an older repository to the new layout as part of initialization unless the user explicitly asks for a layout migration.
+### Drift detection (old five-tier signals)
 
-If front matter shows an old or missing `agentic_rails_source_version`, expect path and metadata drift. Validate actual files instead of assuming the current starter structure.
+If the target shows old five-tier residue instead of the seven-tier layout, treat it as drift, not as a supported layout:
+
+- a single `context/milestones.md` file (now a `milestones/` folder plus a Milestones Index in `design.md`)
+- `context/goals*.md` files (the `goal` work unit is retired; the work unit is now a **Story** in `backlog/`)
+- a `context/tier0/` folder (now `context/dictations-tier-0/`)
+- a `Documentation/` context root (older era; the current starter uses `context/`)
+
+Do not silently convert a drifted repository as part of Tier 0 initialization. Report the drift and recommend updating the project from the current starter (for example with `rails-update-from-starter`) before, or alongside, initialization. If front matter shows an old or missing `agentic_rails_source_version`, expect path and metadata drift; validate actual files instead of assuming structure.
 
 ## Target Project Validation
 
@@ -75,21 +77,23 @@ Strong Agentic Rails target signals include:
 
 - `AGENTIC_RAILS_README.MD`
 - `AGENTS.md`
-- `context/` or `Documentation/`
-- a Tier 0 folder
-- `design.md`
-- `milestones.md`
-- `goals*.md`
-- an implementation-plan template folder
+- `context/`
+- `context/dictations-tier-0/`
+- `context/design.md` (with a Milestones Index)
+- `context/milestones/`
+- `context/sprints/`
+- `context/backlog/`
+- `context/implementation-plans/`
 
 If the target lacks most of these signals, stop and ask whether this is the intended repository.
 
-If the detected design, milestone, or goals files already contain real project-specific content, treat the task as enrichment or selective re-synthesis, not blank initialization. Ask before replacing maintained truth unless the user explicitly requested a full reinitialization.
+If the detected design, milestone, or backlog files already contain real project-specific content, treat the task as enrichment or selective re-synthesis, not blank initialization. Ask before replacing maintained truth unless the user explicitly requested a full reinitialization.
 
 Do not use this skill on:
 
 - the central `agentic_rails_context_starter` repository itself
 - the reusable `agentic_rails_tooling` repository
+- the `agentic-rails-memory` repository
 - generic skills, agents, rules, or workflow tooling repositories
 
 ## Starter Path Use
@@ -107,10 +111,11 @@ If a starter path is supplied, validate it with signals such as:
 - `AGENTIC_RAILS_README.MD`
 - `AGENTS.md`
 - `context/design.md`
-- `context/milestones.md`
-- `context/goals1.md`
-- `context/tier0/README.md`
-- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/plan.md`
+- `context/milestones/milestone-1.md`
+- `context/sprints/sprint-1.md`
+- `context/backlog/backlog-1.md`
+- `context/dictations-tier-0/README-DICTATIONS-TIER-0.md`
+- `context/implementation-plans/` (a `.gitkeep`-only folder in the current starter; there is no checked-in plan template)
 
 If the supplied path does not look like `agentic_rails_context_starter`, stop and tell the user what was missing.
 
@@ -121,13 +126,13 @@ Inspect these before editing:
 1. Root `README.md`
 2. `AGENTIC_RAILS_README.MD`
 3. `AGENTS.md`
-4. detected Tier 0 README or index
-5. existing Tier 0 intake files
-6. detected `design.md`
-7. detected `milestones.md`
-8. existing `goals*.md`
-9. implementation-plan template, index, or example folders
-10. workflow docs such as `agenticworkflow.md`
+4. `context/dictations-tier-0/` README and existing intake files
+5. `context/design.md` (including its Milestones Index)
+6. `context/milestones/` milestone docs
+7. `context/sprints/` sprint docs
+8. `context/backlog/` story files
+9. `context/implementation-plans/` for any existing plan folders
+10. workflow docs such as `context/agenticworkflow.md`
 11. wiki/secrets guidance and source/test/script README stubs when present
 
 Use existing project-specific content if present. If the repository is not actually fresh, merge carefully and report the pre-existing content instead of pretending initialization started from a blank template.
@@ -139,13 +144,12 @@ Default editable files:
 - `README.md`
 - `AGENTIC_RAILS_README.MD` front matter and project-specific references
 - `AGENTS.md` project-specific metadata and loading guidance
-- detected Tier 0 intake file
-- detected Tier 0 README or index
-- detected design file
-- detected milestones file
-- detected goals files
+- `context/dictations-tier-0/<intake-file>.md`
+- `context/design.md` (Tier 1, including the Milestones Index)
+- `context/milestones/milestone-N.md` (Tier 2)
+- `context/backlog/backlog-N.md` (Tier 4 stories)
 - support docs with starter residue, including wiki/secrets guidance and source/test/script README stubs
-- optional new folders under the detected implementation-plan folder
+- optional `context/sprints/sprint-N.md` (Tier 3) and new folders under `context/implementation-plans/` (Tier 5), only when justified
 
 ## Scale Strategy
 
@@ -166,11 +170,11 @@ Do not rewrite these unless the user explicitly requests it or the change is a n
 
 - `context/laws.md`
 - `context/agenticworkflow.md`
-- `context/AgentThinking.md`
+- `context/agent-thinking.md`
 - `context/wiki/**`
-- `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/**`
-- equivalent older-layout support files under `Documentation/`
-- completed or historical implementation-plan folders
+- the starter templates: `context/dictations-tier-0/DICTATIONS_TIER_0_NOTE_TEMPLATE.md`, `context/milestones/MILESTONE_TEMPLATE.md`, `context/sprints/SPRINT_TEMPLATE.md`, `context/backlog/BACKLOG_TEMPLATE.md`
+- the tier README files (`README-DICTATIONS-TIER-0.md`, `README-MILESTONES.md`, `README-SPRINTS.md`, `README-BACKLOG.md`)
+- completed or historical implementation-plan folders under `context/implementation-plans/`
 
 ## Placeholder Detection
 
@@ -179,15 +183,16 @@ Treat content as replaceable starter scaffolding when it contains phrases such a
 - `Project Name`
 - `Your Name`
 - `your-repo`
-- `Agentic Starter`
-- `Replace this section`
-- `Describe the project`
-- `Milestone 1: Name`
-- `Goal 1.1 - *Name*`
+- `Milestone 1: *Name*`
+- `Sprint 1: *Name*`
+- `Story name` / `Story: *Name*`
 - `Service or dependency`
 - `Principle 1`
-- `description: ???`
-- `placeholder sections`
+- `Replace this section`
+- `Replace the placeholders`
+- `Replace placeholders with`
+- `starter scaffolding`
+- `placeholder stories`
 
 Do not delete a section merely because it still has template wording. First decide whether the section remains useful as structure, then replace only the placeholder text with project-specific synthesis.
 
@@ -200,7 +205,7 @@ Use targeted scans. Do not rely on broad searches for words such as `template`, 
 Exclude or classify expected false positives:
 
 - raw Tier 0 intake
-- reusable implementation-plan templates
+- reusable starter templates and tier README files
 - examples and cheat sheets
 - Doxygen or language-specific template terminology
 - code concepts that legitimately use words such as placeholder

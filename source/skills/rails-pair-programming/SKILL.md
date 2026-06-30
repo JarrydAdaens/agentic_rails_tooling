@@ -4,12 +4,12 @@ description: >-
   Use this skill when the user explicitly wants a structured Agentic Rails
   pair-programming session, such as "use rails-pair-programming", "start
   rails-pair-programming", "pair program this under Rails", or similar phrasing.
-  The skill establishes intent, gathers current 5T Goal and implementation-plan
-  context, runs a collaborative tutoring and pair-programming loop, and creates
-  a uniquely named session artifact at wrap-up.
+  The skill establishes intent, gathers the current Story and implementation-plan
+  context from the seven-tier system, runs a collaborative tutoring and
+  pair-programming loop, and creates a uniquely named session artifact at wrap-up.
 disable-model-invocation: true
 metadata:
-  version: "1.1"
+  version: "2.0"
 ---
 
 # Rails Pair Programming
@@ -32,8 +32,8 @@ Use four phases:
 Intent -> Context Gathering -> Collaborative Session -> Wrap-up
 ```
 
-Keep the active Goal authoritative. Explore freely when helpful, but ground
-decisions, conclusions, and next steps back into the current Goal and Plan when
+Keep the active Story authoritative. Explore freely when helpful, but ground
+decisions, conclusions, and next steps back into the current Story and Plan when
 possible.
 
 Do not write production code unless the user explicitly moves the session into
@@ -47,13 +47,13 @@ Identify:
 
 - what the user wants to work on
 - whether the session is exploration, intense collaboration, or mixed
-- which Goal or implementation plan the work relates to
+- which Story or implementation plan the work relates to
 - what outcome would make the session useful
 
 Modes:
 
 - `Exploration`: understand a codebase area, file, architecture, bug surface,
-  design, goal, or implementation plan.
+  design, story, or implementation plan.
 - `Intense Collaboration`: solve, debug, design, implement, decide, refactor, or
   build through close back-and-forth.
 - `Mixed`: begin with exploration and switch into concrete collaboration when a
@@ -69,7 +69,7 @@ rails-pair-programming is active.
 
 Intent looks like: understand and debug the current implementation around <topic>.
 Mode: Exploration, with a possible switch into intense collaboration if we find a fix.
-I'll ground this against the current Goal and Plan folder first.
+I'll ground this against the current Story and Plan folder first.
 ```
 
 ## Phase 2: Context Gathering
@@ -79,29 +79,31 @@ context over chat memory.
 
 Load, when relevant and available:
 
-- current Goal document
-- active implementation-plan folder and `plan.md`
-- sibling Tier 4 artifacts such as `implementation-log.md`, `thinking.md`,
-  `evidence.md`, `complaining.md`, handovers, notes, or addenda
-- Tier 1 design and Tier 2 milestone context
+- the current Story (in `context/backlog/`)
+- the active implementation-plan folder and `plan.md` (Tier 5)
+- sibling plan-folder artifacts such as `implementation-log.md`,
+  `completion-review.md`, `thinking.md`, `evidence.md`, `complaining.md`,
+  handovers, notes, or addenda
+- Tier 1 design (with its Milestones Index), Tier 2 milestone, and Tier 3 sprint
+  context
 - relevant source files, tests, logs, or technical artifacts
-- Tier 0 intake only when rationale recovery or source synthesis matters
+- Tier 0 dictation only when rationale recovery or source synthesis matters
 
 Priority order:
 
 1. Active user request
-2. Current Goal document
-3. Active implementation plan
-4. Design and milestone context
-5. Tier 0 notes, only when needed
-6. Source files, tests, logs, and technical artifacts
+2. Current Story and its implementation plan
+3. Design, milestone, and sprint context
+4. Tier 0 dictation notes, only when needed
+5. Source files, tests, logs, and technical artifacts
 
 Path hints:
 
-- Prefer `context/implementation-plans/<current-goal-or-plan-folder>/`.
+- Prefer `context/implementation-plans/<current-story-or-plan-folder>/`. Current
+  plan folders are named `STORY_<sprint>_<story>_<slug>/`.
 - Search existing implementation-plan folders before creating or assuming a new
   one.
-- If no active Goal or Plan can be located, ask one targeted question or proceed
+- If no active Story or Plan can be located, ask one targeted question or proceed
   with clearly marked uncertainty.
 
 Keep context use visible enough that the user can tell the session is grounded,
@@ -116,7 +118,7 @@ During the loop:
 
 - ask useful questions when the next move depends on the answer
 - inspect relevant files and project context
-- explain concepts through the actual code or Goal context
+- explain concepts through the actual code or Story context
 - test ideas against project constraints
 - challenge weak assumptions with concrete reasons
 - narrow broad problems into actionable next moves
@@ -173,7 +175,7 @@ At wrap-up:
    Example: `pair-programming-09MAY2026-hooks-observability.md`
 4. Include discoveries, key discussions, decisions, open questions, outcomes,
    and yielded work.
-5. Ground the artifact in the active Goal and Plan context.
+5. Ground the artifact in the active Story and Plan context.
 6. End cleanly.
 
 Each session always produces its own file. Never overwrite or append to an
@@ -182,7 +184,7 @@ existing session artifact.
 Preferred path:
 
 ```text
-context/implementation-plans/<current-goal-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
+context/implementation-plans/<current-story-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
 ```
 
 Fallback path when the active plan folder is unknown:
@@ -203,9 +205,9 @@ existing file:
 
 <YYYY-MM-DD>
 
-## Goal Reference
+## Story Reference
 
-<Link or describe the current Goal and Plan folder.>
+<Link or describe the current Story and Plan folder.>
 
 ## Intent And Mode
 
@@ -244,12 +246,12 @@ existing file:
 
 Do not:
 
-- operate as generic chat with no Goal or Plan awareness
-- invent Goal context when it cannot be found
+- operate as generic chat with no Story or Plan awareness
+- invent Story context when it cannot be found
 - create fake decisions, discoveries, or validation evidence
 - expose private chain-of-thought
-- replace `implementation-log.md`, `evidence.md`, `thinking.md`,
-  `complaining.md`, or handover artifacts
+- replace `implementation-log.md`, `completion-review.md`, `evidence.md`,
+  `thinking.md`, `complaining.md`, or handover artifacts
 - write code unless the user explicitly moves into implementation
 - keep asking setup questions when intent is already obvious
 - finish a save or wrap-up request without writing the artifact
@@ -258,6 +260,8 @@ Do not:
 
 - `implementation-log.md`: records implementation history; reference it, but do
   not replace it.
+- `completion-review.md`: the session-end postmortem (estimates vs. actuals);
+  reference it, but do not replace it.
 - `complaining.md`: records real execution friction; surface friction only when
   it is genuine.
 - `thinking.md`: stores sanitized working notes; keep the pair-programming
@@ -273,8 +277,9 @@ Before considering the skill applied correctly, confirm:
 
 - explicit `rails-pair-programming` activation occurred
 - intent and mode were established
-- relevant 5T, Goal, and Plan context was gathered or uncertainty was stated
-- the collaborative loop stayed grounded in the current Goal and Plan
+- relevant seven-tier, Story, and Plan context was gathered or uncertainty was
+  stated
+- the collaborative loop stayed grounded in the current Story and Plan
 - useful questions were asked where appropriate
 - wrap-up was triggered by the user
 - a new artifact file was created using the `pair-programming-DDMMMYYYY-topic-slug.md` convention

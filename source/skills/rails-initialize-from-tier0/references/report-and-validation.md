@@ -1,7 +1,7 @@
 ---
 name: rails-initialize-from-tier0-report-and-validation
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
 # Report And Validation
@@ -17,12 +17,12 @@ Produce this factual report. Do not claim a file was populated unless it was act
 
 ## Source
 - Tier 0 sources: `<paths, pasted text, research reports, or existing intake files>`
-- Preserved raw Tier 0 intake files: `<context-or-Documentation/tier0/...>`
+- Preserved raw Tier 0 intake files: `<context/dictations-tier-0/...>`
 - Input mode: `<initialization seed / multi-source seed / enrichment addendum / unclear>`
 
 ## Target
 - Project path: `<path>`
-- Detected layout: `<context/implementation-plans or Documentation/implementation_plans>`
+- Layout check: `<current seven-tier context/ layout / drift detected — describe>`
 - Target validation: `<fresh starter / lightly populated / existing project with preserved content>`
 - Scale strategy: `<single-agent / batched / delegated subagents / scripted cleanup>`
 - Checkpoint: `<git commit / git status noted / filesystem checkpoint / not created and why>`
@@ -53,12 +53,12 @@ Produce this factual report. Do not claim a file was populated unless it was act
 | --- | --- | --- |
 
 ## Validation
-- Tier 0 sources preserved under the detected Tier 0 folder: yes/no
-- Target path and layout validated: yes/no
+- Tier 0 sources preserved under `context/dictations-tier-0/`: yes/no
+- Target path and seven-tier layout validated (drift reported if found): yes/no
 - Identity map applied; no starter or legacy residue left in maintained truth: yes/no
 - Secrets or sensitive data screened out: yes/no
-- Reusable framework docs preserved: yes/no
-- Milestone and goal links and anchors resolve: yes/no
+- Reusable framework docs and starter templates preserved: yes/no
+- Milestones Index, milestone docs, and backlog story links/anchors resolve: yes/no
 - Report reflects only files actually changed: yes/no
 ```
 
@@ -71,13 +71,13 @@ Confirm before producing the report. Group order mirrors the workflow.
 **Inputs and target**
 
 - A Tier 0 source was provided or found, and judged suitable for initialization rather than late-stage enrichment.
-- The target path was validated and the layout detected rather than assumed.
+- The target uses the current seven-tier `context/` layout, or any drift (single `milestones.md`, `goals*.md`, `tier0/`, `Documentation/`) was reported rather than silently converted.
 - Old or missing `agentic_rails_source_version` was treated as drift, not failure.
-- The central starter repository and the tooling repository were not modified.
+- The central starter, tooling, and memory repositories were not modified.
 
 **Tier 0 and checkpoint**
 
-- All raw Tier 0 sources, including AI research reports, were preserved under the detected Tier 0 folder.
+- All raw Tier 0 sources, including AI research reports, were preserved under `context/dictations-tier-0/`.
 - A short initialization plan was created before edits, unless immediate implementation was requested.
 - A recovery checkpoint was created or explicitly deferred before broad synthesis.
 - A canonical identity map was created before rewriting maintained docs.
@@ -86,18 +86,20 @@ Confirm before producing the report. Group order mirrors the workflow.
 
 - More than 3-4 maintained files were handled through delegation or small batches.
 - `README.md` is project-facing and `AGENTIC_RAILS_README.MD` still explains Agentic Rails.
-- Design has project-specific synthesis; milestones have real structure or honest open questions; goals match the milestone structure.
-- All needed milestone goal files were created, with near-term goals more detailed than distant ones.
-- Every goal has deliverables, acceptance criteria, and out-of-scope guidance where possible.
-- Milestone links resolve to goal files and goal summary links resolve to anchors.
-- Initialization itself was tracked as `Goal 1.1` or a context-synthesis plan when that fits the repository.
+- Design has project-specific synthesis, including a populated Milestones Index subsection.
+- One milestone document was created per milestone, with near-term milestones more detailed than distant ones, and each has a matching Milestones Index row.
+- The backlog is a single priority-sorted pool (30-story cap per file), not per-milestone files; each story has type, summary, value, rough scope, unscored metrics, and a reclassification check.
+- Sprints and implementation plans were left deferred unless the user asked to seed them.
+- Milestones Index rows resolve to milestone docs, and backlog story summary links resolve to anchors.
+- Initialization itself was tracked as the first backlog story or a context-synthesis plan when that fits the repository.
 
 **Residue, safety, and output**
 
 - Targeted scans found no starter or legacy identity residue in maintained truth, and intentional template leftovers were separated from real residue.
+- No retired vocabulary (`goals`, single `milestones.md`, `tier0/`, `task` as a tier name) was reintroduced.
 - Final docs describe the new project cleanly rather than as a migration, except where provenance is explicit.
 - Unknowns were recorded as questions or assumptions, and no Tier 0 secrets were copied into maintained docs.
-- Optional Tier 4 plans were created only when justified, usually at most one context-synthesis plan.
+- Optional Tier 5 plans were created only when justified, usually at most one context-synthesis plan.
 - No product code was mixed into context setup unless explicitly requested.
 - Git status was checked when the target is Git-backed; otherwise filesystem verification was used.
 - A factual initialization report was produced.
@@ -124,8 +126,9 @@ I want a desktop app that watches a folder, imports CSV bank exports, tags trans
 
 Synthesize as:
 
-- Design: desktop app purpose, folder watcher, import pipeline, tagging model, reporting output, CSV-first constraint.
-- Milestone: first working CSV import and monthly reporting.
-- Goal: detect new CSV files, parse transactions, tag transactions, generate monthly report.
-- Out of scope: OFX support until a later milestone.
-- Open question: bank CSV formats and report output format if not specified.
+- **Design (Tier 1):** desktop app purpose, folder watcher, import pipeline, tagging model, reporting output, CSV-first constraint.
+- **Milestones Index + milestone-1.md (Tier 2):** "First working CSV import and monthly reporting" as the first milestone; OFX support as a later milestone.
+- **Backlog (Tier 4 stories):** detect new CSV files; parse transactions; tag transactions; generate monthly report — priority-sorted, unscored, status `Backlog`, `*unscheduled*`.
+- **Out of scope (recorded on the OFX milestone/stories):** OFX support until a later milestone.
+- **Open question:** bank CSV formats and report output format if not specified.
+- **Deferred:** sprint planning (Tier 3) and implementation plans (Tier 5) happen close to execution, not during initialization.

@@ -1,0 +1,38 @@
+---
+description: General coding principles and git conventions that apply across all projects and languages.
+globs: []
+alwaysApply: true
+metadata:
+  version: "1.3"
+  owner: Jarryd Adaens
+---
+
+# General Coding Principles
+Your overarching goal is to produce code that is clean, efficient, and maintainable. You should always strive for readability, simplicity, and modularity, regardless of the programming language or context. Provide solutions in a supportive manner, ensuring that your recommendations are both actionable and adaptable. Avoid unnecessary complexity: keep your code open to iteration and future growth while preserving its clarity. Building upon these guiding principles, remember to respect language idioms, choose intuitive naming conventions, and consider best practices for error handling and testing from the outset. Whenever possible, aim for solutions that balance clarity with performance, factoring in future scalability and maintainability.
+
+# General
+- This is a public repository, so please be respectful of others and make sure the content makes sense to others.
+- Clarity Over Brevity: Favor understandable code over clever tricks. Prioritize legibility and maintainability over saving a few lines.
+- When fixing linting issues use the tools intended for this instead of trying to edit files yourself, directly.
+- Adhere to the principle of DRY (Don't Repeat Yourself) when writing anything in this repository, code or text. Keep this in mind when reviewing files as well.
+- Never say something without being certain. Always check your sources--after all you're free to look at the entire repository freely.
+- Don't update documentation and description until after the behavior you're describing is actually saved into the repository.
+- Always code in American English.
+- Code should be understandable at a glance, making it more approachable for collaborators and your future self. Avoid obfuscation or over-optimization that sacrifices readability.
+- Plan for growth and changing requirements, but do not overengineer. Keep your design flexible enough to adapt without complicating the initial implementation.
+- Write straightforward code that conveys its intent clearly. Minimize abstraction layers that obscure readability.
+- Use meaningful, consistent names for variables, functions, classes, and modules that reflect their purpose.
+- Comment thoughtfully. Provide comments or docstrings where necessary, but avoid restating what the code already expresses.
+- Encapsulate Complexity. Group related logic into self-contained modules or classes with clear, well-documented interfaces.
+- Keep primary types in their own files. Avoid loading one source file with multiple classes, structs, records, enums, or equivalent type definitions; it hurts readability, ownership, review clarity, and git history.
+- Allow only narrow local exceptions for tiny helper definitions that are inseparable from the owning type, or for language/framework patterns such as generated partials.
+- Loose coupling. Design components to function independently, using abstraction layers or interfaces to reduce interdependencies.
+- Adhere to SOLID principles.
+- Apply DRY principles. Refactor repetitive or duplicated code into shared utilities or functions to promote reuse and reduce bloat.
+-Design for Extensibility. Structure your codebase so you can add new features and functionalities without requiring major rewrites.
+
+# Git
+- Always write in American English.
+- Small, focused PRs. No cross-cutting refactors with feature work.
+- Commit format: use a `[GOAL X.Y]` or `[XXX-123]` heading followed by `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, `~ Removed:`, `~ Updated:`), and `~ Resolution:`. Full template is in `skills/commit-log/references/commit-log-template.md`.
+- Heading line ≤72 characters.

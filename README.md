@@ -1,29 +1,49 @@
 ---
 metadata:
-  version: "1.0"
+  version: "2.0"
+  owner: Jarryd Adaens
 ---
 
 # Agentic Rails Tooling
 
-`agentic_rails_tooling` is the right rail of the Agentic Rails framework — a reusable capability library for agentic development.
+`agentic_rails_tooling` is the **right rail** of the Agentic Rails framework — a reusable capability library for agentic development.
 
-It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, specialist persona bundles, workflow-skills, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
+It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, workflow-skills, specialist persona bundles, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
 
-This repository is especially useful beside project templates such as [`agentic_rails_context_starter`](../agentic_rails_context_starter/), where the project owns its local context and this repository supplies reusable operating knowledge.
+This repository is one of three rails:
+
+| Rail | Repository | Owns |
+| --- | --- | --- |
+| Left | `agentic_rails_context_starter` | Project-local context, plans, implementation logs, and handovers |
+| Right | `agentic_rails_tooling` (this repo) | Reusable rules, skills, workflow-skills, and personas — plus the logic that operates on memory |
+| Center | `agentic-rails-memory` | The durable, markdown-only store of cross-project learnings and Resumes |
+
+Read [`AGENTIC_RAILS_README.MD`](AGENTIC_RAILS_README.MD) for the full framework philosophy (seven-tier context, three rails, provenance, and handover). This README is scoped to how *this* repository is laid out and used.
 
 ## Core Idea
 
 Agentic IDEs are useful, but their conventions are fragmented. Some understand rules. Some understand skills. Some understand named agents. Some expect private dotfolders. Some are starting to recognize central user-level locations such as `%USERPROFILE%\.agents` for shared rules, skills, and agents.
 
-This repository exists to keep that complexity under control without letting any one IDE define the architecture.
+This repository exists to keep that complexity under control without letting any one IDE define the architecture. The authored artifacts live in [`source/`](source/); everything else either documents, scaffolds, preserves, or accommodates them.
 
-The stars of the repository are:
+## Top-Level Layout
 
-- `rules/`
-- `skills/`
-- `agents/`
+```text
+agentic_rails_tooling/
+  source/        Deployable artifacts — the stars of the repo
+    rules/       Concise engineering standards and style guidance
+    skills/      Portable task capabilities, including *-workflow orchestrations
+    agents/      Named specialist persona bundles
+  context/       Everything about this repo (not deployed)
+    design.md    Purpose and design of this repository
+    templates/   Blank scaffolds for new artifacts
+    prompt-dev/  Prompt source material behind generated artifacts
+    wiki/        Agent Skills spec notes and local alignment decisions
+  archived/      Preserved-but-inactive artifacts (not deployed)
+  ide_specific/  Nonportable vendor files (a deliberate junk pile)
+```
 
-Everything else exists to support those folders, preserve source material, document standards, or handle unavoidable compatibility problems.
+Only `source/` is synced outward into IDEs. `context/`, `archived/`, and `ide_specific/` stay here.
 
 ## Grounded In Agent Skills
 
@@ -50,52 +70,52 @@ That standard matters because it matches the way agentic work scales:
 
 AgentSkills.io also documents progressive disclosure: discovery, activation, then execution. This repository leans into that model. Agents should see enough metadata to know what exists, then load the larger instructions, scripts, and references only when the task actually needs them.
 
-For deeper local notes, see [`wiki/home.md`](wiki/home.md). The wiki summarizes AgentSkills.io guidance and records this repository's local alignment decisions.
+For deeper local notes, see [`context/wiki/home.md`](context/wiki/home.md). The wiki summarizes AgentSkills.io guidance and records this repository's local alignment decisions.
 
-## Repository Structure
+## `source/` — The Deployable Artifacts
 
-### `rules/`
+Everything under `source/` is authored to be installed into an IDE or the shared `%USERPROFILE%\.agents` workspace. It is the only part of the repository Kung Fu syncs outward.
 
-`rules/` contains concise engineering standards and style guidance.
+### `source/rules/`
 
-Start at [`rules/index.md`](rules/index.md). It is the entry point for selecting the smallest relevant rule set for a repository and task.
+`source/rules/` contains concise engineering standards and style guidance.
 
-Use `rules/` for:
+Start at [`source/rules/index.md`](source/rules/index.md). It is the entry point for selecting the smallest relevant rule set for a repository and task.
+
+Use `source/rules/` for:
 
 - General engineering behavior
 - Language and framework standards
 - Formatting and naming conventions
-- Stack-specific guidance such as C#, C++, WPF, and Qt
-- Compatibility files such as [`rules/.cursorrules`](rules/.cursorrules)
+- Stack-specific guidance such as C#, C++, WPF, Qt, TypeScript, and React
+- Compatibility files such as [`source/rules/.cursorrules`](source/rules/.cursorrules)
 
-Rules should stay short and prescriptive. If a file becomes a large body of procedural expertise, it probably belongs in `skills/` or `agents/`.
+Rules should stay short and prescriptive. If a file becomes a large body of procedural expertise, it probably belongs in `source/skills/` or `source/agents/`.
 
-### `skills/`
+### `source/skills/`
 
-`skills/` is the main reusable capability layer.
+`source/skills/` is the main reusable capability layer.
 
 A normal skill is a portable task-shaped unit of expertise. It helps an agent do one class of work reliably without becoming a whole persona.
 
 Current examples include:
 
-- `skills/commit-log`
-- `skills/grade`
-- `skills/rails-planning`
-- `skills/rails-pair-programming`
-- `skills/complaining`
-- `skills/evidence`
-- `skills/handover`
-- `skills/thinking-out-loud`
+- `source/skills/commit-log`
+- `source/skills/grade`
+- `source/skills/rails-planning`
+- `source/skills/rails-pair-programming`
+- `source/skills/complaining`
+- `source/skills/evidence`
+- `source/skills/handover`
+- `source/skills/thinking-out-loud`
 
-Use `skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
+Use `source/skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
-### `skills/*-workflow`
+### `source/skills/*-workflow`
 
-Advanced workflows also live in `skills/`, but they are suffixed with `-workflow`.
+Advanced workflows also live in `source/skills/`, but they are suffixed with `-workflow`.
 
-The old [`workflows/`](workflows/) folder was an exploratory failure. The idea was right: some agentic procedures are large enough to run for hours, coordinate subagents, persist intermediate artifacts, and produce reusable work. The problem is that agentic IDEs generally do not understand a separate `workflows/` primitive.
-
-The practical convention is:
+The idea behind a workflow is right: some agentic procedures are large enough to run for a long time, coordinate subagents, persist intermediate artifacts, and produce reusable work. The problem is that agentic IDEs generally do not understand a separate `workflows/` primitive, so a dedicated top-level folder was retired. The practical convention is:
 
 ```text
 <name>-workflow
@@ -105,14 +125,14 @@ That keeps powerful workflows easy to find through autocomplete in ordinary skil
 
 Current examples include:
 
-- `skills/rails-boss-execute-workflow`
-- `skills/rails-plan-spam-workflow`
+- `source/skills/rails-boss-execute-workflow`
+- `source/skills/rails-plan-spam-workflow`
 
 Workflow-skills should coordinate. They can define queues, subagent roles, artifact paths, handover rules, and validation gates. Reusable domain behavior should still live in ordinary skills when possible.
 
-### `agents/`
+### `source/agents/`
 
-`agents/` contains named specialist persona bundles.
+`source/agents/` contains named specialist persona bundles.
 
 An agent persona is different from a skill. A skill says, "Here is how to do this task." A persona says, "Here is the kind of worker you are, how you think, what quality bar you uphold, and which references you consult."
 
@@ -120,66 +140,58 @@ Agent folder names and frontmatter names must use the suffix `-persona`. That na
 
 Current examples include:
 
-- `agents/quality-gate-persona`
-- `agents/unreal-persona`
-- `agents/web-persona`
-- `agents/wpf-persona`
-- `agents/xna-persona`
+- `source/agents/quality-gate-persona`
+- `source/agents/unreal-persona`
+- `source/agents/web-persona`
+- `source/agents/wpf-persona`
+- `source/agents/xna-persona`
 
 Each persona bundle typically includes:
 
 - `AGENT.md` for the role definition and operating contract
-- Provider-facing metadata under an `agents/` subfolder
+- A `<persona>.toml` adapter for vendors that expect one, plus provider-facing metadata under an `agents/` subfolder
 - `references/` for focused supporting knowledge
 
-Use `agents/` for durable specialist personas, not small reusable procedures.
+Use `source/agents/` for durable specialist personas, not small reusable procedures.
 
-### `archived/`
+## `context/` — Everything About This Repo
 
-`archived/` contains agentic artifacts that are preserved but no longer treated as active reusable capability.
+`context/` holds the material that explains, scaffolds, and supports the artifacts in `source/`. None of it is deployed.
 
-Use it for skills, rules, agents, workflows, and related material that may still have reference value but is of dubious current usefulness, superseded by another artifact, or not worth exposing through normal IDE consumption paths.
+### `context/design.md`
 
-The archive mirrors the main capability categories:
+[`context/design.md`](context/design.md) records the purpose, structure, and design decisions behind this repository. Read it first when you need to understand *why* the layout is shaped the way it is before changing it.
 
-- `archived/agents/`
-- `archived/skills/`
-- `archived/rules/`
-- `archived/workflows/`
+### `context/templates/`
 
-Archived artifacts should not be copied into agentic IDE configuration by default. They can be restored or mined later, but the active folders remain the source that tools and humans should normally consume.
+`context/templates/` contains blank or minimal starting points for creating new agentic artifacts.
 
-### `templates/`
-
-`templates/` contains blank or minimal starter points for creating new agentic artifacts.
-
-Use it for examples and scaffolds for new skills, persona bundles, rules, workflows, and similar reusable context. Templates are source material for authors, not production capability.
+Use it for examples and scaffolds for new skills, persona bundles, and rules. Templates are source material for authors, not production capability.
 
 The template area mirrors the main capability categories:
 
-- `templates/agents/`
-- `templates/skills/`
-- `templates/rules/`
-- `templates/workflows/`
+- `context/templates/agents/`
+- `context/templates/rules/`
+- `context/templates/skills/`
 
 Current examples include:
 
-- `templates/skills/skill-template`
-- `templates/skills/skill-template-advanced`
+- `context/templates/skills/skill-template`
+- `context/templates/skills/skill-template-advanced`
 
-When creating a new artifact, start from the closest template, copy it into the active folder, then rename and fill it in. Do not expose templates directly to agentic IDEs.
+When creating a new artifact, start from the closest template, copy it into the active `source/` folder, then rename and fill it in. Do not expose templates directly to agentic IDEs.
 
-### `prompt_dev/skills_prompts/`
+### `context/prompt-dev/skills-prompts/`
 
 Prompts can be as valuable as source code.
 
-`prompt_dev/skills_prompts/` preserves prompt records and source material used to create, revise, or reason about skills and agents. If a generated skill is the artifact, these prompt records are often the design history behind it.
+`context/prompt-dev/skills-prompts/` preserves prompt records and source material used to create, revise, or reason about skills and agents. If a generated skill is the artifact, these prompt records are often the design history behind it.
 
 Keeping prompt source material separate makes it easier to refine the artifacts later without losing the original thinking.
 
-### `wiki/`
+### `context/wiki/`
 
-`wiki/` contains local documentation about Agent Skills and this repository's conventions.
+`context/wiki/` contains local documentation about Agent Skills and this repository's conventions.
 
 It is not a replacement for AgentSkills.io. It is a local, reviewable companion that captures the parts of the standard this repository relies on most often:
 
@@ -191,46 +203,52 @@ It is not a replacement for AgentSkills.io. It is a local, reviewable companion 
 - Script usage
 - Repository alignment notes
 
-### `ide_specific/`
+## `archived/`
+
+`archived/` contains agentic artifacts that are preserved but no longer treated as active reusable capability.
+
+Use it for skills, rules, agents, and related material that may still have reference value but is of dubious current usefulness, superseded by another artifact, or not worth exposing through normal IDE consumption paths.
+
+The archive mirrors the main capability categories:
+
+- `archived/agents/`
+- `archived/skills/`
+- `archived/rules/`
+
+Archived artifacts should not be copied into agentic IDE configuration by default. They can be restored or mined later, but `source/` remains the set that tools and humans should normally consume.
+
+## `ide_specific/`
 
 `ide_specific/` is intentionally a junk pile for vendor-specific files and conventions that do not belong in the standard layers.
 
 It exists because real tools are messy. Some IDEs need one-off folders, rule files, metadata, or naming conventions that are not portable. Those files can live here as a means to an end, but they should not define the repository's architecture.
 
-### `workflows/`
+## Naming Conventions
 
-`workflows/` is not the active workflow system.
+- File and folder names use **kebab-case** (`commit-log-template.md`, `wpf-rules.md`), not `snake_case` or `PascalCase`, except where a tool mandates a fixed name.
+- Conventional, tool-recognized names are preserved as-is: `SKILL.md`, `AGENT.md`, `README.md`, `SECURITY.md`, `AGENTS.md`, `CLAUDE.md`, `AGENTIC_RAILS_README.MD`, `.cursorrules`, and `.gitkeep`.
+- Code files keep their language idioms (Python and JavaScript use the conventions their ecosystems expect).
+- Persona folders and `name` fields end in `-persona`; orchestration skills end in `-workflow`.
 
-It contains [`workflows/NOT USED.txt`](workflows/NOT%20USED.txt), which records the decision to stop using a standalone workflows folder. Advanced workflows now live under `skills/` with the `-workflow` suffix because that works better across current agentic IDEs.
+## Relationship To The Other Rails
 
-## Relationship To `agentic_rails_context_starter`
-
-[`agentic_rails_context_starter`](../agentic_rails_context_starter/) is the companion GitHub template for new projects — the left rail of the Agentic Rails framework.
-
-The split is:
+The framework splits responsibilities across three repositories so no rail absorbs another's job:
 
 | Repository | Owns |
 | --- | --- |
-| `agentic_rails_context_starter` | Project-local context: Tier 0 intake, design, milestones, goals, implementation plans, handovers, and wiki notes. |
-| `agentic_rails_tooling` | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, specialist persona bundles, and prompt-development source material. |
+| [`agentic_rails_context_starter`](../agentic_rails_context_starter/) | Project-local context: Tier 0 intake, design, milestones, sprints, stories, implementation plans, and handovers. |
+| `agentic_rails_tooling` (this repo) | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, persona bundles, prompt-development source material, and the logic that captures, curates, and rebuilds memory artifacts. |
+| [`agentic-rails-memory`](../agentic-rails-memory/) | Durable, markdown-only cross-project artifacts: learnings and model/agent Resumes. Artifacts only — never the logic that produces or consumes them. |
 
-In practice, `agentic_rails_context_starter` gives a project its documentation-first operating model. It is intentionally empty of application code. It gives future agent sessions a five-tier context system:
-
-- Tier 0 raw intake and addenda
-- Tier 1 design
-- Tier 2 milestones
-- Tier 3 goals
-- Tier 4 implementation plans and handovers
-
-This repository gives agents reusable tools to execute inside that model.
+In practice, the context starter gives a project its documentation-first operating model and is intentionally empty of application code. This repository gives agents the reusable tools to execute inside that model. The memory repository accumulates the track record that lets the framework route the next task from real, measured data rather than gut feel — and the routing logic that reads and writes it lives here, in the right rail.
 
 For example:
 
-- A new project can start from `agentic_rails_context_starter`.
-- The project's `AGENTS.md` and `context/agenticworkflow.md` define how agents load local context.
-- Shared rules from this repository can be copied or installed into the IDE's expected rule location.
-- Skills such as `commit-log`, `rails-planning`, or `rails-boss-execute-workflow` can be installed globally or made available through `%USERPROFILE%\.agents`.
-- Specialist personas such as `agents/wpf-persona` can be used when the project calls for that domain expertise.
+- A new project starts from `agentic_rails_context_starter`.
+- The project's `AGENTS.md` and context files define how agents load local context.
+- Shared rules from this repository are copied or installed into the IDE's expected rule location.
+- Skills such as `commit-log`, `rails-planning`, or `rails-boss-execute-workflow` are installed globally or made available through `%USERPROFILE%\.agents`.
+- Specialist personas such as `source/agents/wpf-persona` are used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
 
@@ -238,39 +256,38 @@ The project remains usable without this repository, but it becomes much stronger
 
 [`kung-fu`](../kung-fu/) is the local WPF deployment app for consuming the artifacts in this repository across agentic IDEs.
 
-This repository is the source of truth. Kung Fu reads configured source folders for skills, rules, workflows, and agents, then copies them outward into the folder layouts expected by different IDEs, profiles, staging folders, or the shared `%USERPROFILE%/.agents` workspace.
+This repository is the source of truth. Kung Fu reads the `source/` tree, then copies its skills, rules, and agents outward into the folder layouts expected by different IDEs, profiles, staging folders, or the shared `%USERPROFILE%/.agents` workspace.
 
 The relationship is deliberately one-way:
 
 ```text
-agentic_tooling -> Kung Fu sync -> IDE and workspace configuration folders
+source/ -> Kung Fu sync -> IDE and workspace configuration folders
 ```
 
-Kung Fu manages deployment, not authorship. Edits should happen in this repository, while Kung Fu makes the active artifacts available wherever the current agentic tool expects them. Archived artifacts are retained here for reference, and templates are retained here for authoring new artifacts. Neither `archived/` nor `templates/` should be included in the normal Kung Fu sync set unless a specific artifact is intentionally promoted into an active folder.
+Kung Fu manages deployment, not authorship. Edits should happen in this repository, while Kung Fu makes the active artifacts available wherever the current agentic tool expects them. `context/`, `archived/`, and `ide_specific/` are not part of the normal sync set.
 
 ## Working Model
 
 When adding or updating reusable context, place it in the narrowest layer that matches its job:
 
-- Put it in `rules/` if it is short, prescriptive, and style-oriented.
-- Put it in `skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
-- Put it in `skills/<name>-workflow/` if it coordinates a larger multi-step process, subagents, queues, or durable artifacts.
-- Put it in `agents/` if it defines a named specialist persona with a mission, operating model, and reference library.
+- Put it in `source/rules/` if it is short, prescriptive, and style-oriented.
+- Put it in `source/skills/` if it is reusable expertise, workflow knowledge, or a portable task module.
+- Put it in `source/skills/<name>-workflow/` if it coordinates a larger multi-step process, subagents, queues, or durable artifacts.
+- Put it in `source/agents/` if it defines a named specialist persona with a mission, operating model, and reference library.
 - Put it in `archived/` if it is preserved for reference but should not be part of the active agentic capability set.
-- Put it in `templates/` if it is a blank, skeletal, or example starter point for creating a future artifact.
-- Put it in `prompt_dev/skills_prompts/` if it is prompt source material used to generate or evolve an artifact.
-- Put it in `wiki/` if it documents the standards and local conventions behind the repository.
+- Put it in `context/templates/` if it is a blank, skeletal, or example starter point for creating a future artifact.
+- Put it in `context/prompt-dev/skills-prompts/` if it is prompt source material used to generate or evolve an artifact.
+- Put it in `context/wiki/` if it documents the standards and local conventions behind the repository.
 - Put it in `ide_specific/` only when a tool requires a nonstandard compatibility file.
 
 ## Layer Examples
 
-- A WPF naming rule belongs in `rules/wpf_rules.md`.
-- A reusable commit message process belongs in `skills/commit-log`.
+- A WPF naming rule belongs in `source/rules/wpf-rules.md`.
+- A reusable commit message process belongs in `source/skills/commit-log`.
 - A questionable or superseded skill belongs in `archived/skills/`.
-- A retired multi-skill workflow, such as the old Mermaid mapping pipeline, belongs in `archived/skills/` with its related skills.
-- A blank starter for a future persona bundle belongs in `templates/agents/`.
-- A production-grade WPF specialist persona belongs in `agents/wpf-persona`.
-- The prompt material used to generate a skill belongs in `prompt_dev/skills_prompts/`.
+- A blank starter for a future persona bundle belongs in `context/templates/agents/`.
+- A production-grade WPF specialist persona belongs in `source/agents/wpf-persona`.
+- The prompt material used to generate a skill belongs in `context/prompt-dev/skills-prompts/`.
 
 ## Maintenance Notes
 
@@ -284,10 +301,10 @@ When adding or updating reusable context, place it in the narrowest layer that m
 - Keep prompt records when they are the real source behind generated artifacts.
 - Keep IDE-specific files isolated from the core architecture.
 - Keep archived artifacts out of normal sync/deployment paths unless deliberately restored.
-- Keep templates out of normal sync/deployment paths; copy from them into active folders before use.
+- Keep templates out of normal sync/deployment paths; copy from them into active `source/` folders before use.
 
 ## Repository
 
 - Repository: https://github.com/JarrydSemmens/agentic_rails_tooling
 - Owner: Jarryd Adaens
-- Last Updated: 2026-05-07
+- Last Updated: 2026-06-30

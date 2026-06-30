@@ -7,19 +7,19 @@ metadata:
 # Global Claude Rules — Jarryd Adaens
 
 ## Rules — Always Load First
-Read and apply `~/.claude/rules/global_rules.md` before every task.
+Read and apply `~/.claude/rules/global-rules.md` before every task.
 
 ## Rules — Load by Stack
 Inspect the workspace before starting. Load every file whose condition matches; skip the rest.
 
 | Condition | Load |
 |-----------|------|
-| Any `.cs`, `.csproj`, or `.sln` file present | `~/.claude/rules/csharp_rules.md` |
-| Task touches WPF, XAML, bindings, or view models | `~/.claude/rules/wpf_rules.md` |
-| Any `.uproject` file or Unreal-style source layout present | `~/.claude/rules/cplusplus_rules.md` |
-| Any Qt project file, CMake Qt config, or Qt-specific source present | `~/.claude/rules/qt_rules.md` |
-| Any `.ts` or `.tsx` files present | `~/.claude/rules/typescript_rules.md` |
-| Task touches React components, hooks, or JSX | `~/.claude/rules/react_rules.md` |
+| Any `.cs`, `.csproj`, or `.sln` file present | `~/.claude/rules/csharp-rules.md` |
+| Task touches WPF, XAML, bindings, or view models | `~/.claude/rules/wpf-rules.md` |
+| Any `.uproject` file or Unreal-style source layout present | `~/.claude/rules/cplusplus-rules.md` |
+| Any Qt project file, CMake Qt config, or Qt-specific source present | `~/.claude/rules/qt-rules.md` |
+| Any `.ts` or `.tsx` files present | `~/.claude/rules/typescript-rules.md` |
+| Task touches React components, hooks, or JSX | `~/.claude/rules/react-rules.md` |
 
 ## Agents
 Use the named agent whenever the task clearly fits its domain. Don't wait to be asked.

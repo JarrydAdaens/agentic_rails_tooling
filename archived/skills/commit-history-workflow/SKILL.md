@@ -20,7 +20,7 @@ Review exactly one historical commit and return exactly one JSON object for that
 commit.
 
 Use the rules in
-[references/commit_log_template.md](references/commit_log_template.md). This
+[references/commit-log-template.md](references/commit-log-template.md). This
 template is for historical research output, not for modern Jira or goal-based
 commit messages.
 

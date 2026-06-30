@@ -10,8 +10,9 @@ description: >-
   updating a derived app from WPF-Starter, syncing Agentic Rails context starter
   files, general refactoring inside one repository, or copying project-specific
   business logic into a starter.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Harvest Innovation

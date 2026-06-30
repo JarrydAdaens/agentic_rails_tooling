@@ -6,8 +6,9 @@ description: >-
   agentic work. It reviews conversation context when available, recent git
   history, plan.md, implementation-log.md, and optional thinking.md,
   evidence.md, and complaining.md to produce a grounded shallow handover file.
+disable-model-invocation: false
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Handover

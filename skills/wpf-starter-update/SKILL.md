@@ -10,8 +10,9 @@ description: >-
   behavior. Do not use for Agentic Rails context updates, documentation-tier
   template synchronization, pushing derived app features upstream, generic WPF
   advice, or ordinary feature work unrelated to starter alignment.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # WPF-Starter Update

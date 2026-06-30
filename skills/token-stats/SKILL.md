@@ -7,8 +7,9 @@ description: >
   asks a model to estimate and never stores prompt text. Trigger: "/token-stats",
   "how many tokens did this session use", "token cost so far", "show my usage this week",
   "export token usage", or whenever durable token/cost accounting is wanted across IDEs.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # token-stats

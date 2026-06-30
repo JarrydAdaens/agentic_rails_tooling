@@ -6,8 +6,9 @@ description: >
   Compressed version overwrites the original file. Human-readable backup saved out-of-tree
   under %LOCALAPPDATA%\grugg-compress\backups\ (Windows) or ~/.local/share/grugg-compress/backups/ (POSIX).
   Trigger: /grugg-compress FILEPATH or "compress memory file"
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Grugg Compress

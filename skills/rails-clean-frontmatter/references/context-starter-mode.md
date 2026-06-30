@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-context-starter-mode
 description: Context-starter mode for rails-clean-frontmatter — keep agentic_rails_source_version equal to version, the starter source of truth.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Context Starter Mode
@@ -53,6 +53,8 @@ here. A mismatch is an error to fix:
 ---
 name: <slug>
 description: <one sentence>
+# skill files keep their Cursor fields top-level:
+disable-model-invocation: <true|false>
 metadata:
   version: "X.Y"
   agentic_rails_source_version: "X.Y"   # always equal to version

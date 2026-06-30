@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-derived-project-mode
 description: Derived-project mode for rails-clean-frontmatter — preserve agentic_rails_source_version, or add it as 0.0 when missing.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Derived Project Mode
@@ -60,6 +60,8 @@ These fields were inherited from the starter template where they served as known
 ---
 name: <slug>
 description: <one sentence>
+# skill files keep their Cursor fields top-level:
+disable-model-invocation: <true|false>
 metadata:
   version: "X.Y"
   agentic_rails_source_version: "A.B"   # preserved, or "0.0" if it was missing

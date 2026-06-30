@@ -5,8 +5,9 @@ description: >-
   entry, version-control summary, or copy-paste check-in wording after work is
   completed. It writes a standardized commit log from a fixed template for git,
   Perforce, Mercurial, SVN, or similar VCS workflows.
+disable-model-invocation: false
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # Commit log

@@ -5,8 +5,9 @@ description: >-
   backlog items, or design notes into many implementation-plan documents. The
   Boss builds a durable planning queue, dispatches one subagent per goal or
   feature cluster, writes plans, updates progress, and repeats until complete.
+disable-model-invocation: true
 metadata:
-  version: "2.2"
+  version: "2.3"
 ---
 
 # Rails Plan Spam Workflow (Boss)

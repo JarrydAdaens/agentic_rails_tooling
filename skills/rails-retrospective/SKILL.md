@@ -7,8 +7,9 @@ description: >-
   review, process review, plan-adherence review, or durable retrospective.md
   grounded in plans, logs, git history, changed files, and optional provenance
   artifacts.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Retrospective

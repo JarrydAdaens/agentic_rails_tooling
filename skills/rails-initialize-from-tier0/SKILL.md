@@ -9,8 +9,9 @@ description: >-
   left-rail context, replace starter placeholders in design, milestones, goals,
   README, and related context files, and optionally seed initial implementation
   plans without overwriting reusable Agentic Rails framework material.
+disable-model-invocation: true
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # Rails Initialize From Tier 0

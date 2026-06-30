@@ -6,8 +6,9 @@ description: >-
   agentic task. It maintains an opt-in project-local thinking artifact that
   captures useful investigation paths, discovered constraints, observations, and
   revisit items without exposing private chain-of-thought.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Thinking Out Loud

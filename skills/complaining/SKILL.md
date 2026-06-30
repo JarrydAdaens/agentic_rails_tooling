@@ -4,8 +4,9 @@ description: >-
   Use this skill when an agent should maintain a project-local complaint log for
   genuine blockers, friction, ambiguity, tool failures, bad assumptions, risky
   constraints, or other execution problems while it works.
+disable-model-invocation: true
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Complaining

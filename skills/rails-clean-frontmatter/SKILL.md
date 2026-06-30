@@ -7,8 +7,9 @@ description: >-
   policy. It auto-selects one of three modes — tooling repo, context starter, or a
   project derived from the starter — and aborts in repositories that do not use
   Agentic Rails.
+disable-model-invocation: true
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Rails Clean Front Matter
@@ -69,6 +70,8 @@ local data lives under `metadata`.
 ---
 name: <kebab-slug>
 description: <one concise sentence>
+# skill files only:
+disable-model-invocation: <true|false>
 # rules files only:
 globs: [<patterns>]
 alwaysApply: <true|false>
@@ -92,14 +95,20 @@ Rules that hold in every mode:
   IDE-consumed field) from front matter.
 - **`metadata.version` is required**, listed first under `metadata`. Keep
   `owner`, `repo`, and `template` under `metadata` when applicable to the mode.
-- **Keep top-level** only the tool-consumed fields: `name`, `description`, and
-  the Cursor rule fields `globs` and `alwaysApply`. Move anything else that is
-  local data (`version`, `owner`, `repo`, `template`) under `metadata`.
+- **`disable-model-invocation` is required on every `SKILL.md`.** It is a
+  top-level Cursor skill field, not local metadata. If a processed `SKILL.md`
+  is missing it, stop and ask the user whether the value should be `true` or
+  `false`; do not infer, default, or choose from context. Preserve an existing
+  boolean value unless the user explicitly asks to change it.
+- **Keep top-level** only the tool-consumed fields: `name`, `description`, the
+  Cursor skill field `disable-model-invocation`, and the Cursor rule fields
+  `globs` and `alwaysApply`. Move anything else that is local data (`version`,
+  `owner`, `repo`, `template`) under `metadata`.
 - **Unknown field → stop and ask.** If a front matter carries a field this skill
   does not recognize (not `name`, `description`, `globs`, `alwaysApply`,
-  `metadata`, `version`, `owner`, `repo`, `template`, `agentic_rails_source_version`,
-  `changelog`, or `invocation`), halt and ask the user what to do with it. Do not
-  drop or keep it silently.
+  `disable-model-invocation`, `metadata`, `version`, `owner`, `repo`, `template`,
+  `agentic_rails_source_version`, `changelog`, or `invocation`), halt and ask
+  the user what to do with it. Do not drop or keep it silently.
 - **Exclusions**: never process anything under `archived/`, and never rewrite
   `agents/openai.yaml` provider files — those use a separate `interface:` schema,
   not Markdown front matter.
@@ -133,6 +142,8 @@ Before reporting done:
 - Scan that no `changelog:`, `invocation:`, or out-of-policy
   `agentic_rails_source_version:` remains as a key in any front matter block.
 - Confirm `name` and `description` exist in every processed file.
+- Confirm every processed `SKILL.md` has top-level
+  `disable-model-invocation: true` or `disable-model-invocation: false`.
 - Spot-check a non-ASCII file to confirm encoding survived.
 
 ## Report

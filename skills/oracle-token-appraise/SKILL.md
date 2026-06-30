@@ -8,8 +8,9 @@ description: >
   Trigger: "appraise <file>", "how big is <file>", "check tokens in <file>",
   "can I afford to read <file>", or whenever an agent should check a file's cost
   before ingesting it.
+disable-model-invocation: false
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Oracle Token Appraise

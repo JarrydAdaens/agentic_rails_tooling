@@ -7,8 +7,9 @@ description: >-
   agentic_rails_context_starter source of truth. Use when refreshing derived
   Agentic Rails projects from the starter without overwriting project-specific
   design, milestones, goals, historical implementation plans, or provenance.
+disable-model-invocation: true
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Rails Update From Starter

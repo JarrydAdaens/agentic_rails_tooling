@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-tooling-repo-mode
 description: Tooling-repo mode for rails-clean-frontmatter — strip agentic_rails_source_version and conform every file to the metadata.version standard.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Tooling Repo Mode
@@ -45,6 +45,8 @@ matter (top-level or under `metadata`).
 ---
 name: <slug>
 description: <one sentence>
+# skill files keep their Cursor fields top-level:
+disable-model-invocation: <true|false>
 # rules files keep their Cursor fields top-level:
 globs: [<patterns>]
 alwaysApply: <true|false>
@@ -63,8 +65,9 @@ Process every Markdown file outside `archived/`, including:
 
 - `skills/**/SKILL.md` and `skills/**/references/**`
 - `agents/**/AGENT.md`, persona `references/**`, and design documents
-- `rules/**` (keep `description`, `globs`, `alwaysApply` top-level; `owner` and
-  `version` under `metadata`)
+- `rules/**` (keep `description`, `globs`, `alwaysApply` top-level; keep
+  `disable-model-invocation` top-level on skill files; keep `owner` and `version`
+  under `metadata`)
 - `templates/**` (keep the `template` field under `metadata`)
 - `wiki/**`, `prompt_dev/**`, `Documentation/**`
 - root `README.md` and `AGENTIC_RAILS_README.MD`

@@ -6,8 +6,9 @@ description: >
   wenyan-lite, wenyan-full, wenyan-ultra.
   Use when user says "grugg mode", "talk like grugg", "be grugg", "use grugg", "less tokens",
   "be brief", or invokes /grugg. Also auto-triggers when token efficiency is requested.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 Respond terse like smart caveman. All technical substance stay. Only fluff die.

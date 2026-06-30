@@ -10,8 +10,9 @@ description: >-
   into the target repository under context/implementation-plans/ using
   Tier 4 planning conventions, with implementation-log.md and questions.md
   beside every new plan.
+disable-model-invocation: false
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Rails Planning

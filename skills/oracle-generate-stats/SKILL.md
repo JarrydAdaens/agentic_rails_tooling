@@ -9,8 +9,9 @@ description: >
   Trigger: "generate stats", "refresh stats", "update .stats files",
   "run oracle-generate-stats on <target>", or after compressing/editing
   context files when sidecar data needs to be refreshed.
+disable-model-invocation: false
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Oracle Generate Stats

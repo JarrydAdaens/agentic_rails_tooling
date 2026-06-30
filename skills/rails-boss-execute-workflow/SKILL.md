@@ -6,8 +6,9 @@ description: >-
   supplied documents, builds a durable goal queue, dispatches one subagent per
   goal or tightly bound plan slice, enforces specialist agents when required,
   updates progress, and repeats until the requested work is done or blocked.
+disable-model-invocation: true
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # Rails Boss Execute Workflow

@@ -7,8 +7,9 @@ description: >-
   The skill establishes intent, gathers current 5T Goal and implementation-plan
   context, runs a collaborative tutoring and pair-programming loop, and creates
   a uniquely named session artifact at wrap-up.
+disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Pair Programming

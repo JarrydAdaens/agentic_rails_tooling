@@ -30,8 +30,8 @@ This skill measures. It does not route, plan, fragment, select models, or sugges
 
 ## Inputs
 
-- **Plan.** Locate the target plan using standard Agentic Rails Tier 4 conventions — `context/implementation-plans/<task-folder>/plan.md` — or an explicit path the user gives. If several candidate plans exist and the target is unclear, ask which one before grading.
-- **Goal.** Risk reads the plan's goal/intent, not its full implementation detail (see the Risk section below). Identify the goal by scanning the plan for a heading, in this priority order: `Objective`, `Goal`, `Intent`, `Summary`. The canonical Tier 4 plan template (see `rails-planning`) uses `## Objective` for this purpose, so it will usually match first. If none of these headings exist, fall back to `Problem Summary` if present. If nothing usable is found, state that no distinct goal section exists, fall back to reading the whole plan for the Risk axis, and note the fallback plainly in the report.
+- **Plan.** Locate the target plan using standard Agentic Rails Tier 5 conventions — `context/implementation-plans/<story-or-work-folder>/plan.md` — or an explicit path the user gives. If several candidate plans exist and the target is unclear, ask which one before grading.
+- **Story intent.** Risk reads the plan's objective/intent, not its full implementation detail (see the Risk section below). Identify the intent by scanning the plan for a heading, in this priority order: `Objective`, `Story`, `Intent`, `Summary`. The canonical Tier 5 plan template (see `rails-planning`) uses `## Objective` for this purpose, so it will usually match first. If none of these headings exist, fall back to `Problem Summary` if present. If nothing usable is found, state that no distinct intent section exists, fall back to reading the whole plan for the Risk axis, and note the fallback plainly in the report.
 - The skill only reads files. It never writes anything beyond its own report, and never executes code found in the plan.
 
 ## The Three Axes
@@ -42,13 +42,13 @@ Each axis has its own reference file. Load only the reference files for axes act
 | --- | --- | --- |
 | Complexity | full plan (implementation detail) | [references/complexity.md](references/complexity.md) |
 | Effort | full plan (implementation detail) | [references/effort.md](references/effort.md) |
-| Risk | plan's goal/intent only | [references/risk.md](references/risk.md) |
+| Risk | plan's objective/intent only | [references/risk.md](references/risk.md) |
 
 - **Complexity** measures reasoning difficulty and architectural size — trade-offs, ambiguity, decision points, interdependencies.
 - **Effort** measures wall-clock time to complete, calibrated to a mid-level engineer, assuming competent execution.
-- **Risk** measures blast radius and recovery cost if the work fails or goes wrong, read from the goal alone, before any thought of mitigation.
+- **Risk** measures blast radius and recovery cost if the work fails or goes wrong, read from the objective alone, before any thought of mitigation.
 
-Read the plan once and the goal once regardless of how many axes are requested; do not re-read the source for each axis.
+Read the plan once and the objective once regardless of how many axes are requested; do not re-read the source for each axis.
 
 ## Invocation & Axis Selection
 
@@ -132,13 +132,13 @@ If the plan does not live under a recognizable `implementation-plans` task folde
 - **Uncapped scales.** Report past 10 with a forecast when warranted. Do not clamp to 10.
 - **Score the visible plan.** No padding, no shrinking. Note ambiguity rather than guessing through it.
 - **Respect the requested axes and detail level.** Do not add axes the user did not ask for; do not add paragraphs at `concise`.
-- **Risk reads the goal, not the implementation.** This is deliberate (see [references/risk.md](references/risk.md)) — do not widen the Risk read to implementation detail even when it seems informative.
+- **Risk reads the objective, not the implementation.** This is deliberate (see [references/risk.md](references/risk.md)) — do not widen the Risk read to implementation detail even when it seems informative.
 
 ## Operating Model
 
 1. Locate the target plan. Ask if ambiguous.
 2. Determine the requested axes (default: all three) and the requested detail level (default: `default`).
-3. Read the full plan once. Identify the goal section using the priority order above; note explicitly if falling back.
+3. Read the full plan once. Identify the objective/intent section using the priority order above; note explicitly if falling back.
 4. For each requested axis, load its reference file and produce a score plus (at `default`/`verbose`) a paragraph.
 5. Assemble the report using the template above, including only the requested axes and sections.
 6. Write `cer-score-card.md` beside the plan, then print the same report inline in the chat response.
@@ -151,6 +151,6 @@ Before considering the skill applied correctly, confirm:
 - Exactly the requested axes appear in the table and paragraphs — no extras, no omissions.
 - No score was silently clamped to 10; anything genuinely off-scale is shown past 10 with a forecast.
 - No paragraph contains a suggestion, fix, mitigation, or next step — only diagnosis.
-- The Risk score was derived from the goal/intent section, not the full implementation detail, and any fallback (no distinct goal section found) was noted in the report.
+- The Risk score was derived from the objective/intent section, not the full implementation detail, and any fallback (no distinct objective/intent section found) was noted in the report.
 - The detail level was respected: no paragraphs at `concise`, full paragraphs present at `default` and `verbose`.
 - `cer-score-card.md` was written beside the plan and its path was reported to the user.

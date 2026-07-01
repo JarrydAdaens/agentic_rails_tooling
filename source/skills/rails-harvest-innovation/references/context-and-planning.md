@@ -28,7 +28,7 @@ Signals that a repository may be derived:
 
 - it carries `context/wpf-starter-inventory.md` with modifications or intentional removals.
 - WPF-Starter project names, namespaces, or architecture have been renamed.
-- app-specific design, milestones, goals, deployment identity, or product branding are present.
+- app-specific design, milestones, sprints, stories, deployment identity, or product branding are present.
 
 Ask before editing when the destination/source roles are ambiguous.
 
@@ -45,8 +45,8 @@ In the destination, inspect when present:
 5. `context/wpf-starter-inventory.md`
 6. `context/laws.md`
 7. `context/design.md`
-8. `context/milestones.md`
-9. relevant `context/goals*.md`
+8. relevant `context/milestones/*.md`
+9. relevant `context/sprints/*.md` and `context/backlog/*.md` stories
 10. relevant `context/implementation-plans/`
 
 In the source, inspect only what helps locate and understand the requested feature:
@@ -60,17 +60,17 @@ In the source, inspect only what helps locate and understand the requested featu
 - docs and implementation plans
 - source inventory notes or intentional removal logs
 
-Project-local context is authoritative for that repository. Shared tooling supplements it; it does not override laws, design, goals, or implementation plans.
+Project-local context is authoritative for that repository. Shared tooling supplements it; it does not override laws, design, stories, or implementation plans.
 
-## Tier 4 Work Record
+## Tier 5 Work Record
 
 For meaningful upstreaming, create or reuse a destination folder under:
 
 ```text
-context/implementation-plans/GOAL_x_y_harvest-short-feature-name/
+context/implementation-plans/STORY_x_y_harvest-short-feature-name/
 ```
 
-Use the destination's existing naming pattern when one is obvious. If there is no clear goal number, use a readable folder name that includes `harvest` or `upstream`.
+Use the destination's existing naming pattern when one is obvious. If there is no clear story number, use a readable folder name that includes `harvest` or `upstream`.
 
 Maintain at minimum:
 

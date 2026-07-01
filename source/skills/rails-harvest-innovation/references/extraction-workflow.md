@@ -93,7 +93,7 @@ Apply the feature to WPF-Starter by updating only what the feature requires:
 - XAML resources and resource merges
 - tests or test fixtures
 - `context/wpf-starter-inventory.md`
-- relevant design, goals, plan, or implementation-log files when behavior changes
+- relevant design, story, plan, or implementation-log files when behavior changes
 
 Keep WPF-Starter usable as a standalone template after the change.
 

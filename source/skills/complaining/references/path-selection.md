@@ -29,7 +29,7 @@ complaining.md
 ## Examples
 
 ```text
-context/implementation-plans/GOAL_1_2_short-slug/complaining.md
+context/implementation-plans/STORY_1_2_short-slug/complaining.md
 context/complaining.md
 documentation/complaining.md
 docs/complaining.md

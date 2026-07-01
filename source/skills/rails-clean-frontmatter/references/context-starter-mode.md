@@ -15,7 +15,7 @@ detection selects Starter mode.
 
 Strong signals:
 
-- `context/` with `design.md`, `milestones.md`, `goals*.md`, `tier0/`, and an
+- `context/` with `design.md`, `milestones/`, `sprints/`, `backlog/`, `dictations-tier-0/`, and an
   `implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/` folder.
 - That content is still template/placeholder (`Project Name`, `Milestone 1: Name`,
   `Goal 1.1 - Name`, `Describe the project`).
@@ -70,8 +70,8 @@ No `changelog` or `invocation`.
 
 Process Markdown front matter outside `archived/`, including:
 
-- `context/design.md`, `context/milestones.md`, `context/goals*.md`
-- `context/tier0/README.md` and other maintained context docs
+- `context/design.md`, `context/milestones/`, `context/sprints/`, `context/backlog/`
+- `context/dictations-tier-0/README-DICTATIONS-TIER-0.md` and other maintained context docs
 - `context/implementation-plans/IMPLEMENTATION_PLAN_TEMPLATE/**`
 - root `README.md` and `AGENTIC_RAILS_README.MD`
 - any wiki, rules, or support docs the starter ships

@@ -4,19 +4,19 @@ metadata:
   version: "1.0"
 ---
 
-# Tier 4 Implementation Plan Template
+# Tier 5 Implementation Plan Template
 
 Use this template for `rails-planning` and `rails-plan-spam-workflow` unless the target repository has a stronger local implementation-plan template.
 
-Tier 4 context means the plan is grounded in concrete implementation reality — named files, modules, classes, interfaces, and validation surfaces — rather than broad product intent alone. If exact locations are unknown, name the narrowest credible subsystem and the discovery step needed to confirm it.
+Tier 5 planning means a Story has been translated into concrete implementation reality: named files, modules, classes, interfaces, validation surfaces, and execution steps. If exact locations are unknown, name the narrowest credible subsystem and the discovery step needed to confirm it.
 
 ```markdown
 # <Task Name> - Implementation Plan
 
 ## Metadata
 
-- Task Type: `GOAL | FEATURE | BUG | REFACTOR | SPIKE`
-- Task ID: `<goal-id or feature-id if applicable>`
+- Task Type: `STORY | FEATURE | BUG | REFACTOR | SPIKE`
+- Story/Work ID: `<story-id or feature-id if applicable>`
 - Task Name: `<short task title>`
 - Status: `Draft | Ready | In Progress | Blocked | Complete | Superseded`
 - Owner: `<human, team, or agent if known>`
@@ -26,7 +26,7 @@ Tier 4 context means the plan is grounded in concrete implementation reality —
 
 - Design: `../../design.md`
 - Milestone: `<link if applicable>`
-- Goal: `<link if applicable>`
+- Story: `<link if applicable>`
 - Tier 0 Source: `<link only if materially relevant>`
 - Related Plans: `<links if applicable>`
 - External Tooling: `<skills, agents, workflows if required>`
@@ -47,13 +47,13 @@ Describe the issue, feature gap, or implementation need.
 
 ### Out Of Scope
 
-- `<explicit non-goal>`
+- `<explicit out-of-scope item>`
 
 ## Current State
 
 Summarize the existing relevant repository state.
 
-## Tier 4 Context
+## Tier 5 Implementation Context
 
 Ground the plan in concrete implementation reality before writing steps.
 
@@ -101,7 +101,7 @@ If exact locations are unknown, name the narrowest credible subsystem and the di
 
 ## Completion Checklist
 
-- [ ] Implementation matches the linked design and goal context
+- [ ] Implementation matches the linked design and story context
 - [ ] Scope stayed inside this plan
 - [ ] Relevant docs were updated if behavior changed
 - [ ] Verification was completed or explicitly deferred

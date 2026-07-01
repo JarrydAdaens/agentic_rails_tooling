@@ -56,7 +56,7 @@ Capture useful engineering notes here. This is not a private chain-of-thought du
 
 - Investigation: `context/agenticworkflow.md` - found that optional artifacts are skill-gated.
 - Constraint: Do not write `thinking.md` unless this skill is active.
-- Observation: The implementation plan uses folder-based Tier 4 context, so local artifacts should live beside `plan.md` when possible.
+- Observation: The implementation plan uses folder-based Tier 5 implementation-plan context, so local artifacts should live beside `plan.md` when possible.
 - Revisit: Validate path-selection behavior in a non-Agentic-Rails repository before installing globally.
 
 ## Do Not Record

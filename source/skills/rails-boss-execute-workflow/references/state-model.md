@@ -21,17 +21,17 @@ Only the **Boss** mutates the `Status` column in `context/rails-boss-execute/pro
 
 | From | To | When |
 | --- | --- | --- |
-| `TODO` | `DOING` | Boss dispatches the goal to a worker |
+| `TODO` | `DOING` | Boss dispatches the story to a worker |
 | `DOING` | `DONE` | Worker result is accepted and the required commit exists when files changed |
 | `DOING` | `BLOCKED` | Worker is blocked, validation fails, or changed files exist without an acceptable commit |
 | `BLOCKED` | `TODO` | Boss explicitly requeues after a deliberate retry decision |
 
 ## Rules
 
-- Do not mark a goal `DONE` before the worker result is reviewed.
-- Do not mark a goal `DONE` if files changed and no real commit exists.
+- Do not mark a story `DONE` before the worker result is reviewed.
+- Do not mark a story `DONE` if files changed and no real commit exists.
 - Do not mark a source checklist item complete before the corresponding progress row is `DONE`.
-- Preserve goal ids exactly when they came from source documents.
+- Preserve story ids exactly when they came from source documents.
 - Synthetic ids such as `STEP-001` are stable once created.
 
 ## Resume

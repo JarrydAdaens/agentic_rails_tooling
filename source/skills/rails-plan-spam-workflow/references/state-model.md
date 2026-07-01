@@ -23,7 +23,7 @@ The run folder (`context/plan-spam-<slug>/`) is unique per invocation. See the r
 
 | From | To | When |
 | --- | --- | --- |
-| `TODO` | `DOING` | Boss dispatches the goal to a planning worker |
+| `TODO` | `DOING` | Boss dispatches the story to a planning worker |
 | `DOING` | `DONE` | Worker result is accepted: `plan.md`, `implementation-log.md`, and `questions.md` all exist at expected paths, and the Boss updated the run-folder questions index |
 | `DOING` | `BLOCKED` | Worker is blocked, any of the three output files is missing, wrong template was used, plan is too shallow, or required questions were not captured |
 | `BLOCKED` | `TODO` | Boss explicitly requeues after a deliberate retry decision |
@@ -35,7 +35,7 @@ The run folder (`context/plan-spam-<slug>/`) is unique per invocation. See the r
 - Do not mark a row `DONE` if the plan clearly does not follow `skills/rails-planning/references/plan-template.md` or the repository-local template.
 - Do not mark a row `DONE` if visible uncertainty exists but the worker failed to capture corresponding questions in the plan-local `questions.md`.
 - A row may still be `DONE` while questions remain unanswered as long as the plan is useful, the uncertainty is marked honestly, and the questions are in `questions.md`.
-- Preserve goal ids exactly when they came from source documents.
+- Preserve story ids exactly when they came from source documents.
 - Synthetic ids such as `PLAN-001` are stable once created.
 
 ## Resume

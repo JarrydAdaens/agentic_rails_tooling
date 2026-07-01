@@ -16,7 +16,7 @@ detection selects Derived mode.
 Strong signals:
 
 - `context/` (or older `Documentation/`) carrying real project truth — actual
-  design, milestones, and goals, not placeholders.
+  design, milestones, sprints, and backlog stories, not placeholders.
 - An Agentic Rails marker: `AGENTIC_RAILS_README.MD`, `.agentic-rails.json`, or
   `AGENTIC_RAILS.md`.
 - The repository is neither `agentic_rails_tooling` nor
@@ -77,7 +77,7 @@ No `changelog` or `invocation`. Move any flat `version`/`owner`/`repo` under `me
 Process Markdown front matter outside `archived/`, including:
 
 - `context/**` or `Documentation/**` maintained project docs (design, milestones,
-  goals, tier0 intake, implementation plans, logs, handovers)
+  backlog stories, dictations-tier-0 intake, implementation plans, logs, handovers)
 - root `README.md` and any Agentic Rails framework files
 - project-local skills, agents, or rules if the project carries its own
 

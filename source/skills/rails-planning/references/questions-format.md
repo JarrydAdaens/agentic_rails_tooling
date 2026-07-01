@@ -6,7 +6,7 @@ metadata:
 
 # Per-Plan Questions File Format
 
-Use this format for `questions.md` created beside every `plan.md` under `context/implementation-plans/<task-folder>/`.
+Use this format for `questions.md` created beside every `plan.md` under `context/implementation-plans/<story-or-work-folder>/`.
 
 The file is plan-local. It captures open questions discovered while writing or executing this specific plan so the human or a follow-up agent can answer them and revise the plan without losing context.
 
@@ -16,7 +16,7 @@ The file is plan-local. It captures open questions discovered while writing or e
 # Questions — <Task Name>
 
 - Plan: `<relative path to plan.md>`
-- Goal: `<goal-id or task-id>`
+- Story/Work ID: `<story-id or work-id>`
 - Status: `OPEN | NONE | RESOLVED`
 - Last Updated: `<DD Month YYYY>`
 
@@ -48,7 +48,7 @@ Answer these later — the human or a follow-up agent can revise the plan once a
 # Questions — Add Report Export Support
 
 - Plan: `plan.md`
-- Goal: `GOAL_2_3`
+- Story/Work ID: `STORY_2_3`
 - Status: `OPEN`
 - Last Updated: `07 May 2026`
 
@@ -73,7 +73,7 @@ Answer these later — the human or a follow-up agent can revise the plan once a
 # Questions — Fix Login Token Refresh
 
 - Plan: `plan.md`
-- Goal: `BUG_fix-login-token-refresh`
+- Story/Work ID: `BUG_fix-login-token-refresh`
 - Status: `NONE`
 - Last Updated: `07 May 2026`
 

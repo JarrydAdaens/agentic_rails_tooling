@@ -163,24 +163,13 @@ if ($ProjectAuto) {
 
 # Determine effective MaxDepth
 $EffectiveMaxDepth = $MaxDepth
-if ($null -ne $ConfigDefaultMaxDepth -and $MaxDepth -eq 6) {
-    # Only override if default MaxDepth wasn't customized by user via command line
+if ($null -ne $ConfigDefaultMaxDepth -and -not $PSBoundParameters.ContainsKey('MaxDepth')) {
     $EffectiveMaxDepth = $ConfigDefaultMaxDepth
 }
 
-# Redaction helper
-function Redact-SensitiveValue($Name, $AutomationId, $ClassName, $ControlType) {
-    if ([string]::IsNullOrWhiteSpace($Name)) { return $Name }
-    $sensitiveKeys = "password|passcode|secret|token|apikey|privatekey|credential|connectionstring|auth"
-    if ($AutomationId -match $sensitiveKeys -or $ClassName -match $sensitiveKeys -or $Name -match $sensitiveKeys) {
-        if ($ControlType -in @("Edit", "Document", "Custom") -or $ClassName -like "*Password*" -or $ClassName -like "*TextBox*") {
-            if ($Name.Length -gt 3 -and $Name -notmatch "^(Password|Token|API Key|Secret|Key|Enter|Input|Type|Your|Please).*$") {
-                return "[REDACTED]"
-            }
-        }
-    }
-    return $Name
-}
+# NOTE: Redaction is intentionally deferred. The sensor does not currently read
+# ValuePattern values, so there are no sensitive user inputs to redact. If value
+# reading is added later, implement redaction at the ValuePattern read site.
 
 function New-TargetSpec {
     [ordered]@{
@@ -338,10 +327,8 @@ function Convert-ElementToNode($Element, $Depth, $MaxDepth, $Warnings) {
         $controlType = $current.ControlType.ProgrammaticName -replace "^ControlType\.", ""
     }
 
-    $redactedName = Redact-SensitiveValue $current.Name $current.AutomationId $current.ClassName $controlType
-
     $node = [ordered]@{
-        name = $redactedName
+        name = $current.Name
         automationId = $current.AutomationId
         controlType = $controlType
         className = $current.ClassName
@@ -393,7 +380,10 @@ function Get-FlatNodes($Node) {
     $list.Add($Node)
     if ($null -ne $Node.children) {
         foreach ($child in $Node.children) {
-            $list.AddRange((Get-FlatNodes $child))
+            $childNodes = @(Get-FlatNodes $child)
+            foreach ($cn in $childNodes) {
+                $list.Add($cn)
+            }
         }
     }
     return $list
@@ -421,7 +411,7 @@ function Resolve-ProbableView($FlatNodes, $TopWindowName) {
     # 1. Window title heuristics
     $titleWords = $TopWindowName -split '[\s\-\(\)\[\]]'
     foreach ($word in $titleWords) {
-        if ($word -match "^[A-Z][a-zA-Z]{2,15}$" -and $word -notmatch "WPF|App|Application|Client|System|Window|Quota|Tank|Kung|Fu|Cryptillionaire") {
+        if ($word -match "^[A-Z][a-zA-Z]{2,15}$" -and $word -notmatch "^(WPF|App|Application|Client|System|Window|Desktop|Main|Host)$") {
             Add-Score $word 3 "Window title contains '$word'"
         }
     }
@@ -490,6 +480,18 @@ function Resolve-ProbableView($FlatNodes, $TopWindowName) {
     }
 }
 
+function Get-RejectedCandidateList($CandidatesRejected) {
+    $list = @()
+    foreach ($r in $CandidatesRejected) {
+        $list += [ordered]@{
+            name = $r.name
+            processName = $r.processName
+            processId = $r.processId
+        }
+    }
+    return $list
+}
+
 try {
     Add-Type -AssemblyName UIAutomationClient
     Add-Type -AssemblyName UIAutomationTypes
@@ -517,21 +519,31 @@ try {
             $isMatch = $true
             if ($ProcessId -gt 0 -and $windowPid -ne $ProcessId) { $isMatch = $false }
             
+            $processMatch = $false
+            $titleMatch = $false
+            
             if ($AllowedProcessNames.Count -gt 0) {
-                $pMatch = $false
                 foreach ($apName in $AllowedProcessNames) {
                     $cleanAp = if ($apName -like "*.exe") { $apName.Substring(0, $apName.Length - 4) } else { $apName }
-                    if ($pName -ieq $cleanAp) { $pMatch = $true; break }
+                    if ($pName -ieq $cleanAp) { $processMatch = $true; break }
                 }
-                if (-not $pMatch) { $isMatch = $false }
             }
             
             if ($AllowedWindowTitles.Count -gt 0) {
-                $tMatch = $false
                 foreach ($awt in $AllowedWindowTitles) {
-                    if (Test-Contains $title $awt) { $tMatch = $true; break }
+                    if (Test-Contains $title $awt) { $titleMatch = $true; break }
                 }
-                if (-not $tMatch) { $isMatch = $false }
+            }
+            
+            # ProjectAuto uses OR: match if process name OR window title matches.
+            # Explicit targeting uses AND: all specified filters must match.
+            if ($AllowedProcessNames.Count -gt 0 -or $AllowedWindowTitles.Count -gt 0) {
+                if ($ProjectAuto) {
+                    if (-not $processMatch -and -not $titleMatch) { $isMatch = $false }
+                } else {
+                    if ($AllowedProcessNames.Count -gt 0 -and -not $processMatch) { $isMatch = $false }
+                    if ($AllowedWindowTitles.Count -gt 0 -and -not $titleMatch) { $isMatch = $false }
+                }
             }
             
             # Check ignored window titles
@@ -564,11 +576,12 @@ try {
         Start-Sleep -Milliseconds 250
     } while ((Get-Date) -lt $deadline)
 
-    # 1. If -ListWindows mode:
+    # ListWindows mode (Write-SensorJson calls exit, so subsequent code is not reached)
     if ($ListWindows) {
         $windowList = @()
         $targetWindows = if ($ProcessId -eq 0 -and $AllowedProcessNames.Count -eq 0 -and $AllowedWindowTitles.Count -eq 0) {
-            $windows
+            # No filters: enumerate all desktop windows fresh (don't rely on loop variable)
+            $desktop.FindAll([System.Windows.Automation.TreeScope]::Children, [System.Windows.Automation.Condition]::TrueCondition)
         } else {
             $matches
         }
@@ -599,6 +612,7 @@ try {
     }
 
     # Standard / Summary capture mode
+    # Note: only reached when -ListWindows was not used, since Write-SensorJson calls exit
     if ($matches.Count -eq 0) {
         Write-SensorJson (New-Failure "TargetWindowNotFound" "No matching top-level window was found.") 1
     }
@@ -699,14 +713,7 @@ try {
         # Probable current view
         $currentView = Resolve-ProbableView $flatNodes $windowCurrent.Name
         
-        $rejectedList = @()
-        foreach ($r in $candidatesRejected) {
-            $rejectedList += [ordered]@{
-                name = $r.name
-                processName = $r.processName
-                processId = $r.processId
-            }
-        }
+        $rejectedList = @(Get-RejectedCandidateList $candidatesRejected)
         
         $result = [pscustomobject][ordered]@{
             sensor = "WpfTreeSensor"
@@ -736,14 +743,7 @@ try {
     }
     else {
         # Full tree mode
-        $rejectedList = @()
-        foreach ($r in $candidatesRejected) {
-            $rejectedList += [ordered]@{
-                name = $r.name
-                processName = $r.processName
-                processId = $r.processId
-            }
-        }
+        $rejectedList = @(Get-RejectedCandidateList $candidatesRejected)
         
         $result = [pscustomobject][ordered]@{
             sensor = "WpfTreeSensor"

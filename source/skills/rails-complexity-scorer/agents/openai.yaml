@@ -1,4 +1,0 @@
-interface:
-  display_name: "Rails Complexity Scorer"
-  short_description: "Right-size Agentic Rails plans"
-  default_prompt: "Use $rails-complexity-scorer to score this Agentic Rails implementation plan and split it into phase files if it exceeds the target model budget."

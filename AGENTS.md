@@ -4,7 +4,7 @@ This file provides repository guidance for agentic IDEs and coding agents workin
 
 ## What this repository is
 
-`agentic_rails_tooling` is the **right rail** of the Agentic Rails framework: a version-controlled library of reusable agent capabilities. It contains almost no executable code — the artifacts are Markdown (`SKILL.md`, `AGENT.md`, rules, references) plus prompt source material. There is no build, no test suite, and no lint step. "Correctness" here means well-formed artifacts that obey the naming and frontmatter conventions below.
+`agentic_rails_tooling` is the **right rail** of the Agentic Rails framework: a version-controlled library of reusable agent capabilities. It contains almost no executable code — the artifacts are Markdown (`SKILL.md`, `AGENT.md`, rules, references) plus prompt source material. There is no build, but there **is** a lint step: `scripts/rails_lint.py` deterministically enforces the naming, frontmatter, and vocabulary conventions below. Run it (`python scripts/rails_lint.py .`) before committing artifact changes and before deployment; a clean exit is the repo's definition of well-formed.
 
 It sits alongside two other rails: `agentic_rails_context_starter` (the **left rail**, project-local context) and `agentic-rails-memory` (the **center rail**, durable cross-project artifacts). This repo also owns the logic that captures, curates, and rebuilds memory artifacts. It is deployed into IDEs by the external `kung-fu` WPF app, which syncs only the `source/` tree. This repo is the source of truth; sync is one-way outward. Edit artifacts here, never in the deployed copies.
 
@@ -13,6 +13,7 @@ Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README
 ## Top-level layout
 
 - `source/` — the only deployable tree. Holds `source/rules/`, `source/skills/`, and `source/agents/`.
+- `scripts/` — repo infrastructure (not deployed): `scripts/rails_lint.py` plus its tests. See `scripts/README-SCRIPTS.md`.
 - `context/` — everything *about* this repo (not deployed): `context/design.md`, `context/templates/`, `context/prompt-dev/`, `context/wiki/`.
 - `archived/` — preserved-but-inactive artifacts (not deployed).
 - `ide_specific/` — nonportable vendor files (a deliberate junk pile).

@@ -31,7 +31,7 @@ Agentic Rails is a framework name, not a single repository. Three rails divide t
 each rail has one responsibility it must not hand to another:
 
 - **Left rail — `agentic_rails_context_starter`**: project-local context and provenance.
-  Where project knowledge lives (design, milestones, sprints, stories, plans, handovers).
+  Where project knowledge lives (design, milestones, stories, plans, handovers).
 - **Right rail — `agentic_rails_tooling` (this repo)**: reusable behaviour. Rules, skills,
   workflow-skills, personas, and the logic that captures, curates, and rebuilds memory.
 - **Center rail — `agentic-rails-memory`**: durable, markdown-only cross-project artifacts

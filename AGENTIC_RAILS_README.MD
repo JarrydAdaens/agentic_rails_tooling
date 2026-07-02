@@ -1,11 +1,9 @@
 ---
 name: agentic-rails-readme
-description: Durable framework overview for Agentic Rails, the opinionated IDE-agnostic system for AI-assisted software development, now spanning three rails - context, tooling, and memory.
+description: Durable framework overview for Agentic Rails, the opinionated IDE-agnostic system for AI-assisted software development, now spanning three rails - context, tooling, and memory. This is the single canonical copy; the starter and memory repos carry short stubs that point here.
 metadata:
-  version: "2.1"
-  agentic_rails_source_version: "2.1"
+  version: "3.0"
   owner: "Jarryd Adaens"
-  repo: "agentic-rails-memory"
 ---
 
 # Agentic Rails
@@ -41,7 +39,7 @@ Agentic Rails is the framework name for projects that use the context starter, r
 | --- | --- | --- |
 | Agentic Rails | Framework name | Names the combined development system, terminology, and adoption model |
 | `agentic_rails_context_starter` | Left rail | Template repository for project-local context, plans, implementation logs, and handovers |
-| `agentic-rails-memory` | Center rail | Durable, git-revisioned store of cross-project artifacts (learnings and Resumes) that feeds data-driven routing |
+| `agentic_rails_memory` | Center rail | Durable, git-revisioned store of cross-project artifacts (learnings and Resumes) that feeds data-driven routing |
 | `agentic_rails_tooling` | Right rail | Reusable skills, agents, rules, workflows, and references |
 | Target project repositories | Carriage | Actual software projects created from the starter and supported by tooling |
 
@@ -49,6 +47,8 @@ Each rail has a single responsibility and should not absorb another's. The conte
 carries per-project structure; the tooling carries reusable behaviour and the logic that
 operates on memory; the memory repository carries cross-project *artifacts only*, not the
 logic that produces or consumes them.
+
+Repository folder names are `snake_case`, not the framework's own `kebab-case` mandate for artifact and skill names — that mandate governs files and folders *inside* a rail, not the three rail repositories themselves. This is a deliberate, narrow exemption, not drift: renaming them would touch local git remotes, IDE workspace references, and the Kung Fu deployment tool's configured source paths for no functional gain.
 
 ## The Left Rail: Context And Provenance
 
@@ -58,15 +58,15 @@ The left rail answers:
 
 It is provided by `agentic_rails_context_starter` and gives each project a durable documentation structure:
 
-- seven-tier context hierarchy
-- backlog, sprint, and milestone conventions
+- the context tier system (see below)
+- backlog and milestone conventions
 - documentation conventions
-- implementation-plan folders that receive plan, implementation-log, and completion-review documents
+- implementation-plan folders, grouped by milestone, holding one primary `plan.md` per story
 - optional skill-generated provenance artifacts
 - handover locations when a handover skill or workflow is used
 - persistent framework identity files
 
-The starter is a template. A derived project should replace placeholders with project-specific purpose, architecture, milestones, sprints, stories, and execution history.
+The starter is a template. A derived project should replace placeholders with project-specific purpose, architecture, milestones, stories, and execution history.
 
 ## The Right Rail: Tooling And Behaviour
 
@@ -85,7 +85,7 @@ It is provided by `agentic_rails_tooling` and may include reusable:
 - complaint logging behaviours
 - evidence and provenance behaviours
 
-Project-local context remains authoritative. Shared tooling supplements the project, but it does not override the project laws, design, milestones, sprints, stories, or implementation plans.
+Project-local context remains authoritative. Shared tooling supplements the project, but it does not override the project laws, design, milestones, stories, or implementation plans.
 
 ## The Center Rail: Memory And Track Record
 
@@ -93,7 +93,7 @@ The Center rail answers:
 
 > What did we learn by doing the work, and how should that change what we do next?
 
-It is provided by `agentic-rails-memory`: a durable, git-revisioned, **markdown-only**
+It is provided by `agentic_rails_memory`: a durable, git-revisioned, **markdown-only**
 store that lives outside any single project. Skills and agents "memorize" things by writing
 files here. It is the place where cross-project knowledge accumulates so that the framework
 can make decisions from real, measured data rather than gut feel.
@@ -126,25 +126,24 @@ findings back into the left and right rails, making framework evolution data dri
 > something of value was stored outside the project where the work happened. Curation is a
 > separate, deliberate step.
 
-## Seven-Tier Context System
+## The Context Tier System
 
-Agentic Rails uses a seven-tier, backlog-driven, Scrum-aligned context model. Rough design and milestones are set up front; work is then planned close to execution by pulling only what is needed now. The backlog is allowed to be messy.
+Agentic Rails uses a milestone-centric, backlog-informed context model. Rough design and milestones are set up front; work is then planned close to execution by pulling only what is needed now. The backlog is allowed to be messy.
 
-| Tier | Layer | Location | Purpose | Scrum |
-| --- | --- | --- | --- | --- |
-| Tier 0 | Transcription | `context/dictations-tier-0/` | Raw dictation — the rough shape of the project before structure is imposed | Pre-planning |
-| Tier 1 | Design | `context/design.md` | The whole deliverable and its largest pieces; holds the Milestones Index subsection | Vision / roadmap |
-| Tier 2 | Milestone | `context/milestones/` | Macro-features; each doc indexes a grouped collection of sprints | Theme |
-| Tier 3 | Sprint | `context/sprints/` | Time-bounded chunks toward a milestone with a clear deliverable | Sprint |
-| Tier 4 | Story | `context/backlog/` | Discrete work units (feature, bug, refactor), then scheduled into a sprint | Story |
-| Tier 5 | Implementation Plan | `context/implementation-plans/` | The normalized how-to for one story, with scoring and mitigation | Task breakdown |
-| Tier 6 | Phase *(optional)* | `context/implementation-plans/` | A safe slice of an over-large story | Sub-task |
+The tiers, by name — **Dictation → Design → Milestone → Story → Implementation Plan → Phase**. The numbered table is canonical in exactly two files: `agentic_rails_context_starter/context/design.md` and `agentic_rails_context_starter/context/agenticworkflow.md`. Everywhere else, including here, tiers are referred to by name, not number, so a future structural reform only has to touch those two files instead of the whole framework — see the six-tier addendum's rationale if you want the history.
+
+- **Dictation** (`context/dictations-tier-0/`) — raw dictation, the rough shape of the project before structure is imposed.
+- **Design** (`context/design.md`) — the whole deliverable and its largest pieces; holds the Milestones Index subsection.
+- **Milestone** (`context/milestones/`) — a coherent macro-feature or delivery outcome; contains the story list needed to deliver it directly, roughly 10-20 stories as a guideline.
+- **Story** — a discrete work unit (feature, bug, refactor, research, infrastructure, documentation, tooling) living inside a milestone document once selected for delivery. Before selection, unscheduled stories sit in the backlog (`context/backlog/`) — an informal staging pool, not a numbered tier, sometimes called "Milestone -1" or the story inventory.
+- **Implementation Plan** (`context/implementation-plans/<milestone-slug>/<story-slug>/plan.md`) — the normalized how-to for one story, with CER scoring, mitigation, execution log, and completion review folded into the one primary artifact.
+- **Phase** *(optional)* (`context/implementation-plans/<milestone-slug>/<story-slug>/phase-N.md`) — a safe, sequential slice of a plan that exceeds CER thresholds or carries high risk.
 
 Lower tiers give agents strategic context. Higher tiers capture what happened during execution. This prevents agents from operating only on immediate prompts and scattered source files.
 
 ### Vocabulary
 
-The overloaded word **`goal`** is retired: the old goal-file container is gone (its grouping role moved to Milestone and Sprint), and the old individual goal is now a **Story**. The word **`task`** is never used as a tier name, because sub-agents already use it for their internal to-do items. The system adopts standard Scrum nouns: **Design → Milestone → Sprint → Story**, with **Phases** as an optional split below the implementation plan.
+The overloaded word **`goal`** is retired: the old goal-file container is gone (its grouping role moved to Milestone), and the old individual goal is now a **Story**. The word **`task`** is never used as a tier name, because sub-agents already use it for their internal to-do items. There is no separate scheduling tier between Milestone and Story — Milestone owns that function directly; a milestone contains stories, not a grouped collection of time-boxed iterations.
 
 ### Scoring, Orchestration, and Observability
 
@@ -162,68 +161,33 @@ It also asks:
 
 > What was intended, what happened, what evidence proves it, what friction appeared, and how does ownership transfer back to the human?
 
-Meaningful implementation work should live in a dedicated folder under `context/implementation-plans/`:
+Meaningful implementation work should live in a dedicated folder under `context/implementation-plans/`, grouped by milestone:
 
 ```text
 context/
   implementation-plans/
-    STORY_3_1_short-readable-name/
-      plan.md
-      implementation-log.md
-      completion-review.md
+    <milestone-slug>/
+      <story-slug>/
+        plan.md
 ```
+
+Every story gets one primary artifact: `plan.md`. Sidecar files (`phase-N.md`, `research.md`, `evidence.md`, `complaining.md`, standalone `implementation-log.md` / `completion-review.md`) are opt-in — created only when a story is large/phased enough to need them, or when explicitly requested. Default output is one file.
 
 ### `plan.md`
 
-The intended work:
+The intended work, and — as execution proceeds — what actually happened:
 
-- objective
-- estimates block (time, files, effort, complexity, risk)
-- complexity / effort / risk scoring and routing intent
-- mitigation (phase fragmentation, gates)
-- approach, scope, and non-goals
-- steps
-- acceptance criteria
-- optional Tier 6 phase breakdown
-- risks and open questions
-
-### `implementation-log.md`
-
-What actually happened:
-
-- execution steps
-- deviations from the plan
-- failed attempts
-- implementation decisions
-- validation performed
-- remaining uncertainty
-
-### `completion-review.md`
-
-The session-end postmortem, distinct from the implementation log:
-
-- estimates vs. actuals (same units on both sides)
-- model used and reasoning level
-- narrative review
-- why things were unexpected, split by root cause
-
-The following artifacts are optional. They are created only when the corresponding reusable skill or workflow is invoked for the task.
-
-### `complaining.md`
-
-Operational friction:
-
-- missing permissions
-- ambiguous requirements
-- broken tooling
-- risky assumptions
-- repeated workarounds
-- missing domain knowledge
-- unclear validation paths
-
-This is not emotional theatre. It captures actionable friction that would otherwise disappear.
-
-Created by the `complaining` skill.
+- linked context (milestone, story, backlog source)
+- CER (complexity / effort / risk) and routing intent
+- objective, scope, non-goals
+- current understanding, questions / unknowns
+- execution steps and validation
+- risk mitigation
+- optional phase split
+- evidence / references (short inline notes; a standalone `evidence.md` is opt-in)
+- complaints / friction (short inline notes; a standalone `complaining.md` is opt-in)
+- **Execution Log** — chronological record of what was actually done and deviations from the plan, filled in during/after execution. A standalone `implementation-log.md` is opt-in, for large or phased stories.
+- **Completion Review** — estimates vs. actuals, what worked, what didn't, root-cause split for anything unexpected. This is the memory rail's primary data source; don't skip it. A standalone `completion-review.md` is opt-in, for large or phased stories.
 
 ### `thinking.md`
 
@@ -237,20 +201,6 @@ Sanitised agent notes:
 This is not a private chain-of-thought dump.
 
 Created by the `thinking-out-loud` skill.
-
-### `evidence.md`
-
-The provenance index:
-
-- files changed
-- commits
-- tests run
-- build results
-- validation evidence
-- planning inputs
-- known unverified claims
-
-Created by the `evidence` skill.
 
 ### `handover/`
 
@@ -340,7 +290,7 @@ It should not contain:
 
 `agentic_rails_tooling` should contain reusable agentic machinery, including the logic that captures, ranks, curates, and rebuilds memory artifacts.
 
-`agentic-rails-memory` should contain:
+`agentic_rails_memory` should contain:
 
 - cross-project learning artifacts (`memories/learnings/`)
 - model and agent Resumes (`memories/model-resumes/`, `memories/agent-resumes/`)

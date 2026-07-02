@@ -50,6 +50,16 @@ Path conventions below follow the Agentic Rails context structure. If the target
 Create these directories and files on first run.
 Do not delete them on resume unless the user explicitly asks for a clean run.
 
+## Plan path convention
+
+Implementation plans this workflow consumes live at:
+
+```text
+context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
+```
+
+`plan.md` is the one primary artifact per story. Do not expect every plan folder to also contain `implementation-log.md`, `completion-review.md`, `questions.md`, `evidence.md`, or `complaining.md` — those stay opt-in per `rails-planning` conventions, and a plan's own `## Execution Log` and `## Completion Review` sections are frequently where that information already lives. If a worker needs to record what actually happened during execution, prefer appending to `plan.md`'s `## Execution Log` section over inventing a new sidecar file, unless the story is large or phased enough that a standalone log was explicitly requested.
+
 ## Skills and agent contracts
 
 | Role | Path from this repository root |
@@ -66,7 +76,7 @@ The user passes the work request in the message. The message may include source 
 
 Examples:
 
-- `/rails-boss-execute review [context/design.md] [context/milestones/milestone-1.md] then follow [context/implementation-plans/feature/plan.md] with subagents`
+- `/rails-boss-execute review [context/design.md] [context/milestones/milestone-1.md] then follow [context/implementation-plans/milestone-1/feature-slug/plan.md] with subagents`
 - `/rails-boss-execute implement STORY 1.2 and then STORY 1.3 with subagents and mark them off as you go`
 - `/rails-boss-execute read these design docs first, then implement the requested plan steps with workers`
 
@@ -93,7 +103,7 @@ If the user names both source docs and plan docs, read the source docs first and
 - If a story is blocked, mark it blocked in `progress.md`, write a note under `logs/`, and do not pretend the story is done.
 - Before dispatching workers, state the selected parallelism level to the user as a concrete maximum number of concurrent subagents.
 
-## Goal extraction rules
+## Story extraction rules
 
 - If the plan document already has named stories, steps, milestones, or checklist items, preserve those identifiers exactly.
 - If the user explicitly requested a subset of stories, queue only that subset.
@@ -119,9 +129,9 @@ Keep `briefing.md` concise.
 
 Write or refresh `context/rails-boss-execute/progress.md` as a table like this:
 
-| Status | Goal | Source | Persona | Commit | Notes |
+| Status | Story | Source | Persona | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| TODO | GOAL 1.2 | `context/implementation-plans/example/plan.md` | `agents/wpf-persona/AGENT.md` |  | queued |
+| TODO | STORY 1.2 | `context/implementation-plans/milestone-1/story-1-2-slug/plan.md` | `agents/wpf-persona/AGENT.md` |  | queued |
 
 Use the status values from [references/state-model.md](references/state-model.md).
 Only the Boss updates the `Status` column.

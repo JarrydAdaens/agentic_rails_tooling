@@ -1,19 +1,31 @@
 ---
 name: complaining
 description: >-
-  Use this skill when an agent should maintain a project-local complaint log for
-  genuine blockers, friction, ambiguity, tool failures, bad assumptions, risky
-  constraints, or other execution problems while it works.
+  Use this skill when an agent should record genuine blockers, friction,
+  ambiguity, tool failures, bad assumptions, risky constraints, or other
+  execution problems while it works. By default, complaints go into the active
+  plan's `## Complaints / Friction` section or are raised directly to the user;
+  a standalone complaining.md is opt-in, for explicit requests or long-running
+  workflows that need durable friction tracking.
 disable-model-invocation: true
 metadata:
-  version: "1.3"
+  version: "2.0"
 ---
 
 # Complaining
 
-Maintain a durable project-local log of real execution friction. This skill exists to expose hidden blockers and bad task conditions so later humans and agents can diagnose why work was slow, risky, blocked, or low quality.
+Record real execution friction so later humans and agents can diagnose why work was slow, risky, blocked, or low quality.
 
 This is operational visibility, not emotional theatre.
+
+## Default Destination
+
+**Default: raise it, or write it into the active plan.** Two defaults, not one file:
+
+- If the friction is worth the user's attention now, say so directly in the conversation.
+- If it should also survive past the conversation, and an active plan is identifiable, append it to that plan's `## Complaints / Friction` section (see `rails-planning`'s [plan-template.md](../rails-planning/references/plan-template.md)) instead of creating a separate file.
+
+Do not create a standalone `complaining.md` for ordinary tasks. It is opt-in — see "Standalone Artifact" below.
 
 ## When to use
 
@@ -31,15 +43,18 @@ This is an agent-invoked skill. The agent activates it proactively when conditio
 - Do not stop doing the assigned work just because a complaint was recorded.
 - Do not treat minor inconveniences as catastrophic. Log proportionally.
 
-## Artifact
+## Standalone Artifact (Opt-In)
 
-When this skill is active, ensure a complaints file exists in the target project.
+Create a standalone `complaining.md` only when:
 
-Path selection:
+- the user explicitly asks for a standalone complaint log, or
+- the work is a long-running agentic workflow (an orchestration run, a multi-session build-out, a plan-spam or boss-execute run) where durable, separately-tracked friction tracking is genuinely needed beyond what one plan's `## Complaints / Friction` section can hold.
 
-1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `complaining.md` in that folder.
-2. Otherwise, if the target repository follows Agentic Rails, write `context/complaining.md`.
-3. Otherwise write `complaining.md` in the target project's context or documentation folder, preferring `context/`, then `documentation/`, then `docs/`.
+When justified, path selection:
+
+1. If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, write `complaining.md` in that story folder — `context/implementation-plans/<milestone-slug>/<story-slug>/complaining.md`.
+2. If the friction belongs to a planning run rather than one story, write it under that run's scoped folder — `context/implementation-plans/<milestone-slug>/_planning-runs/<run-slug>/complaining.md` — never directly under `context/`.
+3. Otherwise write `complaining.md` in the target project's context or documentation folder, preferring `context/`, then `documentation/`, then `docs/`, and say plainly that it was written outside any plan or run folder because none exists.
 
 Load [references/path-selection.md](references/path-selection.md) when the correct location is not obvious.
 
@@ -55,12 +70,11 @@ If this file is empty, there were no meaningful complaints to record.
 
 ## Operating Model
 
-1. Identify the target project root and complaint log path.
-2. Ensure the complaint log exists before substantive work begins.
-3. Work on the assigned task normally.
-4. Append a complaint when a real blocker, failure, ambiguity, risky assumption, or meaningful process problem appears.
-5. Keep existing complaints append-only unless the user explicitly asks for cleanup or the agent is correcting its own factual mistake.
-6. Continue the task after logging unless the problem truly blocks progress.
+1. Identify the target project root, whether an active plan is identifiable, and whether a standalone log is justified (see "Standalone Artifact" above).
+2. Work on the assigned task normally.
+3. When a real blocker, failure, ambiguity, risky assumption, or meaningful process problem appears, raise it to the user, append it to the active plan's `## Complaints / Friction` section, or append it to the standalone `complaining.md` — whichever destination was resolved in step 1.
+4. Keep existing complaints append-only unless the user explicitly asks for cleanup or the agent is correcting its own factual mistake.
+5. Continue the task after logging unless the problem truly blocks progress.
 
 ## Complaint Standard
 
@@ -88,10 +102,11 @@ The complaint log is a diagnostic artifact. It is allowed to criticize the task,
 
 Before considering the skill applied correctly, confirm:
 
-- The complaint log exists inside the **target project**, not inside the tooling repository.
-- The complaint log is in the correct location for the detected project type:
-  - Agentic Rails with an active implementation-plan folder → `<plan-folder>/complaining.md`
-  - Agentic Rails without an identifiable active plan → `context/complaining.md`
+- No standalone `complaining.md` was created unless the user explicitly requested one or a long-running workflow genuinely needed durable friction tracking beyond one plan's `## Complaints / Friction` section.
+- When a standalone log exists, it lives inside the **target project**, not inside the tooling repository, and in the correct location for the detected project type:
+  - Agentic Rails with an active implementation-plan folder → `<milestone-slug>/<story-slug>/complaining.md`
+  - Agentic Rails, friction scoped to a planning run rather than one story → `<milestone-slug>/_planning-runs/<run-slug>/complaining.md`
+  - Agentic Rails without an identifiable active plan or run → an existing context or documentation folder (`context/`, `documentation/`, `docs/`, `Docs/`), or a newly created `context/` if none exists, with the fallback stated plainly
   - Non-Agentic-Rails project → an existing context or documentation folder (`context/`, `documentation/`, `docs/`, `Docs/`), or a newly created `context/` if none exists
 - No fake complaint was added when nothing meaningful went wrong.
 - Any real blocker or friction was appended with enough detail for a later reader to understand it without reconstructing the whole session.

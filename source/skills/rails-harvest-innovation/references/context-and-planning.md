@@ -28,7 +28,7 @@ Signals that a repository may be derived:
 
 - it carries `context/wpf-starter-inventory.md` with modifications or intentional removals.
 - WPF-Starter project names, namespaces, or architecture have been renamed.
-- app-specific design, milestones, sprints, stories, deployment identity, or product branding are present.
+- app-specific design, milestones, stories, deployment identity, or product branding are present.
 
 Ask before editing when the destination/source roles are ambiguous.
 
@@ -46,7 +46,7 @@ In the destination, inspect when present:
 6. `context/laws.md`
 7. `context/design.md`
 8. relevant `context/milestones/*.md`
-9. relevant `context/sprints/*.md` and `context/backlog/*.md` stories
+9. relevant `context/backlog/*.md` stories
 10. relevant `context/implementation-plans/`
 
 In the source, inspect only what helps locate and understand the requested feature:
@@ -62,24 +62,23 @@ In the source, inspect only what helps locate and understand the requested featu
 
 Project-local context is authoritative for that repository. Shared tooling supplements it; it does not override laws, design, stories, or implementation plans.
 
-## Tier 5 Work Record
+## Implementation Plan Work Record
 
 For meaningful upstreaming, create or reuse a destination folder under:
 
 ```text
-context/implementation-plans/STORY_x_y_harvest-short-feature-name/
+context/implementation-plans/<milestone-slug>/harvest-short-feature-name/
 ```
 
-Use the destination's existing naming pattern when one is obvious. If there is no clear story number, use a readable folder name that includes `harvest` or `upstream`.
+Use the destination's existing milestone naming pattern when one is obvious. If there is no clear milestone, use a readable milestone-slug that includes `harvest` or `upstream`.
 
-Maintain at minimum:
+Maintain one primary artifact:
 
 ```text
 plan.md
-implementation-log.md
 ```
 
-Create optional artifacts only when the corresponding skill is active:
+`plan.md` carries its own `## Execution Log` and `## Completion Review` sections — fill those in as the harvest proceeds rather than creating a standalone `implementation-log.md`. Create other optional artifacts only when the corresponding skill is active or genuinely required:
 
 - `complaining.md`
 - `thinking.md`

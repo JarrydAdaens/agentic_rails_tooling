@@ -1,4 +1,5 @@
 ---
+name: typescript-agent-design-document
 metadata:
   version: "1.0"
 ---

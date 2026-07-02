@@ -1,56 +1,58 @@
 ---
 name: rails-plan-spam-questions-file-format
 metadata:
-  version: "2.2"
+  version: "3.0"
 ---
 
-# Questions File Structure
+# Questions Index Structure
 
 `rails-plan-spam-workflow` uses a two-level questions structure.
 
-## Level 1 — Per-plan questions.md
+## Level 1 — Per-plan `## Questions / Unknowns`
 
-Each worker (following `rails-planning` conventions) creates a `questions.md` file beside its `plan.md`:
+Each worker (following `rails-planning` conventions) records open questions directly inside its own `plan.md`, under `## Questions / Unknowns`:
 
 ```text
-context/implementation-plans/<task-folder>/questions.md
+context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
 ```
 
-This file is owned by the plan. It records only the questions for that specific story or work item.
-
-Format is defined in `skills/rails-planning/references/questions-format.md`.
+This section is owned by the plan. It records only the questions for that specific story or work item. There is no standalone per-plan `questions.md` by default — that file stays opt-in per `rails-planning` conventions, for stories that genuinely need a durable, separately-tracked questions log.
 
 ## Level 2 — Run-folder questions index
 
-The Boss maintains a questions index inside the run folder:
+The Boss maintains a questions index inside each involved milestone's planning-run folder:
 
 ```text
-context/plan-spam-<slug>/questions.md
+context/implementation-plans/<milestone-slug>/_planning-runs/<run-slug>/questions.md
 ```
 
 This file does two things:
 
-1. **Index** — links to every per-plan `questions.md` with current status so the user has one place to survey all open questions across the run.
+1. **Index** — links to each plan's `## Questions / Unknowns` section with current status so the user has one place to survey all open questions across the run.
 2. **Boss questions** — cross-cutting questions that span multiple stories, affect sequencing, or require answers before any worker proceeds.
+
+This index is a run-scoped convenience artifact, not a durable one. Deleting the `_planning-runs/<run-slug>/` folder after the run completes loses the aggregated overview, never the underlying questions, which remain inside each accepted `plan.md`.
 
 ## Run-folder questions.md shape
 
 ```md
-# Plan Spam Questions — <Run Folder Name>
+# Plan Spam Questions — <Milestone Name>, Run <run-slug>
 
-Run: `context/plan-spam-<slug>/`
+Milestone: `context/implementation-plans/<milestone-slug>/`
+Run: `context/implementation-plans/<milestone-slug>/_planning-runs/<run-slug>/`
 Date: `<YYYY-MM-DD>`
 Source: `<source documents>`
 
-Per-plan questions live beside each plan under `context/implementation-plans/`.
-This file indexes them and carries cross-run Boss questions.
+Per-plan questions live inside each plan's `## Questions / Unknowns` section under
+`context/implementation-plans/<milestone-slug>/`. This file indexes them and carries
+cross-run Boss questions.
 
 ## Per-Plan Questions Index
 
-| Story | Plan Folder | Questions File | Status |
+| Story | Plan Folder | Questions | Status |
 | --- | --- | --- | --- |
-| STORY 3.4 | `context/implementation-plans/STORY_3_4_slug/` | [questions.md](../../../implementation-plans/STORY_3_4_slug/questions.md) | OPEN |
-| STORY 3.5 | `context/implementation-plans/STORY_3_5_slug/` | [questions.md](../../../implementation-plans/STORY_3_5_slug/questions.md) | NONE |
+| STORY 3.4 | `context/implementation-plans/milestone-1/story-3-4-slug/` | [plan.md#questions--unknowns](../../story-3-4-slug/plan.md#questions--unknowns) | OPEN |
+| STORY 3.5 | `context/implementation-plans/milestone-1/story-3-5-slug/` | [plan.md#questions--unknowns](../../story-3-5-slug/plan.md#questions--unknowns) | NONE |
 
 ## Boss Questions
 
@@ -65,9 +67,9 @@ Cross-cutting questions that apply to multiple plans, affect sequencing, or must
 
 ## Rules
 
-- Workers write to their own plan-local `questions.md`. They do not write to the run-folder index directly.
-- After reviewing each worker, the Boss updates the index row status (`OPEN` or `NONE`) to reflect the per-plan file.
+- Workers write to their own plan's `## Questions / Unknowns` section. They do not write to the run-folder index directly.
+- After reviewing each worker, the Boss updates the index row status (`OPEN` or `NONE`) to reflect that plan's `## Questions / Unknowns` section.
 - Boss questions are pre-flight or cross-run. Add them before dispatching workers when the source material raises concerns that span stories.
 - The Boss may add a Boss question mid-run if a worker's output reveals a cross-cutting concern.
-- The index `Status` column is updated by the Boss only, by reading the per-plan `questions.md` status after worker acceptance.
-- Use `OPEN` when any unanswered question remains in that plan's file. Use `NONE` when the per-plan file has `Status: NONE`.
+- The index `Status` column is updated by the Boss only, by reading each plan's `## Questions / Unknowns` section after worker acceptance.
+- Use `OPEN` when any unanswered question remains in that section. Use `NONE` when the section is empty or explicitly states none were needed.

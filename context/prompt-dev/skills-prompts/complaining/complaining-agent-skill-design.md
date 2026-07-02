@@ -1,4 +1,5 @@
 ---
+name: complaining-agent-skill-design
 metadata:
   version: "1.0"
 ---

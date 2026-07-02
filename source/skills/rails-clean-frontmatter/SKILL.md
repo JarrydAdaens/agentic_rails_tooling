@@ -47,13 +47,13 @@ Detection signals:
   `wiki/`, and a `design.md` describing the tooling library itself);
   `AGENTIC_RAILS_README.MD` describes this as the right rail / reusable tooling.
   The repo *is* the product (skills/agents/rules), not a project with the
-  seven-tier `context/` structure below.
-- **Starter**: `context/` with `design.md`, `milestones/`, `sprints/`,
+  context tier system's `context/` structure below.
+- **Starter**: `context/` with `design.md`, `milestones/`,
   `backlog/`, `dictations-tier-0/`, and an implementation-plans folder, where
   that content is still template/placeholder; identified as the starter /
   template / left rail.
-- **Derived**: `context/` carrying real project truth (the seven-tier
-  design/milestones/sprints/backlog/implementation-plans structure), plus an
+- **Derived**: `context/` carrying real project truth (the context tier system's
+  design/milestones/backlog/implementation-plans structure), plus an
   Agentic Rails marker (`AGENTIC_RAILS_README.MD`, `.agentic-rails.json`, or
   `AGENTIC_RAILS.md`); it has no reusable `source/` capability library of its
   own and is neither of the two repositories above.

@@ -4,9 +4,11 @@ metadata:
   version: "1.1"
 ---
 
-# Per-Plan Questions File Format
+# Per-Plan Questions File Format (Opt-In)
 
-Use this format for `questions.md` created beside every `plan.md` under `context/implementation-plans/<story-or-work-folder>/`.
+By default, open questions live inline in `plan.md`'s own `## Questions / Unknowns` section — see [plan-template.md](plan-template.md). A standalone `questions.md` is **not** created by default; use this format only when the user explicitly asks for one, or the story is large/phased enough that a separately-tracked questions file is genuinely justified.
+
+When created, `questions.md` lives beside `plan.md` under `context/implementation-plans/<milestone-slug>/<story-slug>/`.
 
 The file is plan-local. It captures open questions discovered while writing or executing this specific plan so the human or a follow-up agent can answer them and revise the plan without losing context.
 
@@ -34,11 +36,11 @@ Answer these later — the human or a follow-up agent can revise the plan once a
 
 ## Rules
 
-- Create this file beside every new `plan.md`, even when no questions exist.
+- Only create this file when explicitly requested or genuinely justified by story size/phasing (see the note above). Otherwise use `plan.md`'s `## Questions / Unknowns` section instead.
 - Set `Status: NONE` and write `_No open questions._` when the plan has no gaps.
 - Set `Status: OPEN` when one or more questions are unanswered.
 - Set `Status: RESOLVED` when all questions have been answered and the plan updated.
-- Record the same temporary assumption in the plan's `Risks And Open Questions` section so the uncertainty is visible in both places.
+- Record the same temporary assumption in the plan's `## Questions / Unknowns` section so the uncertainty is visible in both places.
 - Update this file when answers arrive, not only when questions are created.
 - Do not delete answered questions. Move them under a `## Resolved` heading if the list grows long.
 

@@ -28,6 +28,6 @@ It is normal and expected for a plan to phase into a mix of tiers — for exampl
 
 This matrix currently holds one `(C, E, R)` triple per model tier, not separate per-axis thresholds per model. A model that is strong on risk-heavy work but weak on effort-heavy work is represented by whichever single triple best reflects its overall safe operating envelope, not by axis-specific overrides. If real completion data later shows a model's competence genuinely differs enough per axis to need separate thresholds, that is a future revision to this file — it does not require changing `SKILL.md` or the phasing loop itself.
 
-## Tier 3 Has No Ceiling
+## No Ceiling At The Top Model Tier
 
-Tier 3 exists specifically to absorb work that tier 1 and tier 2 cannot: anything that would otherwise force `rails-planning-phaser` to over-cut a phase just to force a lower number. Because tier 3 has no ceiling, every phase is guaranteed to resolve to some tier — this skill should never reach a state where a phase has no tier that covers it.
+The top model tier (tier 3) exists specifically to absorb work that tier 1 and tier 2 cannot: anything that would otherwise force `rails-planning-phaser` to over-cut a phase just to force a lower number. Because it has no ceiling, every phase is guaranteed to resolve to some tier — this skill should never reach a state where a phase has no tier that covers it.

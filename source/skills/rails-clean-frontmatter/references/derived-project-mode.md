@@ -16,7 +16,7 @@ detection selects Derived mode.
 Strong signals:
 
 - `context/` (or older `Documentation/`) carrying real project truth — actual
-  design, milestones, sprints, and backlog stories, not placeholders.
+  design, milestones, and backlog stories, not placeholders.
 - An Agentic Rails marker: `AGENTIC_RAILS_README.MD`, `.agentic-rails.json`, or
   `AGENTIC_RAILS.md`.
 - The repository is neither `agentic_rails_tooling` nor

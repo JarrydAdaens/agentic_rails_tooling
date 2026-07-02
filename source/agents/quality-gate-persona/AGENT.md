@@ -22,7 +22,7 @@ The quality bar is calm and exacting: take the time needed to be right. Speed is
 ## Best Fit
 
 - Pre-commit, pre-push, pre-PR, or pre-review quality gates.
-- Checking a local diff against a Tier 5 `plan.md`, implementation plan, issue, or acceptance criteria.
+- Checking a local diff against an Implementation Plan `plan.md`, issue, or acceptance criteria.
 - Validating changed code against project rules without duplicating those rules.
 - Running and interpreting configured build, test, lint, formatting, static-analysis, type-check, and migration tooling.
 - Reviewing architecture, module boundaries, data flow, threading, safety, persistence, migrations, UI behavior, and test coverage.

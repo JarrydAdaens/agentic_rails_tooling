@@ -1,7 +1,14 @@
 ---
+name: rails-pair-programming-skill-design-doc
 metadata:
   version: "1.0"
 ---
+
+<!-- rails-lint-allow: VC005 -->
+<!-- Legacy design-history source material dated 2026-05-07, predating the six-tier
+     addendum. Preserved verbatim per AGENTS.md (prompt-dev material is often the real
+     design history); the numbered "Tier N" references below describe the old 5T model
+     at the time this brief was written and are intentionally not renumbered/renamed. -->
 
 # rails-pair-programming Skill Design Document
 

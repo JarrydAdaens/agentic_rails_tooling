@@ -1,4 +1,5 @@
 ---
+name: agentic-rails-tooling-readme
 metadata:
   version: "2.0"
   owner: Jarryd Adaens
@@ -18,7 +19,7 @@ This repository is one of three rails:
 | Right | `agentic_rails_tooling` (this repo) | Reusable rules, skills, workflow-skills, and personas — plus the logic that operates on memory |
 | Center | `agentic-rails-memory` | The durable, markdown-only store of cross-project learnings and Resumes |
 
-Read [`AGENTIC_RAILS_README.MD`](AGENTIC_RAILS_README.MD) for the full framework philosophy (seven-tier context, three rails, provenance, and handover). This README is scoped to how *this* repository is laid out and used.
+Read [`AGENTIC_RAILS_README.MD`](AGENTIC_RAILS_README.MD) for the full framework philosophy (the context tier system, three rails, provenance, and handover). This README is scoped to how *this* repository is laid out and used.
 
 ## Core Idea
 
@@ -230,13 +231,56 @@ It exists because real tools are messy. Some IDEs need one-off folders, rule fil
 - Code files keep their language idioms (Python and JavaScript use the conventions their ecosystems expect).
 - Persona folders and `name` fields end in `-persona`; orchestration skills end in `-workflow`.
 
+## Rails vs. Personal Skill Classification
+
+This repository currently mixes framework skills with loose personal/experimental skills. The six-tier addendum (§11) sets the ownership test: a skill is part of Agentic Rails when other Rails skills directly consume it, Rails workflows call it, Rails documentation requires it, it reads or writes Rails context artifacts, or it implements core Rails behavior such as planning, CER, milestone creation, orchestration, handover, or memory capture. Everything else is personal — useful, but not a Rails framework component.
+
+This is the classification decision only. The physical move to a separate personal-skills repository is deferred: it needs Kung Fu to support multiple skill source roots first (six-tier addendum §12), which is out of scope here. Until then, personal skills stay in this repo's `source/skills/` and `source/agents/`, just flagged below.
+
+### Rails framework skills
+
+| Skill | Why it's Rails |
+| --- | --- |
+| `rails-planning` | Produces the primary Implementation Plan artifact (`plan.md`) |
+| `rails-milestone-planning` | Produces Milestone documents from the backlog |
+| `rails-grade-cer` | Scores Complexity/Effort/Risk, the routing input for planning |
+| `rails-planning-phaser` | Fractures an over-large plan into Phases using CER |
+| `rails-initialize-from-tier0` | Bootstraps a project's context tier structure from Dictation |
+| `rails-update-from-starter` | Reconciles a derived project's context tiers against the starter |
+| `rails-plan-spam-workflow` | Orchestrates bulk plan creation across milestone stories |
+| `rails-boss-execute-workflow` | Orchestrates execution against implementation plans |
+| `rails-clean-frontmatter` | Normalizes/repairs frontmatter across Rails artifacts |
+| `rails-memory-learnings` | Writes session learnings into the memory rail |
+| `rails-pair-programming` | Explicitly reads Story/plan context from the context tier system |
+| `complaining` | Writes into `plan.md`'s `## Complaints / Friction`, or a plan-scoped `complaining.md` |
+| `evidence` | Writes into `plan.md`'s `## Evidence / References`, or a plan-scoped `evidence.md` |
+| `thinking-out-loud` | Writes a plan/story-scoped `thinking.md` |
+| `handover` | Reads `plan.md`, implementation log, and other Rails provenance artifacts to produce a handover |
+
+`complaining`, `evidence`, `thinking-out-loud`, and `handover` read/write Rails context artifacts and are documented in `AGENTIC_RAILS_README.MD`'s Provenance section, so they pass the ownership test — but they don't carry the `rails-` prefix the addendum recommends for Rails skills. That's a pre-existing naming inconsistency, noted here rather than silently fixed; renaming them means updating every cross-reference (this README, `AGENTIC_RAILS_README.MD`, `rails-planning`, `rails-boss-execute-workflow`, and more) and is a larger, separate pass.
+
+### Personal / loose skills (not Rails framework components)
+
+| Skill | Why it's personal |
+| --- | --- |
+| `commit-log` | Generic VCS commit-log writer for any git/Perforce/Mercurial/SVN workflow — the addendum names this exact skill as its example of a non-Rails skill (§11) |
+| `grade` | Generic artifact grading (code, design, docs) — distinct from `rails-grade-cer`'s Rails-specific CER scoring |
+| `grugg`, `grugg-compress` | Adopted external compression/communication skills — the addendum's own "adopted external skill" example is this family |
+| `oracle-generate-stats`, `oracle-token-appraise` | Generic file/token-cost tooling, usable on any repository |
+| `token-stats` | Generic cross-IDE session token/cost accounting |
+| `wpf-tree-sensor` | WPF/Windows UI Automation inspection — unrelated to the context tier system |
+| `rails-harvest-innovation` | Operates on the separate `WPF-Starter` template repo, not Agentic Rails context artifacts — carries the `rails-` prefix despite not being a Rails skill; flagged as a naming mismatch worth fixing in a later pass |
+| `wpf-starter-update` | Same `WPF-Starter` family as above, correctly unprefixed |
+
+`source/agents/` (`quality-gate-persona`, `unreal-persona`, `web-persona`, `wpf-persona`, `xna-persona`) are all personal: generic domain-specialist personas usable in any repository, not specific to the Rails context tier system. `quality-gate-persona` references a generic "task plan" and "evidence," which overlaps with Rails vocabulary by coincidence rather than by dependency — it doesn't require the context tier system to function.
+
 ## Relationship To The Other Rails
 
 The framework splits responsibilities across three repositories so no rail absorbs another's job:
 
 | Repository | Owns |
 | --- | --- |
-| [`agentic_rails_context_starter`](../agentic_rails_context_starter/) | Project-local context: Tier 0 intake, design, milestones, sprints, stories, implementation plans, and handovers. |
+| [`agentic_rails_context_starter`](../agentic_rails_context_starter/) | Project-local context: Dictation intake, design, milestones, stories, implementation plans, and handovers. |
 | `agentic_rails_tooling` (this repo) | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, persona bundles, prompt-development source material, and the logic that captures, curates, and rebuilds memory artifacts. |
 | [`agentic-rails-memory`](../agentic-rails-memory/) | Durable, markdown-only cross-project artifacts: learnings and model/agent Resumes. Artifacts only — never the logic that produces or consumes them. |
 

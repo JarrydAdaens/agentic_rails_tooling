@@ -5,7 +5,7 @@ description: >-
   pair-programming session, such as "use rails-pair-programming", "start
   rails-pair-programming", "pair program this under Rails", or similar phrasing.
   The skill establishes intent, gathers the current Story and implementation-plan
-  context from the seven-tier system, runs a collaborative tutoring and
+  context from the context tier system, runs a collaborative tutoring and
   pair-programming loop, and creates a uniquely named session artifact at wrap-up.
 disable-model-invocation: true
 metadata:
@@ -79,28 +79,29 @@ context over chat memory.
 
 Load, when relevant and available:
 
-- the current Story (in `context/backlog/`)
-- the active implementation-plan folder and `plan.md` (Tier 5)
-- sibling plan-folder artifacts such as `implementation-log.md`,
-  `completion-review.md`, `thinking.md`, `evidence.md`, `complaining.md`,
-  handovers, notes, or addenda
-- Tier 1 design (with its Milestones Index), Tier 2 milestone, and Tier 3 sprint
-  context
+- the current Story (in the active milestone document, or `context/backlog/`
+  before it is pulled into one)
+- the active implementation-plan folder and `plan.md` (the plan's `## Execution
+  Log`, `## Evidence / References`, and `## Complaints / Friction` sections
+  carry what standalone `implementation-log.md`, `evidence.md`, and
+  `complaining.md` used to hold; check for those standalone files too, since
+  large/phased stories may still keep them separately)
+- Design (with its Milestones Index), the relevant Milestone, and the Story's
+  own section inside it
 - relevant source files, tests, logs, or technical artifacts
-- Tier 0 dictation only when rationale recovery or source synthesis matters
+- Dictation notes only when rationale recovery or source synthesis matters
 
 Priority order:
 
 1. Active user request
 2. Current Story and its implementation plan
-3. Design, milestone, and sprint context
-4. Tier 0 dictation notes, only when needed
+3. Design and milestone context
+4. Dictation notes, only when needed
 5. Source files, tests, logs, and technical artifacts
 
 Path hints:
 
-- Prefer `context/implementation-plans/<current-story-or-plan-folder>/`. Current
-  plan folders are named `STORY_<sprint>_<story>_<slug>/`.
+- Prefer `context/implementation-plans/<milestone-slug>/<story-slug>/`.
 - Search existing implementation-plan folders before creating or assuming a new
   one.
 - If no active Story or Plan can be located, ask one targeted question or proceed
@@ -184,7 +185,7 @@ existing session artifact.
 Preferred path:
 
 ```text
-context/implementation-plans/<current-story-or-plan-folder>/pair-programming-DDMMMYYYY-topic-slug.md
+context/implementation-plans/<milestone-slug>/<story-slug>/pair-programming-DDMMMYYYY-topic-slug.md
 ```
 
 Fallback path when the active plan folder is unknown:
@@ -250,24 +251,29 @@ Do not:
 - invent Story context when it cannot be found
 - create fake decisions, discoveries, or validation evidence
 - expose private chain-of-thought
-- replace `implementation-log.md`, `completion-review.md`, `evidence.md`,
-  `thinking.md`, `complaining.md`, or handover artifacts
+- replace `plan.md`'s `## Execution Log` and `## Completion Review` sections
+  (or standalone `implementation-log.md` / `completion-review.md` when a large
+  or phased story keeps them separately), `evidence.md`, `thinking.md`,
+  `complaining.md`, or handover artifacts
 - write code unless the user explicitly moves into implementation
 - keep asking setup questions when intent is already obvious
 - finish a save or wrap-up request without writing the artifact
 
 ## Related Artifacts
 
-- `implementation-log.md`: records implementation history; reference it, but do
-  not replace it.
-- `completion-review.md`: the session-end postmortem (estimates vs. actuals);
-  reference it, but do not replace it.
-- `complaining.md`: records real execution friction; surface friction only when
-  it is genuine.
+- `plan.md`'s `## Execution Log` section (or standalone `implementation-log.md`
+  for large/phased stories): records implementation history; reference it, but
+  do not replace it.
+- `plan.md`'s `## Completion Review` section (or standalone
+  `completion-review.md` for large/phased stories): the session-end postmortem
+  (estimates vs. actuals); reference it, but do not replace it.
+- `complaining.md` (or `plan.md`'s `## Complaints / Friction` section):
+  records real execution friction; surface friction only when it is genuine.
 - `thinking.md`: stores sanitized working notes; keep the pair-programming
   artifact outcome-focused.
-- `evidence.md`: indexes validation and provenance; mention evidence needs, but
-  do not replace evidence tracking.
+- `evidence.md` (or `plan.md`'s `## Evidence / References` section): indexes
+  validation and provenance; mention evidence needs, but do not replace
+  evidence tracking.
 - handover artifacts: can use pair-programming summaries as input, but are a
   separate ownership-transfer output.
 
@@ -277,7 +283,7 @@ Before considering the skill applied correctly, confirm:
 
 - explicit `rails-pair-programming` activation occurred
 - intent and mode were established
-- relevant seven-tier, Story, and Plan context was gathered or uncertainty was
+- relevant Story and Plan context was gathered or uncertainty was
   stated
 - the collaborative loop stayed grounded in the current Story and Plan
 - useful questions were asked where appropriate

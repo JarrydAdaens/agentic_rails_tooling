@@ -45,7 +45,7 @@ Do not update or reconcile Agentic Rails context files, including:
 - `context/dictations-tier-0/`
 - `context/implementation-plans/`
 - Agentic Rails context starter templates
-- project planning documents, story status, sprint status, or milestone status
+- project planning documents, story status, or milestone status
 
 You may read lightweight repository documents such as `README.md` only for source-code orientation and starter feature history. Do not treat documentation-tier files as synchronization targets.
 

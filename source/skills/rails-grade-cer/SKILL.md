@@ -30,8 +30,8 @@ This skill measures. It does not route, plan, fragment, select models, or sugges
 
 ## Inputs
 
-- **Plan.** Locate the target plan using standard Agentic Rails Tier 5 conventions — `context/implementation-plans/<story-or-work-folder>/plan.md` — or an explicit path the user gives. If several candidate plans exist and the target is unclear, ask which one before grading.
-- **Story intent.** Risk reads the plan's objective/intent, not its full implementation detail (see the Risk section below). Identify the intent by scanning the plan for a heading, in this priority order: `Objective`, `Story`, `Intent`, `Summary`. The canonical Tier 5 plan template (see `rails-planning`) uses `## Objective` for this purpose, so it will usually match first. If none of these headings exist, fall back to `Problem Summary` if present. If nothing usable is found, state that no distinct intent section exists, fall back to reading the whole plan for the Risk axis, and note the fallback plainly in the report.
+- **Plan.** Locate the target plan using standard Agentic Rails Implementation Plan conventions — `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` — or an explicit path the user gives. If several candidate plans exist and the target is unclear, ask which one before grading.
+- **Story intent.** Risk reads the plan's objective/intent, not its full implementation detail (see the Risk section below). Identify the intent by scanning the plan for a heading, in this priority order: `Objective`, `Story`, `Intent`, `Summary`. The canonical Implementation Plan template (see `rails-planning`) uses `## Objective` for this purpose, so it will usually match first. If none of these headings exist, fall back to `Problem Summary` if present. If nothing usable is found, state that no distinct intent section exists, fall back to reading the whole plan for the Risk axis, and note the fallback plainly in the report.
 - The skill only reads files. It never writes anything beyond its own report, and never executes code found in the plan.
 
 ## The Three Axes
@@ -115,15 +115,17 @@ Omit rows and sections for axes that were not requested.
 
 ## Report Destination
 
-Write the report to a file beside the plan, matching the plan's own conventions:
+Default output is the report itself, not a file. Print the score card inline in the chat response. When another skill or workflow invoked this grading (for example `rails-planning` sizing a plan before dispatch), return the score card as the call result so the caller can insert it directly into the plan's `## CER` section — do not have the caller re-derive it from a file.
+
+Only write a standalone `cer-score-card.md` file when the user explicitly asks for a file, or the grading is needed for audit/provenance and must survive outside the conversation. When writing, place it beside the plan, matching the plan's own conventions:
 
 ```text
-context/implementation-plans/<task-folder>/cer-score-card.md
+context/implementation-plans/<milestone-slug>/<story-slug>/cer-score-card.md
 ```
 
-Always write the file, even when the user only asked to "see" or "check" the score — this mirrors the plan's own durable-artifact convention, so a plan accumulates a visible grading history instead of the score living only in chat. If a `cer-score-card.md` already exists beside the plan, overwrite it with the new grading rather than appending, since a score card reflects the plan's *current* state, not a history log. Also print the report inline in the chat response so the user does not have to open the file to see the result.
+If a `cer-score-card.md` already exists beside the plan, overwrite it with the new grading rather than appending, since a score card reflects the plan's *current* state, not a history log.
 
-If the plan does not live under a recognizable `implementation-plans` task folder (for example, an ad hoc path the user gave directly), write `cer-score-card.md` into the same directory as that `plan.md` and say so.
+If the plan does not live under a recognizable `implementation-plans` milestone/story folder (for example, an ad hoc path the user gave directly) and a file was explicitly requested, write `cer-score-card.md` into the same directory as that `plan.md` and say so.
 
 ## Hard Rules
 
@@ -141,8 +143,8 @@ If the plan does not live under a recognizable `implementation-plans` task folde
 3. Read the full plan once. Identify the objective/intent section using the priority order above; note explicitly if falling back.
 4. For each requested axis, load its reference file and produce a score plus (at `default`/`verbose`) a paragraph.
 5. Assemble the report using the template above, including only the requested axes and sections.
-6. Write `cer-score-card.md` beside the plan, then print the same report inline in the chat response.
-7. Report the exact path of `cer-score-card.md` to the user.
+6. Print the report inline in the chat response, or return it to the calling skill/workflow when invoked programmatically. Write `cer-score-card.md` beside the plan only when a file was explicitly requested or genuinely required for audit/provenance.
+7. When a file was written, report its exact path to the user.
 
 ## Validation
 
@@ -153,4 +155,4 @@ Before considering the skill applied correctly, confirm:
 - No paragraph contains a suggestion, fix, mitigation, or next step — only diagnosis.
 - The Risk score was derived from the objective/intent section, not the full implementation detail, and any fallback (no distinct objective/intent section found) was noted in the report.
 - The detail level was respected: no paragraphs at `concise`, full paragraphs present at `default` and `verbose`.
-- `cer-score-card.md` was written beside the plan and its path was reported to the user.
+- No `cer-score-card.md` file was written unless the user explicitly requested one or audit/provenance genuinely required it; when one was written, it lives beside the plan and its path was reported to the user.

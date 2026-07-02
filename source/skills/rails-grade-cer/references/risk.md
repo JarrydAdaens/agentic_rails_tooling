@@ -25,7 +25,7 @@ Establish the risk level **before** any thought of mitigation. Measuring risk an
 | 2 | Small bug escapes — a handful of users affected, one-day fix. |
 | 3 | Moderate bug — a feature misbehaves, users notice, few-day fix. |
 | 4 | Serious bug — a core flow breaks, customers lose money or time, ~week to fix. |
-| 5 | Feature miss — the sprint rebalances, agreed deadlines slip, producers get told, but there is capacity to absorb it. Bad but tolerable. |
+| 5 | Feature miss — the milestone rebalances, agreed deadlines slip, producers get told, but there is capacity to absorb it. Bad but tolerable. |
 | 6 | A subsystem is at risk — an outage window is possible, recovery is painful. |
 | 7 | Service degradation — revenue impact, regulators watching. |
 | 8 | Experimental framework — weeks-to-months of work potentially wasted, nothing recoverable, rollback takes days to a week, a subsystem ships late or gets cut. |
@@ -35,7 +35,7 @@ Establish the risk level **before** any thought of mitigation. Measuring risk an
 
 Note on rungs 7 and 8: rung 7 is customer-facing *harm* (revenue, regulators) and rung 8 is internal *opportunity cost* (wasted effort, nothing recoverable). These are arguably different kinds of risk sitting adjacent on one ladder rather than a strictly ordered progression — 8 is not automatically "worse" than 7 in every situation. The ladder is kept exactly as authored above; when an objective sits ambiguously between these two rungs, judge by whichever scenario description is the closer match and say so in the paragraph rather than trying to force a strict ranking.
 
-## Scope Boundary: Goal-Only, By Design
+## Scope Boundary: Objective-Only, By Design
 
 This axis deliberately reads only the objective/intent of the plan, not the implementation approach. Two consequences follow from that, and both are accepted trade-offs, not oversights:
 
@@ -44,9 +44,9 @@ This axis deliberately reads only the objective/intent of the plan, not the impl
 
 State this scope boundary in the paragraph whenever it is materially relevant — for example, when the plan's implementation approach looks notably risky even though the objective itself reads as safe. Do not widen the read to implementation detail to compensate; name the boundary instead.
 
-## Identifying The Goal
+## Identifying The Objective
 
-Locate the objective using the priority order defined in `SKILL.md`: a heading named `Objective`, `Goal`, `Intent`, or `Summary`, in that order, falling back to `Problem Summary` if none of those exist. If no usable objective/intent section exists anywhere in the plan, fall back to reading the whole plan for this axis and state that fallback plainly in the paragraph — do not silently substitute the whole plan without flagging it.
+Locate the objective using the priority order defined in `SKILL.md`: a heading named `Objective`, `Story`, `Intent`, or `Summary`, in that order, falling back to `Problem Summary` if none of those exist. If no usable objective/intent section exists anywhere in the plan, fall back to reading the whole plan for this axis and state that fallback plainly in the paragraph — do not silently substitute the whole plan without flagging it.
 
 ## Writing The Paragraph
 

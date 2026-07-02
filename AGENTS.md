@@ -8,7 +8,7 @@ This file provides repository guidance for agentic IDEs and coding agents workin
 
 It sits alongside two other rails: `agentic_rails_context_starter` (the **left rail**, project-local context) and `agentic-rails-memory` (the **center rail**, durable cross-project artifacts). This repo also owns the logic that captures, curates, and rebuilds memory artifacts. It is deployed into IDEs by the external `kung-fu` WPF app, which syncs only the `source/` tree. This repo is the source of truth; sync is one-way outward. Edit artifacts here, never in the deployed copies.
 
-Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README.MD` for the framework philosophy (seven-tier context, three rails, provenance, handover). Don't duplicate their content into new files.
+Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README.MD` for the framework philosophy (the context tier system, three rails, provenance, handover). Don't duplicate their content into new files.
 
 ## Top-level layout
 

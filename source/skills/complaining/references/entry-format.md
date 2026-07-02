@@ -6,7 +6,7 @@ metadata:
 
 # Complaint Entry Format
 
-Use this format when appending a complaint. Include a timestamp only when the environment provides a reliable current date and time.
+Use this format when appending a complaint — whether inline under a plan's `## Complaints / Friction` section or inside a standalone `complaining.md`. Include a timestamp only when the environment provides a reliable current date and time.
 
 ```markdown
 ## YYYY-MM-DD HH:mm - Short complaint title

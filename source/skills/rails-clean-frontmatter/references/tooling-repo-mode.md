@@ -21,11 +21,11 @@ Strong signals:
 - `AGENTIC_RAILS_README.MD` Repository Model row calls this the right rail /
   reusable tooling.
 - The repo is the product (skills/agents/rules), not a project with the
-  seven-tier `context/` project structure (milestones, sprints, backlog,
+  context tier system's `context/` project structure (milestones, backlog,
   implementation-plans).
 
-If it instead carries real seven-tier project context, it is a derived project —
-switch references.
+If it instead carries real project context under the context tier system, it is
+a derived project — switch references.
 
 ## `agentic_rails_source_version`, `repo`, and `owner` Policy
 

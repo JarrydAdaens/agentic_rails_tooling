@@ -256,6 +256,7 @@ This is the classification decision only. The physical move to a separate person
 | `evidence` | Writes into `plan.md`'s `## Evidence / References`, or a plan-scoped `evidence.md` |
 | `thinking-out-loud` | Writes a plan/story-scoped `thinking.md` |
 | `handover` | Reads `plan.md`, implementation log, and other Rails provenance artifacts to produce a handover |
+| `rails-project-appraisal` | Reads design/milestone/backlog/plan context tiers and writes its verdict as a durable `context/reports/` artifact |
 
 `complaining`, `evidence`, `thinking-out-loud`, and `handover` read/write Rails context artifacts and are documented in `AGENTIC_RAILS_README.MD`'s Provenance section, so they pass the ownership test — but they don't carry the `rails-` prefix the addendum recommends for Rails skills. That's a pre-existing naming inconsistency, noted here rather than silently fixed; renaming them means updating every cross-reference (this README, `AGENTIC_RAILS_README.MD`, `rails-planning`, `rails-boss-execute-workflow`, and more) and is a larger, separate pass.
 

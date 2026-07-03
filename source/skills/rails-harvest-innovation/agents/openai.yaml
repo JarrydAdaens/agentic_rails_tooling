@@ -1,4 +1,0 @@
-interface:
-  display_name: "Rails Harvest Innovation"
-  short_description: "Upstream WPF-derived features into WPF-Starter."
-  default_prompt: "Use $rails-harvest-innovation to harvest a reusable feature from a WPF-Starter-derived project and upstream it into the local WPF-Starter source-of-truth."

@@ -10,7 +10,9 @@ description: >-
   the target repository under context/implementation-plans/<milestone-slug>/
   <story-slug>/, producing one primary artifact — plan.md — with CER, questions,
   evidence, complaints, execution log, and completion review folded into it by
-  default.
+  default. Can also produce opt-in sidecars (evidence.md, complaining.md,
+  thinking.md) beside plan.md when a story genuinely needs durable, separately
+  tracked provenance.
 disable-model-invocation: false
 metadata:
   version: "2.0"
@@ -32,7 +34,7 @@ Every story gets **one primary artifact**:
 context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
 ```
 
-`plan.md` integrates CER, questions/unknowns, evidence/references, complaints/friction, execution log, and completion review as sections inside the one file — see [references/plan-template.md](references/plan-template.md). Do not produce separate `questions.md`, `evidence.md`, `complaining.md`, `implementation-log.md`, or `completion-review.md` files by default.
+`plan.md` integrates CER, questions/unknowns, evidence/references, complaints/friction, execution log, and completion review as sections inside the one file — see [references/plan-template.md](references/plan-template.md). Do not produce separate `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` files by default. `thinking.md` is the one exception that is never a `plan.md` section — see [references/plan-template.md](references/plan-template.md)'s `thinking.md` Sidecar note.
 
 Only create one of those sidecar files when:
 
@@ -136,7 +138,7 @@ If the story does not yet belong to a milestone (for example, it is still sittin
 5. Resolve the story's milestone, then select or create the correct `<milestone-slug>/<story-slug>/` folder.
 6. Create or update `plan.md` using the structure from [references/plan-template.md](references/plan-template.md), unless the repository has a stronger local template.
 7. Populate CER, `## Questions / Unknowns`, and `## Risk Mitigation` inline in `plan.md`. Preserve uncertainty — record assumptions, constraints, risks, and open questions rather than inventing certainty.
-8. Do not create `questions.md`, `evidence.md`, `complaining.md`, `implementation-log.md`, or `completion-review.md` unless the user explicitly requests one or the story is large/phased enough to justify it (see Core Rule). When creating any of them, use [references/questions-format.md](references/questions-format.md) for the questions format.
+8. Do not create `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` unless the user explicitly requests one or the story is large/phased enough to justify it (see Core Rule). When creating any of them, use [references/questions-format.md](references/questions-format.md) for the questions format.
 9. Leave `## Execution Log` and `## Completion Review` absent (or clearly marked not-yet-started) for a plan that has not begun execution — they are filled in during and after execution, not at plan-creation time.
 10. Report the exact path of `plan.md` to the user, plus the path of any sidecar file actually created.
 
@@ -185,6 +187,6 @@ Before considering this skill applied correctly, confirm:
 - The plan follows the implementation-plan structure in [references/plan-template.md](references/plan-template.md) or a stronger local template.
 - Relevant maintained context is linked where available.
 - The plan includes CER, scope, steps, validation, risk mitigation, and open questions/unknowns.
-- No `questions.md`, `evidence.md`, `complaining.md`, `implementation-log.md`, or `completion-review.md` was created unless explicitly requested or genuinely justified by story size/phasing.
+- No `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` was created unless explicitly requested or genuinely justified by story size/phasing.
 - Existing related plans were reused or intentionally superseded instead of duplicated accidentally.
 - The user was told the exact path of `plan.md`, plus any sidecar file actually created.

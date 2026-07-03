@@ -200,13 +200,13 @@ Sanitised agent notes:
 
 This is not a private chain-of-thought dump.
 
-Created by the `thinking-out-loud` skill.
+Created by `rails-planning` as an opt-in sidecar beside `plan.md`, when justified.
 
 ### `handover/`
 
 Ownership transfer artifacts that help the human understand what was done and how to continue.
 
-Created by the `handover` skill or a larger handover workflow.
+No actively deployed skill currently produces this artifact; a prior `handover` skill is preserved in `agentic_rails_tooling/archived/skills/` for reference.
 
 ## Accountability Handover
 

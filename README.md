@@ -104,10 +104,6 @@ Current examples include:
 - `source/skills/grade`
 - `source/skills/rails-planning`
 - `source/skills/rails-pair-programming`
-- `source/skills/complaining`
-- `source/skills/evidence`
-- `source/skills/handover`
-- `source/skills/thinking-out-loud`
 
 Use `source/skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
@@ -251,13 +247,9 @@ This is the classification decision only. The physical move to a separate person
 | `rails-clean-frontmatter` | Normalizes/repairs frontmatter across Rails artifacts |
 | `rails-memory-learnings` | Writes session learnings into the memory rail |
 | `rails-pair-programming` | Explicitly reads Story/plan context from the context tier system |
-| `complaining` | Writes into `plan.md`'s `## Complaints / Friction`, or a plan-scoped `complaining.md` |
-| `evidence` | Writes into `plan.md`'s `## Evidence / References`, or a plan-scoped `evidence.md` |
-| `thinking-out-loud` | Writes a plan/story-scoped `thinking.md` |
-| `handover` | Reads `plan.md`, implementation log, and other Rails provenance artifacts to produce a handover |
 | `rails-project-appraisal` | Reads design/milestone/backlog/plan context tiers and writes its verdict as a durable `context/reports/` artifact |
 
-`complaining`, `evidence`, `thinking-out-loud`, and `handover` read/write Rails context artifacts and are documented in `AGENTIC_RAILS_README.MD`'s Provenance section, so they pass the ownership test — but they don't carry the `rails-` prefix the addendum recommends for Rails skills. That's a pre-existing naming inconsistency, noted here rather than silently fixed; renaming them means updating every cross-reference (this README, `AGENTIC_RAILS_README.MD`, `rails-planning`, `rails-boss-execute-workflow`, and more) and is a larger, separate pass.
+`complaining`, `evidence`, and `thinking-out-loud` were early experiments in generating the provenance artifacts (`## Complaints / Friction`, `## Evidence / References`, `thinking.md`) that `rails-planning` now produces directly as part of its own opt-in sidecars; their salvageable content (the complaint entry format, the `thinking.md` good/bad-entry guidance) was folded into `rails-planning`'s `references/plan-template.md` and the three skills were archived. `handover` (Reads `plan.md`, implementation log, and other Rails provenance artifacts to produce a handover) was archived as unused; no actively deployed skill currently produces `handover/` artifacts. All four are preserved under `archived/skills/` for reference.
 
 ### Personal / loose skills (not Rails framework components)
 
@@ -269,8 +261,7 @@ This is the classification decision only. The physical move to a separate person
 | `oracle-generate-stats`, `oracle-token-appraise` | Generic file/token-cost tooling, usable on any repository |
 | `token-stats` | Generic cross-IDE session token/cost accounting |
 | `wpf-tree-sensor` | WPF/Windows UI Automation inspection — unrelated to the context tier system |
-| `rails-harvest-innovation` | Operates on the separate `WPF-Starter` template repo, not Agentic Rails context artifacts — carries the `rails-` prefix despite not being a Rails skill; flagged as a naming mismatch worth fixing in a later pass |
-| `wpf-starter-update` | Same `WPF-Starter` family as above, correctly unprefixed |
+| `wpf-starter-update` | Same `WPF-Starter` family as `rails-harvest-innovation` (moved out of this repo) — correctly unprefixed |
 
 `source/agents/` (`quality-gate-persona`, `unreal-persona`, `web-persona`, `wpf-persona`, `xna-persona`) are all personal: generic domain-specialist personas usable in any repository, not specific to the Rails context tier system. `quality-gate-persona` references a generic "task plan" and "evidence," which overlaps with Rails vocabulary by coincidence rather than by dependency — it doesn't require the context tier system to function.
 

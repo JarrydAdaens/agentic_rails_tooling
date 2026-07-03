@@ -111,17 +111,40 @@ class FrontmatterTests(unittest.TestCase):
         violations = lint_text(self.root, "source/skills/my-skill/references/some-reference.md", body)
         self.assertNotIn("FM004", rule_ids(violations))
 
-    def test_rules_file_shape_needs_no_name(self):
+    def test_rules_file_paths_shape_needs_no_name(self):
         body = ("---\n"
-                "description: C# coding rules for .NET projects.\n"
-                "globs: [\"**/*.cs\"]\n"
-                "alwaysApply: false\n"
-                "metadata:\n"
-                "  version: \"1.3\"\n"
+                "paths:\n"
+                "  - \"**/*.cs\"\n"
                 "---\n"
                 "Rules content.\n")
         violations = lint_text(self.root, "source/rules/csharp-rules.md", body)
-        self.assertNotIn("FM002", rule_ids(violations))
+        ids = rule_ids(violations)
+        self.assertNotIn("FM002", ids)
+        self.assertNotIn("FM005", ids)
+
+    def test_rules_file_without_frontmatter_is_clean(self):
+        body = "# Global Rules\n- Applies to every file, every session.\n"
+        self.assertEqual(lint_text(self.root, "source/rules/global-rules.md", body), [])
+
+    def test_rules_file_quoted_paths_pass(self):
+        body = ("---\n"
+                "paths:\n"
+                "  - \"**/*.cpp\"\n"
+                "  - \"**/*.h\"\n"
+                "---\n"
+                "C++ rules.\n")
+        violations = lint_text(self.root, "source/rules/cplusplus-rules.md", body)
+        self.assertNotIn("FM007", rule_ids(violations))
+
+    def test_rules_file_unquoted_paths_flagged(self):
+        body = ("---\n"
+                "paths:\n"
+                "  - **/*.cpp\n"
+                "  - \"**/*.h\"\n"
+                "---\n"
+                "C++ rules.\n")
+        violations = lint_text(self.root, "source/rules/cplusplus-rules.md", body)
+        self.assertIn("FM007", rule_ids(violations))
 
     def test_session_learning_file_is_fully_exempt(self):
         body = ("---\n"

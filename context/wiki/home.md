@@ -2,7 +2,7 @@
 name: wiki-home
 description: Index and local guidance hub for the AgentSkills.io material used by this repository.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Agent Skills Wiki
@@ -20,6 +20,7 @@ This wiki captures the AgentSkills.io material used by this repository and turns
 | [evaluating-skills.md](evaluating-skills.md) | How to test whether a skill improves output quality. |
 | [using-scripts.md](using-scripts.md) | How to reference commands and bundle scripts in skills. |
 | [repo-alignment-notes.md](repo-alignment-notes.md) | Local conventions for this repository's `skills/`, `agents/`, `rules/`, and workflow-style skills. |
+| [claude-code-rules.md](claude-code-rules.md) | How Claude Code loads and scopes rule files (`paths:` frontmatter) — this repo's `source/rules/` is authored to this spec; read it before touching that folder. |
 | [versioning.md](versioning.md) | What `version` and `agentic_rails_source_version` mean, and how context sync uses them. |
 
 ## Local Maintenance Checklist

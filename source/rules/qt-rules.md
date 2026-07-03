@@ -1,10 +1,10 @@
 ---
-description: Qt C++ coding rules — Qt Widgets, signals/slots, threading, CMake build, and OpenRGB plugin conventions for Windows.
-globs: ["**/*.pro", "**/*.qrc", "**/*.qml"]
-alwaysApply: false
-metadata:
-  version: "1.2"
-  owner: Jarryd Adaens
+paths:
+  - "**/*.pro"
+  - "**/*.qrc"
+  - "**/*.qml"
+  - "**/*.cpp"
+  - "**/*.h"
 ---
 
 # Windsurf Rules — Qt C++ (Windows, OpenRGB Plugin)

@@ -71,6 +71,7 @@ ALL_RULES = {
     "FM004": "frontmatter 'description' missing or over 1024 characters",
     "FM005": "frontmatter 'metadata.version' missing or not a quoted string",
     "FM006": "banned frontmatter key in tooling repo (agentic_rails_source_version, repo, changelog, invocation)",
+    "FM007": "rules file 'paths:' entry is not a quoted glob string",
     "ST001": "skill folder is missing SKILL.md",
     "ST002": "agent folder is missing AGENT.md",
     "NM001": "skill/agent folder name is not kebab-case",
@@ -114,13 +115,17 @@ def split_frontmatter(in_lines):
 
 
 def parse_frontmatter(in_fm_lines):
-    """Parse top-level keys and the metadata block from frontmatter lines.
+    """Parse top-level keys, the metadata block, and the paths list from
+    frontmatter lines.
 
-    Returns (fields, metadata) where each maps key -> (raw_value, 0-based
-    line offset within the frontmatter block).
+    Returns (fields, metadata, paths_items). fields and metadata map
+    key -> (raw_value, 0-based line offset within the frontmatter block).
+    paths_items is a list of (raw_value, offset) for each '- ...' entry
+    under a top-level 'paths:' key (the Claude Code rules-file shape).
     """
     fields = {}
     metadata = {}
+    paths_items = []
     current_top_key = None
     for offset, line in enumerate(in_fm_lines):
         top_match = re.match(r"^([A-Za-z_][\w-]*):\s*(.*)$", line)
@@ -132,7 +137,11 @@ def parse_frontmatter(in_fm_lines):
             nested_match = re.match(r"^\s+([\w-]+):\s*(.*)$", line)
             if nested_match:
                 metadata[nested_match.group(1)] = (nested_match.group(2).strip(), offset)
-    return fields, metadata
+        elif current_top_key == "paths":
+            list_match = re.match(r"^\s*-\s*(.+)$", line)
+            if list_match:
+                paths_items.append((list_match.group(1).strip(), offset))
+    return fields, metadata, paths_items
 
 
 def folded_value(in_fm_lines, in_offset, in_inline_value):
@@ -168,6 +177,17 @@ def is_under_tooling_source(in_path: Path):
     return False
 
 
+def is_in_rules_dir(in_path: Path):
+    """True for a file whose parent folder is 'rules' directly under source/ or archived/.
+
+    Rules files follow Claude Code's frontmatter shape (an optional
+    top-level 'paths:' list, or no frontmatter at all), not this repo's
+    general name/description/metadata.version standard.
+    """
+    parent = in_path.parent
+    return parent.name == "rules" and parent.parent.name in ("source", "archived")
+
+
 def is_session_learning(in_lines):
     """True for memory-rail learning captures, which use their own schema.
 
@@ -178,13 +198,13 @@ def is_session_learning(in_lines):
     fm_lines, _ = split_frontmatter(in_lines)
     if fm_lines is None:
         return False
-    fields, _ = parse_frontmatter(fm_lines)
+    fields, _, _ = parse_frontmatter(fm_lines)
     entry = fields.get("type")
     return entry is not None and entry[0] == "session-learning"
 
 
 def check_frontmatter(in_path: Path, in_lines, out_violations):
-    """Run FM001-FM006 for one markdown file."""
+    """Run FM001-FM007 for one markdown file."""
     fm_lines, body_start = split_frontmatter(in_lines)
     is_artifact = in_path.name in ("SKILL.md", "AGENT.md")
 
@@ -195,15 +215,16 @@ def check_frontmatter(in_path: Path, in_lines, out_violations):
             out_violations.append(Violation(in_path, 1, "FM001", "missing frontmatter block"))
         return
 
-    fields, metadata = parse_frontmatter(fm_lines)
+    fields, metadata, paths_items = parse_frontmatter(fm_lines)
 
     # Line numbers inside the block are offset by the opening '---' line.
     def line_of(in_offset):
         return in_offset + 2
 
-    # Rules files use the Cursor shape (description/globs/alwaysApply) and
-    # deliberately carry no 'name' key.
-    is_rules_file = "globs" in fields or "alwaysApply" in fields
+    # Rules files (source/rules/, archived/rules/) follow Claude Code's
+    # 'paths:' shape or carry no frontmatter at all — either way they
+    # deliberately carry no 'name', 'description', or 'metadata.version'.
+    is_rules_file = is_in_rules_dir(in_path)
 
     name_entry = fields.get("name")
     if name_entry is None:
@@ -240,14 +261,22 @@ def check_frontmatter(in_path: Path, in_lines, out_violations):
 
     version_entry = metadata.get("version")
     if version_entry is None:
-        out_violations.append(Violation(
-            in_path, 1, "FM005", "frontmatter has no 'metadata.version' key"))
+        if not is_rules_file:
+            out_violations.append(Violation(
+                in_path, 1, "FM005", "frontmatter has no 'metadata.version' key"))
     else:
         version_value, version_offset = version_entry
         if not re.match(r"^([\"']).+\1$", version_value):
             out_violations.append(Violation(
                 in_path, line_of(version_offset), "FM005",
                 f"metadata.version {version_value or '(empty)'} must be a quoted string"))
+
+    if is_rules_file:
+        for path_value, path_offset in paths_items:
+            if not re.match(r"^([\"']).+\1$", path_value):
+                out_violations.append(Violation(
+                    in_path, line_of(path_offset), "FM007",
+                    f"paths entry {path_value or '(empty)'} must be a quoted glob string"))
 
     if is_under_tooling_source(in_path):
         for banned_key in BANNED_TOOLING_KEYS:

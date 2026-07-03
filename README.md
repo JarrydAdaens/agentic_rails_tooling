@@ -1,7 +1,7 @@
 ---
 name: agentic-rails-tooling-readme
 metadata:
-  version: "2.0"
+  version: "2.1"
   owner: Jarryd Adaens
 ---
 
@@ -79,9 +79,7 @@ Everything under `source/` is authored to be installed into an IDE or the shared
 
 ### `source/rules/`
 
-`source/rules/` contains concise engineering standards and style guidance.
-
-Start at [`source/rules/index.md`](source/rules/index.md). It is the entry point for selecting the smallest relevant rule set for a repository and task.
+`source/rules/` contains concise engineering standards and style guidance, authored for Claude Code's rule-loading spec: each file carries only a top-level `paths:` list of quoted glob strings, or no frontmatter at all when the rule should load every session. Claude Code loads global rules (`global-rules.md`, `unit-testing-rules.md`) unconditionally, and stack rules only when a file matching their `paths:` globs is touched — there is no index file to route through.
 
 Use `source/rules/` for:
 
@@ -89,7 +87,8 @@ Use `source/rules/` for:
 - Language and framework standards
 - Formatting and naming conventions
 - Stack-specific guidance such as C#, C++, WPF, Qt, TypeScript, and React
-- Compatibility files such as [`source/rules/.cursorrules`](source/rules/.cursorrules)
+
+Support for other IDEs (Cursor, Windsurf, Copilot, etc.) is produced at copy time by Kung Fu's conversion scripts from this Claude-Code-first source, not by hand-maintained per-IDE files in this repo.
 
 Rules should stay short and prescriptive. If a file becomes a large body of procedural expertise, it probably belongs in `source/skills/` or `source/agents/`.
 
@@ -352,4 +351,4 @@ When adding or updating reusable context, place it in the narrowest layer that m
 
 - Repository: https://github.com/JarrydSemmens/agentic_rails_tooling
 - Owner: Jarryd Adaens
-- Last Updated: 2026-06-30
+- Last Updated: 2026-07-03

@@ -2,7 +2,7 @@
 name: readme-scripts
 description: Guide to the repo-infrastructure scripts — the rails linter, what it enforces, how to run it, and how files opt out of rules.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Scripts
@@ -27,7 +27,7 @@ Deliberate exemptions built into the rules:
 
 - `archived/` is skipped unless `--include-archived` is passed.
 - `design.md` and `agenticworkflow.md` may use numbered tiers — they hold the canonical tier table. Everything else must use tier names.
-- Rules files use the Cursor shape (`description`/`globs`/`alwaysApply`) and need no `name` key.
+- Rules files under `source/rules/` (and `archived/rules/`) use Claude Code's shape: an optional top-level `paths:` list of quoted glob strings, or no frontmatter at all for rules that should always load. They need no `name`, `description`, or `metadata.version` — FM002 and FM005 exempt them, and FM007 checks that any `paths:` entries are quoted.
 - Reference files need only `name` and `metadata.version`; `description` is required on `SKILL.md`/`AGENT.md`, where discovery happens.
 - Memory learning captures (`type: session-learning`) are historical records and are fully exempt — history is not rewritten to new vocabulary.
 

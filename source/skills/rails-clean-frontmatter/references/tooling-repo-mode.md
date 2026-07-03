@@ -2,7 +2,7 @@
 name: rails-clean-frontmatter-tooling-repo-mode
 description: Tooling-repo mode for rails-clean-frontmatter — strip agentic_rails_source_version and conform every file to the metadata.version standard.
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Tooling Repo Mode
@@ -50,9 +50,6 @@ name: <slug>
 description: <one sentence>
 # skill files keep their Cursor fields top-level:
 disable-model-invocation: <true|false>
-# rules files keep their Cursor fields top-level:
-globs: [<patterns>]
-alwaysApply: <true|false>
 metadata:
   version: "X.Y"
   owner: <name>          # when present
@@ -62,15 +59,38 @@ metadata:
 
 No `agentic_rails_source_version`, `repo`, `changelog`, or `invocation`.
 
+## Rules Files Exception
+
+Files under `source/rules/` (and `archived/rules/`) do **not** follow the
+Resulting Shape above — they are authored for Claude Code's rule-loading spec,
+not this repo's general standard. Never add `name`, `description`, or
+`metadata.version` to one. There are exactly two valid shapes:
+
+- **Path-scoped** — a top-level `paths:` list of quoted glob strings, nothing
+  else:
+  ```yaml
+  ---
+  paths:
+    - "**/*.cs"
+  ---
+  ```
+- **Unconditional** — no frontmatter block at all, so the rule loads every
+  session (used by `global-rules.md` and `unit-testing-rules.md`).
+
+If this skill encounters a rules file already in one of these two shapes,
+leave it untouched.
+
 ## File Scope
 
 Process every Markdown file outside `archived/`, including:
 
 - `source/skills/**/SKILL.md` and `source/skills/**/references/**`
 - `source/agents/**/AGENT.md`, persona `references/**`, and design documents
-- `source/rules/**` (keep `description`, `globs`, `alwaysApply` top-level; keep
-  `disable-model-invocation` top-level on skill files; keep `owner` and `version`
-  under `metadata`)
+- `source/rules/**` — do **not** apply the standard shape here. Rules files
+  carry only an optional top-level `paths:` list of quoted glob strings, or no
+  frontmatter at all. Never add `name`, `description`, or `metadata.version`.
+  Leave `paths:`-only or frontmatter-less rules files untouched (see Rules
+  Files Exception above).
 - `context/templates/**` (keep the `template` field under `metadata`)
 - `context/wiki/**`, `context/prompt-dev/**`, and `context/design.md`
 - root `README.md` and `AGENTIC_RAILS_README.MD`
@@ -82,7 +102,7 @@ Do not touch `agents/openai.yaml` provider files.
 - Skill and persona references use a unique `name`: the plain stem when it is
   already unique, otherwise skill- or persona-prefixed (e.g. `path-selection`
   appears in several skills, so `complaining-path-selection`).
-- Rules `description` follows the existing form: `"<Stack> coding rules — ..."`.
+- Rules files carry no `description` at all — see Rules Files Exception above.
 
 ## Notes
 

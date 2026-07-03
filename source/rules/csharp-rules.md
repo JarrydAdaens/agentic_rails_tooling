@@ -1,10 +1,8 @@
 ---
-description: C# coding rules — naming, style, modern language features, and conventions for .NET projects.
-globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]
-alwaysApply: false
-metadata:
-  version: "1.3"
-  owner: Jarryd Adaens
+paths:
+  - "**/*.cs"
+  - "**/*.csproj"
+  - "**/*.sln"
 ---
 
 # C# Coding Rules

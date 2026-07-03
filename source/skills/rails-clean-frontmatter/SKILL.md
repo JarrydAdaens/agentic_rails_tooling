@@ -9,7 +9,7 @@ description: >-
   Agentic Rails.
 disable-model-invocation: true
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Rails Clean Front Matter
@@ -77,9 +77,6 @@ name: <kebab-slug>
 description: <one concise sentence>
 # skill files only:
 disable-model-invocation: <true|false>
-# rules files only:
-globs: [<patterns>]
-alwaysApply: <true|false>
 metadata:
   version: "X.Y"
   # mode-specific fields — see the mode reference:
@@ -89,6 +86,14 @@ metadata:
   template: "true"                       # template files only
 ---
 ```
+
+**Rules files under `source/rules/` are an exception to this whole standard**,
+not an application of it. They carry only an optional top-level `paths:` list
+of quoted glob strings (Claude Code's rule-scoping format), or no frontmatter
+at all when the rule should load every session. Never add `name`,
+`description`, or `metadata.version` to a rules file. See
+[references/tooling-repo-mode.md](references/tooling-repo-mode.md)'s Rules
+Files Exception for the full shape.
 
 Rules that hold in every mode:
 
@@ -105,15 +110,16 @@ Rules that hold in every mode:
   is missing it, stop and ask the user whether the value should be `true` or
   `false`; do not infer, default, or choose from context. Preserve an existing
   boolean value unless the user explicitly asks to change it.
-- **Keep top-level** only the tool-consumed fields: `name`, `description`, the
-  Cursor skill field `disable-model-invocation`, and the Cursor rule fields
-  `globs` and `alwaysApply`. Move anything else that is local data (`version`,
-  `owner`, `repo`, `template`) under `metadata`.
+- **Keep top-level** only the tool-consumed fields: `name`, `description`, and
+  the Cursor skill field `disable-model-invocation`. Move anything else that is
+  local data (`version`, `owner`, `repo`, `template`) under `metadata`.
 - **Unknown field → stop and ask.** If a front matter carries a field this skill
-  does not recognize (not `name`, `description`, `globs`, `alwaysApply`,
-  `disable-model-invocation`, `metadata`, `version`, `owner`, `repo`, `template`,
+  does not recognize (not `name`, `description`, `disable-model-invocation`,
+  `metadata`, `version`, `owner`, `repo`, `template`,
   `agentic_rails_source_version`, `changelog`, or `invocation`), halt and ask
-  the user what to do with it. Do not drop or keep it silently.
+  the user what to do with it. Do not drop or keep it silently. Exception:
+  `paths` is a recognized field, but only inside a rules file — see the Rules
+  Files Exception above; do not halt on it there.
 - **Exclusions**: never process anything under `archived/`, and never rewrite
   `agents/openai.yaml` provider files — those use a separate `interface:` schema,
   not Markdown front matter.

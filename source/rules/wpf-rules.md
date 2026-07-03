@@ -1,10 +1,7 @@
 ---
-description: WPF and XAML coding rules — MVVM, bindings, resources, layout, and formatting for .NET desktop apps.
-globs: ["**/*.xaml", "**/*.xaml.cs"]
-alwaysApply: false
-metadata:
-  version: "1.3"
-  owner: Jarryd Adaens
+paths:
+  - "**/*.xaml"
+  - "**/*.xaml.cs"
 ---
 
 # WPF XAML Coding Rules (Workspace)

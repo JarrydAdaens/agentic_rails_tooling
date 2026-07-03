@@ -1,12 +1,3 @@
----
-description: Unit testing limits — keep tests scoped to the task, proportionate to risk, and avoid test-chasing.
-globs: []
-alwaysApply: true
-metadata:
-  version: "1.0"
-  owner: Jarryd Adaens
----
-
 # Unit Testing Limits Rule
 
 ## Scope

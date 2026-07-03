@@ -2,7 +2,7 @@
 name: repo-alignment-notes
 description: Local conventions for this repository's front matter standard, skills, agents, rules, and workflow-style skills.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Repository Alignment Notes
@@ -23,7 +23,7 @@ Every Markdown file that carries front matter follows one shape:
 - **`name` and `description` are required** on every file. If either is missing,
   infer and add it from the file's content.
 - **Tool-consumed fields stay top-level**, because IDEs read them directly:
-  `name`, `description`, and the Cursor rule fields `globs` and `alwaysApply`.
+  `name` and `description`.
 - **Local or custom data lives under `metadata`**: `version`, `owner`, and
   `template` (for template files).
 - Do **not** use these anywhere in this repo's front matter:
@@ -32,6 +32,14 @@ Every Markdown file that carries front matter follows one shape:
   IDE-consumed field).
 - `agents/openai.yaml` provider files use their own `interface:` schema and are
   not Markdown front matter; leave their shape alone.
+- **Exception: `source/rules/` (and archived `archived/rules/`).** These files
+  are authored for Claude Code's rule-loading spec, not this repo's general
+  standard. They carry only an optional top-level `paths:` list of quoted glob
+  strings (no `description`, `alwaysApply`, or `metadata` block), or no
+  frontmatter at all when the rule should load unconditionally every session.
+  They are exempt from the `name`, `description`, and `metadata.version`
+  requirements above. See [claude-code-rules.md](claude-code-rules.md) for the
+  spec this shape follows.
 
 The `rails-clean-frontmatter` skill applies and repairs this standard across an
 Agentic Rails repository, including the starter and derived-project variants of

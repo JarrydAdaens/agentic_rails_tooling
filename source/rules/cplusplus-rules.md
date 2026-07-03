@@ -1,10 +1,11 @@
 ---
-description: Unreal Engine C++ coding rules — UE idioms, UHT/UBT, naming, formatting, and reflection for UE5 projects.
-globs: ["**/*.uproject", "**/*.uplugin", "**/*.Build.cs"]
-alwaysApply: false
-metadata:
-  version: "1.3"
-  owner: Jarryd Adaens
+paths:
+  - "**/*.uproject"
+  - "**/*.uplugin"
+  - "**/*.Build.cs"
+  - "**/*.cpp"
+  - "**/*.h"
+  - "**/*.hpp"
 ---
 
 # Unreal C++ Coding Rules (Workspace)

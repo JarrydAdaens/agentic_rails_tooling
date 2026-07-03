@@ -6,7 +6,7 @@
 //     "hooks": {
 //       "UserPromptSubmit": [
 //         { "hooks": [ { "type": "command",
-//           "command": "node \"<abs>/skills/token-stats/hooks/token-stats.js\"" } ] }
+//           "command": "node \"<abs>/skills/oracle-token-stats/hooks/token-stats.js\"" } ] }
 //       ]
 //     }
 //   }

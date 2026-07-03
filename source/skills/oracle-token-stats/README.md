@@ -1,4 +1,4 @@
-# token-stats
+# oracle-token-stats
 
 Durable, agent-neutral token receipts and estimated cost for agentic IDE sessions.
 Real counts from logs — no AI estimation, no stored prompt text.
@@ -27,7 +27,7 @@ is recorded only as a `caveman:on` tag.
 No install — zero dependencies. Run with `node`:
 
 ```
-node skills/token-stats/scripts/token-stats.js <command> [flags]
+node skills/oracle-token-stats/scripts/token-stats.js <command> [flags]
 ```
 
 Optionally `npm link` inside `scripts/` to expose a global `token-stats` binary.
@@ -83,11 +83,10 @@ table version. Dollars are estimates, not billing truth.
 ## Tests
 
 ```
-node --test skills/token-stats/scripts/test/*.test.js
+node --test skills/oracle-token-stats/scripts/test/*.test.js
 ```
 
 ## See also
 
 - [`SKILL.md`](./SKILL.md) — trigger, workflow, and hook contract
 - [`references/codex-research.md`](./references/codex-research.md) — Codex open questions and v1 plan
-- [`../caveman-stats/`](../caveman-stats/) — the caveman-specific predecessor

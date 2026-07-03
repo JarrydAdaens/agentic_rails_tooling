@@ -1,5 +1,5 @@
 ---
-name: token-stats
+name: oracle-token-stats
 description: >
   Use this when you need real token-usage receipts and estimated cost for agentic
   IDE sessions — current session, recent sessions, or totals by day/project/model/provider.
@@ -9,10 +9,10 @@ description: >
   "export token usage", or whenever durable token/cost accounting is wanted across IDEs.
 disable-model-invocation: true
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
-# token-stats
+# Oracle Token Stats
 
 Agent-neutral token receipts. Real counts from logs, no AI estimation.
 
@@ -46,16 +46,16 @@ stored — never prompt text. Override the location with `TOKEN_STATS_DIR`.
 
 ## Process
 
-1. Locate the CLI at `skills/token-stats/scripts/token-stats.js`.
+1. Locate the CLI at `skills/oracle-token-stats/scripts/token-stats.js`.
 2. Run the relevant command with `node` (no install step — zero dependencies):
 
    ```
-   node skills/token-stats/scripts/token-stats.js current
-   node skills/token-stats/scripts/token-stats.js summary --since 7d
-   node skills/token-stats/scripts/token-stats.js summary --by project
-   node skills/token-stats/scripts/token-stats.js sessions --project "MyBrain"
-   node skills/token-stats/scripts/token-stats.js export --format csv
-   node skills/token-stats/scripts/token-stats.js prices
+   node skills/oracle-token-stats/scripts/token-stats.js current
+   node skills/oracle-token-stats/scripts/token-stats.js summary --since 7d
+   node skills/oracle-token-stats/scripts/token-stats.js summary --by project
+   node skills/oracle-token-stats/scripts/token-stats.js sessions --project "MyBrain"
+   node skills/oracle-token-stats/scripts/token-stats.js export --format csv
+   node skills/oracle-token-stats/scripts/token-stats.js prices
    ```
 
    `summary`/`sessions`/`export` auto-refresh the Claude ledger first (suppress with
@@ -87,7 +87,7 @@ decision — the model does not compute the numbers. Wire it in `settings.json`:
 ```json
 { "hooks": { "UserPromptSubmit": [ { "hooks": [
   { "type": "command",
-    "command": "node \"<abs-path>/skills/token-stats/hooks/token-stats.js\"" }
+    "command": "node \"<abs-path>/skills/oracle-token-stats/hooks/token-stats.js\"" }
 ] } ] } }
 ```
 

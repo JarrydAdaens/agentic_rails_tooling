@@ -258,8 +258,7 @@ This is the classification decision only. The physical move to a separate person
 | `commit-log` | Generic VCS commit-log writer for any git/Perforce/Mercurial/SVN workflow — the addendum names this exact skill as its example of a non-Rails skill (§11) |
 | `grade` | Generic artifact grading (code, design, docs) — distinct from `rails-grade-cer`'s Rails-specific CER scoring |
 | `grugg`, `grugg-compress` | Adopted external compression/communication skills — the addendum's own "adopted external skill" example is this family |
-| `oracle-generate-stats`, `oracle-token-appraise` | Generic file/token-cost tooling, usable on any repository |
-| `token-stats` | Generic cross-IDE session token/cost accounting |
+| `oracle-generate-stats`, `oracle-token-appraise`, `oracle-token-stats` | Generic file/token-cost tooling, usable on any repository — grouped under the `oracle-` prefix ahead of a future standalone Oracle token-tracking project |
 | `wpf-tree-sensor` | WPF/Windows UI Automation inspection — unrelated to the context tier system |
 | `wpf-starter-update` | Same `WPF-Starter` family as `rails-harvest-innovation` (moved out of this repo) — correctly unprefixed |
 

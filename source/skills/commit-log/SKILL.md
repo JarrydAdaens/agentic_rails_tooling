@@ -7,7 +7,7 @@ description: >-
   Perforce, Mercurial, SVN, or similar VCS workflows.
 disable-model-invocation: false
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # Commit log
@@ -25,12 +25,12 @@ Output the commit message in chat and stop. Do not touch git. The user copies an
 
 ## Heading prefix selection
 
-Pick the most specific prefix the work warrants. Do **not** fabricate a `[GOAL X.Y]` value to make untracked work look tracked.
+Pick the most specific prefix the work warrants. Do **not** fabricate a `[STORY X.Y]` value to make untracked work look tracked.
 
 - `[XXX-123]` — Jira-tracked work.
-- `[GOAL X.Y]` — work tied to a numbered goal in a non-Jira project.
-- `[BUG]` — defect fix not tracked against a ticket or goal.
-- `[FEATURE]` — new behavior not tracked against a ticket or goal.
+- `[STORY X.Y]` — work tied to a numbered story in a non-Jira project.
+- `[BUG]` — defect fix not tracked against a ticket or story.
+- `[FEATURE]` — new behavior not tracked against a ticket or story.
 - `[CONTEXT]` — revisions to narrative content under `context/`.
 - `[REFACTOR]` — code restructuring with no intended behavior change.
 - `[CHORE]` — build, CI, dependency, tooling, or repo housekeeping.

@@ -2,7 +2,7 @@
 name: versioning
 description: Explains the difference between version (local file revision) and agentic_rails_source_version (starter sync baseline) in Agentic Rails front matter.
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Versioning: `version` vs `agentic_rails_source_version`
@@ -15,7 +15,7 @@ questions. They are independent on purpose. Confusing them breaks context sync.
 | Field | Question it answers | Where it lives |
 | --- | --- | --- |
 | `version` | "What revision is *this file* at, on its own terms?" | Any maintained file (context files, skills, agents). |
-| `agentic_rails_source_version` | "Which starter generation was this file's *layout* last reconciled against?" | Derived-project context files (e.g. `design.md`, `milestones.md`, `goals*.md`) and the context starter itself. |
+| `agentic_rails_source_version` | "Which starter generation was this file's *layout* last reconciled against?" | Derived-project context files (e.g. `design.md`, `milestones/milestone-1.md`, `backlog/backlog-1.md`) and the context starter itself. |
 
 ### `version` — local evolution
 

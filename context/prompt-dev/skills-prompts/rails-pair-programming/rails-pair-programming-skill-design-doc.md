@@ -34,7 +34,7 @@ This skill assumes:
 
 - The target repository follows Agentic Rails conventions.
 - The agent has access to the full 5T context structure.
-- The current Goal document is known or can be located.
+- The current Story document is known or can be located.
 - The current implementation-plan folder is known or can be located.
 - The session should stay grounded in official project context rather than
   floating chat memory.
@@ -57,12 +57,12 @@ operates against the left rail by reading and updating project-local context.
 | Tier 0 | Optional source notes or rough intake, only when relevant |
 | Tier 1 | Project design constraints and architectural principles |
 | Tier 2 | Milestone intent and sequencing |
-| Tier 3 | Current Goal document and acceptance criteria |
+| Tier 3 | Current Story document and acceptance criteria |
 | Tier 4 | Current implementation-plan folder, plan, logs, and generated session artifact |
 
-The skill should keep the current Goal authoritative. The session may explore
+The skill should keep the current Story authoritative. The session may explore
 ideas freely, but decisions and conclusions must be grounded back into the active
-Goal and Plan context where relevant.
+Story and Plan context where relevant.
 
 ## Activation
 
@@ -114,7 +114,7 @@ Agent behaviour:
 - Determine what the user is working on.
 - Determine whether the user is exploring, building, debugging, reviewing, or
   designing.
-- Determine which Goal or Plan the session connects to.
+- Determine which Story or Plan the session connects to.
 - Determine what a useful session outcome looks like.
 - If the user already supplied this, briefly confirm inferred intent and
   proceed.
@@ -126,7 +126,7 @@ rails-pair-programming is active.
 
 Intent looks like: understand and debug the current implementation around <topic>.
 Mode: Exploration moving into intense collaboration if we find a concrete fix.
-I'll ground this against the current Goal and Plan folder first.
+I'll ground this against the current Story and Plan folder first.
 ```
 
 ### Phase 2: Context Gathering
@@ -135,7 +135,7 @@ Pull relevant 5T context before the session drifts into ungrounded chat.
 
 Required context:
 
-- Current Goal document
+- Current Story document
 - Current implementation plan
 - Existing specs, notes, or addenda that affect the session
 - Relevant source files or file areas, if the user has identified them
@@ -146,7 +146,7 @@ Context priority:
 | Priority | Context |
 | --- | --- |
 | 1 | Active user request |
-| 2 | Current Goal document |
+| 2 | Current Story document |
 | 3 | Active implementation plan |
 | 4 | Design and milestone context |
 | 5 | Tier 0 notes, only when rationale recovery or intake synthesis is needed |
@@ -158,9 +158,9 @@ Behaviour rules:
 - Do not dump large context summaries unless the user asks.
 - Keep context use visible enough that the user can tell the session is
   grounded.
-- Treat Goal and Plan files as authoritative unless the user explicitly says
+- Treat Story and Plan files as authoritative unless the user explicitly says
   they are stale.
-- If the relevant Goal or Plan folder cannot be found, ask a targeted question
+- If the relevant Story or Plan folder cannot be found, ask a targeted question
   or proceed with clearly marked uncertainty.
 
 ### Phase 3: Collaborative Tutoring Session
@@ -211,14 +211,14 @@ Intense collaboration mode:
 Tutoring behaviour:
 
 - explain concepts in direct, practical language
-- connect explanations to the actual code or goal
+- connect explanations to the actual code or story
 - avoid generic textbook dumps
 - ask short comprehension-check questions only when useful
 - adapt depth to the user's existing expertise
 
 Pair-programming behaviour:
 
-- think in terms of the current codebase and active goal
+- think in terms of the current codebase and active story
 - prefer concrete next actions over vague advice
 - call out trade-offs and risks
 - help identify validation steps
@@ -243,16 +243,16 @@ summarise this
 On wrap-up, the agent should:
 
 1. Summarise the entire session.
-2. Create or update `pair-programming.md` in the current Goal or Plan folder.
+2. Create or update `pair-programming.md` in the current Story or Plan folder.
 3. Include discoveries, key discussions, decisions, open questions, outcomes,
    and yielded work.
-4. Keep the summary grounded in the active Goal and Plan context.
+4. Keep the summary grounded in the active Story and Plan context.
 5. End cleanly.
 
 Preferred path:
 
 ```text
-context/implementation-plans/<current-goal-or-plan-folder>/pair-programming.md
+context/implementation-plans/<current-story-or-plan-folder>/pair-programming.md
 ```
 
 Fallback path if the active plan folder is unknown:
@@ -275,9 +275,9 @@ Recommended structure:
 
 <YYYY-MM-DD>
 
-## Goal Reference
+## Story Reference
 
-<Link or describe the current Goal and Plan folder.>
+<Link or describe the current Story and Plan folder.>
 
 ## Intent And Mode
 
@@ -326,8 +326,8 @@ or correction.
 
 The skill must not:
 
-- operate as generic chat with no Goal or Plan awareness
-- invent Goal context when it cannot find it
+- operate as generic chat with no Story or Plan awareness
+- invent Story context when it cannot find it
 - create fake decisions or discoveries
 - dump private chain-of-thought
 - replace implementation logs, evidence logs, or complaint logs
@@ -352,10 +352,10 @@ Before considering the skill applied correctly, confirm:
 
 - The user explicitly activated `rails-pair-programming`.
 - Phase 1 established intent and mode.
-- Phase 2 gathered relevant 5T / Goal / Plan context.
+- Phase 2 gathered relevant 5T / Story / Plan context.
 - Phase 3 maintained an active collaborative loop.
 - The agent asked useful questions where appropriate.
-- The session stayed grounded in the current Goal and Plan.
+- The session stayed grounded in the current Story and Plan.
 - Wrap-up was triggered by the user.
 - `pair-programming.md` was created or updated in the correct folder.
 - The artifact includes discoveries, discussions, decisions, open questions,
@@ -371,6 +371,6 @@ Intent -> Context Gathering -> Collaborative Tutoring Session -> Wrap-up
 ```
 
 It starts by identifying whether the user wants exploration or intense
-collaboration, grounds the session in the current Goal and Plan folder, works
+collaboration, grounds the session in the current Story and Plan folder, works
 interactively as a tutor and pair programmer, then writes `pair-programming.md`
 when the user finishes the session.

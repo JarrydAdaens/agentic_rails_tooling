@@ -4,10 +4,10 @@
     {
       "id": 1,
       "prompt": "I added a login feature that accepts username and password and returns a JWT token. Write a commit message.",
-      "expected_output": "A commit log with a heading using one of the supported prefixes ([XXX-123], [GOAL X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], [CHORE]), a ~ Problem: line, at least one body line describing the change, and a ~ Resolution: line.",
+      "expected_output": "A commit log with a heading using one of the supported prefixes ([XXX-123], [STORY X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], [CHORE]), a ~ Problem: line, at least one body line describing the change, and a ~ Resolution: line.",
       "assertions": [
-        "Output includes a heading line using one of the supported prefixes: [XXX-123], [GOAL X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], or [CHORE]",
-        "If no ticket or goal was referenced in the prompt, [FEATURE] is used (not a fabricated [GOAL X.Y])",
+        "Output includes a heading line using one of the supported prefixes: [XXX-123], [STORY X.Y], [BUG], [FEATURE], [CONTEXT], [REFACTOR], or [CHORE]",
+        "If no ticket or story was referenced in the prompt, [FEATURE] is used (not a fabricated [STORY X.Y])",
         "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line",
         "Output includes a ~ Resolution: line",
@@ -19,7 +19,7 @@
       "prompt": "I fixed a null reference exception in UserService.cs that crashed when the user object was null. Write a commit message.",
       "expected_output": "A commit log with a [BUG] heading, a ~ Problem: line describing the null reference, a ~ Fixed: body line referencing UserService, and a ~ Resolution: line.",
       "assertions": [
-        "Output includes a heading line using the [BUG] prefix (no ticket or goal was referenced)",
+        "Output includes a heading line using the [BUG] prefix (no ticket or story was referenced)",
         "The heading line is 72 characters or fewer",
         "Output includes a ~ Problem: line that describes the null reference issue",
         "Output includes a ~ Fixed: or ~ Changed: body line that names UserService",

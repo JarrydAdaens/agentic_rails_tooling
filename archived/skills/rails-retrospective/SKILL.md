@@ -3,7 +3,7 @@ name: rails-retrospective
 description: >-
   Use this skill after implementation work, planning work, Agentic Rails
   implementation-plan execution, bulk planning, orchestration runs, or completed
-  goals when the user asks for a retrospective, lessons learned, post-work
+  stories when the user asks for a retrospective, lessons learned, post-work
   review, process review, plan-adherence review, or durable retrospective.md
   grounded in plans, logs, git history, changed files, and optional provenance
   artifacts.
@@ -39,7 +39,7 @@ Prefer co-locating the retrospective with the implementation artifacts whenever 
 
 Use the most relevant available sources. Missing optional files are not failures.
 
-- Project context: `design.md`, `milestones.md`, `goals*.md`, repository laws, rules, or local instructions.
+- Project context: `design.md`, `milestones.md``, repository laws, rules, or local instructions.
 - Execution context: `plan.md`, `implementation-log.md`, handover artifacts, workflow progress files, orchestration briefs, or planning outputs.
 - Optional provenance: `complaining.md`, `thinking.md`, `evidence.md`.
 - Git history: relevant commits, commit messages, diffs, changed file lists, and commit ranges.
@@ -82,7 +82,7 @@ Keep the sections even when a section is brief. If there is nothing meaningful t
 
 Identify what was reviewed:
 
-- task, goal, plan folder, workflow run, or commit range
+- task, story, plan folder, workflow run, or commit range
 - review date
 - reviewer agent or persona
 - sources consulted
@@ -153,7 +153,7 @@ Do not turn ratings into empty bureaucracy.
 
 ## Operating Model
 
-1. Detect whether the scope is one task, one implementation-plan folder, one goal, multiple goals, a planning run, an execution run, or a workflow run.
+1. Detect whether the scope is one task, one implementation-plan folder, one story, multiple stories, a planning run, an execution run, or a workflow run.
 2. Locate the minimum relevant sources needed to review the work.
 3. Compare intended work against actual execution.
 4. Inspect changed files and validation evidence enough to assess implementation quality.

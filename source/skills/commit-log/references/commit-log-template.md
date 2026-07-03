@@ -1,7 +1,7 @@
 ---
 name: commit-log-template
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Commit Log Template
@@ -25,7 +25,7 @@ The heading is always a bracketed prefix, a space-dash-space separator, and a co
 [PREFIX] - Concise summary of the change
 ```
 
-Pick the **most specific prefix that fits**. If the work maps to a tracked Jira ticket or numbered goal, use that. Otherwise use one of the lightweight prefixes below.
+Pick the **most specific prefix that fits**. If the work maps to a tracked Jira ticket or numbered story, use that. Otherwise use one of the lightweight prefixes below.
 
 ### Tracked work
 
@@ -46,25 +46,25 @@ Optional split-work suffix:
 [XXX-123] - Did the thing with the code on backend (1 of 2)
 ```
 
-#### Goal-based work (non-Jira)
+#### Story-based work (non-Jira)
 
 ```text
-[GOAL X.Y] - Implemented the thing with the code for real
+[STORY X.Y] - Implemented the thing with the code for real
 ```
 
 Rules:
 
-- Use this for projects not using Jira but tracking against a numbered goal hierarchy.
-- `X.Y` follows the goal hierarchy.
+- Use this for projects not using Jira but tracking against a numbered story hierarchy.
+- `X.Y` follows the story hierarchy.
 
-### Lightweight prefixes (no ticket, no goal)
+### Lightweight prefixes (no ticket, no story)
 
-Use these for small, self-contained work that doesn't correspond to a tracked ticket or numbered goal. Do **not** invent a `[GOAL X.Y]` value to make untracked work look tracked.
+Use these for small, self-contained work that doesn't correspond to a tracked ticket or numbered story. Do **not** invent a `[STORY X.Y]` value to make untracked work look tracked.
 
 | Prefix | When to use |
 |--------|-------------|
-| `[BUG]` | Fixing a defect that is not tracked against a ticket or goal. |
-| `[FEATURE]` | Adding new behavior that is not tracked against a ticket or goal. |
+| `[BUG]` | Fixing a defect that is not tracked against a ticket or story. |
+| `[FEATURE]` | Adding new behavior that is not tracked against a ticket or story. |
 | `[CONTEXT]` | Revising narrative content under the `context/` folder (plans, retrospectives, handovers, project context). |
 | `[REFACTOR]` | Restructuring code with no intended behavior change. |
 | `[CHORE]` | Build, CI, dependency, tooling, or repo housekeeping. |
@@ -74,7 +74,7 @@ Examples:
 ```text
 [BUG] - Fix null deref in UserService when session is anonymous
 [FEATURE] - Add JWT-based login endpoint with refresh token
-[CONTEXT] - Update context/handovers/2026-05-07.md with current goal state
+[CONTEXT] - Update context/handovers/2026-05-07.md with current story state
 [REFACTOR] - Extract DataService dependencies behind an interface
 [CHORE] - Bump xunit to 2.7 and update test runner config
 ```
@@ -87,7 +87,7 @@ Examples:
 
 ```text
 [XXX-123] - Document local build and env setup in README
-[GOAL 1.2] - Add regression tests for edge cases in the parser
+[STORY 1.2] - Add regression tests for edge cases in the parser
 [CHORE] - Adjust CI workflow for new test project
 ```
 
@@ -152,4 +152,4 @@ NOTE: An important callout, perhaps that this is changeset 1 of 2
 - Body: one major change per line. Aim for 3–7 body lines including `~ Problem:` and `~ Resolution:`. If you need more than ~10, the change set should probably be split.
 - Each `~` callout fits on a single line. No wrapped paragraphs.
 - Name impacted systems, classes, files, or modules where it adds clarity. Avoid vague phrases like "misc cleanup" or "various fixes".
-- Pick the most specific heading prefix that fits. Do not invent a `[GOAL X.Y]` for untracked work — use a lightweight prefix instead.
+- Pick the most specific heading prefix that fits. Do not invent a `[STORY X.Y]` for untracked work — use a lightweight prefix instead.

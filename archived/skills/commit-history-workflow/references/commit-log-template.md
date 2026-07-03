@@ -9,7 +9,7 @@ agentic_rails_source_version: 2.0
 Use this template for reconstructing repository history from old commits during a
 research workflow.
 
-This is not a modern commit-message template. Do not use Jira keys, goal IDs, or
+This is not a modern commit-message template. Do not use Jira keys, story IDs, or
 invented planning context.
 
 ## Required historical entry shape

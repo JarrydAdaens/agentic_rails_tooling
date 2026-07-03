@@ -18,7 +18,7 @@ Use it when the domain is broad enough that the agent needs:
 
 This is especially useful for skills derived from layered professional expertise, such as UI engineering, game development, framework-specific architecture, tooling ecosystems, or other domains where the agent needs both breadth and restraint.
 
-## Template Goal
+## Template Story
 
 Treat the main skill as the router and operating model, not the full body of knowledge.
 

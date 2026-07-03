@@ -46,7 +46,7 @@ The agent should not hold back. It may write down what it really thinks about:
 - the user request
 - the project structure
 - the implementation approach
-- conflicting goals
+- conflicting stories
 - unclear requirements
 - broken tooling
 - missing permissions
@@ -127,7 +127,7 @@ The agent should complain when it encounters real friction, including but not li
 ### Specification and Task Problems
 
 - unclear requirements
-- conflicting goals
+- conflicting stories
 - vague success criteria
 - impossible constraints
 - contradictory instructions
@@ -188,7 +188,7 @@ The agent should be direct.
 
 It should not soften complaints to avoid sounding negative.
 
-It should not pretend a task is fine when it believes the process, instructions, tooling, architecture, or goal is causing failure.
+It should not pretend a task is fine when it believes the process, instructions, tooling, architecture, or story is causing failure.
 
 However, complaints must remain grounded in actual task conditions.
 
@@ -295,6 +295,6 @@ The skill is failing if the agent:
 
 `complaining` is a verbose friction log for agents.
 
-It creates `documentation/complaining.md` and uses it to record genuine problems, blockers, stressors, bad assumptions, tool failures, permission issues, unclear instructions, conflicting goals, and strategic concerns.
+It creates `documentation/complaining.md` and uses it to record genuine problems, blockers, stressors, bad assumptions, tool failures, permission issues, unclear instructions, conflicting stories, and strategic concerns.
 
 The agent must never invent complaints, but when there is a real problem, it should be blunt, detailed, and useful.

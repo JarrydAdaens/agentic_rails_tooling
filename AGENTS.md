@@ -47,4 +47,4 @@ These are load-bearing because the artifacts are consumed by other agents via pr
 
 ## Git conventions
 
-When the user or their global rules require a structured commit format, use the `commit-log` skill. The template is in `source/skills/commit-log/references/commit-log-template.md`. Typical shape: a `[GOAL X.Y]` or `[XXX-123]` heading (≤72 chars), then `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, etc.), and `~ Resolution:`. American English throughout. Keep PRs small and focused — no cross-cutting refactors mixed with feature work.
+When the user or their global rules require a structured commit format, use the `commit-log` skill. The template is in `source/skills/commit-log/references/commit-log-template.md`. Typical shape: a `[STORY X.Y]` or `[XXX-123]` heading (≤72 chars), then `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, etc.), and `~ Resolution:`. American English throughout. Keep PRs small and focused — no cross-cutting refactors mixed with feature work.

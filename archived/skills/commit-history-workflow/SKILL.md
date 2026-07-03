@@ -21,7 +21,7 @@ commit.
 
 Use the rules in
 [references/commit-log-template.md](references/commit-log-template.md). This
-template is for historical research output, not for modern Jira or goal-based
+template is for historical research output, not for modern Jira or story-based
 commit messages.
 
 ## When to use
@@ -152,8 +152,8 @@ If the version is visible, include it in the summary or `~ Notes:` line.
 For emitted results:
 
 - Use factual reconstruction, not speculative product-management language.
-- Do not use Jira keys, goals, or invented planning context.
-- Do not output `[GOAL x.y]`.
+- Do not use Jira keys, stories, or invented planning context.
+- Do not output `[STORY x.y]`.
 - Prefer `~ Changed:` lines.
 - Add `~ Notes:` only when there is useful historical context directly supported
   by the commit subject or diff.

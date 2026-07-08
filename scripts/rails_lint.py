@@ -29,9 +29,12 @@ from dataclasses import dataclass
 from pathlib import Path
 
 # Directories never scanned. `archived` is also skipped unless --include-archived.
+# `proposals` holds verbatim slices copied from foreign projects (see the
+# rails-new-proposal skill); linting them would force mutating the evidence.
 EXCLUDED_DIRS = {
     ".git", "node_modules", "__pycache__", ".vs", ".idea",
     ".claude", ".cursor", ".agents", "ide_specific", "_planning-runs",
+    "proposals",
 }
 
 # Files that should never be committed to a rails repo (HY001).

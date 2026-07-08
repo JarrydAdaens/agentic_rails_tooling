@@ -16,6 +16,7 @@ Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README
 - `scripts/` — repo infrastructure (not deployed): `scripts/rails_lint.py` plus its tests. See `scripts/README-SCRIPTS.md`.
 - `context/` — everything *about* this repo (not deployed): `context/design.md`, `context/templates/`, `context/prompt-dev/`, `context/wiki/`.
 - `archived/` — preserved-but-inactive artifacts (not deployed).
+- `proposals/` — inbox of self-contained candidate capabilities dropped off by the `rails-new-proposal` skill (not deployed, excluded from lint; slices are verbatim copies from foreign projects — review, then promote or delete).
 - `ide_specific/` — nonportable vendor files (a deliberate junk pile).
 
 ## The three primary layers

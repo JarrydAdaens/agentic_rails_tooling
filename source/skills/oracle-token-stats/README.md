@@ -42,6 +42,7 @@ token-stats summary  --by project                 # totals grouped by project
 token-stats sessions --project "MyBrain"          # session rows for one project
 token-stats export   --format csv                 # CSV of filtered receipts
 token-stats prices                                # show the bundled pricing table
+token-stats live                                  # today/week burn from Oracle Server
 ```
 
 Filters: `--provider`, `--project <substring>`, `--model <prefix>`, `--since <7d|24h|ISO>`.
@@ -64,6 +65,16 @@ Total:       236,495 tokens
 
 Est. cost:    $0.2143 (pricing 2026-06-18)
 ```
+
+## Server mode
+
+`token-stats live` reports today/this-week burn from an Oracle Server instance
+(`GET /health` probe, then `GET /v1/usage/window`), falling back to the local
+ledger when the server is unreachable. Output always names its data source
+(`server` vs `offline — local ledger`). Configure the server with
+`ORACLE_SERVER_URL` (default `http://localhost:5140`). See
+[`SKILL.md`](./SKILL.md#server-mode-live) for the fallback semantics and the
+known session-level gap.
 
 ## Storage
 

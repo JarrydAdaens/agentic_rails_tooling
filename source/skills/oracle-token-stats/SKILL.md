@@ -4,12 +4,14 @@ description: >
   Use this when you need real token-usage receipts and estimated cost for agentic
   IDE sessions — current session, recent sessions, or totals by day/project/model/provider.
   Reads actual token counts from session logs (Claude Code today, Codex later); it never
-  asks a model to estimate and never stores prompt text. Trigger: "/token-stats",
-  "how many tokens did this session use", "token cost so far", "show my usage this week",
-  "export token usage", or whenever durable token/cost accounting is wanted across IDEs.
+  asks a model to estimate and never stores prompt text. The `live` command reports
+  today/this-week burn from Oracle Server when reachable, local ledger otherwise.
+  Trigger: "/token-stats", "how many tokens did this session use", "token cost so far",
+  "show my usage this week", "current burn", "live usage", "export token usage", or
+  whenever durable token/cost accounting is wanted across IDEs.
 disable-model-invocation: true
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Oracle Token Stats
@@ -56,6 +58,7 @@ stored — never prompt text. Override the location with `TOKEN_STATS_DIR`.
    node skills/oracle-token-stats/scripts/token-stats.js sessions --project "MyBrain"
    node skills/oracle-token-stats/scripts/token-stats.js export --format csv
    node skills/oracle-token-stats/scripts/token-stats.js prices
+   node skills/oracle-token-stats/scripts/token-stats.js live
    ```
 
    `summary`/`sessions`/`export` auto-refresh the Claude ledger first (suppress with
@@ -74,9 +77,32 @@ stored — never prompt text. Override the location with `TOKEN_STATS_DIR`.
 | `sessions` | One row per recorded session |
 | `export --format csv` | Dump filtered receipts as CSV |
 | `prices [update]` | Show the bundled pricing table; `update` explains how to edit it |
+| `live [--window today\|week]` | Today/this-week burn from Oracle Server, local ledger fallback offline |
 
 Filters (where applicable): `--provider <id>`, `--project <substring>`,
 `--model <prefix>`, `--since <7d\|24h\|ISO>`. Add `--json` for machine-readable output.
+
+## Server mode (`live`)
+
+`live` is the live-awareness command: it probes Oracle Server's `GET /health`
+(short timeout), and when the server answers it reports current burn from
+`GET /v1/usage/window?window=today|week` — centralized, cross-machine truth
+grouped by machine, source, and model. When the server is unreachable it falls
+back to this skill's existing local ledger and says so. Output always opens
+with its data source: `Data source: server (…)` or
+`Data source: offline — local ledger (…)`.
+
+- **Configuration:** `ORACLE_SERVER_URL` (default `http://localhost:5140`,
+  Oracle Server's default bind). Env-var only, like `TOKEN_STATS_DIR`.
+- **Offline approximation, stated honestly:** the local fallback uses rolling
+  windows (last 24h for `today`, last 7d for `week`) over the local ledger —
+  not the server's UTC calendar-day / ISO-week buckets — and labels them as such.
+- **Known gap — session-level burn:** Oracle's `GET /v1/usage/session` requires
+  the full session triple `(machine, source, sessionId)`. This CLI has no
+  collector-configured machine identity and its provider ids do not map onto the
+  server's source strings, so `live` deliberately ships window burn only rather
+  than fabricating a session convention. Session receipts remain available
+  locally via `current`.
 
 ## Optional Claude Code `/token-stats` hook
 
@@ -105,8 +131,9 @@ dollars only apply under per-token (API/flexible) pricing.
 
 `node --test scripts/test/*.test.js` — covers full input/cache/output accounting,
 malformed JSONL, multi-model sessions, empty sessions, duplicate-snapshot dedup, known
-vs unknown model pricing, prefix matching, `--since`/grouping, and the pricing-table
-version stamp.
+vs unknown model pricing, prefix matching, `--since`/grouping, the pricing-table
+version stamp, and the server client (URL config, health probe, timeout abort, window
+fetches — all against stubbed HTTP, no live server required).
 
 ## See also
 

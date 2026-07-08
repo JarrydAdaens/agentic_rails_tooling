@@ -87,6 +87,38 @@ export function formatSessions(receipts) {
   return lines.join('\n');
 }
 
+// Oracle Server /v1/usage/window response ({ window, fromUtc, toUtc, rows, totals })
+// rendered as a composite (machine, source, model) table. Server figures are
+// cache-inclusive totals; costUsd is null when no row carried a cost.
+export function formatWindowUsage(response) {
+  const lines = [];
+  const bucket = `${(response.fromUtc || '').slice(0, 10)} → ${(response.toUtc || '').slice(0, 10)}`;
+  lines.push(`Window: ${response.window} (UTC ${bucket})`);
+
+  if (!response.rows || !response.rows.length) {
+    lines.push('No usage recorded in this window.');
+    return lines.join('\n');
+  }
+
+  const header = `${'Machine'.padEnd(14)} ${'Source'.padEnd(16)} ${'Model'.padEnd(24)} ${'Total tok'.padStart(12)} ${'Est. cost'.padStart(11)}`;
+  lines.push(header);
+  lines.push('-'.repeat(header.length));
+  for (const row of response.rows) {
+    lines.push(
+      `${String(row.machine || '').padEnd(14)} ${String(row.source || '').padEnd(16)} ` +
+      `${String(row.model || '').padEnd(24)} ${formatInt(row.totalTokens).padStart(12)} ` +
+      `${formatUsd(row.costUsd).padStart(11)}`,
+    );
+  }
+  lines.push('-'.repeat(header.length));
+  const totals = response.totals || {};
+  lines.push(
+    `${'TOTAL'.padEnd(14)} ${''.padEnd(16)} ${''.padEnd(24)} ` +
+    `${formatInt(totals.totalTokens).padStart(12)} ${formatUsd(totals.costUsd).padStart(11)}`,
+  );
+  return lines.join('\n');
+}
+
 // CSV export. Quotes only the free-text path field; counters are plain numbers.
 export function formatCsv(receipts) {
   const columns = [

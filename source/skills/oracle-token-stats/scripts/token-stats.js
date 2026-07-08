@@ -11,6 +11,7 @@
 //   token-stats sessions [--since 7d] [filters]
 //   token-stats export   [--format csv] [filters]
 //   token-stats prices   [update]
+//   token-stats live     [--window today|week] [--json]
 //
 // Filters: --provider <id>  --project <substring>  --model <prefix>  --since <7d|ISO>
 // Global:  --json (machine-readable output where supported)
@@ -21,8 +22,9 @@ import { filterReceipts, summarize } from './lib/summary.js';
 import { loadPricing } from './lib/pricing.js';
 import { ledgerPath } from './lib/paths.js';
 import { parseArgs } from './lib/util.js';
+import { serverBaseUrl, probeHealth, fetchWindowUsage } from './lib/server-client.js';
 import {
-  formatReceipt, formatSummary, formatSessions, formatCsv,
+  formatReceipt, formatSummary, formatSessions, formatCsv, formatWindowUsage,
 } from './lib/format.js';
 
 function out(text) {
@@ -103,6 +105,40 @@ const COMMANDS = {
     out(formatCsv(receipts));
   },
 
+  // Live burn awareness: server-sourced today/week usage when Oracle Server is
+  // reachable, the existing local ledger otherwise. Output always names its
+  // data source so a consumer can tell centralized truth from local receipts.
+  async live(flags) {
+    const windows = flags.window ? [String(flags.window)] : ['today', 'week'];
+    for (const window of windows) {
+      if (window !== 'today' && window !== 'week') {
+        return fail(`Unsupported --window "${window}". Use "today" or "week".`);
+      }
+    }
+
+    const baseUrl = serverBaseUrl();
+    const probe = await probeHealth({ baseUrl });
+
+    if (!probe.reachable) {
+      return liveOffline(flags, windows, baseUrl, probe.reason);
+    }
+
+    if (flags.json) {
+      const payload = { dataSource: 'server', serverUrl: baseUrl, windows: {} };
+      for (const window of windows) {
+        payload.windows[window] = await fetchWindowUsage(window, { baseUrl });
+      }
+      return out(JSON.stringify(payload, null, 2));
+    }
+
+    out(`Data source: server (Oracle Server at ${baseUrl}, health: ${probe.status})`);
+    for (const window of windows) {
+      const usage = await fetchWindowUsage(window, { baseUrl });
+      out('');
+      out(formatWindowUsage(usage));
+    }
+  },
+
   prices(flags, positionals) {
     const pricing = loadPricing();
     if (positionals[0] === 'update') {
@@ -129,6 +165,44 @@ const COMMANDS = {
   },
 };
 
+// Offline half of `live`: the existing local ledger pipeline, explicitly labeled.
+// Local approximations are rolling windows (last 24h / last 7d), not the server's
+// UTC calendar-day / ISO-week buckets — said out loud rather than overstating.
+function liveOffline(flags, windows, baseUrl, reason) {
+  const sinceFor = { today: '24h', week: '7d' };
+  refreshIfClaude(flags);
+
+  if (flags.json) {
+    const payload = {
+      dataSource: 'offline — local ledger',
+      serverUrl: baseUrl,
+      serverError: reason,
+      windows: {},
+    };
+    for (const window of windows) {
+      const receipts = filterReceipts(readLedger(), { since: sinceFor[window] });
+      payload.windows[window] = {
+        approximation: `rolling last ${sinceFor[window]}, not a UTC calendar window`,
+        summary: summarize(receipts, 'model'),
+      };
+    }
+    return out(JSON.stringify(payload, null, 2));
+  }
+
+  out(`Data source: offline — local ledger (Oracle Server unreachable at ${baseUrl}: ${reason})`);
+  for (const window of windows) {
+    const since = sinceFor[window];
+    const receipts = filterReceipts(readLedger(), { since });
+    out('');
+    out(`Window: ${window} (local approximation: rolling last ${since})`);
+    if (!receipts.length) {
+      out('No local receipts in this window. Run `token-stats scan` first.');
+      continue;
+    }
+    out(formatSummary(summarize(receipts, 'model'), 'model'));
+  }
+}
+
 // summary/sessions/export operate on the ledger; auto-refresh Claude so a first
 // run works without a separate `scan`. Other providers read the ledger as-is.
 function refreshIfClaude(flags) {
@@ -145,7 +219,7 @@ function main() {
   const [, , command, ...rest] = process.argv;
   if (!command || command === '--help' || command === '-h' || command === 'help') {
     out('token-stats — real token receipts across agentic IDEs.');
-    out('Commands: current | scan | summary | sessions | export | prices');
+    out('Commands: current | scan | summary | sessions | export | prices | live');
     out(`Providers: ${listProviders().join(', ')}`);
     out('See the skill README for full usage.');
     return;
@@ -155,7 +229,9 @@ function main() {
     return fail(`Unknown command "${command}". Try: ${Object.keys(COMMANDS).join(', ')}.`);
   }
   const { _, flags } = parseArgs(rest);
-  handler(flags, _);
+  // `live` is async (HTTP); the rest are sync. Promise.resolve covers both, and
+  // a rejection (e.g. a mid-flight server error after a healthy probe) exits 1.
+  Promise.resolve(handler(flags, _)).catch((error) => fail(error.message || String(error)));
 }
 
 main();

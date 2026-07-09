@@ -1,3 +1,13 @@
+---
+name: quota-advisor-design
+description: >-
+  Design history for the advisor guard rail: the native advisor-tool behavior
+  being replicated inside Claude Code, accepted trade-offs, architecture,
+  cost controls, risks, and the v2 backlog.
+metadata:
+  version: "1.0"
+---
+
 # Quota Advisor — Design Document
 
 **Status:** Draft for implementation

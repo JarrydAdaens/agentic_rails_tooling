@@ -77,7 +77,8 @@ ALL_RULES = {
     "FM007": "rules file 'paths:' entry is not a quoted glob string",
     "ST001": "skill folder is missing SKILL.md",
     "ST002": "agent folder is missing AGENT.md",
-    "NM001": "skill/agent folder name is not kebab-case",
+    "ST003": "eval folder is missing README.md",
+    "NM001": "skill/agent/eval folder name is not kebab-case",
     "NM002": "agent folder name must end in -persona",
     "HY001": "junk file committed (Desktop.ini, Thumbs.db, debug.log)",
     **{rule_id: message for rule_id, _, message in VOCAB_RULES},
@@ -305,14 +306,14 @@ def check_vocabulary(in_path: Path, in_lines, out_violations):
 
 
 def check_structure(in_root: Path, in_include_archived: bool, out_violations):
-    """Run ST/NM checks over skill and agent bundle folders."""
+    """Run ST/NM checks over skill, agent, and eval bundle folders."""
     excluded = set(EXCLUDED_DIRS)
     if not in_include_archived:
         excluded.add("archived")
     for dirpath, dirnames, _filenames in os.walk(in_root):
         dirnames[:] = sorted(d for d in dirnames if d not in excluded)
         parent = Path(dirpath)
-        if parent.name not in ("skills", "agents"):
+        if parent.name not in ("skills", "agents", "evals"):
             continue
         for child_name in dirnames:
             child = parent / child_name
@@ -321,6 +322,8 @@ def check_structure(in_root: Path, in_include_archived: bool, out_violations):
                     child, 1, "NM001", f"folder '{child_name}' is not kebab-case"))
             if parent.name == "skills" and not (child / "SKILL.md").is_file():
                 out_violations.append(Violation(child, 1, "ST001", "skill folder has no SKILL.md"))
+            if parent.name == "evals" and not (child / "README.md").is_file():
+                out_violations.append(Violation(child, 1, "ST003", "eval folder has no README.md"))
             if parent.name == "agents":
                 if not (child / "AGENT.md").is_file():
                     out_violations.append(Violation(child, 1, "ST002", "agent folder has no AGENT.md"))

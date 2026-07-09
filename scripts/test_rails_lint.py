@@ -185,6 +185,17 @@ class StructureAndHygieneTests(unittest.TestCase):
             GOOD_FRONTMATTER.format(name="helper"), encoding="utf-8")
         self.assertIn("NM002", rule_ids(rails_lint.lint_paths([self.root], False)))
 
+    def test_eval_folder_without_readme_flagged(self):
+        (self.root / "source" / "evals" / "my-eval").mkdir(parents=True)
+        self.assertIn("ST003", rule_ids(rails_lint.lint_paths([self.root], False)))
+
+    def test_clean_eval_folder_passes(self):
+        eval_dir = self.root / "source" / "evals" / "my-eval"
+        eval_dir.mkdir(parents=True)
+        (eval_dir / "README.md").write_text(
+            GOOD_FRONTMATTER.format(name="my-eval") + "Eval content.\n", encoding="utf-8")
+        self.assertEqual(rails_lint.lint_paths([self.root], False), [])
+
     def test_junk_file_flagged(self):
         (self.root / "Desktop.ini").write_text("[junk]\n", encoding="utf-8")
         self.assertIn("HY001", rule_ids(rails_lint.lint_paths([self.root], False)))

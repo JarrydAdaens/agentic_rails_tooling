@@ -11,7 +11,7 @@ description: >-
   effort, reasoning vs non-reasoning, fast mode, and token cost behind the work.
 disable-model-invocation: true
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Memory Learnings
@@ -24,7 +24,7 @@ This skill has exactly **one job**: reflect on the session and produce **one** l
 
 | In scope | Out of scope |
 | --- | --- |
-| Reflect on the session that just happened | Generating wiki pages, rules, skills, or evals |
+| Reflect on the session that just happened | Generating wiki pages, rules, skills, or verifiers |
 | Produce one learning artifact | Curation, ranking, or promotion |
 | Capture full provenance + execution profile | Rebuilding or editing any model/agent Resume |
 | Write the file into `learnings/new/` | Touching `archived/` or `golden/` |
@@ -139,7 +139,7 @@ a confidence band (low / medium / high). Examples:
 - (high) Smells like a reusable rule: always run X before Y.
 - (medium) Possible wiki page on the Z subsystem.
 - (low) An eval was missing around the W edge case.
-Only NOTE these. Do not build rules, wiki pages, skills, or evals here.>
+Only NOTE these. Do not build rules, wiki pages, skills, or verifiers here.>
 
 ## Evidence Reviewed
 <The sources actually consulted: plan.md, implementation-log.md, commits,
@@ -183,7 +183,7 @@ For a cold capture (no conversation context), be stricter about labeling inferen
 - Write **exactly one** file, only into `learnings/new/`.
 - Do not rebuild, append to, or edit any model or agent Resume.
 - Do not touch `archived/` or `golden/`, and do not run curation.
-- Do not generate wiki pages, rules, skills, or evals - only **note** them as candidate signals.
+- Do not generate wiki pages, rules, skills, or verifiers - only **note** them as candidate signals.
 - Do not write learnings into the project repository; they belong in the memory repository.
 - Never include secrets, credentials, API keys, customer data, or proprietary source. Sanitize before writing.
 - Do not expose private chain-of-thought; capture sanitized observations only.

@@ -1,18 +1,18 @@
 ---
-name: game-golden-screenshot-eval
+name: game-golden-screenshot-verifier
 description: >-
-  Engine-independent runtime smoke eval for games. Launches a game, drives it
+  Engine-independent runtime smoke verifier for games. Launches a game, drives it
   into a deterministic state, captures a screenshot from the outside, and
   compares it against a versioned golden — exit 0 pass / 1 fail. Drop it into
   any game project, fill in one config file, and replace the stub input driver
   with your game's route to a repeatable scene.
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
-# Game Golden-Screenshot Eval
+# Game Golden-Screenshot Verifier
 
-A one-command runtime eval an agent can run unattended to answer "does the game
+A one-command runtime verifier an agent can run unattended to answer "does the game
 still boot and render correctly?" It launches the game, puts it into a
 deterministic state, captures the screen, and asserts the render still matches a
 human-approved golden image. Exit code `0` = pass, `1` = fail.
@@ -21,7 +21,7 @@ This is the generalized form of the Block Game 2 autotest eval. The origin used
 the game engine's own in-engine harness for scene setup, screenshot capture, and
 image comparison. Here those three engine-provided pieces are replaced by regular
 system tools — an input driver, an OS-level screen grab, and a local image diff —
-so the eval runs against **any** game executable with no engine cooperation.
+so the verifier runs against **any** game executable with no engine cooperation.
 
 ## What is preserved from the origin (the hard-won part)
 
@@ -50,7 +50,7 @@ Python 3.10+ and [`uv`](https://docs.astral.sh/uv/). Dependencies (Pillow, NumPy
 mss, PyGetWindow, PyAutoGUI) are declared inline in `run_eval.py` and installed
 automatically on first `uv run` — nothing to install by hand. Without uv:
 `pip install pillow numpy mss pygetwindow pyautogui`. Screen capture and input
-injection are OS-level, so the eval runs on a real desktop session (Windows-first,
+injection are OS-level, so the verifier runs on a real desktop session (Windows-first,
 matching the origin; the capture and input libraries also support macOS/Linux).
 
 ## Usage
@@ -63,7 +63,7 @@ uv run run_eval.py --self-test
 uv run run_eval.py --config eval_config.json --mode golden
 #    → review goldens/golden.png by eye, then commit it
 
-# 2. Run the eval — exit 0 = pass, 1 = fail
+# 2. Run the verifier — exit 0 = pass, 1 = fail
 uv run run_eval.py --config eval_config.json
 ```
 

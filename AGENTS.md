@@ -12,21 +12,21 @@ Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README
 
 ## Top-level layout
 
-- `source/` — the only deployable tree. Holds `source/rules/`, `source/skills/`, and `source/agents/`.
+- `source/` — the only deployable tree. Holds `source/rules/`, `source/skills/`, `source/agents/`, and `source/verifiers/`.
 - `scripts/` — repo infrastructure (not deployed): `scripts/rails_lint.py` plus its tests. See `scripts/README-SCRIPTS.md`.
 - `context/` — everything *about* this repo (not deployed): `context/design.md`, `context/templates/`, `context/prompt-dev/`, `context/wiki/`.
 - `archived/` — preserved-but-inactive artifacts (not deployed).
 - `proposals/` — inbox of self-contained candidate capabilities dropped off by the `rails-new-proposal` skill (not deployed, excluded from lint; slices are verbatim copies from foreign projects — review, then promote or delete).
 - `ide_specific/` — nonportable vendor files (a deliberate junk pile).
 
-## The three primary layers
+## The four primary layers
 
 These all live under `source/`. When adding capability, pick the **narrowest** layer that fits:
 
 - **`source/rules/`** — short, prescriptive style/engineering standards (C#, C++, WPF, Qt, TypeScript, React, etc.), authored for Claude Code: each file carries only a top-level `paths:` list of quoted glob strings, or no frontmatter at all for rules that should load every session (global, unit-testing). Claude Code auto-loads them by matching `paths:` globs against touched files — there is no routing index to read. Support for other IDEs (Cursor, Windsurf, Copilot, etc.) is produced at copy time by Kung Fu's conversion scripts, not hand-maintained per-IDE files in this repo. If a rule file grows into procedural expertise, it belongs in `source/skills/` instead.
 - **`source/skills/`** — portable, task-shaped capability units. A skill says "here is how to do this task." Orchestration skills that coordinate subagents, queues, or durable artifacts use the **`-workflow`** suffix (e.g. `rails-boss-execute-workflow`, `rails-plan-spam-workflow`) so they surface in skill autocomplete while staying recognizable.
 - **`source/agents/`** — named specialist personas. A persona says "here is the kind of worker you are." Folder name and frontmatter `name` must end in **`-persona`** (e.g. `wpf-persona`, `unreal-persona`). Each bundle has `AGENT.md` plus a `references/` library of focused knowledge files.
-- **`source/evals/`** — reusable, runnable evaluations. An eval says "here is a check that proves a target project still behaves correctly." One kebab-case folder per eval, each with a required `README.md` and a small, clearly marked seam (config, adapter script) where a consuming project plugs in its specifics. See `source/evals/README-EVALS.md`.
+- **`source/verifiers/`** — reusable acceptance checks. A verifier says "here is a check that delivers a pass/fail verdict on whether a target project actually behaves correctly." One kebab-case folder per verifier, each with a required `README.md` and a small, clearly marked seam (config, adapter script, project-defaults table) where a consuming project plugs in its specifics. Not "evals": that term is reserved for scored, many-case test suites, which this layer is not. See `source/verifiers/README-VERIFIERS.md`.
 
 ## Supporting directories
 

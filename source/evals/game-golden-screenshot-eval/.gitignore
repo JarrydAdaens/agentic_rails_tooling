@@ -1,0 +1,8 @@
+# Transient artifacts from the most recent run — never versioned.
+last-run/
+
+# Python / tooling caches produced by running the eval.
+__pycache__/
+*.pyc
+.ruff_cache/
+.venv/

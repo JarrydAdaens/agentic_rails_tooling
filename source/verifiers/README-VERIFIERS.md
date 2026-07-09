@@ -59,3 +59,4 @@ stays free for genuine scored suites if this repo ever grows them. See
 | Verifier | Verifies |
 | --- | --- |
 | `game-golden-screenshot-verifier` | A game still boots and renders a deterministic scene matching a versioned golden screenshot. |
+| `wpf-visual-quality-gate` | A visible WPF UI change actually works in the running app — an independent evaluator launches it, drives the interaction with real input, and screenshot-verifies the result. |

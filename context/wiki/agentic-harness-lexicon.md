@@ -125,3 +125,10 @@ axes:
 | `source/agents/` | Judges and workers — including evaluator and advisor personas. |
 | Verifiers (now plugins in `agentic_rails_marketplace`) | Verifiers / acceptance gates — per-task pass/fail checks on a target project. The layer was renamed from `evals/` for exactly the terminology reason above, then extracted to the marketplace repo in July 2026 because verifiers are lifecycle artifacts. |
 | Hooks (shipped inside marketplace plugins) | The enforcement delivery mechanism that turns any of the above from advisory into deterministic. Hook-wired artifacts live in `agentic_rails_marketplace`, never in this repo. |
+
+On the target-project side, all of this machinery standardizes under one
+root folder, `harness/` — the classic CI sense of a test harness: the rig
+automation uses to run checks and collect evidence. One self-contained module
+per verifier, gate, guardrail seam, sensor, or actuator; marketplace plugins
+keep their per-project seams there too. The layer is defined by the context
+starter's `harness/README-HARNESS.md`.

@@ -1,2 +1,0 @@
-# Quota Advisor per-session consult markers
-.claude/.advisor-consulted-*

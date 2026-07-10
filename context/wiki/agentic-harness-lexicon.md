@@ -123,5 +123,5 @@ axes:
 | `source/rules/` | Advisory context — soft guardrails. |
 | `source/skills/` | Advisory procedure — how to do a task. |
 | `source/agents/` | Judges and workers — including evaluator and advisor personas. |
-| `source/verifiers/` | Verifiers / acceptance gates — per-task pass/fail checks on a target project. The layer was renamed from `evals/` for exactly the terminology reason above. |
-| Hooks (shipped inside skills or verifier packages) | The enforcement delivery mechanism that turns any of the above from advisory into deterministic. |
+| Verifiers (now plugins in `agentic_rails_marketplace`) | Verifiers / acceptance gates — per-task pass/fail checks on a target project. The layer was renamed from `evals/` for exactly the terminology reason above, then extracted to the marketplace repo in July 2026 because verifiers are lifecycle artifacts. |
+| Hooks (shipped inside marketplace plugins) | The enforcement delivery mechanism that turns any of the above from advisory into deterministic. Hook-wired artifacts live in `agentic_rails_marketplace`, never in this repo. |

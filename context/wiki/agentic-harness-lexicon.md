@@ -131,4 +131,5 @@ root folder, `harness/` — the classic CI sense of a test harness: the rig
 automation uses to run checks and collect evidence. One self-contained module
 per verifier, gate, guardrail seam, sensor, or actuator; marketplace plugins
 keep their per-project seams there too. The layer is defined by the context
-starter's `harness/README-HARNESS.md`.
+starter's `harness/README-HARNESS.md`; the full pattern, contract, and
+lineage are in [harness-directory-pattern.md](harness-directory-pattern.md).

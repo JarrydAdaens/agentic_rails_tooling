@@ -2,7 +2,7 @@
 name: wiki-home
 description: Index and local guidance hub for the AgentSkills.io material used by this repository.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Agent Skills Wiki
@@ -23,6 +23,7 @@ This wiki captures the AgentSkills.io material used by this repository and turns
 | [claude-code-rules.md](claude-code-rules.md) | How Claude Code loads and scopes rule files (`paths:` frontmatter) — this repo's `source/rules/` is authored to this spec; read it before touching that folder. |
 | [versioning.md](versioning.md) | What `version` and `agentic_rails_source_version` mean, and how context sync uses them. |
 | [agentic-harness-lexicon.md](agentic-harness-lexicon.md) | The industry-standard vocabulary for harness machinery — guardrails, gates, verifiers, sensors, advisor/critic patterns — and how it maps onto this repo's layers. |
+| [harness-directory-pattern.md](harness-directory-pattern.md) | The standard shape of a target project's `harness/` directory — one self-contained module per verifier/gate/guardrail-seam/sensor/actuator, the module contract, the three-home rule, and the promotion pipeline. |
 
 ## Local Maintenance Checklist
 

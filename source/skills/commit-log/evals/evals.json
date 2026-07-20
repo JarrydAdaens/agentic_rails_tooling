@@ -77,6 +77,31 @@
         "Body uses ~ Updated: or ~ Added: callouts",
         "No git commands are executed"
       ]
+    },
+    {
+      "id": 7,
+      "prompt": "/commit-log --commit\n\nI added retry logic with exponential backoff to the HTTP client.",
+      "expected_output": "A commit log is output first, then a git add and git commit are executed because --commit granted permission. No push.",
+      "assertions": [
+        "Output includes a commit log in the correct format before any git commands run",
+        "The heading uses one of the supported prefixes and is 72 characters or fewer",
+        "A git add command is executed for files changed during the session",
+        "A git commit command is executed using the generated message verbatim",
+        "The --commit token is not treated as part of the commit message or heading",
+        "No git push command is executed"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "/commit-log BUG-441\n\nI fixed the off-by-one error in the pagination offset.",
+      "expected_output": "A commit log using the BUG-441 ticket as the heading prefix. No commit is run, because --commit was not supplied and the user did not ask in plain language.",
+      "assertions": [
+        "The heading uses the [BUG-441] ticket prefix taken from the arguments",
+        "The heading line is 72 characters or fewer",
+        "Output includes a ~ Problem: line and a ~ Resolution: line",
+        "No git commands are executed",
+        "The user is not asked to re-invoke the skill with different arguments"
+      ]
     }
   ]
 }

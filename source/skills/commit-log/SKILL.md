@@ -6,8 +6,9 @@ description: >-
   completed. It writes a standardized commit log from a fixed template for git,
   Perforce, Mercurial, SVN, or similar VCS workflows.
 disable-model-invocation: false
+argument-hint: "[--commit] [scope or ticket hint]"
 metadata:
-  version: "1.6"
+  version: "1.7"
 ---
 
 # Commit log
@@ -18,6 +19,19 @@ Write a commit log that follows the template in [references/commit-log-template.
 
 - After completing work and summarizing what changed.
 - When the user explicitly wants commit or check-in wording.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently:
+
+| Token | Meaning |
+| --- | --- |
+| `--commit` | Explicit permission to run the commit after writing the log. Absent means write only. |
+| anything else | A scope or ticket hint (e.g. `BUG-441`, `only the parser changes`). Use it to pick the heading prefix or narrow which files the log covers. |
+
+If that line is blank, both are simply unset — that is the normal case, not an error. Never ask the user to re-invoke with arguments; the defaults below already cover it.
 
 ## Default behavior
 
@@ -37,9 +51,16 @@ Pick the most specific prefix the work warrants. Do **not** fabricate a `[STORY 
 
 Heading line is capped at 72 characters end-to-end.
 
-## Commit behavior (only when the user explicitly asks to commit)
+## Commit behavior (requires explicit permission)
 
-If the user explicitly says to commit (e.g. "commit it", "go ahead and commit", "commit that"), do the following:
+Committing is opt-in. Treat exactly one of these as permission, and nothing else:
+
+- `--commit` appeared in the invocation line above.
+- The user says so in plain language in the conversation (e.g. "commit it", "go ahead and commit", "commit that").
+
+A scope hint, an urgent tone, or work that obviously wants committing are **not** permission. When in doubt, write the log and stop — the user can always say "commit it" afterward, and that costs them one line. Committing unasked costs them a `git reset`.
+
+Once permission is established, do the following:
 
 1. Write the commit log as normal per the instructions below.
 2. Stage all changes made during this session: `git add` every file that was created or modified. Do not stage unrelated files.

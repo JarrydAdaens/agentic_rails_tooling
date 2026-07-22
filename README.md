@@ -264,9 +264,9 @@ The framework splits responsibilities across three repositories so no rail absor
 
 | Repository | Owns |
 | --- | --- |
-| [`agentic_rails_context_starter`](../agentic_rails_context_starter/) | Project-local context: Dictation intake, design, milestones, stories, implementation plans, and handovers. |
+| `agentic_rails_context_starter` | Project-local context: Dictation intake, design, milestones, stories, implementation plans, and handovers. |
 | `agentic_rails_tooling` (this repo) | Reusable agent capabilities: shared rules, Agent Skills, workflow-skills, persona bundles, prompt-development source material, and the logic that captures, curates, and rebuilds memory artifacts. |
-| [`agentic-rails-memory`](../agentic-rails-memory/) | Durable, markdown-only cross-project artifacts: learnings and model/agent Resumes. Artifacts only — never the logic that produces or consumes them. |
+| `agentic-rails-memory` | Durable, markdown-only cross-project artifacts: learnings and model/agent Resumes. Artifacts only — never the logic that produces or consumes them. |
 
 In practice, the context starter gives a project its documentation-first operating model and is intentionally empty of application code. This repository gives agents the reusable tools to execute inside that model. The memory repository accumulates the track record that lets the framework route the next task from real, measured data rather than gut feel — and the routing logic that reads and writes it lives here, in the right rail.
 
@@ -282,7 +282,7 @@ The project remains usable without this repository, but it becomes much stronger
 
 ## Relationship To `kung-fu`
 
-[`kung-fu`](../kung-fu/) is the local WPF deployment app for consuming the artifacts in this repository across agentic IDEs.
+`kung-fu` is the local WPF deployment app for consuming the artifacts in this repository across agentic IDEs.
 
 This repository is the source of truth. Kung Fu reads the `source/` tree, then copies its skills, rules, and agents outward into the folder layouts expected by different IDEs, profiles, staging folders, or the shared `%USERPROFILE%/.agents` workspace.
 

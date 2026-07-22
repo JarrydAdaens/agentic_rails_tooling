@@ -23,7 +23,7 @@ This is operational visibility, not emotional theatre.
 **Default: raise it, or write it into the active plan.** Two defaults, not one file:
 
 - If the friction is worth the user's attention now, say so directly in the conversation.
-- If it should also survive past the conversation, and an active plan is identifiable, append it to that plan's `## Complaints / Friction` section (see `rails-planning`'s [plan-template.md](../rails-planning/references/plan-template.md)) instead of creating a separate file.
+- If it should also survive past the conversation, and an active plan is identifiable, append it to that plan's `## Complaints / Friction` section (see `rails-planning`'s [plan-template.md](../../../source/skills/rails-planning/references/plan-template.md)) instead of creating a separate file.
 
 Do not create a standalone `complaining.md` for ordinary tasks. It is opt-in — see "Standalone Artifact" below.
 

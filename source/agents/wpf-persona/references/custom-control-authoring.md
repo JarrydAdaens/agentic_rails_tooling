@@ -76,7 +76,7 @@ Reusable controls should be first-class citizens for screen readers, assistive t
 
 - Override `OnCreateAutomationPeer` and return a peer based on the closest meaningful base peer type.
 - Override core peer methods such as `GetClassNameCore`, `GetAutomationControlTypeCore`, and `IsControlElementCore` so the control presents itself correctly in the automation tree.
-- Implement patterns through `GetPatternCore` when the control behaves like an invokable, expandable, selectable, or value-bearing control.
+- Implement patterns through `GetPatternCore` when the control behaves like an invocable, expandable, selectable, or value-bearing control.
 - Raise automation events or property-changed notifications from the automation peer when important state changes occur.
 - Preserve keyboard interaction, focus behavior, and semantic clarity even when the template changes radically.
 

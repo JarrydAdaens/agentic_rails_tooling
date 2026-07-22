@@ -20,7 +20,7 @@ This skill is opt-in and should not be created by default for every plan. When i
 
 ## Artifact
 
-**Default: write into `plan.md`.** If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, record evidence inside that plan's `## Evidence / References` section (see `rails-planning`'s [plan-template.md](../rails-planning/references/plan-template.md)). Do not create a standalone `evidence.md` for this case.
+**Default: write into `plan.md`.** If the target repository follows Agentic Rails and an active implementation-plan folder is identifiable, record evidence inside that plan's `## Evidence / References` section (see `rails-planning`'s [plan-template.md](../../../source/skills/rails-planning/references/plan-template.md)). Do not create a standalone `evidence.md` for this case.
 
 **Standalone `evidence.md`, only when justified.** Create a separate `evidence.md` file only when:
 

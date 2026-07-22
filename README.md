@@ -1,7 +1,7 @@
 ---
 name: agentic-rails-tooling-readme
 metadata:
-  version: "2.1"
+  version: "2.2"
   owner: Jarryd Adaens
 ---
 
@@ -11,15 +11,15 @@ metadata:
 
 It keeps the durable pieces of AI-assisted engineering in one version-controlled place: rules, skills, workflow-skills, specialist persona bundles, and the prompt source material used to create or improve them. The point is not loyalty to Anthropic, OpenAI, Google, Cursor, Windsurf, or any other specific IDE or model provider. The point is portable agent capability that can be installed, copied, adapted, and reused wherever the current best tool expects it.
 
-This repository is one of three rails:
+This repository sits alongside the other core framework repositories:
 
-| Rail | Repository | Owns |
+| Role | Repository | Owns |
 | --- | --- | --- |
-| Left | `agentic_rails_context_starter` | Project-local context, plans, implementation logs, and handovers |
-| Right | `agentic_rails_tooling` (this repo) | Reusable rules, skills, workflow-skills, and personas — plus the logic that operates on memory |
-| Center | `agentic-rails-memory` | The durable, markdown-only store of cross-project learnings and Resumes |
+| Left rail | `agentic_rails_context_starter` | Project-local context, plans, implementation logs, and handovers |
+| Right rail | `agentic_rails_tooling` (this repo) | Reusable rules, skills, workflow-skills, and personas — plus the logic that operates on memory |
+| Records office | `agentic-rails-memory` | The durable, markdown-only store of cross-project learnings and Resumes — beside the line, not a rail |
 
-Read [`AGENTIC_RAILS_README.MD`](AGENTIC_RAILS_README.MD) for the full framework philosophy (the context tier system, three rails, provenance, and handover). This README is scoped to how *this* repository is laid out and used.
+Read [`AGENTIC_RAILS_README.MD`](AGENTIC_RAILS_README.MD) for the full framework philosophy (the context tier system, the rails and the records office, provenance, and handover). This README is scoped to how *this* repository is laid out and used.
 
 ## Core Idea
 

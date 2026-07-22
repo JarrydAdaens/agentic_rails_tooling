@@ -1,7 +1,7 @@
 ---
 name: rails-planning-plan-template
 metadata:
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Implementation Plan Template
@@ -139,7 +139,7 @@ Only present once execution starts. Chronological record of what was actually do
 
 ## Completion Review
 
-Only present once the story is done. Estimates vs. actuals (CER and time), what worked, what didn't, and a root-cause split for anything that went wrong. This is the memory rail's primary data source — do not skip it silently. Standalone `completion-review.md` is opt-in only, for large or phased stories.
+Only present once the story is done. Estimates vs. actuals (CER and time), what worked, what didn't, and a root-cause split for anything that went wrong. This is the memory records office's primary data source — do not skip it silently. Standalone `completion-review.md` is opt-in only, for large or phased stories.
 ```
 
 ## `thinking.md` Sidecar

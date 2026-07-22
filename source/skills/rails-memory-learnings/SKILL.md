@@ -11,12 +11,12 @@ description: >-
   effort, reasoning vs non-reasoning, fast mode, and token cost behind the work.
 disable-model-invocation: true
 metadata:
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Rails Memory Learnings
 
-Capture the learnings from a work session as a single durable artifact and deposit it into the **Agentic Rails memory** repository (the center rail). This is the **write** phase of the memory feedback loop: `capture -> curate -> consume`.
+Capture the learnings from a work session as a single durable artifact and deposit it into the **Agentic Rails memory** repository (the framework's records office). This is the **write** phase of the memory feedback loop: `capture -> curate -> consume`.
 
 This skill has exactly **one job**: reflect on the session and produce **one** learning file in `learnings/new/`. It records what happened and, critically, **what produced it** - the models, harness, thinking effort, reasoning mode, fast mode, and token cost - so a later curation run can distill these raw data points into model and agent Resumes.
 

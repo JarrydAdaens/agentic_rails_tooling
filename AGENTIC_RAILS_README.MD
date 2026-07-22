@@ -1,8 +1,8 @@
 ---
 name: agentic-rails-readme
-description: Durable framework overview for Agentic Rails, the opinionated IDE-agnostic system for AI-assisted software development, now spanning three rails - context, tooling, and memory. This is the single canonical copy; the starter and memory repos carry short stubs that point here.
+description: Durable framework overview for Agentic Rails, the opinionated IDE-agnostic system for AI-assisted software development - two rails (context and tooling), the project carriage, and the memory records office beside the line. This is the single canonical copy; the starter and memory repos carry short stubs that point here.
 metadata:
-  version: "3.0"
+  version: "3.1"
   owner: "Jarryd Adaens"
 ---
 
@@ -19,15 +19,16 @@ Without rails, agentic coding can become generated code, scattered plans, half-r
 ```text
 Left rail  = context and provenance
 Right rail = tools, skills, agents, and workflows
-Third rail = memory: durable cross-project knowledge that powers data-driven decisions
 Carriage   = the project being built
 Driver     = the human
+Records office = memory: durable cross-project knowledge, kept beside the line
 ```
 
-A railway runs on two rails. A third, electrified rail supplies the power. Agentic Rails
-follows the same shape: the left and right rails keep the carriage on track, and the third
-rail — memory — energizes the system to route its own work from real, measured data
-instead of gut feel.
+The rails keep the carriage on track while the work is done. Beside the line stands the
+records office — memory — where the logbook of every run (learnings) and the crew's
+service files (Resumes) are kept, so future decisions can be made from real, measured
+data instead of gut feel. It is a record system, not part of the track: the train runs
+the same whether or not anyone walks in.
 
 The point is not to make agents autonomous. The point is to make agentic coding legible, inspectable, repeatable, and safe enough for real engineering work.
 
@@ -39,16 +40,16 @@ Agentic Rails is the framework name for projects that use the context starter, r
 | --- | --- | --- |
 | Agentic Rails | Framework name | Names the combined development system, terminology, and adoption model |
 | `agentic_rails_context_starter` | Left rail | Template repository for project-local context, plans, implementation logs, and handovers |
-| `agentic_rails_memory` | Center rail | Durable, git-revisioned store of cross-project artifacts (learnings and Resumes) that feeds data-driven routing |
+| `agentic_rails_memory` | Records office | Durable, git-revisioned store of cross-project artifacts (learnings and Resumes) that feeds data-driven routing |
 | `agentic_rails_tooling` | Right rail | Reusable skills, agents, rules, workflows, and references |
 | Target project repositories | Carriage | Actual software projects created from the starter and supported by tooling |
 
-Each rail has a single responsibility and should not absorb another's. The context starter
+Each repository has a single responsibility and should not absorb another's. The context starter
 carries per-project structure; the tooling carries reusable behaviour and the logic that
 operates on memory; the memory repository carries cross-project *artifacts only*, not the
 logic that produces or consumes them.
 
-Repository folder names are `snake_case`, not the framework's own `kebab-case` mandate for artifact and skill names — that mandate governs files and folders *inside* a rail, not the three rail repositories themselves. This is a deliberate, narrow exemption, not drift: renaming them would touch local git remotes, IDE workspace references, and the Kung Fu deployment tool's configured source paths for no functional gain.
+Repository folder names are `snake_case`, not the framework's own `kebab-case` mandate for artifact and skill names — that mandate governs files and folders *inside* a repository, not the framework repositories themselves. This is a deliberate, narrow exemption, not drift: renaming them would touch local git remotes, IDE workspace references, and the Kung Fu deployment tool's configured source paths for no functional gain.
 
 ## The Left Rail: Context And Provenance
 
@@ -87,9 +88,9 @@ It is provided by `agentic_rails_tooling` and may include reusable:
 
 Project-local context remains authoritative. Shared tooling supplements the project, but it does not override the project laws, design, milestones, stories, or implementation plans.
 
-## The Center Rail: Memory And Track Record
+## The Records Office: Memory And Track Record
 
-The Center rail answers:
+The records office answers:
 
 > What did we learn by doing the work, and how should that change what we do next?
 
@@ -98,20 +99,20 @@ store that lives outside any single project. Skills and agents "memorize" things
 files here. It is the place where cross-project knowledge accumulates so that the framework
 can make decisions from real, measured data rather than gut feel.
 
-The memory rail holds **artifacts only**. The logic that captures, ranks, curates, and
+The memory repository holds **artifacts only**. The logic that captures, ranks, curates, and
 rebuilds them is right-rail tooling.
 
 Two artifact families anchor the store:
 
-- **Learnings** — one markdown file per work session, captured at a natural checkpoint.
-  They flow through a `new -> archived -> golden` lifecycle so that only high-signal
-  learnings inform later decisions.
-- **Resumes** — one per model and one per agent persona, **rebuilt (never appended)** from
+- **Learnings** — the logbook: one markdown file per work session, captured at a natural
+  checkpoint. They flow through a `new -> archived -> golden` lifecycle so that only
+  high-signal learnings inform later decisions.
+- **Resumes** — the service files: one per model and one per agent persona, **rebuilt (never appended)** from
   completion reviews and golden learnings. Picking a model or persona for work is treated
   as *hiring for a team*: a Resume is its empirical, your-workflow-specific track record,
   not a vendor benchmark or model card.
 
-The memory rail closes a feedback loop:
+The records office closes a feedback loop:
 
 ```text
 work done -> capture learnings -> curate (archive + promote) -> rebuild Resumes -> orchestrator routes next task -> better work
@@ -187,7 +188,7 @@ The intended work, and — as execution proceeds — what actually happened:
 - evidence / references (short inline notes; a standalone `evidence.md` is opt-in)
 - complaints / friction (short inline notes; a standalone `complaining.md` is opt-in)
 - **Execution Log** — chronological record of what was actually done and deviations from the plan, filled in during/after execution. A standalone `implementation-log.md` is opt-in, for large or phased stories.
-- **Completion Review** — estimates vs. actuals, what worked, what didn't, root-cause split for anything unexpected. This is the memory rail's primary data source; don't skip it. A standalone `completion-review.md` is opt-in, for large or phased stories.
+- **Completion Review** — estimates vs. actuals, what worked, what didn't, root-cause split for anything unexpected. This is the records office's primary data source; don't skip it. A standalone `completion-review.md` is opt-in, for large or phased stories.
 
 ### `thinking.md`
 
@@ -321,7 +322,7 @@ Context -> Backlog -> Plan -> Score -> Execute -> Log -> Review -> Handover -> O
                                               Memorize -> Curate -> Route next task
 ```
 
-Each completed cycle can deposit a learning into the third rail. Curation distills those
+Each completed cycle can deposit a learning into the records office. Curation distills those
 learnings into Resumes, and the next cycle's model, persona, and reasoning level are routed
 from that record — so the loop gets smarter over time.
 

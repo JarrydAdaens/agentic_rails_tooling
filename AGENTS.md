@@ -6,9 +6,9 @@ This file provides repository guidance for agentic IDEs and coding agents workin
 
 `agentic_rails_tooling` is the **right rail** of the Agentic Rails framework: a version-controlled library of reusable agent capabilities. It contains almost no executable code — the artifacts are Markdown (`SKILL.md`, `AGENT.md`, rules, references) plus prompt source material. There is no build, but there **is** a lint step: `scripts/rails_lint.py` deterministically enforces the naming, frontmatter, and vocabulary conventions below. Run it (`python scripts/rails_lint.py .`) before committing artifact changes and before deployment; a clean exit is the repo's definition of well-formed.
 
-It sits alongside two other rails: `agentic_rails_context_starter` (the **left rail**, project-local context) and `agentic-rails-memory` (the **center rail**, durable cross-project artifacts). This repo also owns the logic that captures, curates, and rebuilds memory artifacts. It is deployed into IDEs by the external `kung-fu` WPF app, which syncs only the `source/` tree. This repo is the source of truth; sync is one-way outward. Edit artifacts here, never in the deployed copies.
+It sits alongside `agentic_rails_context_starter` (the **left rail**, project-local context) and `agentic-rails-memory` (the framework's **records office** — durable cross-project artifacts, a record store beside the line rather than a rail). This repo also owns the logic that captures, curates, and rebuilds memory artifacts. It is deployed into IDEs by the external `kung-fu` WPF app, which syncs only the `source/` tree. This repo is the source of truth; sync is one-way outward. Edit artifacts here, never in the deployed copies.
 
-Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README.MD` for the framework philosophy (the context tier system, three rails, provenance, handover). Don't duplicate their content into new files.
+Read `README.md` for the full layer-by-layer rationale and `AGENTIC_RAILS_README.MD` for the framework philosophy (the context tier system, the rails and the records office, provenance, handover). Don't duplicate their content into new files.
 
 ## Top-level layout
 

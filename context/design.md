@@ -2,7 +2,7 @@
 name: agentic-rails-tooling-design
 description: The purpose, structure, and design decisions behind agentic_rails_tooling, the right rail of the Agentic Rails framework.
 metadata:
-  version: "1.0"
+  version: "1.1"
   owner: Jarryd Adaens
 ---
 
@@ -27,19 +27,19 @@ that obey the naming and frontmatter conventions.
 
 ## Place In The Framework
 
-Agentic Rails is a framework name, not a single repository. Three rails divide the work, and
-each rail has one responsibility it must not hand to another:
+Agentic Rails is a framework name, not a single repository. Two rails and a records office
+divide the work, and each repository has one responsibility it must not hand to another:
 
 - **Left rail — `agentic_rails_context_starter`**: project-local context and provenance.
   Where project knowledge lives (design, milestones, stories, plans, handovers).
 - **Right rail — `agentic_rails_tooling` (this repo)**: reusable behaviour. Rules, skills,
   workflow-skills, personas, and the logic that captures, curates, and rebuilds memory.
-- **Center rail — `agentic-rails-memory`**: durable, markdown-only cross-project artifacts
+- **Records office — `agentic-rails-memory`**: durable, markdown-only cross-project artifacts
   (learnings and Resumes). Artifacts only — never the logic that produces or consumes them.
 
 The split matters because it keeps responsibilities clean. Project-local context stays
 authoritative for a project; this repository supplements it with reusable behaviour but never
-overrides a project's design, plans, or decisions. The memory rail stores the track record;
+overrides a project's design, plans, or decisions. The records office stores the track record;
 the *logic* that reads and writes that record lives here, in the right rail, so routing
 decisions remain self-owned and data-driven.
 
@@ -124,12 +124,12 @@ description is often the only thing an agent reads before deciding whether to en
 - **Context is consolidated.** Templates, prompt history, and wiki notes are all *about* the
   repository, so they live together under `context/` instead of cluttering the root.
 - **Artifacts only in memory.** The right rail owns the logic that operates on memory; the
-  center rail stores the resulting artifacts. Keeping logic and data apart is what makes the
-  framework's routing decisions trustable.
+  records office stores the resulting artifacts. Keeping logic and data apart is what makes
+  the framework's routing decisions trustable.
 
 ## Boundaries
 
 This repository should contain reusable agentic machinery and the logic that captures, ranks,
 curates, and rebuilds memory artifacts. It should **not** contain project-local context (that
-is the left rail), memory artifacts themselves (that is the center rail), or secrets,
+is the left rail), memory artifacts themselves (that is the records office), or secrets,
 credentials, and proprietary source pulled from any project.

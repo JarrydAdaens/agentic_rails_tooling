@@ -1,4 +1,0 @@
-interface:
-  display_name: "WPF Starter Update"
-  short_description: "Reconcile WPF-Starter source improvements into derived WPF apps."
-  default_prompt: "Use $wpf-starter-update to update this derived WPF project from a local WPF-Starter source-of-truth while preserving project-specific code and Agentic Rails context files."

@@ -100,10 +100,9 @@ A normal skill is a portable task-shaped unit of expertise. It helps an agent do
 
 Current examples include:
 
-- `source/skills/commit-log`
-- `source/skills/grade`
 - `source/skills/rails-planning`
 - `source/skills/rails-pair-programming`
+- `source/skills/rails-grade-cer`
 
 Use `source/skills/` for repeatable workflows, tool guidance, templates, validation loops, and focused process knowledge.
 
@@ -245,22 +244,17 @@ This is the classification decision only. The physical move to a separate person
 | `rails-plan-spam-workflow` | Orchestrates bulk plan creation across milestone stories |
 | `rails-boss-execute-workflow` | Orchestrates execution against implementation plans |
 | `rails-clean-frontmatter` | Normalizes/repairs frontmatter across Rails artifacts |
-| `rails-memory-learnings` | Writes session learnings into the memory rail |
+| `rails-memory-learnings` | Writes session learnings into the memory records office |
 | `rails-pair-programming` | Explicitly reads Story/plan context from the context tier system |
 | `rails-project-appraisal` | Reads design/milestone/backlog/plan context tiers and writes its verdict as a durable `context/reports/` artifact |
 
 `complaining`, `evidence`, and `thinking-out-loud` were early experiments in generating the provenance artifacts (`## Complaints / Friction`, `## Evidence / References`, `thinking.md`) that `rails-planning` now produces directly as part of its own opt-in sidecars; their salvageable content (the complaint entry format, the `thinking.md` good/bad-entry guidance) was folded into `rails-planning`'s `references/plan-template.md` and the three skills were archived. `handover` (Reads `plan.md`, implementation log, and other Rails provenance artifacts to produce a handover) was archived as unused; no actively deployed skill currently produces `handover/` artifacts. All four are preserved under `archived/skills/` for reference.
 
-### Personal / loose skills (not Rails framework components)
+### Personal / loose skills (extracted July 2026)
 
-| Skill | Why it's personal |
-| --- | --- |
-| `commit-log` | Generic VCS commit-log writer for any git/Perforce/Mercurial/SVN workflow — the addendum names this exact skill as its example of a non-Rails skill (§11) |
-| `grade` | Generic artifact grading (code, design, docs) — distinct from `rails-grade-cer`'s Rails-specific CER scoring |
-| `grugg`, `grugg-compress` | Adopted external compression/communication skills — the addendum's own "adopted external skill" example is this family |
-| `oracle-generate-stats`, `oracle-token-appraise`, `oracle-token-stats` | Generic file/token-cost tooling, usable on any repository — grouped under the `oracle-` prefix ahead of a future standalone Oracle token-tracking project |
-| `wpf-tree-sensor` | WPF/Windows UI Automation inspection — unrelated to the context tier system |
-| `wpf-starter-update` | Same `WPF-Starter` family as `rails-harvest-innovation` (moved out of this repo) — correctly unprefixed |
+This repo previously also carried personal, non-Rails skills: `commit-log`, `grade`, `grugg`, `grugg-compress`, the `oracle-*` token-tooling family, `wpf-starter-update`, and `wpf-tree-sensor`. None of them assume the Agentic Rails context tier system, so in July 2026 they were extracted to the separate `jarryds-agent-marketplace` repository. The rule going forward: every skill here must be specific to Agentic Rails — it may assume the target project follows the `agentic_rails_context_starter` layout. Generic, works-anywhere skills belong in `jarryds-agent-marketplace`.
+
+Some Rails skills reference the extracted skills by their installed name (`rails-boss-execute-workflow` requires workers to load `commit-log`; `rails-project-appraisal` contrasts itself with `grade`). Those references are to the globally installed skills, not to paths in this repo — they keep working as long as the marketplace skills are installed.
 
 `source/agents/` (`quality-gate-persona`, `unreal-persona`, `web-persona`, `wpf-persona`, `xna-persona`) are all personal: generic domain-specialist personas usable in any repository, not specific to the Rails context tier system. `quality-gate-persona` references a generic "task plan" and "evidence," which overlaps with Rails vocabulary by coincidence rather than by dependency — it doesn't require the context tier system to function.
 
@@ -281,7 +275,7 @@ For example:
 - A new project starts from `agentic_rails_context_starter`.
 - The project's `AGENTS.md` and context files define how agents load local context.
 - Shared rules from this repository are copied or installed into the IDE's expected rule location.
-- Skills such as `commit-log`, `rails-planning`, or `rails-boss-execute-workflow` are installed globally or made available through `%USERPROFILE%\.agents`.
+- Skills such as `rails-planning` or `rails-boss-execute-workflow` are installed globally or made available through `%USERPROFILE%\.agents`.
 - Specialist personas such as `source/agents/wpf-persona` are used when the project calls for that domain expertise.
 
 The project remains usable without this repository, but it becomes much stronger when these reusable assets are available.
@@ -317,7 +311,8 @@ When adding or updating reusable context, place it in the narrowest layer that m
 ## Layer Examples
 
 - A WPF naming rule belongs in `source/rules/wpf-rules.md`.
-- A reusable commit message process belongs in `source/skills/commit-log`.
+- A Rails-specific planning process belongs in `source/skills/rails-planning`.
+- A generic, non-Rails skill (commit wording, artifact grading, token tooling) belongs in the separate `jarryds-agent-marketplace` repository, not here.
 - A questionable or superseded skill belongs in `archived/skills/`.
 - A blank starter for a future persona bundle belongs in `context/templates/agents/`.
 - A production-grade WPF specialist persona belongs in `source/agents/wpf-persona`.

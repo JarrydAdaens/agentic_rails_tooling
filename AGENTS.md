@@ -29,6 +29,8 @@ These all live under `source/`. When adding capability, pick the **narrowest** l
 
 A fourth layer, `source/verifiers/` (reusable pass/fail acceptance checks), lived here until July 2026. Verifiers and guardrails are lifecycle artifacts — they install, update, and uninstall — so they were extracted to the `agentic_rails_marketplace` repository and are distributed through the native plugin marketplaces of Claude Code and Codex, not by Kung Fu. New verifiers and guardrails belong there, never here.
 
+Likewise, in July 2026 the personal, non-Rails skills (`commit-log`, `grade`, `grugg`, `grugg-compress`, the `oracle-*` token-tooling family, `wpf-starter-update`, `wpf-tree-sensor`) were extracted to the separate `jarryds-agent-marketplace` repository. Every skill in this repo must be specific to the Agentic Rails system — it assumes the target project follows the `agentic_rails_context_starter` layout. A generic, works-anywhere skill belongs in `jarryds-agent-marketplace`, never here.
+
 ## Supporting directories
 
 - `context/design.md` — the purpose and design of this repository. Read it before reshaping the layout.
@@ -50,4 +52,4 @@ These are load-bearing because the artifacts are consumed by other agents via pr
 
 ## Git conventions
 
-When the user or their global rules require a structured commit format, use the `commit-log` skill. The template is in `source/skills/commit-log/references/commit-log-template.md`. Typical shape: a `[STORY X.Y]` or `[XXX-123]` heading (≤72 chars), then `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, etc.), and `~ Resolution:`. American English throughout. Keep PRs small and focused — no cross-cutting refactors mixed with feature work.
+When the user or their global rules require a structured commit format, use the `commit-log` skill (maintained in the separate `jarryds-agent-marketplace` repository and installed globally — not part of this repo). Typical shape: a `[STORY X.Y]` or `[XXX-123]` heading (≤72 chars), then `~ Problem:`, body lines (`~ Fixed:`, `~ Changed:`, `~ Added:`, etc.), and `~ Resolution:`. American English throughout. Keep PRs small and focused — no cross-cutting refactors mixed with feature work.

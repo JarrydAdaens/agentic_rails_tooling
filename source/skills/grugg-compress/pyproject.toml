@@ -1,8 +1,0 @@
-[project]
-name = "grugg-compress"
-version = "1.0.0"
-description = "Compress memory files into grugg/caveman format to save input tokens"
-requires-python = ">=3.10"
-dependencies = [
-    "anthropic>=0.40.0",
-]

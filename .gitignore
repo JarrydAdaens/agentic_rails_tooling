@@ -15,3 +15,6 @@ uv.lock
 
 # Logs
 debug.log
+
+# Machine-local IDE state
+.claude/settings.local.json

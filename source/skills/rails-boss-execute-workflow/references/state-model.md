@@ -1,12 +1,12 @@
 ---
 name: rails-boss-execute-state-model
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # Progress Row State Model
 
-Only the **Boss** mutates the `Status` column in `context/rails-boss-execute/progress.md`.
+Only the **Boss** mutates the `Status` column in `context/_boss-runs/<run-slug>/progress.md`.
 
 ## Status values
 
@@ -33,8 +33,13 @@ Only the **Boss** mutates the `Status` column in `context/rails-boss-execute/pro
 - Do not mark a source checklist item complete before the corresponding progress row is `DONE`.
 - Preserve story ids exactly when they came from source documents.
 - Synthetic ids such as `STEP-001` are stable once created.
+- The `Model` column records what a worker actually ran on. Correct it downward to `inherited (unresolved)` if a requested override did not take; never leave a model there that was only requested.
 
 ## Resume
+
+Resume is **per run slug**, not per repository. A `progress.md` belongs to exactly one run folder, and the Boss only opens one when the user named that run slug as a resume target. Finding a run folder from a previous invocation is not permission to continue it — see the run-slug rules in `SKILL.md`.
+
+Within a named run:
 
 - If `progress.md` already exists, resume from its current rows.
 - `TODO` rows still need work.

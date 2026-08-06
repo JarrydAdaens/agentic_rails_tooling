@@ -2,7 +2,7 @@
 name: wiki-home
 description: Index and local guidance hub for the AgentSkills.io material used by this repository.
 metadata:
-  version: "1.4"
+  version: "1.5"
 ---
 
 # Agent Skills Wiki
@@ -24,6 +24,7 @@ This wiki captures the AgentSkills.io material used by this repository and turns
 | [versioning.md](versioning.md) | What `version` and `agentic_rails_source_version` mean, and how context sync uses them. |
 | [agentic-harness-lexicon.md](agentic-harness-lexicon.md) | The industry-standard vocabulary for harness machinery — guardrails, gates, verifiers, sensors, advisor/critic patterns — and how it maps onto this repo's layers. |
 | [harness-directory-pattern.md](harness-directory-pattern.md) | The standard shape of a target project's `harness/` directory — one self-contained module per verifier/gate/guardrail-seam/sensor/actuator, the module contract, the three-home rule, and the promotion pipeline. |
+| [worker-model-selection-research.md](worker-model-selection-research.md) | Sourced research behind the Boss workflow's worker-model tables — Anthropic and OpenAI rosters, how each harness sets a subagent's model, and where those overrides fail. |
 
 ## Local Maintenance Checklist
 

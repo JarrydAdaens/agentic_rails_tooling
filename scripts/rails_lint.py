@@ -47,6 +47,29 @@ KEBAB_CASE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 PRAGMA = re.compile(r"<!--\s*rails-lint-allow:\s*([A-Za-z0-9 ,]+?)\s*-->")
 MAX_DESCRIPTION_CHARS = 1024
 
+# Skill-authoring standard (context/wiki/skill-authoring-standard.md).
+MAX_SKILL_LINES = 500
+MIN_DUPLICATED_BLOCK_LINES = 4
+
+# A heading whose only job is to ask the agent that just did the work
+# whether it did the work (standard, section 4).
+SELF_EVAL_HEADING = re.compile(
+    r"^#{2,}\s+(validation|self[- ]check|self[- ]validation|self[- ]assessment)\s*$",
+    re.IGNORECASE)
+
+# A filesystem path addressing a markdown file inside another skill's bundle.
+# Deployed skills live in the agent's configuration directory, not the target
+# repo a worker runs in, so such a path resolves from neither (standard,
+# section 6). Requiring the .md target keeps prose like "(skills/agents/rules)"
+# out of the match.
+CROSS_SKILL_PATH = re.compile(r"skills/[a-z0-9]+(?:-[a-z0-9]+)*/[^\s`)\"']*\.md")
+
+# Markdown inline links, excluding external schemes and pure anchors.
+MARKDOWN_LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
+
+# A compaction-survival statement needs both stems to count (standard, section 7).
+COMPACTION_STEMS = ("surviv", "compact")
+
 # Frontmatter keys banned in the tooling repo (rails-clean-frontmatter, tooling mode).
 BANNED_TOOLING_KEYS = ("agentic_rails_source_version", "repo", "changelog", "invocation")
 
@@ -81,6 +104,18 @@ ALL_RULES = {
     "NM001": "skill/agent/verifier folder name is not kebab-case",
     "NM002": "agent folder name must end in -persona",
     "HY001": "junk file committed (Desktop.ini, Thumbs.db, debug.log)",
+    "AR001": "body uses $ARGUMENTS but frontmatter has no 'argument-hint'",
+    "AR002": "'argument-hint' present but body has no '## Arguments' section or no $ARGUMENTS",
+    "AR003": "frontmatter 'argument-hint' is not a quoted string",
+    "DS001": "frontmatter 'description' does not begin with 'Use'",
+    "WF001": "-workflow skill has no compaction-survival statement",
+    "WF002": "-workflow skill has no 'argument-hint'",
+    "RF001": "relative link target does not exist",
+    "RF002": "reference file is not linked from anywhere in its skill",
+    "PT001": "cross-skill filesystem path - invoke skills by name instead",
+    "SE001": "self-evaluation section - state observable acceptance or dispatch a verifier",
+    "DP001": "fenced block duplicated from this skill's own references",
+    "LN001": f"SKILL.md exceeds {MAX_SKILL_LINES} lines",
     **{rule_id: message for rule_id, _, message in VOCAB_RULES},
 }
 
@@ -291,6 +326,159 @@ def check_frontmatter(in_path: Path, in_lines, out_violations):
                         f"banned key '{source}{banned_key}' in tooling repo frontmatter"))
 
 
+def is_skill_file(in_path: Path):
+    """True for a SKILL.md inside a skills/ bundle folder."""
+    return in_path.name == "SKILL.md" and in_path.parent.parent.name == "skills"
+
+
+def check_skill_conventions(in_path: Path, in_lines, out_violations):
+    """Run AR001-AR003, DS001, WF001-WF002, SE001, LN001 for one SKILL.md.
+
+    These enforce the mechanical half of the skill-authoring standard. The
+    semantic half - whether a skill really takes parameters, whether its
+    acceptance criteria are falsifiable - is not decidable here and is
+    reviewed by quality-gate-persona instead.
+    """
+    if not is_skill_file(in_path):
+        return
+
+    fm_lines, body_start = split_frontmatter(in_lines)
+    if fm_lines is None:
+        return
+    fields, _metadata, _paths = parse_frontmatter(fm_lines)
+    body = "\n".join(in_lines[body_start:])
+
+    hint_entry = fields.get("argument-hint")
+    uses_arguments_token = "$ARGUMENTS" in body
+
+    if hint_entry is None:
+        if uses_arguments_token:
+            out_violations.append(Violation(
+                in_path, 1, "AR001", "body uses $ARGUMENTS but no argument-hint is declared"))
+    else:
+        hint_value, hint_offset = hint_entry
+        if not re.match(r"^([\"']).*\1$", hint_value):
+            out_violations.append(Violation(
+                in_path, hint_offset + 2, "AR003",
+                f"argument-hint {hint_value or '(empty)'} must be a quoted string"))
+        if not re.search(r"^#{2,}\s+Arguments\s*$", body, re.IGNORECASE | re.MULTILINE):
+            out_violations.append(Violation(
+                in_path, hint_offset + 2, "AR002", "no '## Arguments' section in the body"))
+        elif not uses_arguments_token:
+            out_violations.append(Violation(
+                in_path, hint_offset + 2, "AR002", "body never references $ARGUMENTS"))
+
+    description_entry = fields.get("description")
+    if description_entry is not None:
+        full_text = folded_value(fm_lines, description_entry[1], description_entry[0])
+        if full_text and not full_text.lstrip().startswith("Use"):
+            out_violations.append(Violation(
+                in_path, description_entry[1] + 2, "DS001",
+                f"description begins '{full_text.split()[0]}', not 'Use'"))
+
+    if in_path.parent.name.endswith("-workflow"):
+        lowered = body.lower()
+        if not all(stem in lowered for stem in COMPACTION_STEMS):
+            out_violations.append(Violation(
+                in_path, 1, "WF001",
+                "orchestration skills must state how a run survives compaction"))
+        if hint_entry is None:
+            out_violations.append(Violation(
+                in_path, 1, "WF002", "orchestration skills must declare an argument-hint"))
+
+    for line_number, line in enumerate(in_lines, start=1):
+        if SELF_EVAL_HEADING.match(line.strip()):
+            out_violations.append(Violation(
+                in_path, line_number, "SE001", f"self-evaluation heading '{line.strip()}'"))
+
+    if len(in_lines) > MAX_SKILL_LINES:
+        out_violations.append(Violation(
+            in_path, MAX_SKILL_LINES, "LN001",
+            f"{len(in_lines)} lines (max {MAX_SKILL_LINES}) - look for a section that repeats another"))
+
+
+def check_paths_and_links(in_path: Path, in_lines, out_violations):
+    """Run PT001 and RF001 over one markdown file under a skills/ bundle."""
+    if "skills" not in {parent.name for parent in in_path.parents}:
+        return
+
+    for line_number, line in enumerate(in_lines, start=1):
+        for match in CROSS_SKILL_PATH.finditer(line):
+            out_violations.append(Violation(
+                in_path, line_number, "PT001",
+                f"path '{match.group(0)}' - invoke the skill by name instead"))
+        for match in MARKDOWN_LINK.finditer(line):
+            target = match.group(1).split("#", 1)[0]
+            if not target or re.match(r"^(https?:|mailto:|<)", target):
+                continue
+            # RF001 validates links within the skill bundle only. A target
+            # containing a <placeholder> or escaping the folder is describing
+            # target-repo content, not addressing a file that ships here.
+            if "<" in target or target.startswith("../"):
+                continue
+            if not (in_path.parent / target).exists():
+                out_violations.append(Violation(
+                    in_path, line_number, "RF001", f"link target '{target}' does not exist"))
+
+
+def fenced_blocks(in_text):
+    """Yield each fenced code block's whitespace-normalized body."""
+    for match in re.finditer(r"^```[^\n]*\n(.*?)^```", in_text, re.DOTALL | re.MULTILINE):
+        lines = [line.strip() for line in match.group(1).splitlines() if line.strip()]
+        if len(lines) >= MIN_DUPLICATED_BLOCK_LINES:
+            yield "\n".join(lines)
+
+
+def check_skill_bundle(in_skill_dir: Path, out_violations):
+    """Run RF002 and DP001 across one skill folder's files.
+
+    Both compare SKILL.md against its own references/, so neither fits the
+    single-file pass. Each respects the pragma of the file it reports against.
+    """
+    skill_file = in_skill_dir / "SKILL.md"
+    references_dir = in_skill_dir / "references"
+    if not skill_file.is_file() or not references_dir.is_dir():
+        return
+
+    try:
+        skill_text = skill_file.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return
+    skill_allows = collect_pragma_allows(skill_text)
+
+    sibling_texts = {}
+    for path in sorted(in_skill_dir.rglob("*.md")):
+        try:
+            sibling_texts[path] = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+
+    for reference in sorted(references_dir.glob("*.md")):
+        linked = any(
+            reference.name in text
+            for path, text in sibling_texts.items() if path != reference)
+        if linked:
+            continue
+        allows = collect_pragma_allows(sibling_texts.get(reference, ""))
+        if "all" in allows or "RF002" in allows:
+            continue
+        out_violations.append(Violation(
+            reference, 1, "RF002", "nothing links to this reference - delete it or link it"))
+
+    if "all" in skill_allows or "DP001" in skill_allows:
+        return
+    reference_blocks = set()
+    for path, text in sibling_texts.items():
+        if path.parent == references_dir:
+            reference_blocks.update(fenced_blocks(text))
+    for block in fenced_blocks(skill_text):
+        if block in reference_blocks:
+            first_line = block.splitlines()[0][:40]
+            out_violations.append(Violation(
+                skill_file, 1, "DP001",
+                f"fenced block starting '{first_line}' is copied from a reference - link instead"))
+
+
 def check_vocabulary(in_path: Path, in_lines, out_violations):
     """Run VC001-VC006 over every line of one markdown file."""
     exempt_from_tier_numbers = in_path.name.lower() in CANONICAL_TIER_FILES
@@ -320,8 +508,10 @@ def check_structure(in_root: Path, in_include_archived: bool, out_violations):
             if not KEBAB_CASE.match(child_name):
                 out_violations.append(Violation(
                     child, 1, "NM001", f"folder '{child_name}' is not kebab-case"))
-            if parent.name == "skills" and not (child / "SKILL.md").is_file():
-                out_violations.append(Violation(child, 1, "ST001", "skill folder has no SKILL.md"))
+            if parent.name == "skills":
+                if not (child / "SKILL.md").is_file():
+                    out_violations.append(Violation(child, 1, "ST001", "skill folder has no SKILL.md"))
+                check_skill_bundle(child, out_violations)
             if parent.name == "verifiers" and not (child / "README.md").is_file():
                 out_violations.append(Violation(child, 1, "ST003", "verifier folder has no README.md"))
             if parent.name == "agents":
@@ -353,6 +543,8 @@ def lint_paths(in_roots, in_include_archived):
                 continue
             file_violations = []
             check_frontmatter(path, lines, file_violations)
+            check_skill_conventions(path, lines, file_violations)
+            check_paths_and_links(path, lines, file_violations)
             check_vocabulary(path, lines, file_violations)
             if "all" not in allows:
                 violations.extend(v for v in file_violations if v.rule not in allows)

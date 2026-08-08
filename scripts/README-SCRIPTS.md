@@ -23,6 +23,14 @@ python scripts/rails_lint.py . --include-archived
 
 Exit code 0 means clean, 1 means violations, 2 means usage error. Run it on this repo, the context starter, and the memory repo; it is also the intended pre-deploy gate for Kung Fu.
 
+### Skill-authoring rules
+
+`AR001`–`AR003`, `DS001`, `WF001`–`WF002`, `RF001`–`RF002`, `PT001`, `SE001`, `DP001`, and `LN001` enforce the mechanical half of [the skill-authoring standard](../context/wiki/skill-authoring-standard.md): declared arguments, a description that begins with "Use", compaction survival and an argument hint on every `-workflow` skill, links that resolve, references that something points at, skills addressed by name rather than by path, no self-evaluation heading, no reference content copied into `SKILL.md`, and a size ceiling.
+
+Four things that standard asks for are **not** mechanically decidable and are deliberately not linted: internal duplication, whether a skill really takes parameters, whether acceptance criteria are falsifiable, and whether the named state files actually suffice to resume. Those are reviewed by dispatching `source/agents/quality-gate-persona/AGENT.md` with the standard as its project-rules input.
+
+Two scoping choices worth knowing: `PT001` requires the path to target a `.md` file, so prose like "(skills/agents/rules)" is not a match; and `RF001` skips link targets containing a `<placeholder>` or starting with `../`, because those describe target-repository content rather than addressing a file that ships here.
+
 Deliberate exemptions built into the rules:
 
 - `archived/` is skipped unless `--include-archived` is passed.

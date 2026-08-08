@@ -208,5 +208,111 @@ class StructureAndHygieneTests(unittest.TestCase):
         self.assertNotEqual(rails_lint.lint_paths([self.root], True), [])
 
 
+class SkillAuthoringStandardTests(unittest.TestCase):
+    """AR/DS/WF/RF/PT/SE/DP/LN — the mechanical half of the authoring standard."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def write_skill(self, in_name, in_frontmatter, in_body):
+        """Write source/skills/<name>/SKILL.md and lint the repo."""
+        target = self.root / "source" / "skills" / in_name / "SKILL.md"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(in_frontmatter + in_body, encoding="utf-8")
+        return rails_lint.lint_paths([self.root], False)
+
+    def test_arguments_token_without_hint_flagged(self):
+        body = "Invoked with: $ARGUMENTS\n"
+        found = self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), body)
+        self.assertIn("AR001", rule_ids(found))
+
+    def test_hint_without_arguments_section_flagged(self):
+        frontmatter = GOOD_FRONTMATTER.format(name="my-skill").replace(
+            "metadata:", "argument-hint: \"<payload>\"\nmetadata:")
+        found = self.write_skill("my-skill", frontmatter, "No section here.\n")
+        self.assertIn("AR002", rule_ids(found))
+
+    def test_unquoted_hint_flagged(self):
+        frontmatter = GOOD_FRONTMATTER.format(name="my-skill").replace(
+            "metadata:", "argument-hint: <payload>\nmetadata:")
+        found = self.write_skill("my-skill", frontmatter,
+                                 "## Arguments\n\nInvoked with: $ARGUMENTS\n")
+        self.assertIn("AR003", rule_ids(found))
+
+    def test_declared_arguments_pass_clean(self):
+        frontmatter = GOOD_FRONTMATTER.format(name="my-skill").replace(
+            "metadata:", "argument-hint: \"<payload> [--flag]\"\nmetadata:")
+        found = self.write_skill("my-skill", frontmatter,
+                                 "## Arguments\n\nInvoked with: $ARGUMENTS\n")
+        self.assertEqual(found, [])
+
+    def test_description_not_starting_with_use_flagged(self):
+        frontmatter = GOOD_FRONTMATTER.format(name="my-skill").replace(
+            "Use this when testing the linter.", "Grades a plan.")
+        self.assertIn("DS001", rule_ids(self.write_skill("my-skill", frontmatter, "Body.\n")))
+
+    def test_workflow_skill_needs_compaction_and_hint(self):
+        found = self.write_skill("my-workflow", GOOD_FRONTMATTER.format(name="my-workflow"),
+                                 "Body.\n")
+        self.assertIn("WF001", rule_ids(found))
+        self.assertIn("WF002", rule_ids(found))
+
+    def test_workflow_skill_with_both_passes(self):
+        frontmatter = GOOD_FRONTMATTER.format(name="my-workflow").replace(
+            "metadata:", "argument-hint: \"<payload>\"\nmetadata:")
+        body = ("## Arguments\n\nInvoked with: $ARGUMENTS\n\n"
+                "### Surviving compaction\n\nState lives in progress.md.\n")
+        self.assertEqual(self.write_skill("my-workflow", frontmatter, body), [])
+
+    def test_cross_skill_path_flagged_but_prose_is_not(self):
+        body = ("Read `skills/other-skill/references/thing.md` first.\n"
+                "The repo is the product (skills/agents/rules), not a project.\n")
+        found = [v for v in self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), body)
+                 if v.rule == "PT001"]
+        self.assertEqual(len(found), 1)
+
+    def test_self_evaluation_heading_flagged(self):
+        found = self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"),
+                                 "## Validation\n\n- confirm you did it\n")
+        self.assertIn("SE001", rule_ids(found))
+
+    def test_broken_local_link_flagged_but_placeholder_is_not(self):
+        body = ("See [gone](references/missing.md).\n"
+                "Plans live at [here](../implementation-plans/<slug>/plan.md).\n")
+        found = [v for v in self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), body)
+                 if v.rule == "RF001"]
+        self.assertEqual(len(found), 1)
+
+    def test_unlinked_reference_flagged(self):
+        self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), "No links.\n")
+        reference = self.root / "source" / "skills" / "my-skill" / "references" / "orphan.md"
+        reference.parent.mkdir(parents=True, exist_ok=True)
+        reference.write_text(GOOD_FRONTMATTER.format(name="orphan") + "Body.\n", encoding="utf-8")
+        self.assertIn("RF002", rule_ids(rails_lint.lint_paths([self.root], False)))
+
+    def test_fenced_block_copied_from_reference_flagged(self):
+        block = "```text\nalpha\nbeta\ngamma\ndelta\n```\n"
+        self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"),
+                         "See [ref](references/ref.md).\n\n" + block)
+        reference = self.root / "source" / "skills" / "my-skill" / "references" / "ref.md"
+        reference.parent.mkdir(parents=True, exist_ok=True)
+        reference.write_text(GOOD_FRONTMATTER.format(name="ref") + block, encoding="utf-8")
+        self.assertIn("DP001", rule_ids(rails_lint.lint_paths([self.root], False)))
+
+    def test_oversized_skill_flagged(self):
+        body = "\n".join(f"Line {n}." for n in range(rails_lint.MAX_SKILL_LINES + 10))
+        found = self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), body)
+        self.assertIn("LN001", rule_ids(found))
+
+    def test_pragma_suppresses_new_rules(self):
+        body = "<!-- rails-lint-allow: SE001 -->\n\n## Validation\n\n- confirm\n"
+        found = self.write_skill("my-skill", GOOD_FRONTMATTER.format(name="my-skill"), body)
+        self.assertNotIn("SE001", rule_ids(found))
+
+
 if __name__ == "__main__":
     unittest.main()

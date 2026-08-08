@@ -14,8 +14,9 @@ description: >-
   or refine a milestone's story list; it does not trigger itself on ambient
   planning conversation.
 disable-model-invocation: true
+argument-hint: "<milestone name or number> [--create|--refine] [--no-rescore]"
 metadata:
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Rails Milestone Planning
@@ -57,6 +58,21 @@ When a backlog item's CER score comes back epic-sized, this skill pulls it out o
 - Fragmenting a single story's implementation into Phases. That is downstream — `rails-planning-phaser`, run against a story's implementation plan.
 - Computing CER scores itself. See above — always call `rails-grade-cer`.
 - Selecting models or executing anything. That is the Orchestrator, which consumes the milestone's story list.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("just reorder them" is `--no-rescore`).
+
+| Token | Meaning |
+| --- | --- |
+| `--create` | Mode A — lay out a fresh milestone's full delivery path. |
+| `--refine` | Mode B — revise an existing milestone's story list. |
+| `--no-rescore` | Reuse the CER scores already recorded rather than re-grading moved stories. Absent means re-score anything whose scope looks like it moved. |
+| anything else | The milestone name or number. Ask only if it cannot be resolved. |
+
+With neither `--create` nor `--refine`, infer the mode from whether the milestone already has a story list, and say which you chose before writing anything.
 
 ## Two Operating Modes
 
@@ -107,7 +123,7 @@ When you infer a dependency, write it back onto the story as an explicit `Depend
 
 ## Reclassification (Epic Detection)
 
-When `rails-grade-cer` returns a story with scores that are epic-sized (any axis materially past the story-tier range CER would expect, or CER's own reasoning calls out that the item reads like a milestone in disguise):
+`rails-grade-cer` owns the definition of epic-sized: any axis scoring past 10. When it returns such a story:
 
 1. **Propose, don't silently promote.** Tell the user the item looks epic-sized and show the CER scores driving that read.
 2. On confirmation, pull the item out of its backlog file and create a new `context/milestones/milestone-N.md` from it, following the milestone doc conventions already established in the project (or the starter's milestone template if this is the first milestone doc created this way).
@@ -160,14 +176,12 @@ See [references/milestone-selection-template.md](references/milestone-selection-
 8. Update `context/backlog/*.md` to reflect any stories pulled into a milestone, any reclassified epics removed, and any newly-confirmed `Depends On` fields.
 9. Report the exact paths of every file written or updated, plus the CER scores behind each decision.
 
-## Validation
+## Acceptance
 
-Before considering this skill applied correctly, confirm:
+Observable facts about what landed on disk:
 
-- Every score used came from a `rails-grade-cer` invocation, not an invented number.
-- The user signed off on the story list shape (stories, order, whether a follow-up milestone exists) before any milestone document was written.
-- Any epic-sized item was proposed for reclassification and only promoted after user confirmation.
-- Any story-list split (overflow) happened only after the user judged the milestone blown out, with CER re-scores shown in support.
-- Story order preserves sequential/backlog order except where a real dependency was surfaced and, if inferred, confirmed and written back as an explicit `Depends On` field.
-- No backlog file exceeds 30 stories after this run; overflow went to a new backlog file, not an oversized existing one.
-- Every written or updated file path (`context/backlog/*.md`, `context/milestones/*.md`) was reported to the user.
+- Every CER field written carries a score, or the literal `not yet scored` — never a number this skill invented.
+- No backlog file under `context/backlog/` contains more than 30 stories.
+- Every story whose order differs from backlog order carries an explicit `Depends On` field naming why.
+- The milestone document's story list was written only after the user's sign-off appears in the conversation.
+- Every written or updated path under `context/backlog/` and `context/milestones/` was reported to the user.

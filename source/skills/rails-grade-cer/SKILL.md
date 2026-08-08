@@ -117,7 +117,11 @@ Omit rows and sections for axes that were not requested.
 
 Default output is the report itself, not a file. Print the score card inline in the chat response. When another skill or workflow invoked this grading (for example `rails-planning` sizing a plan before dispatch), return the score card as the call result so the caller can insert it directly into the plan's `## CER` section — do not have the caller re-derive it from a file.
 
-Only write a standalone `cer-score-card.md` file when the user explicitly asks for a file, or the grading is needed for audit/provenance and must survive outside the conversation. When writing, place it beside the plan, matching the plan's own conventions:
+Only write a standalone `cer-score-card.md` file when the user explicitly asks for a file, or the grading is needed for audit/provenance and must survive outside the conversation.
+
+**Callers must not assume a file exists.** A skill invoking this one takes its scores from what this skill returns, never from disk. A caller that reads, cleans up, or validates the absence of `cer-score-card.md` must treat it as optional and a missing file as normal.
+
+When writing, place it beside the plan, matching the plan's own conventions:
 
 ```text
 context/implementation-plans/<milestone-slug>/<story-slug>/cer-score-card.md

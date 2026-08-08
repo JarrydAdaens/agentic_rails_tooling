@@ -37,7 +37,7 @@ Phasing is not triggered by failure. A plan scoring past threshold has not faile
 
 This skill holds no grading rubric of its own. Every score in this skill comes from following the `rails-grade-cer` skill against the whole document being scored (the original plan, or later, an individual phase). Grade all three axes at `concise` detail — this skill only needs the score table, not the paragraphs.
 
-`rails-grade-cer` always writes a `cer-score-card.md` file beside whatever it grades. This skill embeds the resulting scores into the manifest and phase frontmatter instead of keeping grading artifacts around — after reading a score table, delete the `cer-score-card.md` file that produced it. The plan's scoring history is not lost: it lives in the manifest and in git history, not as loose score-card files.
+`rails-grade-cer` returns its score card inline by default and writes a `cer-score-card.md` file only when one was explicitly requested. Take the scores from what it returns — never go looking for a file, and never treat a missing one as a failure. This skill embeds the scores into the manifest and phase frontmatter rather than keeping grading artifacts around, so **if** a score-card file was produced, delete it after reading. The plan's scoring history is not lost: it lives in the manifest and in git history, not as loose score-card files.
 
 ## Inputs
 
@@ -55,7 +55,7 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
 
 ## The Phasing Loop
 
-1. **Grade the target with CER.** Follow `rails-grade-cer` on the whole document, all three axes, `concise` detail. Read the scores; delete the resulting `cer-score-card.md`.
+1. **Grade the target with CER.** Follow `rails-grade-cer` on the whole document, all three axes, `concise` detail. Read the scores it returns; delete a `cer-score-card.md` only if one was produced.
 
 2. **Check against the tier-1 threshold `(5, 5, 5)`** from [references/model-matrix.md](references/model-matrix.md):
    - **All axes < 5** → no phasing needed. Annotate the plan in place with a single-unit CER assignment block (see [references/manifest-template.md](references/manifest-template.md), Single-Unit Variant) and stop. No phase files, no phase registry table — there is only one unit of work and it already fits the local model.
@@ -67,7 +67,7 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
 
 5. **Write draft phase files.** For each candidate phase, write `phase-1.md` … `phase-N.md` beside the original plan using [references/phase-template.md](references/phase-template.md), with the phase's slice of the work but placeholder frontmatter (no scores yet).
 
-6. **Re-grade every phase with CER.** One CER invocation per phase file just written, identical in method to step 1. Embed the resulting three scores into that phase file's frontmatter. Delete each resulting `cer-score-card.md` after reading it.
+6. **Re-grade every phase with CER.** One CER invocation per phase file just written, identical in method to step 1. Embed the resulting three scores into that phase file's frontmatter. Delete any `cer-score-card.md` that was produced.
 
 7. **Resolve phases that will not drop below threshold.** If a phase still breaches `(5, 5, 5)` after natural-seam grouping — because merging was needed to stay testable, or the work is inherently heavy — do **not** over-cut it further. Assign it up [references/model-matrix.md](references/model-matrix.md) to the lowest tier whose thresholds cover all three of its scores. Leave it as one phase at that tier.
 
@@ -113,7 +113,7 @@ This is progressive disclosure in practice: a sub-agent working phase 2 loads on
 - **Rewrite, don't duplicate.** The plan becomes the manifest in place. No parallel copy of the pre-phase plan.
 - **Don't execute.** This skill phases, grades, and assigns models. It does not do the plan's work.
 - **Grade via CER only.** Every score comes from following `rails-grade-cer`. This skill holds no rubric of its own.
-- **Don't litter grading artifacts.** Delete each `cer-score-card.md` after reading its scores; the scores live in the manifest and phase frontmatter.
+- **Don't litter grading artifacts.** If a `cer-score-card.md` was produced, delete it after reading its scores; the scores live in the manifest and phase frontmatter. Usually there is nothing to delete.
 - **Refuse on already-phased targets.** If a manifest and phase files already exist for the target, stop and tell the user — do not silently re-phase or overwrite.
 
 ## Validation
@@ -122,7 +122,7 @@ Before considering this skill applied correctly, confirm:
 
 - The already-phased check ran first, and the skill refused rather than silently overwrote an existing manifest.
 - Every score used in the manifest or a phase's frontmatter came from a `rails-grade-cer` invocation, not an invented number.
-- No `cer-score-card.md` files remain in the plan's folder after this skill finishes.
+- No `cer-score-card.md` file that this run produced remains in the plan's folder. A score card the user asked for separately is theirs to keep.
 - If no phasing was needed, the plan received a single-unit CER annotation and no phase files were created.
 - If phasing occurred, there are between 1 and 7 phase files, each named `phase-N.md` with sequential integers, each independently testable per the plan's own structure.
 - Every phase's assigned model in the manifest matches its own frontmatter's recommended model, and is the lowest tier whose thresholds cover all three of that phase's scores.

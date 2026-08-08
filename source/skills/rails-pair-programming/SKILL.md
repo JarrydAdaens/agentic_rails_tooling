@@ -8,8 +8,9 @@ description: >-
   context from the context tier system, runs a collaborative tutoring and
   pair-programming loop, and creates a uniquely named session artifact at wrap-up.
 disable-model-invocation: true
+argument-hint: "<topic> [--explore|--collaborate] [--story <slug>] [--implement]"
 metadata:
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Rails Pair Programming
@@ -19,6 +20,22 @@ project's durable context and produces a session artifact when the user wraps up
 
 This skill belongs to the reusable right rail. Its context and outputs belong to
 the project-local left rail.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("help me understand X" is `--explore`).
+
+| Token | Meaning |
+| --- | --- |
+| `--explore` | Exploration mode — understand an area, design, or bug surface. |
+| `--collaborate` | Intense collaboration — solve, debug, design, decide, or build. |
+| `--story <slug>` | The story to ground against, skipping the search. Absent means locate it. |
+| `--implement` | Permission to write production code during this session. Absent means do not. |
+| anything else | The topic or work for the session. |
+
+With neither mode token, infer from the request and confirm briefly. Empty `$ARGUMENTS` means ask what the user wants to work on — the one case where a question is the right opening move.
 
 ## Operating Contract
 
@@ -182,6 +199,18 @@ At wrap-up:
 Each session always produces its own file. Never overwrite or append to an
 existing session artifact.
 
+### Surviving compaction
+
+The session file is the durable state, and it is opened **at the start of the
+session, not at wrap-up**. Create it as soon as the topic is clear, with the
+template's headings in place, and append each discovery, decision, and open
+question to it as it happens.
+
+Waiting until wrap-up means a session that is compacted, interrupted, or simply
+abandoned loses everything — and a long session is exactly the case this skill
+exists for. Wrap-up then only summarizes and tidies a file that already holds
+the substance; the topic slug may be refined and the file renamed at that point.
+
 Preferred path:
 
 ```text
@@ -198,8 +227,7 @@ Never write a session artifact to `context/` root — `rails-planning` reserves 
 
 ## Artifact Template
 
-Use this structure for a new file, or as a new appended session entry in an
-existing file:
+Use this structure for the session file:
 
 ```markdown
 # Pair Programming Session
@@ -279,20 +307,12 @@ Do not:
 - handover artifacts: can use pair-programming summaries as input, but are a
   separate ownership-transfer output.
 
-## Validation
+## Acceptance
 
-Before considering the skill applied correctly, confirm:
+Observable facts about the session artifact:
 
-- explicit `rails-pair-programming` activation occurred
-- intent and mode were established
-- relevant Story and Plan context was gathered or uncertainty was
-  stated
-- the collaborative loop stayed grounded in the current Story and Plan
-- useful questions were asked where appropriate
-- wrap-up was triggered by the user
-- a new artifact file was created using the `pair-programming-DDMMMYYYY-topic-slug.md` convention
-- the topic slug is specific and descriptive, not generic
-- the artifact is in the correct folder (plan folder preferred, `context/` fallback)
-- the artifact includes discoveries, discussions, decisions, open questions,
-  outcomes, and yielded work
-- no existing session artifact was overwritten or appended to
+- A file named `pair-programming-DDMMMYYYY-topic-slug.md` exists, where the slug names the actual subject rather than "session" or "notes".
+- It sits in the story's plan folder, or in `context/implementation-plans/_unfiled/` — never in `context/` root.
+- It carries every section of the artifact template, with no placeholder text left.
+- Its `## Session Date` matches the `DDMMMYYYY` in its own filename.
+- No pre-existing session artifact was modified by this run.

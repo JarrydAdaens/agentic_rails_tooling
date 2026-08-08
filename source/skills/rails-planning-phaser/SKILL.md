@@ -11,8 +11,9 @@ description: >-
   model tier and escalates to the human if the work needs more than seven phases
   (it's really multiple stories) or can't be reduced below threshold.
 disable-model-invocation: false
+argument-hint: "<plan path> [--dry-run] [--rephase]"
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Planning Phaser
@@ -23,15 +24,28 @@ The point is a dark factory: keep real execution on the local rig by default, si
 
 Phasing is not triggered by failure. A plan scoring past threshold has not failed — it is just larger than one execution unit. That is ordinary software engineering. This skill's job is to size the work to the executor.
 
-## Core Principles
+## Arguments
 
-1. **Phase to fit the executor.** The threshold is the local model's competence boundary, not an abstract quality bar. A phase exists so a given model can finish it.
-2. **Local first, tier up only when forced.** Always prefer the local model. Only move to a cloud tier when no legal phasing brings a phase under the local threshold.
-3. **Sequential, always.** Phases run strictly in order. Never out of order — that defeats the purpose. Phase N may depend on phase N−1's output.
-4. **Every phase is a complete, testable unit.** After any phase, the application compiles and runs. A phase that leaves the app broken or half-built is not a phase — it cannot be evaluated, so it cannot be trusted. This constraint outranks hitting the threshold.
-5. **Natural seams, not arithmetic.** Cut at logical completion points, not by slicing effort into equal buckets. Because seams are respected, the *sum* of phase scores can exceed the original plan's scores. That is expected, not a defect.
-6. **Lean on model intelligence.** The plan author (a high-reasoning model working to spec) already structures a good plan with testable increments. This skill reads that structure and groups it. Treat the grouping hints below as hints, not a rigid seam-finding algorithm.
-7. **Know when phasing cannot help.** If the work is inherently too big (too many phases) or inherently too complex/risky to reduce, say so. Do not pretend phasing solved a problem it did not.
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("just show me the cut" is `--dry-run`).
+
+| Token | Meaning |
+| --- | --- |
+| `--dry-run` | Report the proposed phase boundaries and scores without writing phase files or rewriting the plan. Absent means write. |
+| `--rephase` | Proceed on a target that is already phased, replacing the existing manifest and phase files. Absent means refuse — see the already-phased check. |
+| anything else | The path to the plan being phased. Ask only if it cannot be resolved. |
+
+Empty `$ARGUMENTS` means phase the named plan for real, refusing if it is already phased — the normal case.
+
+## Why This Shape
+
+The rules are in [the rule list below](#non-negotiable-rules); these are the reasons behind them, stated once.
+
+- **Phasing sizes work to an executor, it does not judge quality.** The threshold is the local model's competence boundary, not a quality bar, and a plan scoring past it has not failed — it is simply larger than one execution unit.
+- **Cut at natural seams, not by arithmetic.** Because seams are respected rather than effort being sliced into equal buckets, the *sum* of phase scores can exceed the original plan's scores. That is expected, not a defect.
+- **Lean on the plan's own structure.** A good plan already describes testable increments; this skill groups them. The grouping hints in the loop are hints, not a seam-finding algorithm.
+- **Say when phasing cannot help.** Work that is inherently too big or too risky to reduce should be reported as such, not dressed up as solved.
 
 ## Relationship To `rails-grade-cer`
 
@@ -61,7 +75,7 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
    - **tier 1 covers all three axes** → no phasing needed. Annotate the plan in place with a single-unit CER assignment block (see [references/manifest-template.md](references/manifest-template.md), Single-Unit Variant) and stop. No phase files, no phase registry table — there is only one unit of work and it already fits the local model.
    - **Any axis exceeds tier 1** → phase it (continue).
 
-3. **Fracture at natural seams.** Read the plan's own structure (its implementation steps, file groupings, and stated completion points) and group it into candidate phases, each a complete, testable increment (Principle 4). Aim for each phase to land inside tier 1 on all three axes. Useful hints, not rules: bundle setup/scaffolding work into an early phase, cut at points the plan itself already treats as checkpoints, keep a step and everything it strictly depends on in the same phase, and never propose a cut that would leave the app non-compiling or a feature half-wired.
+3. **Fracture at natural seams.** Read the plan's own structure (its implementation steps, file groupings, and stated completion points) and group it into candidate phases, each a complete, testable increment. Aim for each phase to land inside tier 1 on all three axes. Useful hints, not rules: bundle setup/scaffolding work into an early phase, cut at points the plan itself already treats as checkpoints, keep a step and everything it strictly depends on in the same phase, and never propose a cut that would leave the app non-compiling or a feature half-wired.
 
 4. **Ceiling check — before writing anything.** Count the candidate phases. If more than **7**, stop immediately: do not write phase files, do not modify the original plan. Escalate to the human (see the Seven-Phase Ceiling section below) and end here.
 
@@ -103,29 +117,27 @@ Phase files are small plans — same shape as any Agentic Rails plan, just guara
 
 This is progressive disclosure in practice: a sub-agent working phase 2 loads only phase 2, not the entire original plan. It reads the manifest for state and its own phase file for the work — nothing more. The manifest's **assigned** model for a phase and that phase file's own **recommended** model must always agree; if they do not, something in the phasing process broke and should be corrected before reporting done.
 
-## Hard Rules
+## Non-negotiable rules
+
+This is the canonical rule list. Nothing else in this document restates it.
 
 - **Never break the build.** No phase leaves the application non-compiling or non-running. A phase must be independently testable. This outranks hitting the threshold.
 - **Sequential only.** Phases run in order. Never emit or imply phases can execute out of order.
-- **Local first.** Always try to fit tier 1. Only tier up when no legal phasing gets a phase under threshold.
-- **Never over-cut.** Do not split past what natural seams allow just to force a lower score. Assign up the tier instead.
+- **Local first, and never over-cut.** Always try to fit tier 1, but do not split past what natural seams allow just to force a lower score. When no legal seam gets a phase into tier 1, assign it up a tier and leave it whole.
 - **Stop at seven.** More than seven candidate phases → escalate to the human as a mis-tiered story. Emit no phase files, touch no existing files.
 - **Rewrite, don't duplicate.** The plan becomes the manifest in place. No parallel copy of the pre-phase plan.
 - **Don't execute.** This skill phases, grades, and assigns models. It does not do the plan's work.
-- **Grade via CER only.** Every score comes from following `rails-grade-cer`. This skill holds no rubric of its own.
-- **Don't litter grading artifacts.** If a `cer-score-card.md` was produced, delete it after reading its scores; the scores live in the manifest and phase frontmatter. Usually there is nothing to delete.
-- **Refuse on already-phased targets.** If a manifest and phase files already exist for the target, stop and tell the user — do not silently re-phase or overwrite.
+- **Grade via CER only.** Every score comes from following `rails-grade-cer`. This skill holds no rubric of its own, and never invents a number.
+- **Don't litter grading artifacts.** If a `cer-score-card.md` was produced, delete it after reading its scores. Usually there is nothing to delete.
+- **Refuse on already-phased targets.** If a manifest and phase files already exist, stop and tell the user — do not silently re-phase or overwrite.
 
-## Validation
+## Acceptance
 
-Before considering this skill applied correctly, confirm:
+Observable facts about what landed on disk:
 
-- The already-phased check ran first, and the skill refused rather than silently overwrote an existing manifest.
-- Every score used in the manifest or a phase's frontmatter came from a `rails-grade-cer` invocation, not an invented number.
-- No `cer-score-card.md` file that this run produced remains in the plan's folder. A score card the user asked for separately is theirs to keep.
-- If no phasing was needed, the plan received a single-unit CER annotation and no phase files were created.
-- If phasing occurred, there are between 1 and 7 phase files, each named `phase-N.md` with sequential integers, each independently testable per the plan's own structure.
-- Every phase's assigned model in the manifest matches its own frontmatter's recommended model, and is the lowest tier whose thresholds cover all three of that phase's scores.
-- If more than 7 candidate phases were found, no phase files were written, the original plan was left untouched, and the human was told to split at the Story tier first.
-- The manifest's plan-level context is a short condensed paragraph, not a verbatim copy of the original plan body.
-- The user was told the exact paths of the manifest and every phase file, plus a summary of model assignments.
+- Either the plan carries a single-unit CER annotation and no `phase-*.md` files exist, or there are between 1 and 7 files named `phase-N.md` with sequential integers.
+- No `cer-score-card.md` produced by this run remains in the plan's folder. One the user asked for separately is theirs to keep.
+- Every phase's assigned model in the manifest string-matches that phase file's own recommended model.
+- The manifest's plan-level context is shorter than the original plan body, not a copy of it.
+- When the ceiling was breached: no `phase-*.md` files exist, the original `plan.md` is unmodified, and the escalation was reported.
+- The exact paths of the manifest and every phase file were reported to the user.

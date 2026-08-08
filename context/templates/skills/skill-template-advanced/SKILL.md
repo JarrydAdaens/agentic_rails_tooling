@@ -1,124 +1,67 @@
 ---
 name: skill-template-advanced
-description: Use this template when creating a broad Agent Skill that needs progressive disclosure, focused reference files, routing guidance, examples, and validation without loading all domain knowledge up front.
+description: Use this template when creating a broad Agent Skill that needs progressive disclosure, focused reference files, and routing guidance without loading all domain knowledge up front.
+disable-model-invocation: false
+argument-hint: "<payload> [--flag]"
 metadata:
-  version: "1.2"
+  version: "2.0"
   template: "true"
 ---
 
 # Advanced Progressive-Disclosure Skill Template
 
-This template is for building large skills that represent a real expertise domain without turning the main skill file into a monolith.
+For building large skills that represent a real expertise domain without turning the main skill file into a monolith — UI engineering, game development, framework architecture, tooling ecosystems, and similar domains needing both breadth and restraint.
 
-Use it when the domain is broad enough that the agent needs:
+The bar this must meet is `context/wiki/skill-authoring-standard.md`; `scripts/rails_lint.py` enforces its mechanical half. Nothing in this file restates what a reference says, and no section restates another section.
 
-- A stable high-level stance in the main skill
-- A modular reference library for deeper guidance
-- Selective loading so only relevant knowledge is pulled into context
+Set `disable-model-invocation` deliberately. Delete `argument-hint` and `## Arguments` only if the skill genuinely takes nothing.
 
-This is especially useful for skills derived from layered professional expertise, such as UI engineering, game development, framework-specific architecture, tooling ecosystems, or other domains where the agent needs both breadth and restraint.
+## Arguments
 
-## Template Story
+The skill was invoked with: $ARGUMENTS
 
-Treat the main skill as the router and operating model, not the full body of knowledge.
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens.
 
-The main file should answer:
+| Token | Meaning |
+| --- | --- |
+| `--flag` | What it turns on, and what happens when it is absent. |
+| anything else | The main payload. |
 
-1. What kind of domain this skill covers
-2. How the agent should think when using it
-3. How to choose which reference modules to load
-4. What defaults, boundaries, and quality standards should shape the work
+Empty `$ARGUMENTS` is the normal case, never an error.
 
-The reference files should hold the deeper domain truth in focused chunks.
+## Routing
 
-## Progressive Disclosure
+This file is the **router and operating model**, not the body of knowledge. It answers what the domain covers, how to think inside it, which references to load, and what defaults and boundaries shape the work. The references hold the domain truth.
 
-This template uses progressive disclosure to keep broad expertise usable.
+Before loading anything, identify what the user is actually solving and which expertise layer is in play. Then load the **smallest** reference set that gives enough domain truth — one for a narrow task, two when it crosses a boundary, more only when the work genuinely spans layers. The goal is solving the problem, not proving coverage.
 
-Instead of one giant knowledge file:
-
-- Put the shared stance, workflow, and routing logic here
-- Split domain expertise into focused reference files
-- Load only the smallest relevant reference set for the task
-
-As a rule of thumb, each reference should stay tight and single-purpose. If one section starts carrying multiple concerns, split it into smaller modules. For domains built from compact knowledge slices, aim for roughly 500-character chunks of guidance where that still preserves clarity.
-
-## Working Style
-
-Start by identifying what kind of problem the user is actually solving. Do not load every reference file up front.
-
-Think in this order:
-
-1. What is the user trying to build, change, debug, evaluate, teach, or formalize?
-2. Which expertise layer is actually in play: principles, architecture, workflows, implementation patterns, tooling, quality, diagnostics, or performance?
-3. What belongs in the core solution, what belongs in support systems, and what belongs in process or validation?
-4. Which reference files provide enough domain truth without pulling in unrelated context?
-
-Prefer the least complex solution that still respects the domain. Treat the skill as a catalogue first and a deep reference set second.
-
-## Default Stance
-
-- Prefer clarity over cleverness.
-- Prefer focused modules over bloated reference files.
-- Prefer explicit boundaries between domain concerns.
-- Prefer selective loading over broad context dumps.
-- Prefer reusable guidance that can be specialized into derived skills.
-- Prefer validation, diagnostics, and real acceptance checks over confidence alone.
-- Prefer replacing placeholders with real domain truth when creating a concrete skill from this template.
+Keep each reference tight and single-purpose. When one starts carrying multiple concerns, split it. Prefer the least complex solution the domain allows.
 
 ## Included Example References
 
-This template currently ships with three example reference files. They are examples of the structure, not final domain content.
+Structural examples, not final content. Rename and rewrite each one to own a single real concern, then update these links.
 
-- [references/reference-1.md](references/reference-1.md)
-  Example reference module. Use it as a placeholder for one focused expertise slice, then rename and rewrite it for the real domain.
-- [references/reference-2.md](references/reference-2.md)
-  Example reference module. Use it to model a second domain slice that should stay separate from the first.
-- [references/reference-3.md](references/reference-3.md)
-  Example reference module. Use it to model a third domain slice, especially when the skill needs clear progressive loading choices.
+- [references/reference-1.md](references/reference-1.md) — one focused expertise slice.
+- [references/reference-2.md](references/reference-2.md) — a second slice that should stay separate from the first.
+- [references/reference-3.md](references/reference-3.md) — a third slice, where progressive loading choices matter.
 
-When deriving a real skill, replace these example files with domain-specific modules such as architecture, workflows, rendering, systems design, testing, content pipelines, or framework mechanics.
+Add more references only for genuinely separate concerns.
 
-## How to Use the Example References
+## Non-negotiable rules
 
-The three example references are intentionally minimal. They exist to show how the main skill should link to modular domain files.
+This is the canonical rule list. Nothing else in this document restates it.
 
-Typical use:
+- Replace this list with the skill's real rules, each stated once.
+- Replace every placeholder above before treating a derived skill as production-ready.
 
-- Keep this main file generic and domain-aware
-- Rename `reference-1.md`, `reference-2.md`, and `reference-3.md` to meaningful domain names
-- Rewrite each file so it owns one clear concern
-- Update the links and usage notes in this file once the real references exist
+### Surviving compaction
 
-If the domain grows, add more references only when they represent a genuinely separate concern.
+Required when this skill's run can outlive one context window. Name the files that carry the durable state, and state that they are written before each next step rather than at the end. Delete this section for a skill that completes within a single exchange.
 
-## Reference Loading Guidance
+## Acceptance
 
-Load these references only when they are relevant to the task at hand.
+State observable facts a third party can check, not questions for the agent that did the work:
 
-- Use one reference when the task is narrow and clearly belongs to one expertise slice.
-- Use two references when the task crosses a boundary, such as architecture plus implementation, or tooling plus diagnostics.
-- Use three or more only when the work truly spans multiple layers and the added context is necessary.
+- The named output file exists at the stated path.
 
-The goal is not to prove coverage. The goal is to load just enough expertise to solve the actual problem well.
-
-## Execution Checklist
-
-When using this template or any skill derived from it:
-
-1. Identify the real problem before loading references.
-2. Load only the smallest reference set that gives enough domain truth.
-3. Keep the main skill focused on stance, routing, and decision quality.
-4. Keep detailed domain knowledge in references, not in the core file.
-5. Split references when one file starts covering multiple independent concerns.
-6. Verify outcomes with tests, examples, diagnostics, or another concrete check.
-7. Replace placeholder example content before treating a derived skill as production-ready.
-
-## Do Not
-
-- Do not turn this file into a full knowledge dump.
-- Do not refer to reference files that do not actually exist in the template.
-- Do not load every reference module unless the task truly needs them.
-- Do not keep placeholder examples in place once real domain guidance is available.
-- Do not merge unrelated expertise layers into one oversized reference file.
-- Do not confuse breadth of knowledge with quality of routing.
+No unfalsifiable criteria, and no self-attestation. Where real judgment is needed, dispatch `agents/quality-gate-persona/AGENT.md` and take its verdict instead.

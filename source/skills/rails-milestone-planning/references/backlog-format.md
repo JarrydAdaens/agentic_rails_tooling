@@ -1,3 +1,10 @@
+---
+name: rails-milestone-planning-backlog-format
+description: The shape of context/backlog/backlog-N.md - story block fields, CER fields, and the per-file cap.
+metadata:
+  version: "1.0"
+---
+
 # Backlog Format
 
 The story backlog is an unscheduled story inventory, not a formal context tier — informally "Milestone -1". It lives at `context/backlog/backlog-N.md` (matches `rails-initialize-from-tier0`'s seeding convention — reuse it, don't invent a competing one).

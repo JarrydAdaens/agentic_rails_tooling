@@ -1,3 +1,10 @@
+---
+name: rails-milestone-planning-selection-template
+description: The story-list sections rails-milestone-planning writes inside an existing milestone document.
+metadata:
+  version: "1.0"
+---
+
 # Milestone Selection Template
 
 This is not a standalone document template — a milestone's Intent, Why It Matters, and Outcome / Definition of Done are set upstream, when the milestone document itself is created. This reference shows the story-list-specific sections `rails-milestone-planning` writes and updates *inside* an existing milestone document at `context/milestones/milestone-N.md`.

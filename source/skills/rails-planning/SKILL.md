@@ -89,19 +89,15 @@ If an agent encounters `context/milestones.md`, `context/goals*.md`, or `context
 
 ## Path Selection
 
-Prefer the canonical Agentic Rails path, grouped by milestone:
+There is one plan path, grouped by milestone:
 
 ```text
 context/implementation-plans/<milestone-slug>/<story-slug>/
 ```
 
-Preserve an existing repository convention rather than creating duplicate folders. Accept these existing variants:
+This skill owns that convention, and every skill that consumes plans — `rails-plan-spam-workflow`, `rails-planning-phaser`, `rails-milestone-planning`, `rails-pair-programming`, `rails-boss-execute-workflow` — reads from exactly this shape. Both levels are required: a plan filed one level deep is not discoverable by those skills.
 
-```text
-context/implementation-plans/
-documentation/implementation-plans/
-docs/implementation-plans/
-```
+If a repository already keeps plans under a legacy root such as `docs/implementation-plans/` or `documentation/implementation-plans/`, **report it and ask** before writing. Do not silently migrate the existing plans, and do not add a second plan under the canonical path while the legacy ones remain — that produces the duplicate-folder problem this convention exists to prevent.
 
 If an active plan already exists for the same story, update that `plan.md` instead of creating a duplicate. Preserve existing decisions unless the user asks for a revision, add a short revision note when useful, and do not overwrite its `## Execution Log` history.
 

@@ -191,8 +191,10 @@ context/implementation-plans/<milestone-slug>/<story-slug>/pair-programming-DDMM
 Fallback path when the active plan folder is unknown:
 
 ```text
-context/pair-programming-DDMMMYYYY-topic-slug.md
+context/implementation-plans/_unfiled/pair-programming-DDMMMYYYY-topic-slug.md
 ```
+
+Never write a session artifact to `context/` root — `rails-planning` reserves that, and an artifact there is invisible to every skill that reads plans. `_unfiled/` is a real folder those skills can see, and the user can file it against a story later.
 
 ## Artifact Template
 

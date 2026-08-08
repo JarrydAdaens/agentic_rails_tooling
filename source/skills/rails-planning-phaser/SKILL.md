@@ -41,7 +41,7 @@ This skill holds no grading rubric of its own. Every score in this skill comes f
 
 ## Inputs
 
-- **Target document.** A plan by default, but this skill can run on anything CER can grade — a plan, a phase, or a story summary. Locate it via Agentic Rails plan paths (`context/implementation-plans/<task-folder>/plan.md`) or an explicit path the user gives. If ambiguous, ask.
+- **Target document.** A plan by default, but this skill can run on anything CER can grade — a plan, a phase, or a story summary. Locate it via the canonical Agentic Rails plan path (`context/implementation-plans/<milestone-slug>/<story-slug>/plan.md`) or an explicit path the user gives. If ambiguous, ask. A plan found one level deep under a legacy layout still works when named explicitly — report the layout rather than migrating it.
 - **Thresholds.** Come from [references/model-matrix.md](references/model-matrix.md), not from the user, and that file is the only place the numbers and the comparison are stated. They are provisional seeds, not yet calibrated against real completion outcomes; treat them as authoritative until better data exists, and do not let the user override them ad hoc.
 - This skill reads the target, writes the manifest and phase files, and follows `rails-grade-cer` for every score. It does not execute the plan's work.
 

@@ -22,8 +22,9 @@ that is not specific to any one project. It answers a single question:
 
 It deliberately contains almost no executable application code. The artifacts are Markdown
 (`SKILL.md`, `AGENT.md`, rules, references) plus prompt source material and a few supporting
-scripts. There is no build, test, or lint step. "Correctness" means well-formed artifacts
-that obey the naming and frontmatter conventions.
+scripts. There is no build or test step, but there **is** a lint step: `scripts/rails_lint.py`
+deterministically enforces the naming, frontmatter, and vocabulary conventions, and a clean exit
+is this repo's definition of well-formed. Run it before committing artifact changes.
 
 ## Place In The Framework
 
@@ -64,9 +65,9 @@ only add noise to a deployed IDE configuration stays in `context/`, `archived/`,
 
 Inside `source/`, capability is placed in the narrowest layer that fits.
 
-- **`source/rules/`** — short, prescriptive engineering standards and style guidance, routed
-  by `index.md`. If a rule file grows into procedural expertise, it has outgrown the layer and
-  belongs in a skill.
+- **`source/rules/`** — short, prescriptive engineering standards and style guidance, routed by
+  each file's own `paths:` frontmatter globs rather than by any index file. If a rule file grows
+  into procedural expertise, it has outgrown the layer and belongs in a skill.
 - **`source/skills/`** — portable, task-shaped capability. A skill says "here is how to do this
   task." Large orchestrations that coordinate subagents, queues, or durable artifacts use the
   `-workflow` suffix so they remain discoverable in ordinary skill pickers.

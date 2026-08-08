@@ -49,6 +49,7 @@ These are load-bearing because the artifacts are consumed by other agents via pr
 - **`name` field**: lowercase letters, numbers, and hyphens only, and it **must match the folder name**. Persona names end in `-persona`; workflow skills end in `-workflow`.
 - **`description` field**: under 1024 characters, and written as "Use this when…" — it is the only thing an agent sees at discovery time, so it must convey both what the artifact does and when to reach for it.
 - **Frontmatter**: every artifact carries YAML frontmatter with `metadata.version` (a quoted string, e.g. `version: "1.2"`). Use the `rails-clean-frontmatter` skill to normalize/repair frontmatter across the repo rather than hand-editing many files.
+- **The authoring standard**: every `source/skills/*/SKILL.md` is held to `context/wiki/skill-authoring-standard.md` — declared arguments, one canonical rule list, no self-evaluation, skills addressed by name rather than by path, and compaction survival for long runs. Read it before creating or reshaping a skill; `scripts/rails_lint.py` enforces its mechanical half.
 
 ## Git conventions
 

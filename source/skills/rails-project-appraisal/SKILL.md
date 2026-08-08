@@ -9,17 +9,32 @@ description: >-
   performs external grounding via web research, and writes a frank,
   evidence-led markdown report under context/reports/ that grades the
   project and recommends a course of action — continue, refine, harden,
-  pivot, split, rebuild, freeze, or abandon. Reserved for deep, deliberate
+  pivot, split, rebuild, freeze, archive, or abandon. Reserved for deep, deliberate
   use on projects that matter, not a lightweight orientation pass, a
   code-execution skill, or a normal planning/implementation workflow.
 disable-model-invocation: false
+argument-hint: "<repo path> [--no-web] [--no-run]"
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails Project Appraisal
 
-Produce a serious, evidence-led appraisal of an important Agentic Rails project. The output is one markdown report that helps the human decide whether the project should continue, pivot, harden, split, rebuild, freeze, or be abandoned.
+Produce a serious, evidence-led appraisal of an important Agentic Rails project. The output is one markdown report that helps the human decide whether the project should continue, refine, harden, pivot, split, rebuild, freeze, archive, or be abandoned.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--no-web` | Skip external grounding. Absent means research comparable projects and current practice. |
+| `--no-run` | Skip building, testing, and launching the project. Absent means validate live and report what ran. |
+| anything else | The repository to appraise. Absent means the current one. |
+
+Empty `$ARGUMENTS` means a full appraisal of the current repository, with live validation and web grounding — the normal case. Record any skipped stage in the report rather than leaving its absence implicit.
 
 ## Model
 
@@ -67,9 +82,9 @@ Sober, precise, evidence-led. No cheerleading, no softening of materially import
 - Never hide missing evidence, low-confidence judgements, or validation gaps — label them.
 - Never let raw Tier-0 dictation override maintained context (`context/design.md`, milestone/backlog docs) without flagging the contradiction.
 
-## Validation
+## Acceptance
 
-Before considering the skill applied correctly, confirm:
+Observable facts about the written report:
 
 - The report was written to `context/reports/YYYY-MM-DD_project-appraisal-report.md` (or a numeric-suffixed variant), and no other tracked file was edited.
 - Every grading row required by [references/report-template.md](references/report-template.md) is present, each with an explicit confidence level (`High`/`Medium`/`Low`/`Unknown`).

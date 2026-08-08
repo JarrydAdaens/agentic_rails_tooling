@@ -13,8 +13,9 @@ description: >-
   developer. It is drop-off only: it never integrates anything into source/,
   never generalizes code, and never touches other proposals.
 disable-model-invocation: true
+argument-hint: "<feature or slice to propose> [--slug <name>]"
 metadata:
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Rails New Proposal
@@ -22,6 +23,19 @@ metadata:
 Capture a proven, project-local innovation as a **self-contained proposal** and drop it into the `proposals/` inbox at the root of the `agentic_rails_tooling` repository. A proposal is a pitch plus its proof: a README that records the use case and the evidence it worked, and a verbatim slice of every file needed to make the feature work somewhere else.
 
 This skill has exactly one job: **package and drop off**. It does not integrate, generalize, or curate. The user reviews the inbox later and asks an agent to promote a proposal into the right part of the Agentic Rails system - or delete it. Because a proposal is self-contained, it can also be zipped and shared directly with another developer.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--slug <name>` | The proposal folder name. Absent means derive a kebab-case slug from the feature. |
+| anything else | The feature or slice being proposed. Ask only if it cannot be resolved. |
+
+Empty `$ARGUMENTS` means ask which feature to package — this skill cannot guess a slice.
 
 ## Scope: Package and Drop Off
 
@@ -101,12 +115,12 @@ When the user asks to share the proposal (or says "zip it"), create `<proposal-s
 - Never copy secrets, transient state, or the origin project's unrelated configuration.
 - Do not promote, integrate, or delete anything - drop off and stop.
 
-## Validation
+## Acceptance
 
-Before considering the skill applied correctly, confirm:
+Observable facts about the written proposal:
 
-- `proposals/<slug>/README.md` exists, follows the template, and its manifest matches the files actually present.
-- The slice mirrors the origin layout and contains the full dependency closure - nothing needed to run the feature is missing.
+- `proposals/<slug>/README.md` exists and every path its manifest lists resolves to a file that is present.
+- Every file the slice references from within itself resolves inside `proposals/<slug>/`.
 - `.claude/settings.json` in the proposal contains only the feature's hooks and uses portable paths.
 - No secrets, absolute machine paths, or transient state files were copied.
 - Nothing outside `proposals/<slug>/` (and the one-time `README-PROPOSALS.md`) was created or modified.

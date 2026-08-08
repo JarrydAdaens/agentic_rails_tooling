@@ -10,8 +10,9 @@ description: >-
   well, what struggled, and full provenance: the models, harness, thinking
   effort, reasoning vs non-reasoning, fast mode, and token cost behind the work.
 disable-model-invocation: true
+argument-hint: "[--project <name>] [--dry-run]"
 metadata:
-  version: "1.2"
+  version: "1.3"
 ---
 
 # Rails Memory Learnings
@@ -19,6 +20,20 @@ metadata:
 Capture the learnings from a work session as a single durable artifact and deposit it into the **Agentic Rails memory** repository (the framework's records office). This is the **write** phase of the memory feedback loop: `capture -> curate -> consume`.
 
 This skill has exactly **one job**: reflect on the session and produce **one** learning file in `learnings/new/`. It records what happened and, critically, **what produced it** - the models, harness, thinking effort, reasoning mode, fast mode, and token cost - so a later curation run can distill these raw data points into model and agent Resumes.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--project <name>` | The project name used in the filename. Absent means derive it from the repository. |
+| `--dry-run` | Print the learning artifact without writing it. Absent means write. |
+| anything else | Extra emphasis on what the session should record. |
+
+Empty `$ARGUMENTS` means capture this session's learning for the current project and write it — the normal case.
 
 ## Scope: One File In, One File Out
 
@@ -189,14 +204,12 @@ For a cold capture (no conversation context), be stricter about labeling inferen
 - Do not expose private chain-of-thought; capture sanitized observations only.
 - Do not fabricate provenance, praise, or problems. Record `unknown` when a value is genuinely unrecoverable.
 
-## Validation
+## Acceptance
 
-Before considering the skill applied correctly, confirm:
+Observable facts about the written artifact:
 
-- Exactly one file exists at `memories/learnings/new/<project>_<YYYY-MM-DD>.md` (with a numeric suffix only on same-day collision).
-- Frontmatter is complete: provenance fields plus the execution profile (harness, per-model reasoning / thinking effort / fast mode, token cost).
-- The body follows the standard section set, including Per-Model / Per-Agent Notes.
-- Claims are grounded or honestly labeled; the artifact is self-describing (where, when, what, why).
-- Candidate signals are noted, not acted on.
-- No Resume, `archived/`, or `golden/` file was modified.
-- No secrets or private chain-of-thought leaked into the artifact.
+- Exactly one file exists under `memories/learnings/new/`, named `<project>_<YYYY-MM-DD>.md` with a numeric suffix only on same-day collision.
+- Its frontmatter carries every provenance field plus the execution profile (harness, per-model reasoning or thinking effort, fast mode, token cost).
+- Its body contains every heading in the standard section set, including Per-Model / Per-Agent Notes.
+- No file under `archived/` or `golden/`, and no Resume, has a modification time from this run.
+- The artifact contains no credentials, tokens, or raw chain-of-thought.

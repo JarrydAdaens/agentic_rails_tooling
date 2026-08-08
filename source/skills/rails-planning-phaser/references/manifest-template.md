@@ -6,7 +6,7 @@ metadata:
 
 # Manifest Template
 
-There are two variants. Use the Single-Unit Variant when CER graded the whole plan under the tier-1 threshold `(5, 5, 5)` — no phasing occurred. Use the Full Manifest Variant once the plan has actually been fractured into phases.
+There are two variants. Use the Single-Unit Variant when CER graded the whole plan inside tier 1 (see [model-matrix.md](model-matrix.md)) — no phasing occurred. Use the Full Manifest Variant once the plan has actually been fractured into phases.
 
 ## Single-Unit Variant (No Phasing Needed)
 

@@ -6,8 +6,9 @@ description: >-
   Boss builds a durable planning queue, dispatches one subagent per story or
   feature cluster, writes plans, updates progress, and repeats until complete.
 disable-model-invocation: true
+argument-hint: "<source docs, stories, or backlog> [--serial|--parallel N] [--resume <run-slug>] [--milestone <slug>] [--template <path>] [--clean]"
 metadata:
-  version: "3.0"
+  version: "3.1"
 ---
 
 # Rails Plan Spam Workflow (Boss)
@@ -100,33 +101,40 @@ Keep the slug short. Avoid vague names such as `plan-spam-run` or `plan-spam-mis
 
 ## References and contracts
 
-| Role | Path from this repository root |
+This skill's own references, reached by link:
+
+- **Progress state model**: [references/state-model.md](references/state-model.md)
+- **Questions index structure**: [references/questions-file-format.md](references/questions-file-format.md)
+
+**The plan template comes from the `rails-planning` skill, invoked by name.** Do not hand a worker a filesystem path to it: this document's paths are relative to the *target* repository, while skills live in the agent's own configuration directory, so such a path resolves for neither the Boss nor a worker. Tell each worker to invoke `rails-planning` and follow the template that skill defines.
+
+Template precedence, highest first: a template path the user explicitly names inside the target repository; a clearly established implementation-plan template already in the target repository; otherwise the one `rails-planning` defines.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("one at a time" is `--serial`).
+
+| Token | Meaning |
 | --- | --- |
-| Progress state model | `skills/rails-plan-spam-workflow/references/state-model.md` |
-| Unified implementation-plan template | `skills/rails-planning/references/plan-template.md` |
-| Questions index structure | `skills/rails-plan-spam-workflow/references/questions-file-format.md` |
+| `--serial` | One active subagent at a time. Equivalent to `--parallel 1`. |
+| `--parallel N` | Up to `N` active subagents. Absent means the Boss chooses and states a concrete number. |
+| `--resume <run-slug>` | Continue that existing run. Without it, a prior run's artifacts are never reused. |
+| `--milestone <slug>` | The milestone every queued story belongs to, skipping resolution. Absent means resolve per story. |
+| `--template <path>` | A plan template inside the target repository, overriding template precedence. |
+| `--clean` | Delete and recreate the named run folder instead of resuming it. |
+| anything else | The planning request — source document paths, story ids, backlog ranges, or feature lists. |
 
-The unified template in `skills/rails-planning/references/plan-template.md` is the canonical template for all workers.
-If the user explicitly names a plan template inside the target repository, that template overrides the default.
-If the target repository already contains a clearly established implementation-plan template, use it instead.
-If no repository-local template exists, use the unified default.
+Empty `$ARGUMENTS` apart from the request means a fresh run, milestone resolved per story, Boss-chosen parallelism — the normal case.
 
-## Invocation
+Interpret the request literally: read named files first, preserve any story order given, and use a named output folder if one is supplied.
 
-The user passes the planning request in the message. The message may include source document paths, story ids, backlog ranges, milestone names, feature lists, output-folder hints, or template paths.
+### Surviving compaction
 
-Examples:
+`briefing.md` and `progress.md` are the run's durable state. Everything needed to resume must be readable from them alone — a Boss whose context was compacted mid-run reads those two files and continues without loss.
 
-- `/plan-spam turn [context/backlog/backlog-1.md] into implementation plans`
-- `/plan-spam read [context/milestones/milestone-1.md] and generate one implementation plan per ready story`
-- `/plan-spam use [context/plan_template.md] and produce plans for every story in milestone 2`
-- `/plan-spam take these feature descriptions and fill the implementation-plans folder with plans`
-
-Interpret the message literally.
-If the user names files, read those files first.
-If the user names a template, use that template.
-If the user names stories or ranges, preserve that order.
-If the user names an output folder, use it.
+Write state to disk **before** starting the next thing, never after: a row's status and output path land in `progress.md` before the next worker is dispatched. Never hold run state only in the conversation.
 
 ## Non-negotiable rules
 
@@ -190,7 +198,7 @@ Write or refresh `context/implementation-plans/<milestone-slug>/_planning-runs/<
 
 | Status | Story | Source | Plan Folder | Template | Notes |
 | --- | --- | --- | --- | --- | --- |
-| TODO | STORY 2.1 | `context/backlog/backlog-1.md` | `context/implementation-plans/milestone-1/story-2-1-slug/` | `skills/rails-planning/references/plan-template.md` | queued |
+| TODO | STORY 2.1 | `context/backlog/backlog-1.md` | `context/implementation-plans/milestone-1/story-2-1-slug/` | `rails-planning` (skill) | queued |
 
 Use the status values from [references/state-model.md](references/state-model.md).
 Only the Boss updates the `Status` column.
@@ -223,7 +231,7 @@ The index `questions.md` exists so the user can walk away during bulk planning, 
    Determine the exact template source for the run:
    - user-specified template path wins
    - otherwise repository-local established template wins
-   - otherwise use `skills/rails-planning/references/plan-template.md`
+   - otherwise the template `rails-planning` defines
 
 6. **Extract constraints and queue**
    Determine:
@@ -276,22 +284,16 @@ The index `questions.md` exists so the user can walk away during bulk planning, 
 
 Every worker prompt must include all of the following:
 
+This is a payload spec — the facts the Boss must supply. The instructions built from them are in the wording below; do not restate them here.
+
 - The exact story id or synthetic id to plan
 - The resolved milestone-slug for this story
 - The exact source document paths to read before writing
-- The exact output **folder** path for the implementation plan (e.g., `context/implementation-plans/milestone-1/story-2-1-slug/`)
-- A statement that the worker must follow `rails-planning` skill conventions and produce one primary artifact, `plan.md` — no sidecar files by default
-- The exact template path to follow
-- A plain statement that the worker must produce a plan file, not implementation code
-- A plain statement that the worker must ask clarifying questions instead of guessing
-- A plain statement that the worker must record those questions in the plan's own `## Questions / Unknowns` section with the story id
-- A plain statement that the worker must continue planning as far as possible while clearly marking uncertainty in the plan
-- A plain statement that the worker must preserve source constraints and scope boundaries
-- A plain statement that the worker must ground the plan in concrete implementation context: likely files, modules, interfaces, validation surfaces, risks, and sequencing
-- A plain statement that the worker must report the output path, files changed, and blockers
-- A request that the worker return the contents of its `## Questions / Unknowns` section (or confirmation that none were needed) so the Boss can update the run-folder questions index
+- The exact output **folder** path for the plan (e.g. `context/implementation-plans/milestone-1/story-2-1-slug/`)
+- The template to follow: the `rails-planning` skill by name, or a template path inside the target repository when one was assigned
+- Any source constraints and scope boundaries that apply to this story
 
-Recommended worker wording:
+Worker wording:
 
 > You are a planning worker. Follow `rails-planning` skill conventions.
 >
@@ -302,7 +304,7 @@ Recommended worker wording:
 >
 > Do not create standalone `questions.md`, `evidence.md`, `complaining.md`, `implementation-log.md`, or `completion-review.md` files. Record open questions in the plan's own `## Questions / Unknowns` section.
 >
-> Use the exact template at `skills/rails-planning/references/plan-template.md` unless another template path was assigned.
+> Invoke the `rails-planning` skill by name and follow the template it defines, unless a template path inside this repository was assigned to you.
 >
 > If anything important is unclear, ask clarifying questions instead of guessing. Record them in `## Questions / Unknowns` with the exact story id.
 >
@@ -325,7 +327,7 @@ Only force sequential execution when any of the following are true:
 - the output folder names or plan bodies would collide
 - the same living source checklist must be updated in lockstep between plans
 
-If those conditions are not clearly true, parallelize aggressively.
+Otherwise run in parallel, but always to a **stated concrete cap** — never an unbounded fan-out over the whole queue. Honor `--parallel N` when given; otherwise pick a number and tell the user before dispatch, in the form `Parallelism: 4 (max 4 active subagents)`. Boss-owned state — `progress.md`, the questions index, and run logs — stays serialized even when workers run concurrently.
 
 Note: each plan's `## Questions / Unknowns` section is plan-local and does not conflict with any other plan. The Boss updates the run-level index after each worker, so worker-to-index updates are sequential by design.
 

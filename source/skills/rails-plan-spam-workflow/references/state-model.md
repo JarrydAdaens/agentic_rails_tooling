@@ -8,7 +8,7 @@ metadata:
 
 Only the **Boss** mutates the `Status` column in `context/implementation-plans/<milestone-slug>/_planning-runs/<run-slug>/progress.md`.
 
-The run slug is unique per invocation and shared across every milestone-scoped `_planning-runs/` folder it touches. See the run slug naming rules in `skills/rails-plan-spam-workflow/SKILL.md`.
+The run slug is unique per invocation and shared across every milestone-scoped `_planning-runs/` folder it touches. See the run slug naming rules in the `rails-plan-spam-workflow` skill.
 
 ## Status values
 
@@ -32,7 +32,7 @@ The run slug is unique per invocation and shared across every milestone-scoped `
 
 - Do not mark a row `DONE` before the worker result is reviewed.
 - Do not mark a row `DONE` if `plan.md` is missing from the plan folder.
-- Do not mark a row `DONE` if the plan clearly does not follow `skills/rails-planning/references/plan-template.md` or the repository-local template.
+- Do not mark a row `DONE` if the plan clearly does not follow the template `rails-planning` defines or the repository-local template.
 - Do not mark a row `DONE` if visible uncertainty exists but the worker failed to capture corresponding questions in the plan's own `## Questions / Unknowns` section.
 - A row may still be `DONE` while questions remain unanswered as long as the plan is useful, the uncertainty is marked honestly, and the questions are recorded in `## Questions / Unknowns`.
 - Preserve story ids exactly when they came from source documents.

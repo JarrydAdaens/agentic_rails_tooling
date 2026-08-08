@@ -14,8 +14,9 @@ description: >-
   thinking.md) beside plan.md when a story genuinely needs durable, separately
   tracked provenance.
 disable-model-invocation: false
+argument-hint: "<story or plan path> [--revise] [--sidecar evidence,complaining,thinking]"
 metadata:
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Rails Planning
@@ -25,6 +26,20 @@ Force implementation planning to live in the target repository, not in IDE-local
 This is the single-plan enforcement skill for Agentic Rails. It creates or revises durable Implementation Plan artifacts. It does not implement production code.
 
 `rails-planning` itself belongs to the right rail: reusable agentic behavior. Its output belongs to the left rail: project-local context and provenance.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("update the existing plan" is `--revise`).
+
+| Token | Meaning |
+| --- | --- |
+| `--revise` | Update an existing `plan.md` rather than creating one. Absent means infer from whether a plan already exists for the story. |
+| `--sidecar <names>` | Comma-separated sidecars to create alongside the plan (`evidence`, `complaining`, `thinking`). Absent means none — the plan's own sections carry that content. |
+| anything else | The story, feature, bug, or plan path being planned. Ask only if it cannot be resolved. |
+
+Empty `$ARGUMENTS` means one new plan, no sidecars, path inferred from the story — the normal case.
 
 ## Core Rule
 
@@ -38,8 +53,8 @@ context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
 
 Only create one of those sidecar files when:
 
-- the user explicitly asks for it, or
-- the story is large or phased enough that a durable, separately-tracked file is genuinely justified (the same threshold `rails-planning-phaser` uses for splitting a plan into phases is a reasonable signal).
+- `--sidecar` names it in `$ARGUMENTS`, or the user explicitly asks for it, or
+- the story is large or phased enough that a durable, separately-tracked file is genuinely justified — the signal is a story `rails-planning-phaser` would split into phases.
 
 When a sidecar file is created, it lives beside `plan.md` in the same story folder, never in `context/` root.
 
@@ -174,15 +189,11 @@ context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
 
 For Codex, Claude Code, Cursor, Windsurf, Cascade, and similar IDEs, materialize the plan file before implementation begins when the work needs durable planning.
 
-## Validation
+## Acceptance
 
-Before considering this skill applied correctly, confirm:
+Observable facts about what landed on disk:
 
-- `plan.md` exists inside the target repository, under the milestone/story implementation-plans path.
-- The plan is not only in chat, IDE history, or an external folder.
-- The plan follows the implementation-plan structure in [references/plan-template.md](references/plan-template.md) or a stronger local template.
-- Relevant maintained context is linked where available.
-- The plan includes CER, scope, steps, validation, risk mitigation, and open questions/unknowns.
-- No `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` was created unless explicitly requested or genuinely justified by story size/phasing.
-- Existing related plans were reused or intentionally superseded instead of duplicated accidentally.
-- The user was told the exact path of `plan.md`, plus any sidecar file actually created.
+- `plan.md` exists at `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` inside the target repository.
+- It carries every section [references/plan-template.md](references/plan-template.md) requires.
+- The story folder contains no file other than `plan.md` unless a sidecar was requested or justified.
+- The exact path of `plan.md`, and of any sidecar created, was reported to the user.

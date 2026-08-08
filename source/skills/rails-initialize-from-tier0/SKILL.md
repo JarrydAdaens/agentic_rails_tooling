@@ -11,8 +11,9 @@ description: >-
   and optionally seed initial implementation plans without overwriting reusable
   Agentic Rails framework material.
 disable-model-invocation: true
+argument-hint: "<dictation path or text> [--target <repo path>]"
 metadata:
-  version: "2.1"
+  version: "2.2"
 ---
 
 # Rails Initialize From Dictation
@@ -20,6 +21,19 @@ metadata:
 Populate a new Agentic Rails-derived project from a raw dictation intake.
 
 This is an intake synthesis skill, not a generic documentation rewrite. Preserve the human's raw source, then promote stable decisions into the maintained context tier system so future agents can build from the repository instead of from memory.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--target <repo path>` | The project root to initialize. Absent means the current repository. |
+| anything else | The dictation source — a document path, or the raw intake text itself. |
+
+Without a dictation source in `$ARGUMENTS` there is nothing to synthesize, so ask for one. That is the one input this skill cannot default.
 
 ## The Context Tier System
 

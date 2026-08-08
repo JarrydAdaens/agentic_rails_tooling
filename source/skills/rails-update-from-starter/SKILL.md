@@ -13,8 +13,9 @@ description: >-
   generation where milestones only indexed stories kept elsewhere) forward to
   the current context tier system.
 disable-model-invocation: true
+argument-hint: "<starter checkout path> [--target <repo path>] [--dry-run]"
 metadata:
-  version: "3.0"
+  version: "3.1"
 ---
 
 # Rails Update From Starter
@@ -24,6 +25,20 @@ Keep a derived Agentic Rails project aligned with the current local `agentic_rai
 This is a comparison and selective merge skill, not a blind overwrite skill. It belongs to the right rail as reusable behavior; its edits belong to the child project's left-rail context.
 
 The current starter uses the context tier system's milestone-centric layout: `dictations-tier-0/` (Dictation), `design.md` (Design, with an embedded Milestones Index), `milestones/` (Milestone, containing stories directly), an informal `backlog/` story inventory that stages work before it is pulled into a milestone, and `implementation-plans/<milestone-slug>/<story-slug>/plan.md` (Implementation Plan, with optional Phase files). Derived projects come from several eras, so the skill runs in one of two modes.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--target <repo path>` | The project to update. Absent means the current repository. |
+| `--dry-run` | Report the alignment and migration plan without writing. Absent means write. |
+| anything else | The filesystem path to the local `agentic_rails_context_starter` checkout. |
+
+Without a starter path in `$ARGUMENTS` there is nothing to compare against, so ask for one and stop until it is given. Never guess it.
 
 ## Two Modes
 

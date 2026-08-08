@@ -8,8 +8,9 @@ description: >-
   project derived from the starter — and aborts in repositories that do not use
   Agentic Rails.
 disable-model-invocation: true
+argument-hint: "[target path] [--mode tooling|starter|derived] [--dry-run]"
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Rails Clean Front Matter
@@ -21,6 +22,20 @@ This is a maintenance skill, not a content rewrite. It edits only the leading
 front matter block of each file and never touches body prose. The exact rules for
 `agentic_rails_source_version` and the file scope depend on which repository the
 skill is run in, so detect the mode first.
+
+## Arguments
+
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently.
+
+| Token | Meaning |
+| --- | --- |
+| `--mode <name>` | Force `tooling`, `starter`, or `derived` mode. Absent means detect the mode from the repository. |
+| `--dry-run` | Report what would change without writing. Absent means write. |
+| anything else | The path to normalize. Absent means the current repository. |
+
+Empty `$ARGUMENTS` means detect the mode and normalize the current repository for real — the normal case.
 
 ## Required Input
 

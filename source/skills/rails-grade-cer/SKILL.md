@@ -10,8 +10,9 @@ description: >-
   subset the user names (e.g. "just the risk", "effort and complexity"). Grades
   only — it does not route, plan, fragment, select models, or suggest fixes.
 disable-model-invocation: false
+argument-hint: "<plan path> [complexity|effort|risk ...] [--concise|--verbose] [--file]"
 metadata:
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Rails Grade CER
@@ -25,7 +26,8 @@ This skill measures. It does not route, plan, fragment, select models, or sugges
 1. **Grade, don't route.** Output is scores and reasoning. No model selection, no lookup table, no phase splitting. A separate system consumes these scores.
 2. **Diagnose, don't prescribe.** Name problems. Never suggest how to improve, mitigate, or restructure. "This is high risk because X" — never "you should do Y."
 3. **Three orthogonal axes.** Complexity (reasoning difficulty), Effort (wall-clock volume), and Risk (blast radius of failure) are independent. A task can be low-complexity and high-effort (link a style guide across 5,000 files), or low-effort and high-risk (a one-line change to payment routing). Do not let a high score on one axis pull another axis toward it.
-4. **0–10 nominal, uncapped in reality.** Each axis reads 0–10 by default, but the scale is not a ceiling. When something genuinely exceeds 10, report it past 10 with a forecast (e.g. "~1000 — this is insane") so the reader knows it is off the chart, not merely "very high." Never clamp to 10 to make a score look normal.
+4. **The scale is open-ended, and 0–10 is where ordinary work lands.** 10 is not a ceiling, it is the top of the normal range. Work past it scores past it, with a forecast (e.g. "~1000 — this is insane") so the reader knows it is off the chart rather than merely "very high." Never clamp a score to 10 to make it look normal.
+5. **A story scoring past 10 on any axis is epic-sized.** That is the definition, and it lives here — it is the trigger `rails-milestone-planning` uses to reclassify a story as a milestone. Say so in the report when it happens; deciding what to do about it belongs to that skill, not this one.
 5. **Score what is visible.** Do not inflate to force a verdict or deflate to avoid one. If the plan is vague, score the visible work and note that missing detail may hide more.
 
 ## Inputs
@@ -50,10 +52,21 @@ Each axis has its own reference file. Load only the reference files for axes act
 
 Read the plan once and the objective once regardless of how many axes are requested; do not re-read the source for each axis.
 
-## Invocation & Axis Selection
+## Arguments
 
-- **Default:** run all three axes.
-- **Subset:** the user may request any combination — "just the risk", "effort and complexity", "complexity only". Run exactly what they ask and report only those rows. Never add an axis the user did not ask for.
+The skill was invoked with: $ARGUMENTS
+
+Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("just the risk" is `risk`; "give me the full breakdown" is `--verbose`).
+
+| Token | Meaning |
+| --- | --- |
+| `complexity`, `effort`, `risk` | Run only the named axes, in any combination. Absent means all three. |
+| `--concise` | Table only, no paragraphs. |
+| `--verbose` | Table plus paragraphs expanded to whatever length the reasoning needs. |
+| `--file` | Also write `cer-score-card.md` beside the plan. Absent means return the score card inline only. |
+| anything else | The path to the plan being graded. Ask only if it cannot be resolved. |
+
+Empty `$ARGUMENTS` means all three axes at `default` detail with no file — the normal case. Never add an axis the user did not ask for.
 
 ## Detail Levels
 
@@ -150,13 +163,12 @@ If the plan does not live under a recognizable `implementation-plans` milestone/
 6. Print the report inline in the chat response, or return it to the calling skill/workflow when invoked programmatically. Write `cer-score-card.md` beside the plan only when a file was explicitly requested or genuinely required for audit/provenance.
 7. When a file was written, report its exact path to the user.
 
-## Validation
+## Acceptance
 
-Before considering the skill applied correctly, confirm:
+Observable facts about the emitted score card:
 
-- Exactly the requested axes appear in the table and paragraphs — no extras, no omissions.
-- No score was silently clamped to 10; anything genuinely off-scale is shown past 10 with a forecast.
-- No paragraph contains a suggestion, fix, mitigation, or next step — only diagnosis.
-- The Risk score was derived from the objective/intent section, not the full implementation detail, and any fallback (no distinct objective/intent section found) was noted in the report.
-- The detail level was respected: no paragraphs at `concise`, full paragraphs present at `default` and `verbose`.
-- No `cer-score-card.md` file was written unless the user explicitly requested one or audit/provenance genuinely required it; when one was written, it lives beside the plan and its path was reported to the user.
+- The table's rows are exactly the requested axes — no extras, no omissions.
+- No score reads `10` where the reasoning described something past 10; off-scale scores carry a forecast.
+- No paragraph contains the words "should", "consider", "instead", or "recommend" — this skill diagnoses, it does not prescribe.
+- Paragraph count is zero at `--concise`, and one per requested axis otherwise.
+- A `cer-score-card.md` file exists only when `--file` was passed, and its path appears in the report.

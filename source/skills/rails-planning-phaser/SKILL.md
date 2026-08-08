@@ -42,7 +42,7 @@ This skill holds no grading rubric of its own. Every score in this skill comes f
 ## Inputs
 
 - **Target document.** A plan by default, but this skill can run on anything CER can grade — a plan, a phase, or a story summary. Locate it via Agentic Rails plan paths (`context/implementation-plans/<task-folder>/plan.md`) or an explicit path the user gives. If ambiguous, ask.
-- **Thresholds.** Come from [references/model-matrix.md](references/model-matrix.md), not from the user. The tier-1 (local) threshold is `(5, 5, 5)` — a provisional seed, not yet calibrated against real completion outcomes. Treat it as authoritative until better data exists; do not let the user override it ad hoc.
+- **Thresholds.** Come from [references/model-matrix.md](references/model-matrix.md), not from the user, and that file is the only place the numbers and the comparison are stated. They are provisional seeds, not yet calibrated against real completion outcomes; treat them as authoritative until better data exists, and do not let the user override them ad hoc.
 - This skill reads the target, writes the manifest and phase files, and follows `rails-grade-cer` for every score. It does not execute the plan's work.
 
 ## Already-Phased Check (do this first)
@@ -57,11 +57,11 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
 
 1. **Grade the target with CER.** Follow `rails-grade-cer` on the whole document, all three axes, `concise` detail. Read the scores it returns; delete a `cer-score-card.md` only if one was produced.
 
-2. **Check against the tier-1 threshold `(5, 5, 5)`** from [references/model-matrix.md](references/model-matrix.md):
-   - **All axes < 5** → no phasing needed. Annotate the plan in place with a single-unit CER assignment block (see [references/manifest-template.md](references/manifest-template.md), Single-Unit Variant) and stop. No phase files, no phase registry table — there is only one unit of work and it already fits the local model.
-   - **Any axis ≥ 5** → phase it (continue).
+2. **Check against the tier-1 threshold** from [references/model-matrix.md](references/model-matrix.md), whose Assignment Rule defines what "covered" means:
+   - **tier 1 covers all three axes** → no phasing needed. Annotate the plan in place with a single-unit CER assignment block (see [references/manifest-template.md](references/manifest-template.md), Single-Unit Variant) and stop. No phase files, no phase registry table — there is only one unit of work and it already fits the local model.
+   - **Any axis exceeds tier 1** → phase it (continue).
 
-3. **Fracture at natural seams.** Read the plan's own structure (its implementation steps, file groupings, and stated completion points) and group it into candidate phases, each a complete, testable increment (Principle 4). Aim for each phase to land all three axes under `(5, 5, 5)`. Useful hints, not rules: bundle setup/scaffolding work into an early phase, cut at points the plan itself already treats as checkpoints, keep a step and everything it strictly depends on in the same phase, and never propose a cut that would leave the app non-compiling or a feature half-wired.
+3. **Fracture at natural seams.** Read the plan's own structure (its implementation steps, file groupings, and stated completion points) and group it into candidate phases, each a complete, testable increment (Principle 4). Aim for each phase to land inside tier 1 on all three axes. Useful hints, not rules: bundle setup/scaffolding work into an early phase, cut at points the plan itself already treats as checkpoints, keep a step and everything it strictly depends on in the same phase, and never propose a cut that would leave the app non-compiling or a feature half-wired.
 
 4. **Ceiling check — before writing anything.** Count the candidate phases. If more than **7**, stop immediately: do not write phase files, do not modify the original plan. Escalate to the human (see the Seven-Phase Ceiling section below) and end here.
 
@@ -69,7 +69,7 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
 
 6. **Re-grade every phase with CER.** One CER invocation per phase file just written, identical in method to step 1. Embed the resulting three scores into that phase file's frontmatter. Delete any `cer-score-card.md` that was produced.
 
-7. **Resolve phases that will not drop below threshold.** If a phase still breaches `(5, 5, 5)` after natural-seam grouping — because merging was needed to stay testable, or the work is inherently heavy — do **not** over-cut it further. Assign it up [references/model-matrix.md](references/model-matrix.md) to the lowest tier whose thresholds cover all three of its scores. Leave it as one phase at that tier.
+7. **Resolve phases that will not drop below threshold.** If a phase still exceeds tier 1 after natural-seam grouping — because merging was needed to stay testable, or the work is inherently heavy — do **not** over-cut it further. Assign it up [references/model-matrix.md](references/model-matrix.md) to the lowest tier whose thresholds cover all three of its scores. Leave it as one phase at that tier.
 
 8. **Assign models and rewrite the manifest.** Every phase gets an assigned model in the manifest's phase registry and a matching recommended model in its own frontmatter. Rewrite the original `plan.md` in place into the manifest using the Full Manifest Variant in [references/manifest-template.md](references/manifest-template.md).
 
@@ -77,7 +77,7 @@ A plan carrying only a single-unit CER annotation (see below) is **not** conside
 
 ## Model Capability Matrix
 
-See [references/model-matrix.md](references/model-matrix.md) for the full tier table. Summary: a phase is assigned to the **lowest tier whose thresholds cover all three of its axes** — a phase at `(5, 4, 8)` needs a tier whose risk threshold is at least 8, even though its complexity and effort would fit tier 1. The tier-1 threshold `(5, 5, 5)` doubles as the phasing target: this skill tries to make every phase fit tier 1 before accepting a higher tier.
+The tier table, the inclusive comparison, and the assignment rule all live in [references/model-matrix.md](references/model-matrix.md). Read it before assigning a tier. The only consequence needed here: this skill tries to fit every phase into tier 1 before accepting a higher tier.
 
 ## The Seven-Phase Ceiling
 

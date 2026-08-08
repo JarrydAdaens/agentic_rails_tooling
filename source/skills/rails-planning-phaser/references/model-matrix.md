@@ -18,9 +18,11 @@ A data-backed lookup of models and the CER thresholds each can safely execute, o
 
 ## Assignment Rule
 
+**A threshold is inclusive.** A tier *covers* an axis when the score is **less than or equal to** that tier's number for it. A phase scoring exactly `(5, 5, 5)` is covered by tier 1 and needs no phasing. This is the one normative statement of the comparison; everywhere else — in this file and in `SKILL.md` — refers back to it rather than restating an operator.
+
 A phase is assigned to the **lowest tier that covers all three of its axes**. A phase scoring `(5, 4, 8)` needs a tier whose risk threshold is at least 8 — tier 3 here — even though its complexity and effort would comfortably fit tier 1. One weak axis is enough to force a phase up a tier; there is no averaging across axes.
 
-The tier-1 threshold `(5, 5, 5)` doubles as the phasing target in `rails-planning-phaser`: natural-seam fracturing tries to land every phase inside tier 1 first, and only accepts a higher tier when no legal seam gets a phase under `(5, 5, 5)`.
+The tier-1 threshold `(5, 5, 5)` doubles as the phasing target in `rails-planning-phaser`: natural-seam fracturing tries to land every phase inside tier 1 first, and only accepts a higher tier when no legal seam gets a phase down to `(5, 5, 5)` or below.
 
 It is normal and expected for a plan to phase into a mix of tiers — for example, three tier-1 phases and one tier-3 phase because that one phase is inherently high-risk. This skill does not force every phase to the same tier, and does not treat a mixed-tier manifest as a failure.
 

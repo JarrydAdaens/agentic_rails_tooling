@@ -124,11 +124,20 @@ Needs a plan? -- yes --> Adequate plan exists? -- no --> rails-planning
 
 ## Failure handling
 
-A failed gate returns the story to active work. It never downgrades into a note to fix later.
+A failed gate returns the story to active work. It never downgrades into a note to fix later, and it never ends the run on its own.
 
 - **Planning failure** — `rails-planning` cannot produce a usable plan. The story stays incomplete. Resolve the planning problem; do not proceed as though planning succeeded.
 - **Test failure** — diagnose, correct, rerun. If the fix changes design or plan assumptions, update those documents too, then re-verify from the top of the gates.
 - **Runtime failure** — return to phase D. Fix, rerun the tests, rerun the runtime verification. A test suite that passes while the application does not run is a signal about the tests, worth recording.
 - **Commit failure** — the story stays incomplete. Resolve the problem, commit successfully, and only then mark the story complete.
 
-If the same story fails its gates three times, stop the run and escalate to the human rather than attempting a fourth. Three failures mean the story or its plan is wrong, not that the implementation needs another pass.
+## Three failures change the approach, not the run
+
+If the same story fails its gates three times, stop *that approach* — three failures mean the story or its plan is wrong, not that the implementation needs a fourth identical pass. What follows is a rung change, not the end of the run:
+
+1. Reconsider the approach. A different implementation, a narrower scope, or a spike to settle whatever the three attempts kept guessing at.
+2. Decompose the story, and run the phases that are not failing.
+3. Complete and commit whatever subset genuinely works, and record what does not.
+4. Mark the remainder `Blocked`, write the blocker record, and take the next runnable story.
+
+The run ends here only when nothing else in the milestone can proceed. See [blocker-ladder.md](blocker-ladder.md) for the full ladder and [intervention-report.md](intervention-report.md) for the record to write.

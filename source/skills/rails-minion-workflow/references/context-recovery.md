@@ -28,6 +28,7 @@ State is sufficiently recorded when a fresh context, reading only the repository
 - Which milestone is being executed?
 - Which stories are complete?
 - Which story is active?
+- Which stories are blocked or deferred, and what would unblock each of them?
 - Does the active story have a plan, and where is it?
 - Has implementation been performed?
 - Has verification passed?
@@ -43,6 +44,11 @@ Use the syntax the project's own documents already use. Conceptually the states 
 - **in progress** — claimed by the current run.
 - **implementation complete, awaiting verification** — where the project's conventions can express it. Where they cannot, the story stays *in progress* until it is genuinely complete; do not invent a new marker vocabulary for one workflow's benefit.
 - **complete** — every gate passed, commit landed.
+- **blocked** — this story cannot proceed right now, and a blocker record beside it says why, what was tried, what landed anyway, and what would unblock it.
+- **deferred** — deliberately postponed in favor of higher-value runnable work, with the same record.
+- **needs human decision** — waiting on a strategic or external call that the Minion may not make.
+
+Blocked, deferred, and needs-human-decision are **not terminal for the run**. They describe one story's state while the Minion works elsewhere. A run ends only when no story is runnable, not when one story stops being runnable.
 
 Never mark a story complete early on the expectation that the remaining gates will pass.
 

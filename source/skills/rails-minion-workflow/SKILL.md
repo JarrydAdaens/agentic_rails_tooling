@@ -25,6 +25,8 @@ One Minion. One milestone. One story at a time.
 
 You do the work yourself — plan it, implement it, prove it runs, document it, commit it. There is no orchestrator above you and no worker below you. What keeps a run of dozens or hundreds of stories on course is not delegation; it is **returning to the milestone after every compaction** and rebuilding your working state from what the repository actually says.
 
+Your objective is to maximize useful autonomous progress across the milestone before a human is needed. A blocker is a routing decision, not an ending condition — when one path closes, take another, reduce the scope, run an experiment, isolate the problem, switch stories, or prepare future work. The ladder that governs this is [references/blocker-ladder.md](references/blocker-ladder.md), and it applies at every step below.
+
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
@@ -51,7 +53,7 @@ What to reload, and the questions a fresh context must be able to answer from th
 Each story is a fresh iteration of the same state machine. Return to step 1 after every completed story.
 
 1. **Reload.** Re-read the milestone and its linked context. See [references/context-recovery.md](references/context-recovery.md).
-2. **Select.** Take the first story that is not complete, honoring any dependency order the milestone states explicitly. No incomplete stories left → go to Milestone completion.
+2. **Select.** Take the first story that is not complete and not already blocked, honoring any dependency order the milestone states explicitly. No runnable stories left → go to Milestone completion.
 3. **Mark in progress** in the milestone.
 4. **Decide on planning.** Adequate plan already linked → use it. Story simple enough that a plan would add nothing → skip it. Otherwise invoke `rails-planning`, link the plan from the milestone, update any design document the planning changed, then **compact**.
 5. **Reload, then implement.** Keep the project's documents synchronized as you go — new constraints, changed design decisions, plan amendments. Documentation is part of implementation, not cleanup at the end.
@@ -59,7 +61,15 @@ Each story is a fresh iteration of the same state machine. Return to step 1 afte
 7. **Reload, then verify.** Run the gates in [references/verification-gates.md](references/verification-gates.md): tests, then the real application, then documentation synchronization, then a commit via `commit-log`. A failed gate returns the story to step 5.
 8. **Mark complete** in the milestone — last, only after every gate has passed.
 
+Any step can hit an obstacle. When one does, work down [references/blocker-ladder.md](references/blocker-ladder.md) rather than leaving the loop: solve it, try an alternative, spike it, decompose it, complete a useful subset, isolate and defer it, or take the next runnable story. Deferring is a recorded decision — write the blocker record from [references/intervention-report.md](references/intervention-report.md) into the milestone before you move on, and then move on in the same turn.
+
 The phase-by-phase detail, including the state diagram and what each reload must cover, is in [references/story-lifecycle.md](references/story-lifecycle.md).
+
+## Milestone completion
+
+A run ends in one of two states, and both are concrete: the milestone is exhausted, or a global hard block leaves no useful work anywhere — not merely a difficult story. Before ending for any other reason, answer the stopping challenge in [references/intervention-report.md](references/intervention-report.md) in writing; any useful answer means the run continues.
+
+Whichever state ends the run, the last act is the four-category intervention report — completed, partial, blocked or deferred, human decisions — written per [references/intervention-report.md](references/intervention-report.md).
 
 ## Non-negotiable rules
 
@@ -88,15 +98,25 @@ This is the canonical rule list. Nothing else in this document restates it.
 - The actual application, executable, service, or game must be **run**. Compiling is not proof, and passing tests are not proof that the system works.
 - A story that fails any gate returns to implementation. Never record a gate as passed because the failure looked unrelated or minor.
 
+**Tenacity**
+
+- A blocker routes the work; it does not end the run. Descend [references/blocker-ladder.md](references/blocker-ladder.md) before treating anything as terminal.
+- Never report a problem without a path — a mitigation, an experiment, a smaller scope, a workaround, a decomposition, a deferral, or a specific request for human input.
+- Two attempts at the same approach without new evidence means change rung, not try again.
+- Resolve genuine ambiguity with `rails-spike` invoked by name, not with more reasoning about what might happen.
+- Local, reversible implementation decisions are yours. Strategic redefinition — replacing a framework, an architecture, a platform, or the milestone's intent — is the human's; document the decision point and continue with unrelated work.
+- Stop only when the milestone is exhausted or a global hard block leaves nothing runnable, and answer the stopping challenge in writing first.
+
 **Recording**
 
 - Never create a separate progress tracker, ledger, or run folder. The project's existing documents record progress.
+- A story that cannot proceed gets a blocker record in the milestone before the Minion moves to the next story — blocked without a record is indistinguishable from forgotten.
 - Every completed story produces a real commit, worded by the `commit-log` skill invoked by name.
 - Mark a story complete only after tests, runtime verification, documentation synchronization, and the commit have all succeeded — in that order, completion last.
 
 ## Preconditions
 
-Check these before the first story, and stop and say so if one is missing rather than improvising around it:
+Check these before the first story. A missing milestone document ends the run — there is no work queue without one. Any other gap is recorded and routed around, not improvised over: name it, say which stories it affects, and run the ones it does not.
 
 - A milestone document exists, contains identifiable stories, and those stories carry enough state to distinguish pending from in-progress from complete.
 - The repository holds enough documentation for a fresh context to recover after compaction.
@@ -117,8 +137,9 @@ Observable facts, checkable by a reader who was not present for the work:
 
 ### Per milestone
 
-- Every story in the milestone document is marked complete.
+- Every story in the milestone document is marked complete, or carries a blocker record naming its blocker, the attempts made, the partial work that landed, and the next action.
 - Every plan created during the run is linked from the milestone, and every link resolves.
+- The run ends with the four-category intervention report, and every blocked item in it is traceable to a blocker record in the project's documents.
 - No file exists that was created solely to track this workflow's progress.
 - A fresh agent reading only the repository can state which milestone ran, that it is complete, and where each story's plan and commit are — without access to this run's context.
 
@@ -128,5 +149,7 @@ Confirm milestone completion by **re-reading the milestone from disk**, not by r
 
 - **`rails-boss-execute-workflow`** dispatches a subagent per story and judges the result with an independent verifier. Prefer the Boss when stories are independent enough to run in parallel, or when a specialist persona must own the implementation. Prefer the Minion when delegation overhead, duplicated context, and planning-to-implementation hand-off errors cost more than they buy. The Minion's substitute for an independent verifier is the compaction boundary at step 6: verification runs from a context that was rebuilt from the repository, not from the narrative that produced the code.
 - **`rails-plan-spam-workflow`** generates many plans up front through delegated workers. The Minion plans one story at a time, immediately before implementing it, so the plan never goes stale between authoring and execution.
+- **`rails-spike`** answers a single uncertainty with the smallest experiment that produces evidence. The Minion invokes it at rung 3 of the ladder, integrates its recommended path, and keeps working while it runs where independent work exists.
+- **`rails-planning-phaser`** splits a story too large or too risky to run as one unit. It is rung 4.
 - **`rails-planning`** owns plan quality and structure. The Minion owns only the decision of *when* a plan is needed, linking it into the milestone, compacting afterward, and later executing it.
 - **`commit-log`** owns commit wording. A successful commit through it is part of a story's definition of done.

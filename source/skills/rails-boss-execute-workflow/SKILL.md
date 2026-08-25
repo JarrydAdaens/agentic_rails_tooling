@@ -202,7 +202,7 @@ This is the canonical rule list. Nothing else in this document restates it.
 - Only a `PASS` or `PASS WITH NOTES` verdict may become `DONE`. A `BLOCK` becomes `BLOCKED`. An unverifiable result never becomes `DONE`.
 - Mark a story complete in the source plan or backlog only after its row is `DONE`.
 - When a story is blocked, mark it blocked, write a note under `logs/`, and do not pretend it is done.
-- Stop the run and escalate to the user after a story has failed verification three times. Do not retry a fourth.
+- A story that has failed verification three times stops consuming the queue, not the run: mark it `BLOCKED` with the reason and the three verdicts, and dispatch the next runnable story. Do not retry a fourth. The run ends when no story is runnable, not when one story is.
 
 ## Story extraction rules
 
@@ -332,7 +332,7 @@ Add one Boss-specific check to the dispatch: **confirm each required skill's obs
 
 **Verifier model.** Run the verifier at the same difficulty band as its worker, and never below Standard. A skeptical verifier is the cheapest quality lever in this workflow; do not economize on it.
 
-**Retries.** A `BLOCK` that the user asks to retry re-enters as `TODO` one difficulty band higher, per [references/model-selection.md](references/model-selection.md). After a third failed verification of the same story, stop the run and escalate — three failures mean the plan is wrong, not the worker.
+**Retries.** A `BLOCK` that the user asks to retry re-enters as `TODO` one difficulty band higher, per [references/model-selection.md](references/model-selection.md). After a third failed verification of the same story, stop retrying that story — three failures mean the plan is wrong, not the worker. Leave it `BLOCKED` with its verdicts recorded and continue with the stories that can still run.
 
 **Skipping.** `--verify off` is the only way to skip verification. When it is set, write `skipped` in the `Verdict` column for every row, disclose it in `briefing.md`, and say so plainly in the final report. Never report a run as verified when it was not.
 
@@ -388,7 +388,7 @@ Only run workers concurrently when the stories are clearly independent, file own
 
 - `BLOCKED` is durable state. Do not silently requeue a blocked story.
 - On a user-requested retry, rewrite `BLOCKED` back to `TODO` intentionally, bump the difficulty band, and note the retry in `logs/`.
-- After three failed verifications of the same story, stop and escalate.
+- After three failed verifications of the same story, leave it `BLOCKED` and move to the next runnable story rather than requeuing a fourth time.
 - If a worker reports that no code change was needed, capture that in `Notes` and mark `DONE` only when the story really was satisfied — the verifier still runs.
 
 ## Standalone uses

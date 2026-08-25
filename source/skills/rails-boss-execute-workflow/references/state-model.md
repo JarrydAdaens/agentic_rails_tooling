@@ -42,7 +42,7 @@ Only the **Boss** mutates the `Status` column in `context/_boss-runs/<run-slug>/
 - Preserve story ids exactly when they came from source documents. Synthetic ids such as `STEP-001` are stable once created.
 - The `Model` column records what a worker actually ran on. Correct it downward to `inherited (unresolved)` if a requested override did not take; never leave a model there that was only requested.
 - The `Verdict` column records the verifier's verdict, or `skipped` when `--verify off` is in effect. It stays blank until verification runs — never fill it ahead of the verdict.
-- After three failed verifications of the same story, stop the run and escalate rather than requeuing a fourth time.
+- After three failed verifications of the same story, the row stays `BLOCKED` and the run continues with the next runnable story. Do not requeue a fourth time, and do not end the run over one blocked row.
 
 ## Resume
 

@@ -1,0 +1,7 @@
+{
+  "quality-gate-persona": "Meticulous local review and evaluation agent for validating changesets against plans, rules, analysis tooling, architecture, and scope before commit or PR.",
+  "unreal-persona": "Specialist Unreal Engine C++ gameplay, UI, actors, components, multiplayer, assets, editor tooling, build systems, and runtime debugging agent.",
+  "web-persona": "Specialist TypeScript, React, Vite, frontend state, API integration, validation, testing, and ASP.NET backend integration agent.",
+  "wpf-persona": "Specialist WPF, XAML, MVVM, binding, commanding, resources, control templating, accessibility, threading, and desktop UI architecture agent.",
+  "xna-persona": "Specialist XNA and MonoGame restoration, game-loop architecture, SpriteBatch rendering, content pipeline, screens, tooling, and performance agent."
+}

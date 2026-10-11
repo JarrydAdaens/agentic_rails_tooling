@@ -1,4 +1,4 @@
 interface:
   display_name: "Rails Update From Starter"
-  short_description: "Refresh derived Agentic Rails context from the local starter"
-  default_prompt: "Use $rails-update-from-starter to update this derived Agentic Rails project from my local context starter."
+  short_description: "Reconcile framework baseline and project edits"
+  default_prompt: "Use $rails-update-from-starter to preview a selective three-way framework update while preserving project truth, adopted profile, and historical paths."

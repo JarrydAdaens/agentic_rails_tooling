@@ -1,7 +1,8 @@
 ---
-paths:
-  - "**/*.xaml"
-  - "**/*.xaml.cs"
+name: rails-stack-wpf-reference
+description: WPF stack guidance selected explicitly for an Agentic Rails project.
+metadata:
+  version: "1.0"
 ---
 
 # WPF XAML Coding Rules (Workspace)

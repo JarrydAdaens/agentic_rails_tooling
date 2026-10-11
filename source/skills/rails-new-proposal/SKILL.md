@@ -1,126 +1,59 @@
 ---
 name: rails-new-proposal
-description: >-
-  Use this skill when the user wants to capture a proven, project-local
-  innovation - a guard rail, hook set, agent, rule pack, script, or workflow -
-  as a self-contained proposal for the Agentic Rails tooling repository.
-  Triggers: "make this a proposal", "propose this for rails", "bundle this up
-  for tooling", "this guard rail should be generalized". It copies the working
-  slice verbatim (hooks extracted into a fresh .claude/settings.json, agents,
-  scripts, dependency manifests, docs) into proposals/<slug>/ in the tooling
-  repo, writes a README recording the use case, the evidence it works, and a
-  suggested destination, and can zip the proposal for sharing with another
-  developer. It is drop-off only: it never integrates anything into source/,
-  never generalizes code, and never touches other proposals.
+description: Use this skill when the user requests packaging a project-local capability for Rails consideration; preserve an attributable working slice and record portable installation, evidence, and limits.
 disable-model-invocation: true
-argument-hint: "<feature or slice to propose> [--slug <name>]"
+argument-hint: "<capability or source paths> [--tooling <path>] [--slug <name>] [--zip] [--dry-run]"
 metadata:
-  version: "1.1"
+  version: "2.0"
 ---
 
 # Rails New Proposal
-
-Capture a proven, project-local innovation as a **self-contained proposal** and drop it into the `proposals/` inbox at the root of the `agentic_rails_tooling` repository. A proposal is a pitch plus its proof: a README that records the use case and the evidence it worked, and a verbatim slice of every file needed to make the feature work somewhere else.
-
-This skill has exactly one job: **package and drop off**. It does not integrate, generalize, or curate. The user reviews the inbox later and asks an agent to promote a proposal into the right part of the Agentic Rails system - or delete it. Because a proposal is self-contained, it can also be zipped and shared directly with another developer.
 
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
 
-Read that line before doing anything else. It is free text, so parse it leniently.
+Parse leniently and accept plain-language equivalents such as "bundle this and zip it".
 
 | Token | Meaning |
 | --- | --- |
-| `--slug <name>` | The proposal folder name. Absent means derive a kebab-case slug from the feature. |
-| anything else | The feature or slice being proposed. Ask only if it cannot be resolved. |
+| `--tooling <path>` | Tooling inbox repository. Absent means discover configured or known verified workspace source. |
+| `--slug <name>` | Kebab-case capability folder. Absent means derive a descriptive collision-free slug. |
+| `--zip` | Produce a portable archive of the proposal. Absent means directory only. |
+| `--dry-run` | Return the proposed manifest and packaging changes without writing. Absent means package the selected slice. |
+| anything else | Capability/source paths and evidence. Empty arguments resolve the requested current capability from session context before asking. |
 
-Empty `$ARGUMENTS` means ask which feature to package — this skill cannot guess a slice.
+## References
 
-## Scope: Package and Drop Off
+- [Proposal README structure](references/proposal-readme-template.md)
+- [Inbox guidance](references/proposals-folder-readme.md)
 
-| In scope | Out of scope |
-| --- | --- |
-| Trace the feature's full dependency closure in the origin project | Integrating anything into `source/` |
-| Copy the slice verbatim into `proposals/<slug>/` | Rewriting or generalizing the copied code |
-| Extract only the relevant hooks into a fresh `.claude/settings.json` | Copying the origin project's whole settings or rules |
-| Write the proposal README (use case, evidence, manifest, destination) | Deciding the proposal's fate (promote/delete) |
-| Bootstrap `proposals/` with its folder README on first use | Editing or deleting other proposals |
-| Zip the proposal on request for sharing | Committing - leave that to the user / repo convention |
+## Non-negotiable rules
 
-## Locating the Tooling Repository
+This is the canonical rule list. Nothing else in this document restates it.
 
-Proposals are written to `<agentic_rails_tooling>/proposals/`. If the `agentic_rails_tooling` repository is not at a known path, ask the user for its location before writing. Never create a `proposals/` folder inside the origin project.
+- Package one bounded capability in the verified tooling repository's proposal inbox. Do not promote it, refactor source, install it, transmit it, or touch other proposals. A new proposal path must not overwrite an existing one.
+- Trace the dependency closure and supported host/runtime contract. Keep project-specific assumptions visible. Thin or inconclusive evidence is acceptable when labeled; packaging does not prove adoption-readiness.
+- Preserve working bytes where portable and safe. For required excerpts, relative-path substitutions, or redactions, retain attributable source path/revision/hash and record each transformation. Do not sacrifice portability or sanitation merely to claim verbatim copying.
+- Carry only relevant settings/hooks and instruction sections, preserving host-specific schema. Avoid unrelated permissions, private configuration, secrets, proprietary customer data, transient markers, caches, and private reasoning traces.
+- Record provenance and applicable license/notices. Copied artifacts retain their owning schemas; do not add Rails metadata or lint-conform foreign slices. README metadata describes the proposal only.
+- Make required runtime paths portable and ensure internal references resolve. External dependencies are declared with versions/installation checks, not silently copied from a user's machine.
+- Suggest the correct destination: reusable Rails behavior in tooling, context templates in starter, cross-project artifacts in memory, lifecycle hooks/plugins in marketplace, generic personal capability in its own marketplace. Integration requires a later request.
+- Use existing session commit authority; packaging implies no commit, push, publication, or external message.
 
-The `proposals/` folder is deliberately **excluded from `rails_lint.py`**: slices are verbatim copies from foreign projects and must not be mutated to satisfy tooling-repo conventions. Do not "fix" lint-style issues in copied files.
+## Workflow
 
-## Proposal Layout
+1. Resolve named capability, origin repository instructions, and verified tooling inbox. Inspect origin and destination dirty state; choose a collision-free slug.
+2. Trace the minimal working closure and record source revisions, current-byte hashes, dependencies, relevant configuration, evidence, and license obligations.
+3. Preview selected files and necessary transformations. Resolve unsafe material by excluding or sanitizing it with an explicit manifest note.
+4. Create the proposal folder and README using the reference. Copy portable bytes; extract only needed host settings/instructions. Bootstrap inbox guidance only if missing, using its reference.
+5. Verify manifest paths, internal references, portable runtime paths, required dependency instructions, and source/output hashes for transformed files. Use existing deterministic checks when meaningful.
+6. If requested, archive the final slice without including the archive recursively. Verify its file list. Report proposal path, what is included, evidence strength, and any portability limits.
 
-```text
-proposals/<proposal-slug>/
-  README.md                  # the pitch: use case, evidence, manifest, destination
-  .claude/settings.json      # fresh file with only the hooks the feature needs
-  .claude/hooks/...          # hook scripts, copied verbatim
-  .claude/agents/...         # subagent definitions, copied verbatim
-  CLAUDE.md                  # only the instruction sections that drive the feature
-  context/...                # design docs / provenance worth carrying along
-  <scripts, dependency manifests, assets as needed>
-  <proposal-slug>.zip        # optional, created on request for sharing
-```
+## Surviving compaction
 
-- `<proposal-slug>` is kebab-case and names the **proposed capability** (e.g. `advisor-guard-rail`, `camera-validation-guard-rail`, `kotlin-rules`), not the origin project.
-- Everything except `README.md` (and the optional zip) mirrors the origin project's layout, so the slice can be dropped into another project's root as-is.
-- If the slug already exists in `proposals/`, ask the user whether to replace it or pick a new slug. Never silently overwrite.
+For a long closure investigation, write the manifest, source/output hashes, transformations, remaining dependencies, and next step in the proposal's README before copying another batch. Keep incomplete packaging explicitly marked; restart from those bytes and source identity.
 
-## Slicing Rules
+## Observable output
 
-1. **Trace the full dependency closure.** Hooks and their scripts, agents, skills, rules, helper scripts, dependency manifests (`requirements.txt`, `package.json` fragments, `pyproject.toml`, etc.), design docs, and the `CLAUDE.md` / `AGENTS.md` sections that drive the behavior. The test: could another developer drop the slice into a fresh project and make it work using only what is inside the proposal?
-2. **Copy verbatim.** The proposal preserves the proven artifact exactly as it ran. Generalization happens at promotion time, not here. If something genuinely cannot be copied as-is, alter it minimally and record the alteration in the README's Generalization Notes.
-3. **Settings are extracted, not copied.** Never copy the origin `.claude/settings.json` wholesale. Create a fresh one containing only the hook entries (and other settings keys) the feature needs.
-4. **Instructions are excerpted, not copied.** From `CLAUDE.md` / `AGENTS.md`, carry over only the sections that belong to the feature. Whole-project rules stay behind.
-5. **Keep paths portable.** Preserve `$CLAUDE_PROJECT_DIR`-style relative paths; strip machine-absolute paths, usernames, and drive letters.
-6. **Sanitize.** No secrets, API keys, tokens, credentials, or customer data. No transient state (session markers, caches, logs, `__pycache__`).
-7. **Record the origin.** The README names the origin project and path so provenance survives even after the slice is shared or promoted.
-
-## The Proposal README
-
-`README.md` at the proposal root is the pitch a future curator (human or agent) reads to decide the proposal's fate. Write it from `references/proposal-readme-template.md`. It must stand alone: use case, the concrete evidence the feature worked in the origin project, why it deserves generalization, a file-by-file manifest, dependencies, a suggested destination in the Agentic Rails system, and honest notes on what is project-specific.
-
-Ground the Evidence section in real observations from the origin project - sessions where the feature caught a problem, adoption on other machines or by other developers, design docs, commits. Do not invent proof; a proposal with thin evidence should say so.
-
-## First Use: Bootstrap the Inbox
-
-If `proposals/` does not exist at the tooling repo root, create it and write `proposals/README-PROPOSALS.md` from `references/proposals-folder-readme.md`. Do this once; never overwrite an existing folder README.
-
-## Zip for Sharing
-
-When the user asks to share the proposal (or says "zip it"), create `<proposal-slug>.zip` inside the proposal folder, containing the folder's contents except the zip itself. The zip is a snapshot: if the proposal changes afterwards, regenerate it. Mention the zip in the README manifest only if it is expected to be kept current.
-
-## Operating Model
-
-1. Confirm the tooling repository location (ask if unknown) and bootstrap `proposals/` if missing.
-2. Ask the user (or read from their description) what the feature is, where it lives, and what evidence exists that it worked.
-3. Explore the origin project and trace the feature's full dependency closure per the Slicing Rules.
-4. Choose the kebab-case slug and create `proposals/<slug>/`.
-5. Copy the slice verbatim, extracting hooks into a fresh `.claude/settings.json` and excerpting instruction sections.
-6. Write `README.md` from the template, grounding the Evidence section in what you actually found.
-7. If asked, produce the zip.
-8. Report the proposal path and a one-paragraph summary of what was captured. Leave committing to the user.
-
-## Boundaries
-
-- Write only inside `proposals/<slug>/` (plus the one-time folder README). Never touch `source/`, `archived/`, `context/`, or other proposals.
-- One proposal per invocation.
-- Copy, do not improve: no refactoring, renaming, or lint-conforming of slice files.
-- Never copy secrets, transient state, or the origin project's unrelated configuration.
-- Do not promote, integrate, or delete anything - drop off and stop.
-
-## Acceptance
-
-Observable facts about the written proposal:
-
-- `proposals/<slug>/README.md` exists and every path its manifest lists resolves to a file that is present.
-- Every file the slice references from within itself resolves inside `proposals/<slug>/`.
-- `.claude/settings.json` in the proposal contains only the feature's hooks and uses portable paths.
-- No secrets, absolute machine paths, or transient state files were copied.
-- Nothing outside `proposals/<slug>/` (and the one-time `README-PROPOSALS.md`) was created or modified.
+The reported proposal README lists each included file, provenance, dependency contract, transformations, and evidence limits. Manifest/internal paths resolve and no origin or unrelated destination files change.

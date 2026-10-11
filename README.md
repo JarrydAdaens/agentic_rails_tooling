@@ -79,14 +79,14 @@ Everything under `source/` is authored to be installed into an IDE or the shared
 
 ### `source/rules/`
 
-`source/rules/` contains concise engineering standards and style guidance, authored for Claude Code's rule-loading spec: each file carries only a top-level `paths:` list of quoted glob strings, or no frontmatter at all when the rule should load every session. Claude Code loads global rules (`global-rules.md`, `unit-testing-rules.md`) unconditionally, and stack rules only when a file matching their `paths:` globs is touched — there is no index file to route through.
+`source/rules/` contains concise standards with unambiguous file triggers. Claude Code loads global rules (`global-rules.md`, `unit-testing-rules.md`) unconditionally and path-scoped rules when their globs match. WPF, Qt, and Unreal guidance lives in the on-demand `rails-stack-guidance` skill because XAML and C++ extensions do not identify those frameworks reliably.
 
 Use `source/rules/` for:
 
 - General engineering behavior
 - Language and framework standards
 - Formatting and naming conventions
-- Stack-specific guidance such as C#, C++, WPF, Qt, TypeScript, and React
+- Language guidance with reliable file triggers, such as C#, TypeScript, and React
 
 Support for other IDEs (Cursor, Windsurf, Copilot, etc.) is produced at copy time by Kung Fu's conversion scripts from this Claude-Code-first source, not by hand-maintained per-IDE files in this repo.
 
@@ -310,7 +310,7 @@ When adding or updating reusable context, place it in the narrowest layer that m
 
 ## Layer Examples
 
-- A WPF naming rule belongs in `source/rules/wpf-rules.md`.
+- WPF, Qt, and Unreal guidance is selected explicitly through `source/skills/rails-stack-guidance/`; broad XAML or C++ globs do not activate it.
 - A Rails-specific planning process belongs in `source/skills/rails-planning`.
 - A generic, non-Rails skill (commit wording, artifact grading, token tooling) belongs in the separate `jarryds-agent-marketplace` repository, not here.
 - A questionable or superseded skill belongs in `archived/skills/`.

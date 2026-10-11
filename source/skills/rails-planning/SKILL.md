@@ -1,199 +1,57 @@
 ---
 name: rails-planning
-description: >-
-  Use this skill when creating, revising, locating, or enforcing implementation
-  plans inside an Agentic Rails project. Use for implementation plans, work
-  plans, execution plans, feature plans, bug plans, repository planning before
-  coding, IDE planning drift, or any planning output that should survive across
-  IDEs, machines, branches, sessions, reviews, retrospectives, execution logs,
-  evidence, complaints, or handovers. The skill ensures plans are written into
-  the target repository under context/implementation-plans/<milestone-slug>/
-  <story-slug>/, producing one primary artifact — plan.md — with CER, questions,
-  evidence, complaints, execution log, and completion review folded into it by
-  default. Can also produce opt-in sidecars (evidence.md, complaining.md,
-  thinking.md) beside plan.md when a story genuinely needs durable, separately
-  tracked provenance.
+description: Use this skill to create, locate, or revise one durable plan for substantial repository work, preserving existing decisions and the project's chosen tracking location.
 disable-model-invocation: false
-argument-hint: "<story or plan path> [--revise] [--sidecar evidence,complaining,thinking]"
+argument-hint: "<work request or plan path> [--revise] [--sidecar evidence,complaining,thinking]"
 metadata:
-  version: "2.1"
+  version: "3.0"
 ---
 
 # Rails Planning
-
-Force implementation planning to live in the target repository, not in IDE-local state, hidden assistant folders, chat history, or machine-specific storage.
-
-This is the single-plan enforcement skill for Agentic Rails. It creates or revises durable Implementation Plan artifacts. It does not implement production code.
-
-`rails-planning` itself belongs to the right rail: reusable agentic behavior. Its output belongs to the left rail: project-local context and provenance.
 
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
 
-Read that line before doing anything else. It is free text, so parse it leniently, and treat plain-language equivalents as equal to the tokens ("update the existing plan" is `--revise`).
+Parse leniently; plain-language equivalents carry the same meaning as tokens.
 
 | Token | Meaning |
 | --- | --- |
-| `--revise` | Update an existing `plan.md` rather than creating one. Absent means infer from whether a plan already exists for the story. |
-| `--sidecar <names>` | Comma-separated sidecars to create alongside the plan (`evidence`, `complaining`, `thinking`). Absent means none — the plan's own sections carry that content. |
-| anything else | The story, feature, bug, or plan path being planned. Ask only if it cannot be resolved. |
+| `--revise` | Revise the existing plan. Absent means discover whether one already owns this work. |
+| `--sidecar <names>` | Explicitly requested evidence, complaining, or thinking sidecars. Absent means none. |
+| anything else | Work request or plan path; empty arguments use established session scope and known paths. |
 
-Empty `$ARGUMENTS` means one new plan, no sidecars, path inferred from the story — the normal case.
+## References
 
-## Core Rule
+- [Plan structure](references/plan-template.md)
+- [Open questions and sidecars](references/questions-format.md)
 
-Every story gets **one primary artifact**:
+## Non-negotiable rules
 
-```text
-context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
-```
+This is the canonical rule list. Nothing else in this document restates it.
 
-`plan.md` integrates CER, questions/unknowns, evidence/references, complaints/friction, execution log, and completion review as sections inside the one file — see [references/plan-template.md](references/plan-template.md). Do not produce separate `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` files by default. `thinking.md` is the one exception that is never a `plan.md` section — see [references/plan-template.md](references/plan-template.md)'s `thinking.md` Sidecar note.
+- Use a durable plan when dependencies, scope, uncertainty, consequence, or continuation make it useful, or when the user explicitly requests one. A routine small edit needs no milestone, scorecard, or planning artifact by default.
+- Keep one primary plan for the work. Reuse the current plan or established local location, including `context/current-plan.md`. An external tracker may own status; link it rather than mirroring its ledger.
+- New unassigned substantial work may use `context/implementation-plans/<work-slug>/plan.md`. Adopted milestone stories may use `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md`. All paths are relative to the target repository root. Preserve historical paths; do not invent a milestone or move existing plans for tidiness.
+- Preserve user decisions, historical execution evidence, and unrelated dirty work. Raw Dictation informs the plan; maintained project decisions govern unless the user explicitly supersedes them.
+- Size steps from real dependencies and independently verifiable outcomes. CER is optional qualitative assessment through `rails-grade-cer`, never numerical model routing or a prerequisite to routine work.
+- Deterministic checks follow the affected artifact. Consequential boundaries may warrant one independent reviewer with scope, acceptance, and user decisions. Compaction does not provide reviewer independence.
+- Commit policy comes from session authorization. Planning neither requires nor authorizes a commit, implementation, deployment, or a new delegation run.
+- Sidecars need an explicit request or a concrete separately maintained evidence need; record that reason. They contain sanitized observations, never private reasoning traces.
 
-Only create one of those sidecar files when:
+## Workflow
 
-- `--sidecar` names it in `$ARGUMENTS`, or the user explicitly asks for it, or
-- the story is large or phased enough that a durable, separately-tracked file is genuinely justified — the signal is a story `rails-planning-phaser` would split into phases.
+1. Read the target's instructions, the named request, and relevant maintained context. Inspect existing plans, adopted profile, tracker ownership, and Git state when available.
+2. Resolve new planning versus revision and whether durable planning serves this work. If the requested task is a routine implementation edit, proceed under its existing authority; do not turn this skill into a barrier.
+3. Select the existing plan or a collision-free descriptive path using the rule list. Write the outcome, scope, constraints, likely affected files, dependencies, acceptance, checks, and important unknowns using the reference.
+4. Sequence the work by prerequisites. Identify blocked items, what can proceed independently, recovery needs, and estimate uncertainty. Leave later work thin until evidence supports detail.
+5. Record any optional CER result inline, including evidence and uncertainty. Invoke `rails-planning-phaser` only when natural delivery seams justify phases or the user requests it.
+6. Save the plan and report its path, assumptions that affect delivery, and unresolved requirements. Report a deliberate chat-only or no-plan outcome when that matches the task.
 
-When a sidecar file is created, it lives beside `plan.md` in the same story folder, never in `context/` root.
+## Surviving compaction
 
-All artifacts must be normal repository files that the human can review, diff, branch, commit, copy, and preserve with the project.
+For a long planning session, the selected primary plan carries accepted decisions, open questions, source links, and the next planning step. Write these before changing focus or starting the next step. Resume by reading that plan and checking current project state; no forced reset is required.
 
-## When To Apply
+## Observable output
 
-Apply this skill when the user asks for one implementation plan or wants IDE planning redirected into Agentic Rails. Typical triggers include:
-
-- Planning before coding in Codex, Claude Code, Cursor, Windsurf, Cascade, or another agentic IDE.
-- Creating or revising a story, feature, bug, refactor, spike, work item, or execution plan.
-- Making planning output durable across machines, IDEs, branches, sessions, reviews, or retrospectives.
-- Preparing context that will later feed the plan's `## Execution Log`, `## Completion Review`, `## Complaints / Friction`, `## Evidence / References`, or a handover artifact.
-- Fixing hidden, scattered, disconnected, or lost IDE-local plans.
-
-Do not apply this skill when the user explicitly wants only a quick chat outline, the plan is unrelated to repository implementation work, the task is trivial enough that a durable plan would be noise, or another active workflow explicitly owns the output location.
-
-Use `rails-plan-spam-workflow` instead when the user wants many plans generated from stories, backlog items, feature dumps, or milestone checklists.
-
-## Repository Detection
-
-1. Identify the target repository root.
-2. Treat the repository as Agentic Rails when any of these exist:
-   - `AGENTIC_RAILS.md`
-   - `.agentic-rails.json`
-   - `AGENTIC_RAILS_README.MD`
-   - `context/implementation-plans/`
-   - an established context tier system under `context/`
-3. If the target repository is not clearly Agentic Rails but the user explicitly asks for this skill, still create repository-local planning artifacts using the path rules below.
-
-## Context Loading
-
-Load only the minimum context needed to write a grounded plan. Prefer maintained context over raw intake:
-
-1. `context/design.md`, including the Milestones Index
-2. relevant `context/milestones/*.md`, including the story's own section inside the milestone
-3. relevant `context/backlog/*.md` story files, when the story has not yet been pulled into a milestone
-4. existing related `context/implementation-plans/**/plan.md`
-5. relevant `context/dictations-tier-0/` source only when raw intake materially shaped the work
-
-Dictation is raw intake, not final truth. If dictation contradicts maintained design, milestones, or stories, prefer maintained context and record the contradiction as an open question.
-
-<!-- rails-lint-allow: VC004 -->
-<!-- Legacy-path migration note: these are retired paths named so an agent recognizes and
-     avoids them, not a live convention. Kept deliberately for that recognition purpose. -->
-If an agent encounters `context/milestones.md`, `context/goals*.md`, or `context/tier0/` in an older repository, treat them as old-era migration signals to retire, not current canonical paths.
-
-## Path Selection
-
-There is one plan path, grouped by milestone:
-
-```text
-context/implementation-plans/<milestone-slug>/<story-slug>/
-```
-
-This skill owns that convention, and every skill that consumes plans — `rails-plan-spam-workflow`, `rails-planning-phaser`, `rails-milestone-planning`, `rails-pair-programming`, `rails-boss-execute-workflow` — reads from exactly this shape. Both levels are required: a plan filed one level deep is not discoverable by those skills.
-
-If a repository already keeps plans under a legacy root such as `docs/implementation-plans/` or `documentation/implementation-plans/`, **report it and ask** before writing. Do not silently migrate the existing plans, and do not add a second plan under the canonical path while the legacy ones remain — that produces the duplicate-folder problem this convention exists to prevent.
-
-If an active plan already exists for the same story, update that `plan.md` instead of creating a duplicate. Preserve existing decisions unless the user asks for a revision, add a short revision note when useful, and do not overwrite its `## Execution Log` history.
-
-## Folder Naming
-
-```text
-context/implementation-plans/<milestone-slug>/<story-slug>/
-```
-
-Slug rules (both `milestone-slug` and `story-slug`):
-
-- Use lowercase words separated by hyphens.
-- Keep the slug short but recognizable.
-- Avoid vague names such as `new-plan`, `task`, or `implementation`.
-- Include a story id when one exists (e.g. `3-4-normalize-settings-loading`).
-- When the story's type matters for discoverability, it may prefix the slug (`bug-fix-login-token-refresh`, `spike-compare-vector-store-options`), but the type prefix is optional — the milestone/story nesting is what matters.
-
-Examples:
-
-```text
-context/implementation-plans/milestone-1-dockerize-app/add-report-export-support/
-context/implementation-plans/milestone-1-dockerize-app/bug-fix-login-token-refresh/
-context/implementation-plans/milestone-2-observability/story-2-3-add-health-checks/
-```
-
-If the story does not yet belong to a milestone (for example, it is still sitting in the backlog), resolve its target milestone first — following the Backlog → Milestone flow — before creating the plan folder, since the folder path requires a milestone slug.
-
-## Operating Model
-
-1. Detect the target repository root and whether it follows Agentic Rails.
-2. Load the minimum maintained context needed to ground the plan.
-3. Decide whether the user wants a new plan, a revision, or path enforcement.
-4. Search existing implementation-plan folders for related active plans.
-5. Resolve the story's milestone, then select or create the correct `<milestone-slug>/<story-slug>/` folder.
-6. Create or update `plan.md` using the structure from [references/plan-template.md](references/plan-template.md), unless the repository has a stronger local template.
-7. Populate CER, `## Questions / Unknowns`, and `## Risk Mitigation` inline in `plan.md`. Preserve uncertainty — record assumptions, constraints, risks, and open questions rather than inventing certainty.
-8. Do not create `questions.md`, `evidence.md`, `complaining.md`, `thinking.md`, `implementation-log.md`, or `completion-review.md` unless the user explicitly requests one or the story is large/phased enough to justify it (see Core Rule). When creating any of them, use [references/questions-format.md](references/questions-format.md) for the questions format.
-9. Leave `## Execution Log` and `## Completion Review` absent (or clearly marked not-yet-started) for a plan that has not begun execution — they are filled in during and after execution, not at plan-creation time.
-10. Report the exact path of `plan.md` to the user, plus the path of any sidecar file actually created.
-
-## Plan Quality Bar
-
-A valid rails-planning plan is concrete enough that another agent or developer can execute it without reconstructing intent from chat history.
-
-Include:
-
-- task metadata and linked context (milestone, story, backlog source)
-- CER (complexity, effort, risk) and routing intent
-- objective, scope, and non-goals
-- current understanding of the repository state, including likely files, modules, interfaces, or subsystems affected
-- assumptions and constraints
-- sequenced execution steps
-- automated and manual verification strategy, plus acceptance criteria
-- risks and mitigation, and open questions/unknowns
-- an execution log and completion review once execution starts and finishes, respectively
-
-Avoid:
-
-- chat-only plans
-- IDE-local hidden plans
-- vague checklists with no repository grounding
-- invented certainty
-- plans that do not explain how to validate completion
-- accidental duplicates of active related plans
-- a cluster of default sidecar files where the plan's own sections would do
-
-## IDE Rule
-
-Any IDE may keep transient internal task state, but the durable plan of record must be the repository file:
-
-```text
-context/implementation-plans/<milestone-slug>/<story-slug>/plan.md
-```
-
-For Codex, Claude Code, Cursor, Windsurf, Cascade, and similar IDEs, materialize the plan file before implementation begins when the work needs durable planning.
-
-## Acceptance
-
-Observable facts about what landed on disk:
-
-- `plan.md` exists at `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` inside the target repository.
-- It carries every section [references/plan-template.md](references/plan-template.md) requires.
-- The story folder contains no file other than `plan.md` unless a sidecar was requested or justified.
-- The exact path of `plan.md`, and of any sidecar created, was reported to the user.
+The selected plan exists at the reported location and identifies concrete acceptance checks and dependencies. Existing execution history remains present. Optional files have a recorded purpose, and a small task has no invented milestone.

@@ -1,44 +1,28 @@
 ---
-name: proposals-folder-readme
+name: rails-new-proposal-proposals-folder-readme
+description: Proposal Inbox Guidance.
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
-# Proposals Folder README
+# Proposal Inbox Guidance
 
-The `rails-new-proposal` skill writes this file to `proposals/README-PROPOSALS.md` the first time it bootstraps the inbox. Copy the block below verbatim (without this preamble). Never overwrite an existing `README-PROPOSALS.md`.
+Create the tooling inbox guidance only when absent, using the owning repository's established README filename. Do not overwrite existing guidance.
+
+Suggested content:
 
 ```markdown
----
-name: readme-proposals
-metadata:
-  version: "1.0"
----
-
 # Proposals
 
-This folder is the **inbox** for proven, project-local innovations that may
-deserve a place in the Agentic Rails system. Each subfolder is one
-self-contained proposal created by the `rails-new-proposal` skill: a
-`README.md` pitching the capability (use case, evidence it worked, manifest,
-suggested destination) plus a verbatim slice of every file needed to make it
-work in another project.
+This inbox holds bounded candidate capabilities, their working slices, and evidence.
+Each proposal README identifies origin, transformations, dependencies, limits, and
+suggested destination. Nothing here is installed or deployed automatically.
 
-## How to use this folder
+Review a candidate's contract and evidence before requesting integration. Copied
+files keep their original schemas, licenses, and notices. They are not normalized
+by tooling lint. Portable packaging can require recorded excerpts or sanitation;
+source and output hashes preserve attribution.
 
-- **Review**: read a proposal's `README.md`; the slice beside it is the proof
-  and the raw material.
-- **Promote**: ask an agent to integrate the proposal into its suggested
-  destination (tooling `source/`, the context starter, memory, or elsewhere),
-  generalizing the slice as needed - then delete the proposal folder.
-- **Delete**: if a proposal is not worth keeping, delete its folder.
-- **Share**: a proposal may contain a `<slug>.zip` snapshot for sending to
-  other developers; regenerate it after any edits.
-
-## Ground rules
-
-- Slices are **verbatim copies from foreign projects**. This folder is
-  excluded from `rails_lint.py`; do not lint-conform, refactor, or otherwise
-  "improve" slice files in place. Generalization happens at promotion time.
-- Nothing in this folder is deployed. It is a holding area, not a rail.
+Promotion, deletion, and external sharing each require their own requested scope.
+An archive is a snapshot; regenerate it when proposal content changes.
 ```

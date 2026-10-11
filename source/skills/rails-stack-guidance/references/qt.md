@@ -1,10 +1,8 @@
 ---
-paths:
-  - "**/*.pro"
-  - "**/*.qrc"
-  - "**/*.qml"
-  - "**/*.cpp"
-  - "**/*.h"
+name: rails-stack-qt-reference
+description: Qt C++ stack guidance selected explicitly for an Agentic Rails project.
+metadata:
+  version: "1.0"
 ---
 
 # Windsurf Rules — Qt C++ (Windows, OpenRGB Plugin)

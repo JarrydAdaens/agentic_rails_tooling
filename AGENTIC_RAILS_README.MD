@@ -105,22 +105,20 @@ rebuilds them is right-rail tooling.
 Two artifact families anchor the store:
 
 - **Learnings** — the logbook: one markdown file per work session, captured at a natural
-  checkpoint. They flow through a `new -> archived -> golden` lifecycle so that only
-  high-signal learnings inform later decisions.
+  checkpoint. New records can be archived or selected as golden qualitative guidance.
 - **Resumes** — the service files: one per model and one per agent persona, **rebuilt (never appended)** from
-  completion reviews and golden learnings. Picking a model or persona for work is treated
-  as *hiring for a team*: a Resume is its empirical, your-workflow-specific track record,
-  not a vendor benchmark or model card.
+  the complete relevant observation corpus, including archived failures. Golden learnings
+  add qualitative guidance but do not narrow the statistical denominator. A Resume records
+  evidence and unknowns; it is not a vendor benchmark or a calibrated routing rule by itself.
 
 The records office closes a feedback loop:
 
 ```text
-work done -> capture learnings -> curate (archive + promote) -> rebuild Resumes -> orchestrator routes next task -> better work
+work done -> capture observations -> curate guidance -> rebuild Resumes -> evidence may inform next task
 ```
 
-Because the data and the routing logic are self-owned, the routing decision is
-**trustable**: it optimizes for measured performance on real work, not hidden vendor
-cost trade-offs. Over time the memory repository can analyze its own artifacts and push
+When evidence is sufficient, the record can inform routing decisions based on observed work.
+Over time the memory repository can analyze its own artifacts and push
 findings back into the left and right rails, making framework evolution data driven.
 
 > Depositing an artifact does not make it clean or ready to consume. It only means
@@ -322,8 +320,9 @@ Context -> Backlog -> Plan -> Score -> Execute -> Log -> Review -> Handover -> O
                                               Memorize -> Curate -> Route next task
 ```
 
-Each completed cycle can deposit a learning into the records office. Curation distills those
-learnings into Resumes, and the next cycle's model, persona, and reasoning level are routed
-from that record — so the loop gets smarter over time.
+Each completed cycle can deposit an observation and an optional learning into the records office.
+Rebuilding Resumes includes the complete relevant observation corpus; curation selects
+qualitative guidance. Routing remains uncalibrated where model identity, outcomes, or
+usage have not been measured reliably.
 
 The human remains responsible for direction, judgement, priorities, acceptance, taste, risk tolerance, and final ownership. Agents can execute, inspect, explain, complain, hand over, and memorize. They do not become the owner.

@@ -1,55 +1,25 @@
 ---
 name: rails-milestone-planning-backlog-format
-description: The shape of context/backlog/backlog-N.md - story block fields, CER fields, and the per-file cap.
+description: Backlog Shape and Ownership.
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
-# Backlog Format
+# Backlog Shape and Ownership
 
-The story backlog is an unscheduled story inventory, not a formal context tier — informally "Milestone -1". It lives at `context/backlog/backlog-N.md` (matches `rails-initialize-from-tier0`'s seeding convention — reuse it, don't invent a competing one).
+Use the project's existing backlog or external tracker, when adopted. Core does not need a backlog. An unscheduled work inventory is not a Milestone and requires no pseudo-milestone number.
 
-## File cap and naming
-
-- Cap each backlog file at **30 stories**.
-- When a file would exceed 30, start `backlog-<N+1>.md` instead of growing the current file.
-- Files are numbered sequentially: `backlog-1.md`, `backlog-2.md`, `backlog-3.md` ...
-- A story does not need to move files once assigned one — the cap governs new-story placement, not tidiness of existing files.
-
-## Evergreen and intentionally messy
-
-The backlog can represent 6 months to multiple years of work. It is not meant to be perfectly organized start-to-end, and it is supplemented over time as understanding improves — new stories get added continuously, not just pulled into milestones. Do not "clean up" the backlog into a falsely tidy state; preserve its working messiness.
-
-## Sort order within a file
-
-Front-to-back:
-
-- **Front** — most urgent, most concrete, most doable now.
-- **Back** — most wishful, most experimental, least concrete, least urgent.
-
-Re-sort a file whenever stories are added, removed, or rescoped enough to change their place in this ordering.
-
-## Story fields
-
-Each story is a subsection inside its backlog file. Minimum fields:
+For a file-based backlog under the target root, `context/backlog/backlog-N.md` is a supported convention. Keep stable IDs and split large files for readability without moving history solely to satisfy a story-count quota.
 
 ```markdown
-### <story-slug>
+### <stable-story-id>: <Outcome>
 
-- **Milestone:** <milestone name/path once pulled in, or "unassigned">
-- **Status:** backlog | in-milestone | superseded
-- **Depends On:** <story-slug(s), or "none">
-- **CER:** Complexity <n> / Effort <n> / Risk <n> (or "not yet scored")
-
-<one-paragraph story summary — what, not how>
+- Summary / acceptance: <concrete result>
+- Source: <request/design link>
+- Priority / reason: <actual urgency or value>
+- Depends on: <confirmed prerequisite IDs or none; uncertain dependencies marked>
+- Delivery owner: <tracker link or selected milestone link>
+- Assessment (optional): <qualitative complexity/effort and risk components, confidence>
 ```
 
-- `<story-slug>` is a short kebab-case identifier that carries straight through to the story's eventual `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` folder without translation, once it is pulled into a milestone and an implementation plan is generated for it.
-- `Depends On` is the authoritative dependency signal for `rails-milestone-planning`'s ordering pass. Leave it as `none` until a real dependency is confirmed — do not pre-fill guesses.
-- `CER` fields are populated only after a real `rails-grade-cer` run. Leave them as "not yet scored" rather than guessing.
-- `Milestone` stays `unassigned` until the story is pulled into a milestone document's story list; once pulled in, hold the milestone name/path here so the backlog entry still traces to where the story now lives.
-- `Status` moves to `in-milestone` the moment a story is pulled into a milestone's story list, and to `superseded` if the entry was replaced or rewritten rather than pulled in unchanged (see Reclassification bookkeeping below for the epic-promotion case).
-
-## Reclassification bookkeeping
-
-When a story is promoted into its own Milestone document (see the Reclassification section in `SKILL.md`), delete its subsection from the backlog file entirely — it has outgrown the story tier — and note the promotion (old story slug, new milestone doc path) in the target milestone document's Backlog Sources or Notes section if the project keeps one. Do not leave a stub or pointer behind in the backlog file itself; the backlog should only ever contain current, real stories.
+Once scheduled, the entry links the authoritative delivery owner rather than mirroring progress. Preserve historical IDs and plan links. A proposed broader outcome can be recorded with its rationale; promotion to a new milestone requires scope authority and is never triggered by a score. Superseded entries retain a traceable replacement link when referenced elsewhere.

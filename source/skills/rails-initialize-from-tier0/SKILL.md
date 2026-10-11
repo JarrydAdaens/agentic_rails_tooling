@@ -1,122 +1,61 @@
 ---
 name: rails-initialize-from-tier0
-description: >-
-  Use this skill when initializing or populating a newly created repository from
-  the Agentic Rails context starter using a large dictation intake document,
-  dictated project seed, AI-generated research report, transcript, rough
-  requirements dump, or kickoff notes.
-  Use it to preserve the raw dictation, synthesize project-specific
-  left-rail context, replace starter placeholders in design (with its Milestones
-  Index), milestone docs, the story backlog, README, and related context files,
-  and optionally seed initial implementation plans without overwriting reusable
-  Agentic Rails framework material.
+description: Use this skill when the user requests project initialization from Dictation, kickoff notes, or research intake; preserve the raw source and generate only the selected useful context profile.
 disable-model-invocation: true
-argument-hint: "<dictation path or text> [--target <repo path>]"
+argument-hint: "<intake path or text> [--target <repo path>] [--starter <path>] [--profile core|planned-delivery|high-consequence] [--host <name>] [--dry-run]"
 metadata:
-  version: "2.2"
+  version: "3.0"
 ---
 
 # Rails Initialize From Dictation
-
-Populate a new Agentic Rails-derived project from a raw dictation intake.
-
-This is an intake synthesis skill, not a generic documentation rewrite. Preserve the human's raw source, then promote stable decisions into the maintained context tier system so future agents can build from the repository instead of from memory.
 
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
 
-Read that line before doing anything else. It is free text, so parse it leniently.
+Parse leniently and accept plain-language equivalents such as "preview Core".
 
 | Token | Meaning |
 | --- | --- |
-| `--target <repo path>` | The project root to initialize. Absent means the current repository. |
-| anything else | The dictation source — a document path, or the raw intake text itself. |
+| `--target <repo path>` | Destination project. Absent means the current project root. |
+| `--starter <path>` | Starter source checkout. Absent means discover the configured or known sibling checkout and verify its identity. |
+| `--profile <name>` | `core`, `planned-delivery`, or `high-consequence`. Absent means Core for new projects, preserving an existing adopted profile. |
+| `--host <name>` | Supported host selection. Absent means resolve the active host when known; otherwise use generic instructions. |
+| `--dry-run` | Report exact proposed paths/content without writing. Absent means apply the reviewed safe changes. |
+| anything else | Intake path or raw text. Empty arguments use already provided session intake or known named files; ask for missing material only after discovery. |
 
-Without a dictation source in `$ARGUMENTS` there is nothing to synthesize, so ask for one. That is the one input this skill cannot default.
+## References
 
-## The Context Tier System
+- [Target and source discovery](references/validation-and-scope.md)
+- [Intake synthesis](references/tier0-synthesis-policy.md)
+- [Evidence and reporting](references/report-and-validation.md)
 
-The current context starter uses a milestone-centric layout. Initialization populates the upper, planning-time tiers and leaves the lower, execution-time tiers as scaffolding:
+## Non-negotiable rules
 
-| Name | Location | Initialization role |
-| --- | --- | --- |
-| Dictation | `context/dictations-tier-0/` | Preserve the raw intake faithfully. |
-| Design | `context/design.md` | Main synthesis target; includes the **Milestones Index** subsection. |
-| Milestone | `context/milestones/milestone-N.md` | One file per milestone; keep in sync with the Milestones Index. Contains that milestone's story list directly. |
-| Story | Inside milestone docs, optionally staged first in `context/backlog/` | Build the story list for each milestone, drawing from the backlog's unscheduled story inventory. |
-| Implementation Plan | `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` | Optional; only when a story is ready to execute. |
-| Phase *(optional)* | Inside the story's plan folder | Not created during initialization. |
+This is the canonical rule list. Nothing else in this document restates it.
 
-The retired vocabulary matters: there are no `goals`, no single `milestones.md`, no `tier0/` folder, and no separate scheduling layer between Milestone and Story. The discrete work unit is a **Story** that lives directly inside a milestone document, optionally staged first in `backlog/` — an unscheduled story inventory, not a formal tier. Milestones are a folder of docs indexed from `design.md`.
+- Initialization is explicitly requested. Preserve raw intake faithfully in the project's existing Dictation location or `context/dictations-tier-0/`, with sensitive material redacted and omissions identified; do not delete or polish away the original evidence.
+- Core is the new-project default. Add a current substantial plan or high-consequence controls only when deliberately adopted. Milestones, a backlog, numerical CER, memory, advisors, personas, and per-story commits are optional.
+- Preserve maintained project truth, identities, commands, published product versions, historical paths, and unrelated work. Existing real context uses selective enrichment, not blank-starter replacement. User decisions may supersede maintained context when explicit; other contradictions remain visible.
+- Generate with explicit destination/profile/host and concrete identity using the verified starter generator. Preview its selected files first; obey collision refusal. Record the exact generated framework baseline before adding project content, never fabricate a baseline from enriched project bytes.
+- Reconcile previously generated content through previous framework baseline, current framework source, and current project content. A version field or Git revision alone is not a baseline. Overlap and unprovable ownership remain conflicts; preserve project bytes pending resolution.
+- Discovery uses session paths, project metadata, and verified known sibling checkouts before asking. Do not infer ownership from Git author configuration or a stack solely from extensions.
+- Create only context that carries an actual decision, acceptance, command, or requirement. Detailed feature plans belong close to execution. Never invent setup stories or ceremonial scaffold to make initialization appear complete.
+- Initialization changes context; product implementation and commits require existing session authority. Use filesystem snapshots when needed without making a commit a prerequisite.
 
-## Required Input
+## Workflow
 
-Require a dictation source document or pasted dictation source text.
+1. Resolve inputs with the discovery reference. Inspect instructions, current files, dirty state, adopted profile, and baseline evidence. Resolve identity fields from explicit intake and maintained project metadata.
+2. Preserve intake or identify its existing durable copy. Extract purpose, audience, constraints, architecture, commands, immediate acceptance, and material uncertainty using the synthesis reference.
+3. Choose fresh generation, trustworthy-baseline reconciliation, or selective enrichment. Preview exact additions, updates, conflicts, selected profile, and omitted optional scaffold.
+4. For a new collision-free destination, run the starter generator with explicit resolved inputs. For existing projects, follow the baseline/ownership rules; use `rails-update-from-starter` for framework reconciliation rather than replacing files.
+5. Add supported project decisions to the generated purpose/design note and instructions. Keep the baseline as generated source bytes. Populate a current plan only for adopted delivery work, and milestone/backlog content only for an actual requested roadmap.
+6. Verify identity, selected command text, relevant links, preserved project content, and unresolved placeholders in generated maintained truth. Report using the evidence reference.
 
-If the user did not provide the dictation source, ask exactly:
+## Surviving compaction
 
-```text
-Please provide the dictation source document path or paste the raw dictation intake text you want synthesized into this Agentic Rails project.
-```
+The preserved intake and maintained purpose/design note carry source and accepted decisions. For substantial initialization use the existing primary plan, or `context/implementation-plans/initialize-project-context/plan.md`, to checkpoint exact proposed paths, baseline identity, conflicts, and next step before editing another batch. It is not a default setup milestone.
 
-Default the target project root to the current repository unless the user provides a target path.
+## Observable output
 
-The local `agentic_rails_context_starter` checkout is optional when the target already contains starter files. If the target is missing core starter structure, ask for the starter path before creating missing structure.
-
-## Progressive Disclosure
-
-Load only the reference needed for the current phase:
-
-- For required inputs, target checks, starter signals, and files in scope, read [references/validation-and-scope.md](references/validation-and-scope.md).
-- For dictation preservation, synthesis rules, and how to populate each maintained context tier, read [references/tier0-synthesis-policy.md](references/tier0-synthesis-policy.md).
-- For the final report, completion checklist, and example trigger patterns, read [references/report-and-validation.md](references/report-and-validation.md).
-
-## Operating Model
-
-1. Identify the target project root. Default to the current repository.
-2. Confirm the target uses the current context tier system layout (`dictations-tier-0/`, `design.md`, `milestones/`, `backlog/`, `implementation-plans/`). Treat legacy layout signals as drift rather than a supported layout, using [references/validation-and-scope.md](references/validation-and-scope.md).
-3. Validate that the target appears to be a new or lightly populated Agentic Rails-derived project. If maintained design already contains real project truth, switch to enrichment/merge behavior instead of blank initialization.
-4. Unless the user explicitly asks to implement immediately, write a short initialization plan naming target files, source inputs, scope boundaries, assumptions, and verification checks before editing.
-5. Locate or create a durable dictation intake file under `context/dictations-tier-0/`.
-6. Preserve every raw dictation input, including research reports, without polishing away uncertainty.
-7. Create a checkpoint after preserving the dictation before broad synthesis, using Git only when available and appropriate.
-8. Extract project signals: purpose, audience, problem, constraints, architecture, milestones, stories, non-goals, risks, external dependencies, and open questions.
-9. Extract a canonical identity map: project name, repository name, old names to purge, new names to use, and transitional terms to avoid.
-10. Choose a scale strategy. For more than 3-4 maintained files, use an orchestration or batch pattern so each pass has a focused file set.
-11. Populate or replace starter placeholders in the maintained tiers using [references/tier0-synthesis-policy.md](references/tier0-synthesis-policy.md): Design + Milestones Index first, then the milestone docs, then the story backlog.
-12. Keep reusable framework identity and template guidance intact where it is still useful.
-13. Remove placeholder examples only from project-specific maintained truth after replacing them with real content.
-14. Prefer tracking initialization itself as the first backlog story or a context-synthesis implementation plan when the repository tracks setup work.
-15. Produce the factual initialization report from [references/report-and-validation.md](references/report-and-validation.md).
-
-## Default File Priority
-
-Populate in dependency order:
-
-1. `context/dictations-tier-0/<intake-file>.md` (Dictation)
-2. root `README.md`
-3. `AGENTIC_RAILS_README.MD` front matter and project-specific references only
-4. `AGENTS.md` project-specific fields only
-5. `context/design.md` (Design), including the **Milestones Index** subsection
-6. `context/milestones/milestone-N.md` (Milestone), one file per milestone, kept in sync with the Milestones Index
-7. `context/backlog/backlog-N.md` (story inventory), priority-sorted, 30 stories per file
-8. support docs such as the Dictation README/index, wiki/secrets guidance, and source/test/script README stubs when they still contain starter residue
-9. optional `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` folders, only when work is ready to execute or the user asks
-
-Do not rewrite laws, the workflow doc, wiki files, or the milestone/backlog/dictation templates unless the dictation initialization explicitly requires project-specific additions and the change is safe.
-
-## Safety Rules
-
-- Never delete the raw dictation source after synthesizing it.
-- Never invent certainty. Record unknowns as assumptions or open questions.
-- Never treat the dictation as authoritative after synthesis; maintained context becomes the working truth.
-- Never overwrite reusable Agentic Rails framework explanation with project-specific prose.
-- Never leave important requirements stranded only in the dictation when they affect design, milestones, the backlog, or plans.
-- Never force premature implementation planning. Initialization builds Design, Milestones, and the Backlog; stories are pulled into milestones and implementation plans are written close to execution unless the user asks otherwise.
-- Never create detailed implementation plans for vague stories unless the user asks for planning exploration.
-- Never store secrets, credentials, private keys, or sensitive personal data from the intake document. Redact or flag them for the user.
-- Never assume Git is available. Use Git checks when the target is a Git repository; otherwise use filesystem and content verification.
-- Never leave final maintained docs speaking as if the project is still a migration from another identity. Keep migration terms in raw dictation, logs, or explicit provenance only.
-- Never force a blank-starter overwrite onto a project that already has maintained design, milestones, or a real backlog. Treat late-stage dictation as enrichment unless the user explicitly requests reinitialization.
-- Never reintroduce retired vocabulary: no `goals`, no single `milestones.md`, no `tier0/` folder, and never use `task` as a tier name.
+The reported profile and generated manifest agree, raw source remains available, and current project decisions survive. A fresh Core project has concrete identity without required milestone/backlog scaffolding.

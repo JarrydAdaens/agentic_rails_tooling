@@ -1,69 +1,24 @@
 ---
 name: rails-minion-workflow-context-recovery
-description: What the Minion reloads after each compaction, the questions the repository alone must answer, and why no separate progress tracker is allowed.
+description: Evidence to reload after an interruption or context reset.
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
-# Context Recovery
+# Context recovery
 
-Compaction is a workflow boundary, not just a token-saving measure. It forces the Minion to rebuild its working state from documents that other agents and humans can also read — which is what stops a long run from drifting away from what the project actually asked for.
+Reload the active request, commit/review policy, chosen status owner, active plan
+when needed, completion receipt, current HEAD/diff, and the relevant source/tests.
+Load design context only for affected decisions. Compaction is optional and
+cannot prove that verification is independent.
 
-## What to reload
+A fresh agent needs to establish which item is active, what was changed, which
+checks ran against which identity, whether completion delivery or a commit is
+pending, and which dependencies remain. Use the tracker's established syntax;
+no separate local story table is needed for an external status owner.
 
-After every compaction, and before every story:
-
-1. **The milestone document** — the work queue, and the only authority on which stories are complete.
-2. **The active story** — its description, acceptance criteria, and current state.
-3. **The linked plan**, if the story has one.
-4. **Relevant design documentation** — the parts the story touches, not the whole set.
-5. **The implementation context** the story will change — the files, tests, and interfaces in its blast radius.
-
-Reload what the next phase needs, not everything available. A reload that pulls in the entire repository defeats the compaction it follows.
-
-## The recovery questions
-
-State is sufficiently recorded when a fresh context, reading only the repository, can answer all of these:
-
-- Which milestone is being executed?
-- Which stories are complete?
-- Which story is active?
-- Which stories are blocked or deferred, and what would unblock each of them?
-- Does the active story have a plan, and where is it?
-- Has implementation been performed?
-- Has verification passed?
-- What remains to be done?
-
-Before any compaction, check that the documents answer these. If one of them can only be answered from the conversation, write it to a document first — that is the whole cost of surviving the boundary, and it is much cheaper than reconstructing lost work.
-
-## Story states
-
-Use the syntax the project's own documents already use. Conceptually the states are:
-
-- **pending** — not started.
-- **in progress** — claimed by the current run.
-- **implementation complete, awaiting verification** — where the project's conventions can express it. Where they cannot, the story stays *in progress* until it is genuinely complete; do not invent a new marker vocabulary for one workflow's benefit.
-- **complete** — every gate passed, commit landed.
-- **blocked** — this story cannot proceed right now, and a blocker record beside it says why, what was tried, what landed anyway, and what would unblock it.
-- **deferred** — deliberately postponed in favor of higher-value runnable work, with the same record.
-- **needs human decision** — waiting on a strategic or external call that the Minion may not make.
-
-Blocked, deferred, and needs-human-decision are **not terminal for the run**. They describe one story's state while the Minion works elsewhere. A run ends only when no story is runnable, not when one story stops being runnable.
-
-Never mark a story complete early on the expectation that the remaining gates will pass.
-
-## Why there is no tracker
-
-A progress file the Minion maintains is a second source of truth. After a compaction it can disagree with the milestone, and the Minion has no way to tell which one is wrong — the very situation the reload exists to prevent. So the milestone is the queue, the plans carry the detail, and the design documents carry the decisions.
-
-This has a cost worth naming: the Minion must keep those documents genuinely current during implementation, because there is no scratch space to defer it into. That cost is the feature. It means the repository is always in a state where another agent or a human can pick the milestone up mid-run.
-
-## Interconnection
-
-Documents form a graph, not a pile of isolated files:
-
-- The milestone references each story's plan.
-- A plan identifies the story it belongs to.
-- Design documents are updated when a plan introduces or changes a design decision.
-
-A plan nothing links to is invisible to the next fresh context, which makes it equivalent to not existing.
+Reconcile evidence before taking the next item. An authorized commit containing
+the sealed receipt and terminal source metadata proves completion even if the
+previous turn ended before reporting it. A no-commit result is valid while its
+recorded diff identity matches; modified artifacts require appropriate renewed
+checks. A completed historical commit is not undone by an unrelated new HEAD.

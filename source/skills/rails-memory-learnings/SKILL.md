@@ -1,215 +1,53 @@
 ---
 name: rails-memory-learnings
-description: >-
-  Use this skill at the end of a work session - after implementation, planning,
-  Agentic Rails implementation-plan execution, bulk planning, orchestration, or
-  a completed story - when the user asks to capture learnings, memorize the
-  session, write a session learning, or deposit a memory artifact. It reflects
-  on the session and writes exactly one durable learning file into the Rails
-  memory repository's learnings/new/ folder, recording the outcome, what went
-  well, what struggled, and full provenance: the models, harness, thinking
-  effort, reasoning vs non-reasoning, fast mode, and token cost behind the work.
+description: Use this skill when the user requests a concise session learning in Rails memory; capture observed outcomes and reliable provenance without guessing identities or usage.
 disable-model-invocation: true
-argument-hint: "[--project <name>] [--dry-run]"
+argument-hint: "[--project <name>] [--memory <path>] [--dry-run]"
 metadata:
-  version: "1.3"
+  version: "2.1"
 ---
 
 # Rails Memory Learnings
-
-Capture the learnings from a work session as a single durable artifact and deposit it into the **Agentic Rails memory** repository (the framework's records office). This is the **write** phase of the memory feedback loop: `capture -> curate -> consume`.
-
-This skill has exactly **one job**: reflect on the session and produce **one** learning file in `learnings/new/`. It records what happened and, critically, **what produced it** - the models, harness, thinking effort, reasoning mode, fast mode, and token cost - so a later curation run can distill these raw data points into model and agent Resumes.
 
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
 
-Read that line before doing anything else. It is free text, so parse it leniently.
+Parse leniently and accept plain-language equivalents such as "preview the learning".
 
 | Token | Meaning |
 | --- | --- |
-| `--project <name>` | The project name used in the filename. Absent means derive it from the repository. |
-| `--dry-run` | Print the learning artifact without writing it. Absent means write. |
-| anything else | Extra emphasis on what the session should record. |
+| `--project <name>` | Project identifier. Absent means derive from established project identity. |
+| `--memory <path>` | Explicit memory repository. Absent means discover configured or known workspace memory; distinguish an actual instance from a template. |
+| `--dry-run` | Return the artifact without writing. Absent means write the requested capture. |
+| anything else | Session emphasis or source links. Empty arguments capture the current requested session. |
 
-Empty `$ARGUMENTS` means capture this session's learning for the current project and write it — the normal case.
+## Reference
 
-## Scope: One File In, One File Out
+- [Concise evidence and provenance](references/learning-format.md)
 
-| In scope | Out of scope |
-| --- | --- |
-| Reflect on the session that just happened | Generating wiki pages, rules, skills, or verifiers |
-| Produce one learning artifact | Curation, ranking, or promotion |
-| Capture full provenance + execution profile | Rebuilding or editing any model/agent Resume |
-| Write the file into `learnings/new/` | Touching `archived/` or `golden/` |
-| Note un-actioned candidate signals for later | Distributing anything to other tooling |
+## Non-negotiable rules
 
-Capture is meant to be **cheap and frequent**. It flags signals; it does not act on them. The **manage** phase (curation) and **read** phase (orchestration) are owned by separate right-rail tooling.
+This is the canonical rule list. Nothing else in this document restates it.
 
-## Memory Repository Location
+- Capture is optional and explicitly requested. Ordinary work has no required memory deposit, routing/resume update, or manufactured retrospective.
+- Produce one concise learning in the actual memory repository's `memories/learnings/new/` location. Capture does not curate, rank models, change Resumes, promote rules, or write implementation status.
+- Record requested and observed runtime identities separately, with evidence source. Model, effort, harness version, fast/reasoning mode, and usage stay `unknown` when not observed; task instructions alone do not prove an override took effect.
+- Separate observations from inference and user reports. Do not invent praise, friction, token totals, causal savings, or model rankings. Partial receipts and estimates retain their limits and coverage.
+- Sanitize secrets, private data, proprietary source, and reasoning traces. Preserve durable source links and hashes when useful; the artifact records conclusions and evidence only.
+- Use collision-free kebab-case names for new captures. Existing historical names and schemas remain evidence and are not rewritten by this capture.
+- Mint one stable observation ID and use the delivery owner's shared result ID, or mint a new result ID for a distinct attempt. Record participant roles against that shared outcome; no participant receives duplicated credit for the same result. The versioned observation block is immutable after capture, with interpretations separated from observations.
+- Discover configured locations and known sibling repositories before asking for missing facts. A memory template is not an instance; unavailable writes can yield a complete inline draft with the destination limitation reported.
+- Commit policy follows existing authority; capture does not authorize a commit or external message.
 
-The memory repository is `agentic-rails-memory`. Write the artifact to:
+## Workflow
 
-```text
-agentic-rails-memory/memories/learnings/new/<project>_<YYYY-MM-DD>.md
-```
+1. Resolve project, requested session, and memory destination from available evidence. Inspect the actual memory instructions/template and preserve its required parser fields.
+2. Review the relevant delivery evidence, changed artifacts, commands, receipts, and session observations. Avoid a full repository rescan for a narrow capture.
+3. Compose the concise learning using the reference's versioned observation block: actual outcome, one or two actionable observations, evidence, uncertainties, and runtime identity/usage coverage. Empty praise/problem categories need no filler.
+4. Select a new target-root-relative name such as `memories/learnings/new/<project>-YYYY-MM-DD.md`, with `-2` on collision. Never overwrite an earlier learning. In dry run, return the complete draft.
+5. Write only the one requested artifact and report path, meaningful observation, and material provenance limits.
 
-If the repository is not at a known path, ask the user for its location before writing. Never write learnings into the project being worked on - they belong in the memory repository only. Write to `new/` and nowhere else.
+## Observable output
 
-## Artifact Naming
-
-The on-disk name stays clean and human-scannable. Heavy metadata lives **inside** the file, not in the filename.
-
-```text
-<project>_<YYYY-MM-DD>.md
-```
-
-- `<project>` - the project slug the session belonged to (kebab-case).
-- `<YYYY-MM-DD>` - the session date.
-
-If a same-day file for the same project already exists, append a numeric counter (`<project>_<YYYY-MM-DD>_2.md`, then `_3`, ...). The `session_id` and all other metadata are carried in the artifact body's frontmatter, never crammed into the name.
-
-## Artifact Format
-
-The file is markdown: a frontmatter block for machine-readable provenance, then a structured human-readable body. Anyone reading it later should immediately be able to tell **where it came from, when, what produced it, and why it exists** - with no external lookup.
-
-### Frontmatter (Provenance + Execution Profile)
-
-```yaml
----
-type: session-learning
-project: <project-slug>
-date: <YYYY-MM-DD>
-session_id: <unique session id>
-captured_by: rails-memory-learnings
-captured_at: <ISO 8601 timestamp>
-status: new                      # new -> archived -> golden, owned by curation
-
-session_scope: <one-task | implementation-plan | multi-story | planning-run | orchestration-run | workflow-run>
-outcome: <succeeded | partial | failed | blocked>
-
-harness: <agent harness / IDE, e.g. "claude-code", "cursor", "codex-cli", "windsurf">
-harness_version: <version if known, else "unknown">
-
-models_used:
-  - name: <model id, e.g. "claude-opus-4-8">
-    provider: <anthropic | openai | google | local/ollama | ...>
-    role: <planning | execution | review | orchestration | ...>
-    reasoning: <reasoning | non-reasoning>
-    thinking_effort: <none | low | medium | high | max | unknown>
-    fast_mode: <true | false | n/a>
-    notes: <optional one-liner on how this model behaved>
-
-agents_used:
-  - <persona or subagent, e.g. "wpf-persona", "general-purpose">
-
-token_cost: <approx total tokens for the session, or "unknown">
----
-```
-
-Field notes:
-
-- **`session_id`** - unique per session; lives here, not in the filename.
-- **`harness` / `harness_version`** - the tool that drove the work (the IDE or agent runtime). Required signal: capture it even if the version is unknown.
-- **`models_used`** - one entry per distinct model+role. This is the raw signal curation distills into Resumes, so be precise:
-  - **`reasoning`** - was the model run as a reasoning/thinking model, or non-reasoning?
-  - **`thinking_effort`** - the reasoning/thinking effort level used (e.g. none, low, medium, high, max). Use `unknown` only if genuinely unrecoverable.
-  - **`fast_mode`** - whether a "fast"/low-latency mode was enabled (`n/a` if the harness has no such mode).
-  - If the same model ran in two roles with different settings (e.g. high-effort planning then fast-mode execution), give it two entries.
-- **`agents_used`** - personas or subagents that executed work, feeding agent Resumes.
-- **`token_cost`** - approximate total tokens; feeds model Resume cost-awareness. Estimate if exact figures are unavailable and say so.
-- **`status`** - always `new` at write time; curation owns all transitions.
-
-If a provenance value cannot be determined, record `unknown` rather than guessing or omitting the field. Do not fabricate model names, effort levels, or token counts.
-
-### Body (The Learning)
-
-Use this section set so the downstream consumer skill can parse predictably. Keep every section even if brief; if a section has nothing meaningful, say so plainly.
-
-```markdown
-# Session Learning: <project> - <YYYY-MM-DD>
-
-## Summary
-<2-4 sentences: what the session was, what was attempted, the outcome and why.>
-
-## What Went Well
-<Concrete wins: clean implementation choices, good plan adherence, effective
-tooling/persona use, unexpectedly efficient outcomes. Do not force praise.>
-
-## What Struggled
-<Factual friction, proportionate: loops, failed attempts, plan drift, tool
-problems, weak context, surprises, edge cases, and failure modes worth
-remembering. Do not invent problems for symmetry.>
-
-## Per-Model / Per-Agent Notes
-<The signal that feeds Resumes. For each model and agent in the frontmatter,
-note what it was good at and where it fell down - tied to its role, reasoning
-mode, thinking effort, and fast-mode setting. Call out token-efficiency or
-latency observations. This is the most important section for the memory loop.>
-
-## Candidate Signals
-<Lightweight, UN-ACTIONED flags for the downstream skill. Each is one line with
-a confidence band (low / medium / high). Examples:
-- (high) Smells like a reusable rule: always run X before Y.
-- (medium) Possible wiki page on the Z subsystem.
-- (low) An eval was missing around the W edge case.
-Only NOTE these. Do not build rules, wiki pages, skills, or verifiers here.>
-
-## Evidence Reviewed
-<The sources actually consulted: plan.md, implementation-log.md, commits,
-changed files, validation commands, completion reviews, persona references.>
-```
-
-## Operating Model
-
-1. Confirm the memory repository location (ask if unknown).
-2. Determine the session scope (one task, an implementation-plan folder, multiple stories, a planning run, an orchestration run, or a workflow run).
-3. Reflect on the session and gather metadata: project slug, date, session id, harness + version, every model used with its role/reasoning/thinking-effort/fast-mode, agents/personas used, approximate token cost, and the outcome.
-4. Review the most relevant available sources to ground the reflection (see Claim Standard).
-5. Compose the artifact: frontmatter, then the structured body.
-6. Resolve the filename, applying the numeric collision suffix only if a same-day file already exists.
-7. Write the single file to `memories/learnings/new/`. Do not touch anything else.
-8. Tell the user the path written. Leave committing to the user / harness convention - the repository is git-controlled.
-
-## Inputs To Review
-
-Use the most relevant available sources; missing optional files are not failures.
-
-- Execution context: `plan.md`, `implementation-log.md`, `completion-review.md`, handover artifacts, workflow progress files, orchestration briefs, planning outputs.
-- Optional provenance: `complaining.md`, `thinking.md`, `evidence.md`.
-- Git history: relevant commits, messages, diffs, changed files.
-- Code state: final changed files, tests, build results, documentation changes.
-- Conversation context: when this is a warm capture, the session itself is a primary source for the execution profile (models, effort, fast mode, harness).
-
-## Claim Standard
-
-Ground the learning in reviewed sources wherever possible, and label honestly:
-
-- **Verified** - directly supported by a source, command output, commit, or artifact.
-- **Inferred** - likely from available evidence, but not directly proven.
-- **Assumed** - accepted because the session context required it.
-- **Unknown** - not enough evidence.
-
-For a cold capture (no conversation context), be stricter about labeling inference and unknowns - especially for the execution profile, where reasoning mode and fast mode may not be recoverable.
-
-## Boundaries
-
-- Write **exactly one** file, only into `learnings/new/`.
-- Do not rebuild, append to, or edit any model or agent Resume.
-- Do not touch `archived/` or `golden/`, and do not run curation.
-- Do not generate wiki pages, rules, skills, or verifiers - only **note** them as candidate signals.
-- Do not write learnings into the project repository; they belong in the memory repository.
-- Never include secrets, credentials, API keys, customer data, or proprietary source. Sanitize before writing.
-- Do not expose private chain-of-thought; capture sanitized observations only.
-- Do not fabricate provenance, praise, or problems. Record `unknown` when a value is genuinely unrecoverable.
-
-## Acceptance
-
-Observable facts about the written artifact:
-
-- Exactly one file exists under `memories/learnings/new/`, named `<project>_<YYYY-MM-DD>.md` with a numeric suffix only on same-day collision.
-- Its frontmatter carries every provenance field plus the execution profile (harness, per-model reasoning or thinking effort, fast mode, token cost).
-- Its body contains every heading in the standard section set, including Per-Model / Per-Agent Notes.
-- No file under `archived/` or `golden/`, and no Resume, has a modification time from this run.
-- The artifact contains no credentials, tokens, or raw chain-of-thought.
+One requested learning or complete dry-run draft contains supported observations, source links, and explicit identity/usage uncertainty. Existing memory records and Resumes remain untouched.

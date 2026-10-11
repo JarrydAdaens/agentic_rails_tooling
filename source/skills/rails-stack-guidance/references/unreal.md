@@ -1,11 +1,8 @@
 ---
-paths:
-  - "**/*.uproject"
-  - "**/*.uplugin"
-  - "**/*.Build.cs"
-  - "**/*.cpp"
-  - "**/*.h"
-  - "**/*.hpp"
+name: rails-stack-unreal-reference
+description: Unreal C++ stack guidance selected explicitly for an Agentic Rails project.
+metadata:
+  version: "1.0"
 ---
 
 # Unreal C++ Coding Rules (Workspace)

@@ -1,190 +1,53 @@
 ---
 name: rails-clean-frontmatter
-description: >-
-  Use this skill to normalize and repair YAML front matter across an Agentic
-  Rails repository: remove junk fields, enforce one metadata.version shape,
-  guarantee name and description, and apply the correct agentic_rails_source_version
-  policy. It auto-selects one of three modes — tooling repo, context starter, or a
-  project derived from the starter — and aborts in repositories that do not use
-  Agentic Rails.
+description: Use this skill when the user requests scoped YAML frontmatter maintenance in Rails-owned artifacts; follow each owning schema and preserve unknown fields, bodies, and provenance.
 disable-model-invocation: true
-argument-hint: "[target path] [--mode tooling|starter|derived] [--dry-run]"
+argument-hint: "[target paths] [--mode tooling|starter|derived] [--dry-run] [--all-owned]"
 metadata:
-  version: "1.4"
+  version: "2.0"
 ---
 
-# Rails Clean Front Matter
-
-Standardize Markdown YAML front matter across one Agentic Rails repository so it is
-consistent, minimal, and machine-checkable.
-
-This is a maintenance skill, not a content rewrite. It edits only the leading
-front matter block of each file and never touches body prose. The exact rules for
-`agentic_rails_source_version` and the file scope depend on which repository the
-skill is run in, so detect the mode first.
+# Rails Clean Frontmatter
 
 ## Arguments
 
 The skill was invoked with: $ARGUMENTS
 
-Read that line before doing anything else. It is free text, so parse it leniently.
+Parse leniently and accept plain-language equivalents such as "preview these files".
 
 | Token | Meaning |
 | --- | --- |
-| `--mode <name>` | Force `tooling`, `starter`, or `derived` mode. Absent means detect the mode from the repository. |
-| `--dry-run` | Report what would change without writing. Absent means write. |
-| anything else | The path to normalize. Absent means the current repository. |
+| `--mode <name>` | Select tooling, starter, or derived policy. Absent means detect the owning repository/schema from instructions and markers. |
+| `--dry-run` | Report proposed changes without writing. Absent means apply unambiguous scoped repairs. |
+| `--all-owned` | Explicit repository-wide pass over artifacts whose schemas require frontmatter. Absent means named or session-selected files only. |
+| anything else | Selected paths. Empty arguments use established scope; absent scope produces an inventory/preview without broad mutation. |
 
-Empty `$ARGUMENTS` means detect the mode and normalize the current repository for real — the normal case.
+## References
 
-## Required Input
+- [Tooling schemas](references/tooling-repo-mode.md)
+- [Starter schemas](references/context-starter-mode.md)
+- [Derived project schemas](references/derived-project-mode.md)
 
-Default the target to the current repository root. Accept a target path if the
-user provides one.
+## Non-negotiable rules
 
-No other input is required. The skill infers everything else from the repository.
+This is the canonical rule list. Nothing else in this document restates it.
 
-## Mode Detection (do this first)
+- Edit only selected Rails-owned leading frontmatter. Do not expand name/version/owner requirements to every Markdown file, raw intake, historical plan, memory record, copied proposal, vendor artifact, or host configuration.
+- The owning schema governs valid keys and requirements. Preserve tool-consumed fields such as argument hints, allowed tools, compatibility, licensing, and host-specific fields. Unknown keys are preserved and reported, never silently dropped or moved.
+- Preserve exact body bytes, encoding, newline style, and unrelated dirty work. Parse YAML structurally; malformed or duplicate keys that cannot be safely resolved are per-file conflicts, not permission to rewrite the body.
+- Required missing values may be inferred only from unambiguous artifact evidence. Ambiguous owner, invocation policy, identity, or version remains a reported conflict; process independent safe files without forcing a repository-wide stop.
+- Document revision and proven starter provenance are independent. Do not invent source-version labels, replace project ownership from Git author settings, or turn template placeholders into maintained project identity.
+- Preserve historical source versions and baselines. Frontmatter repair does not reconcile the starter or product versions and does not authorize a commit.
+- Exclude archives, generated outputs, provider YAML, rules with separate schemas, copied proposals, and historical evidence unless a specific schema-aware repair is requested.
+- Prepare a preview before a bulk write, recheck source bytes, and retain recovery copies for substantive batches. A repeated pass on repaired files produces zero edits.
 
-Decide which repository you are in before editing anything. Read the matching
-reference for the full rules.
+## Workflow
 
-| Mode | Repository | Reference |
-| --- | --- | --- |
-| Tooling | the reusable right-rail tooling library (`agentic_rails_tooling`) | [references/tooling-repo-mode.md](references/tooling-repo-mode.md) |
-| Starter | the left-rail template (`agentic_rails_context_starter`) | [references/context-starter-mode.md](references/context-starter-mode.md) |
-| Derived | a real project created from the starter | [references/derived-project-mode.md](references/derived-project-mode.md) |
+1. Resolve target, selected paths, and repository instructions. Inventory matched files and detect owning schemas using the references. In ambiguous mode, report possible policies without mutation.
+2. Parse each selected leading block and construct the smallest schema repair. Leave unrelated/unknown fields in place. Record unsafe files with exact conflicts.
+3. Preview path-level diffs and old/new local versions when applicable. Apply safe repairs within the selected scope, preserving snapshots and body bytes.
+4. Run the owning parser/linter and a second transform pass to establish idempotence. Report changed files, skipped schemas, preserved unknown fields, conflicts, and check results.
 
-Detection signals:
+## Observable output
 
-- **Tooling**: a `source/` tree holding `source/skills/`, `source/agents/`, and
-  `source/rules/`, supported by `context/` (with `templates/`, `prompt-dev/`,
-  `wiki/`, and a `design.md` describing the tooling library itself);
-  `AGENTIC_RAILS_README.MD` describes this as the right rail / reusable tooling.
-  The repo *is* the product (skills/agents/rules), not a project with the
-  context tier system's `context/` structure below.
-- **Starter**: `context/` with `design.md`, `milestones/`,
-  `backlog/`, `dictations-tier-0/`, and an implementation-plans folder, where
-  that content is still template/placeholder; identified as the starter /
-  template / left rail.
-- **Derived**: `context/` carrying real project truth (the context tier system's
-  design/milestones/backlog/implementation-plans structure), plus an
-  Agentic Rails marker (`AGENTIC_RAILS_README.MD`, `.agentic-rails.json`, or
-  `AGENTIC_RAILS.md`); it has no reusable `source/` capability library of its
-  own and is neither of the two repositories above.
-
-Resolve like this:
-
-1. If no Agentic Rails signal is present at all, **abort** and tell the user:
-   `rails-clean-frontmatter only runs inside Agentic Rails repositories (the tooling repo, the context starter, or a project derived from the starter). This target is none of those, so the skill cannot be applied.`
-2. If exactly one mode matches, proceed with that mode's reference.
-3. If signals are ambiguous or two modes both seem plausible, **stop and ask**
-   the user which mode to apply. Do not guess.
-
-## The Standard (all modes)
-
-Every processed file ends with this shape. Tool-consumed fields stay top-level;
-local data lives under `metadata`.
-
-```yaml
----
-name: <kebab-slug>
-description: <one concise sentence>
-# skill files only:
-disable-model-invocation: <true|false>
-metadata:
-  version: "X.Y"
-  # mode-specific fields — see the mode reference:
-  agentic_rails_source_version: "X.Y"   # starter and derived only
-  owner: <owner>                         # starter: "default"; derived: real name
-  repo: <repo>                           # starter: "default"; derived: real repo name
-  template: "true"                       # template files only
----
-```
-
-**Rules files under `source/rules/` are an exception to this whole standard**,
-not an application of it. They carry only an optional top-level `paths:` list
-of quoted glob strings (Claude Code's rule-scoping format), or no frontmatter
-at all when the rule should load every session. Never add `name`,
-`description`, or `metadata.version` to a rules file. See
-[references/tooling-repo-mode.md](references/tooling-repo-mode.md)'s Rules
-Files Exception for the full shape.
-
-Rules that hold in every mode:
-
-- **`name` and `description` are required.** If either is missing, add and
-  populate it by inferring from the file: derive `name` as a kebab-case slug from
-  the filename or H1 (skill-prefix reference files so the slug is unique), and
-  `description` as a one-line summary of the file's purpose.
-- **Always remove** `changelog` (git is the changelog) and `invocation` (not an
-  IDE-consumed field) from front matter.
-- **`metadata.version` is required**, listed first under `metadata`. Keep
-  `owner`, `repo`, and `template` under `metadata` when applicable to the mode.
-- **`disable-model-invocation` is required on every `SKILL.md`.** It is a
-  top-level Cursor skill field, not local metadata. If a processed `SKILL.md`
-  is missing it, stop and ask the user whether the value should be `true` or
-  `false`; do not infer, default, or choose from context. Preserve an existing
-  boolean value unless the user explicitly asks to change it.
-- **Keep top-level** only the tool-consumed fields: `name`, `description`, and
-  the Cursor skill field `disable-model-invocation`. Move anything else that is
-  local data (`version`, `owner`, `repo`, `template`) under `metadata`.
-- **Unknown field → stop and ask.** If a front matter carries a field this skill
-  does not recognize (not `name`, `description`, `disable-model-invocation`,
-  `metadata`, `version`, `owner`, `repo`, `template`,
-  `agentic_rails_source_version`, `changelog`, or `invocation`), halt and ask
-  the user what to do with it. Do not drop or keep it silently. Exception:
-  `paths` is a recognized field, but only inside a rules file — see the Rules
-  Files Exception above; do not halt on it there.
-- **Exclusions**: never process anything under `archived/`, and never rewrite
-  `agents/openai.yaml` provider files — those use a separate `interface:` schema,
-  not Markdown front matter.
-
-## Method (run it safely)
-
-What this skill learned the hard way:
-
-1. **Front matter only.** Edit just the first `---` block. Many files mention
-   `agentic_rails_source_version`, `changelog`, etc. in body prose or fenced
-   examples — those must be preserved untouched.
-2. **Dry run, review, apply.** For bulk passes, compute the new front matter for
-   every file and review the proposed changes before writing. A reviewed script
-   is appropriate; this is exactly the kind of repetitive edit it suits.
-3. **Indent-aware removal.** When removing a key like `changelog`, also remove
-   its deeper-indented child lines, or they leak into `metadata`.
-4. **Preserve encoding and line endings.** Read and write UTF-8; do not corrupt
-   em-dashes or other non-ASCII. Preserve each file's existing newline style.
-5. **Bump on real change only.** When a file's front matter is actually modified,
-   bump the last numeric component of `version` (e.g. `1.2` → `1.3`). Files
-   already compliant are left untouched. Re-running the skill on a clean repo
-   makes no changes — it is idempotent.
-6. **New front matter starts at `version: "1.0"`** (mode references state the
-   `agentic_rails_source_version` value to pair with it).
-
-## Verification
-
-Before reporting done:
-
-- Re-run the detection and transform; confirm a clean pass reports zero changes.
-- Scan that no `changelog:`, `invocation:`, or out-of-policy
-  `agentic_rails_source_version:` remains as a key in any front matter block.
-- Confirm `name` and `description` exist in every processed file.
-- Confirm every processed `SKILL.md` has top-level
-  `disable-model-invocation: true` or `disable-model-invocation: false`.
-- Spot-check a non-ASCII file to confirm encoding survived.
-
-## Report
-
-Produce a short factual report: detected mode, files changed (with old → new
-version), files created, fields removed, any unknown fields that forced a stop,
-and the verification result. Do not claim a file changed unless it did.
-
-## Safety Rules
-
-- Never edit body prose; front matter only.
-- Never process `archived/` or `agents/openai.yaml`.
-- Never silently keep or drop an unrecognized field — stop and ask.
-- Never force `agentic_rails_source_version` to equal `version` outside the
-  starter; in derived projects the two legitimately differ.
-- Never invent project content while adding `name`/`description`; infer only what
-  the file already makes obvious.
-- Never run in a non-Agentic-Rails repository; abort with the message above.
+Only selected leading blocks change, body byte comparisons match, schema checks pass for repaired artifacts, and a second pass proposes zero changes. Unknown fields and existing provenance survive.

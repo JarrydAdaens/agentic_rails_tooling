@@ -1,143 +1,31 @@
 ---
 name: rails-minion-workflow-story-lifecycle
-description: The six phases of one Minion story iteration, the compaction boundaries between them, and the state machine the loop follows.
+description: Bounded implementation and completion transitions.
 metadata:
-  version: "1.0"
+  version: "2.0"
 ---
 
-# Story Lifecycle
+# Story lifecycle
 
-One story is one full pass through phases A–F. Every story starts from the same entry point, so a run of one story and a run of a hundred follow identical mechanics.
+Resolve an eligible item and record ownership before changing files. Use an
+existing plan or create one only when it improves substantial work. Implement,
+run relevant checks, select independent review where warranted, and prepare the
+[completion transaction](completion-contract.md).
 
-## Phase A — Reload authoritative context
+| Stage | Resume behavior |
+| --- | --- |
+| Working | Inspect preserved baseline, live diff, and active owner before resuming. |
+| Checking | Run missing or invalidated checks; do not redo accepted implementation. |
+| Preparing completion | Receipt exists before terminal metadata. Finish metadata and seal against the verified identity. |
+| Commit pending | Verify Git first. A failed commit preserves the pending result; retry only the authorized delivery step. |
+| Verified uncommitted | Compare recorded artifact/diff identity and retain no-commit policy. |
+| Completed committed | Recognize the exact receipt/artifacts in an ancestor commit; do not redispatch. |
+| Blocked | Preserve evidence and select an independent authorized item. |
 
-Before touching a story, rebuild working state from the repository. Reload the milestone, the active story, any plan linked to it, the relevant design documentation, and the implementation context the story will touch.
+The source tracker owns story state. Local receipt stages describe delivery,
+which can be pending even after implementation and checks have finished. If an
+external status API is unavailable, report pending delivery with its source link;
+do not invent a local completed mirror.
 
-Where the files contradict your recollection of earlier work, the files win. That is the whole point of the phase.
-
-## Phase B — Decide whether planning is required
-
-Three outcomes:
-
-**An adequate plan already exists.** Load it, confirm it still describes the story as written, confirm the milestone references it, and move toward execution.
-
-**The story is simple.** A story whose implementation is obvious from its own description — a rename, a config change, a documented API call, a small well-bounded fix — gains nothing from a planning document. Skip it and move toward execution.
-
-**The story is complex and unplanned.** Invoke `rails-planning` by name. Then, before compacting: link the plan from the milestone, update any design or context document the planning decision changed, and record the plan's status. The linkage lives in the project's documents — never in a note to yourself.
-
-## Phase C — Compact before execution
-
-Compact after planning, or whenever preparation has accumulated substantial context.
-
-Then reload: milestone, active story, its plan, relevant design and context documents. Confirm which story is active before writing a line of implementation.
-
-This is the anti-drift boundary that makes a planned story survive the gap between planning it and building it.
-
-## Phase D — Execute the story
-
-Implement the active story directly.
-
-Keep the project's documents synchronized with meaningful changes as they happen — newly discovered constraints, changed design decisions, modified architecture, revised implementation details, plan amendments, milestone changes. Documentation updates belong inside implementation, not in a cleanup pass at the end, because a compaction between the change and the cleanup loses the reason for the change.
-
-## Phase E — Implementation checkpoint
-
-When implementation appears complete:
-
-1. Update the plan to record that its implementation work is done, where that status is represented.
-2. Update the design documents with the decisions implementation actually settled.
-3. Update the story's state — but **do not mark it complete**. It is not complete until it is proven and committed.
-4. Compact.
-
-## Phase F — Reload before verification
-
-Reload the milestone, story, plan, and relevant design context. Then inspect the **actual implementation state** on disk — the diff, the files, the tests — rather than trusting the account of it you produced in phase D.
-
-Verification from a rebuilt context is what this workflow substitutes for an independent reviewing agent. Skipping the reload collapses that separation and returns you to grading your own homework.
-
-Proceed into the gates in [verification-gates.md](verification-gates.md).
-
-## State machine
-
-```text
-START
-  |
-  v
-Reload milestone + context
-  |
-  v
-Find first incomplete story ---- none ----> MILESTONE COMPLETE
-  |
-  v
-Mark story in progress
-  |
-  v
-Needs a plan? -- yes --> Adequate plan exists? -- no --> rails-planning
-  |                              |                            |
-  |                              |                            v
-  |                              |                    Link plan into docs
-  |                              |                            |
-  |                              +----------------------------+
-  |                                                           |
-  |                                                           v
-  +---- no ------------------------------------------------> COMPACT
-                                                              |
-                                                              v
-                                                       Reload context
-                                                              |
-                                                              v
-                                                       Execute story
-                                                              |
-                                                              v
-                                              Sync docs as work happens
-                                                              |
-                                                              v
-                                                  Implementation done
-                                                              |
-                                                              v
-                                                           COMPACT
-                                                              |
-                                                              v
-                                                       Reload context
-                                                              |
-                        +---- fail ---- Run tests ------------+
-                        |                    |
-                        v                  pass
-                   Fix the work              |
-                        ^                    v
-                        +---- fail ---- Run the application
-                        |                    |
-                        |                  pass
-                        |                    v
-                        |            Sync documentation
-                        |                    |
-                        |                    v
-                        +---- fail ---- commit-log
-                                             |
-                                          success
-                                             |
-                                             v
-                                     Mark story complete
-                                             |
-                                             v
-                                     Reload milestone --> LOOP
-```
-
-## Failure handling
-
-A failed gate returns the story to active work. It never downgrades into a note to fix later, and it never ends the run on its own.
-
-- **Planning failure** — `rails-planning` cannot produce a usable plan. The story stays incomplete. Resolve the planning problem; do not proceed as though planning succeeded.
-- **Test failure** — diagnose, correct, rerun. If the fix changes design or plan assumptions, update those documents too, then re-verify from the top of the gates.
-- **Runtime failure** — return to phase D. Fix, rerun the tests, rerun the runtime verification. A test suite that passes while the application does not run is a signal about the tests, worth recording.
-- **Commit failure** — the story stays incomplete. Resolve the problem, commit successfully, and only then mark the story complete.
-
-## Three failures change the approach, not the run
-
-If the same story fails its gates three times, stop *that approach* — three failures mean the story or its plan is wrong, not that the implementation needs a fourth identical pass. What follows is a rung change, not the end of the run:
-
-1. Reconsider the approach. A different implementation, a narrower scope, or a spike to settle whatever the three attempts kept guessing at.
-2. Decompose the story, and run the phases that are not failing.
-3. Complete and commit whatever subset genuinely works, and record what does not.
-4. Mark the remainder `Blocked`, write the blocker record, and take the next runnable story.
-
-The run ends here only when nothing else in the milestone can proceed. See [blocker-ladder.md](blocker-ladder.md) for the full ladder and [intervention-report.md](intervention-report.md) for the record to write.
+Compaction is not a lifecycle stage. Checkpoint whenever interruption or context
+pressure makes it useful, and reload the evidence after continuation.

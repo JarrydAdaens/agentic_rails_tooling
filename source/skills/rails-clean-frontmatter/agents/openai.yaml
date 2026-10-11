@@ -1,4 +1,4 @@
 interface:
-  display_name: "Rails Clean Front Matter"
-  short_description: "Normalize Agentic Rails Markdown front matter"
-  default_prompt: "Use $rails-clean-frontmatter to normalize the YAML front matter across this Agentic Rails repository."
+  display_name: "Rails Clean Frontmatter"
+  short_description: "Repair selected Rails frontmatter by owning schema"
+  default_prompt: "Use $rails-clean-frontmatter to repair the selected Rails-owned frontmatter, preserve bodies and unknown fields, and preview any ambiguous changes."

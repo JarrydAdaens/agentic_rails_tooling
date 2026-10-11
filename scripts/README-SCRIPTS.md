@@ -50,6 +50,8 @@ Use pragmas sparingly — mainly for migration notes that must name the old voca
 
 ## Tests
 
+Run the complete repository check from any directory with `python scripts/check-repository.py`. It runs the mandatory linter, checks generated persona adapters for drift, and runs infrastructure, execution receipt, and phase file tests. The memory rebuild tests require PyYAML. Test fixtures use a disposable directory under `scripts/` and are removed afterward; the check does not deploy or rewrite source files.
+
 ```text
 cd scripts
 python -m unittest test_rails_lint
